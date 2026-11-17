@@ -1,0 +1,568 @@
+{
+  "packId": "mrak-base",
+  "version": "0.1.0",
+  "schemaVersion": 1,
+  "files": [
+    {
+      "path": "data/achievements/achievements.json",
+      "sha256": "f1a2424edf14bcade5ccd37c7d7084ac3200ffeeba192fb27cba7df1485b0296",
+      "bytes": 4095
+    },
+    {
+      "path": "data/attributes/attributes.json",
+      "sha256": "5054022721d7036ffa7d416e1a204644060a35505a1762884df706bf49f8decc",
+      "bytes": 777
+    },
+    {
+      "path": "data/blessings/blessings.json",
+      "sha256": "fb8f516edcc974a940747704e1b835d2cbb6b5bf74f6062a020d7fc976a975e1",
+      "bytes": 3105
+    },
+    {
+      "path": "data/bloodline-nodes/tier-1.json",
+      "sha256": "90d52fea36d9984b557d4ecf2a8277422f72411af469f4daab04cb85580adeeb",
+      "bytes": 1887
+    },
+    {
+      "path": "data/bloodline-nodes/tier-2.json",
+      "sha256": "5094d19e7e8ba370a6867c3e6961e5d4b5178d3bd682b5b533f441b178ac585c",
+      "bytes": 1037
+    },
+    {
+      "path": "data/buildings/chapel.json",
+      "sha256": "3530c989b6dc65ee76167013736ae63ab2d3823ab4fbcf6204475deda236fb3d",
+      "bytes": 1705
+    },
+    {
+      "path": "data/buildings/herbalists-hut.json",
+      "sha256": "1b747d4eb00edba239300c347521f9e4f420aa123938243dbb79030c1398147a",
+      "bytes": 1601
+    },
+    {
+      "path": "data/buildings/inn.json",
+      "sha256": "81a1410af156a3358a3183691dcf87d83302892383f5ebdc7cc993c128ecc6b0",
+      "bytes": 1615
+    },
+    {
+      "path": "data/buildings/school.json",
+      "sha256": "6df1384739b201443c99803437548abfef5990d39d860eb829cab5d35f755eff",
+      "bytes": 1774
+    },
+    {
+      "path": "data/buildings/watchtower.json",
+      "sha256": "44b9129e6951b4d4c7b3aa1958dc106e6c2645f89994347d15089025c8515831",
+      "bytes": 1645
+    },
+    {
+      "path": "data/buildings/workshop.json",
+      "sha256": "58fe7427672c6f89cc773d3727be71ba037e137dafb3836c46a8d357c87b5167",
+      "bytes": 1684
+    },
+    {
+      "path": "data/cabinet-sets/sets.json",
+      "sha256": "566788c0b5a0ac74941ef44f5bb8250983cf87c5f64217b324b684988bd0fb13",
+      "bytes": 706
+    },
+    {
+      "path": "data/callings/priests-acolyte.json",
+      "sha256": "e44767d72364f006ab2e62c08415b9f6cc291f5497d6a876ae5c0432e7e59dc7",
+      "bytes": 1151
+    },
+    {
+      "path": "data/callings/znaharka.json",
+      "sha256": "dae10fccf3484d20ce99e869a33ef15edfeebd70085367c1c84981afe9fdf985",
+      "bytes": 1062
+    },
+    {
+      "path": "data/collectibles/collectibles.json",
+      "sha256": "eda87d6ca1a92d666538eff17a523fd23edea9f94f8c64b432c23fb1741e1483",
+      "bytes": 4826
+    },
+    {
+      "path": "data/creatures/creatures.json",
+      "sha256": "420ca85f1802ccbc6e7e2e15fd3d44b93592efd4fb8ede450f23fa4436de84a9",
+      "bytes": 2140
+    },
+    {
+      "path": "data/cursed-objects/cursed-objects.json",
+      "sha256": "b7b78f89a1021e2c8e06315b174398ea6212d33021ebc71e5f32b092634bc60a",
+      "bytes": 2384
+    },
+    {
+      "path": "data/darkness-levels/darkness-levels.json",
+      "sha256": "5b34da4b29f61c52b060d7c9cf87e6fbef12165ce8d93506b67eb68dfdfeef70",
+      "bytes": 7293
+    },
+    {
+      "path": "data/debt-collections/debt-collections.json",
+      "sha256": "11d644ead05f94ff080b5e95901be71c91e2d7090f57449b10520bff5a5ac40a",
+      "bytes": 5161
+    },
+    {
+      "path": "data/debt-remedies/debt-remedies.json",
+      "sha256": "ea8f26d50493cf1d0d3d0a545b1f7e7df8f29dbdf21bf176414f75e7c0a4766f",
+      "bytes": 1709
+    },
+    {
+      "path": "data/debt-sources/debt-sources.json",
+      "sha256": "42df2c1c40b8c1375084e8cbdce8ac95d0d1a4ff7c3e47eb33d833a8a57697a8",
+      "bytes": 1708
+    },
+    {
+      "path": "data/demons/lesser-bes.json",
+      "sha256": "4c6cce75015d7e0fccad33070905e1f6664517bb29bc133d84e066e72566d5a0",
+      "bytes": 1406
+    },
+    {
+      "path": "data/demons/mamnik.json",
+      "sha256": "0eb20ac24336a815d27db41c200005c12d447b40462ab0bd5bca59ea73fe62c1",
+      "bytes": 1815
+    },
+    {
+      "path": "data/demons/uroka.json",
+      "sha256": "f9b4203831f85c40a23a795247cf97bf2f4f7ce80c1f026c49680afbece83e90",
+      "bytes": 1593
+    },
+    {
+      "path": "data/events/events.json",
+      "sha256": "ed6a99a7ca19066af7e8854a4f3369c833ce10f0417fe6606bcb8fa19a843da0",
+      "bytes": 14793
+    },
+    {
+      "path": "data/fear-rules/default.json",
+      "sha256": "3e1165c78f5d0d076b79f8ec92bb25f324a33312973add189fea7b0f173a4d8b",
+      "bytes": 24301
+    },
+    {
+      "path": "data/festivals/festivals.json",
+      "sha256": "39178e0d21d632943ad1d65293791c84c5d5f36cff39969ee416b86510b4cd7d",
+      "bytes": 12390
+    },
+    {
+      "path": "data/flags.json",
+      "sha256": "660f2c9e3a5853f7c6db3b68ce689a850f1c349654c8da72f22c6453e789067c",
+      "bytes": 28013
+    },
+    {
+      "path": "data/gear/gear.json",
+      "sha256": "dc40c2f14397e0e05b2941b1b4f1e5ae540a155baa5743d0f0fb2bbf6c490a05",
+      "bytes": 3385
+    },
+    {
+      "path": "data/glossary/folklore.json",
+      "sha256": "26c10b72bd6fd0890c5fabd2014daf8c92f4847f826e3d0a19122822ebfb4dda",
+      "bytes": 6531
+    },
+    {
+      "path": "data/glossary/game.json",
+      "sha256": "d1337efd514721761f2959016f684911a719a27754886dc7a774c8cadfe6ea3f",
+      "bytes": 3509
+    },
+    {
+      "path": "data/glossary/history.json",
+      "sha256": "dfae2fd42ea99d17503064c7b819cca2568d0277046fcb552a385171ea3caad2",
+      "bytes": 3635
+    },
+    {
+      "path": "data/hints/tutorial.json",
+      "sha256": "d396dc5ecd261f9c2b08778d23643a9349c1a4c63ae5f89a7cae164282a13f1d",
+      "bytes": 5412
+    },
+    {
+      "path": "data/item-rules/default.json",
+      "sha256": "08d72cf8e0ae2fe9fe7ae6600ddb08dda024ab063a02c3d08e46d982be6bb3bb",
+      "bytes": 993
+    },
+    {
+      "path": "data/items/items.json",
+      "sha256": "946e95dc9ad387e9b18cd6d548cc822eda1a77bfaa713f3c34c1220bef6c6c02",
+      "bytes": 11144
+    },
+    {
+      "path": "data/milestones/milestones.json",
+      "sha256": "6b8aeb13485bc332181d3b256efdbefc803c2d86c79f458dbbc2bb896743052d",
+      "bytes": 5125
+    },
+    {
+      "path": "data/mysteries/girl-without-a-shadow.json",
+      "sha256": "177a31420410a728d56ce1c5d7aaefe29e87750ab3038d1b28ff3e05fb111b39",
+      "bytes": 8120
+    },
+    {
+      "path": "data/mysteries/wasting-bride.json",
+      "sha256": "73d3a77fd4f011130314d638ffb8402276650fbc6a8da41883acbc089ac31473",
+      "bytes": 8254
+    },
+    {
+      "path": "data/omen-tables/blessing.json",
+      "sha256": "2f312aa8109fd82fde0760c5a92a90ed937e1206cd32a473a2a4256a6bef6eae",
+      "bytes": 653
+    },
+    {
+      "path": "data/omen-tables/exorcism-cast-out.json",
+      "sha256": "f14c29b4fa655c18e5c82dc804463601dc57596c6afa2e682fe7b67a0c6bf8dd",
+      "bytes": 865
+    },
+    {
+      "path": "data/omen-tables/herbalism.json",
+      "sha256": "b77c45e309f9957eec393610b4aebe9aef9765f4eae2f1e453e5c8c77fc82115",
+      "bytes": 800
+    },
+    {
+      "path": "data/omen-tables/investigation.json",
+      "sha256": "6c19da33d3e1636e60a2447d17b00a84dc9502e81de891f9dc19c61cfe1fc2c2",
+      "bytes": 1154
+    },
+    {
+      "path": "data/omen-tables/occultism.json",
+      "sha256": "84f36dc96d5baf32c2e3ff4a85050baeb4b2cf3039ea28ef02357a5879f2c6e6",
+      "bytes": 730
+    },
+    {
+      "path": "data/omen-tables/persuasion.json",
+      "sha256": "a001d8275d35c2434eb3402bca543a73a0aefc840880f2ccc654b9b97e43fece",
+      "bytes": 740
+    },
+    {
+      "path": "data/pacts/crossroads-bargain.json",
+      "sha256": "339841d015b604358fef92b35b0478649181d25287649b47790c8d0e47d611c6",
+      "bytes": 1617
+    },
+    {
+      "path": "data/photo-layers/layers.json",
+      "sha256": "1abafa8db3e1f9a392a7cf3d1c3ba0278224274ce0d9021f55b76ef927637894",
+      "bytes": 2290
+    },
+    {
+      "path": "data/progression-rules/default.json",
+      "sha256": "55042e2cb26508caee7bf05e5774c570d01c4cf134df9b6871afc47ab62546ad",
+      "bytes": 2916
+    },
+    {
+      "path": "data/quests/quests.json",
+      "sha256": "9b10d288a88402000c3a459ec778beeac62d421f140e10d384ef5acb40f278a7",
+      "bytes": 7813
+    },
+    {
+      "path": "data/quests/routes.json",
+      "sha256": "5065ba569eb71d365c1c05d26d9789a9800cfdb83d74e9ec98d33372fc4d4d43",
+      "bytes": 2458
+    },
+    {
+      "path": "data/recipes/recipes.json",
+      "sha256": "de7c25518b377f27fde887cd5b1488875b2a30c368094c6d4768b0cd54d0f6a6",
+      "bytes": 6206
+    },
+    {
+      "path": "data/routines/common.json",
+      "sha256": "20e7d0a323e23b6cee35d346214a62f2bd06e177e596b1ee5d449236466b240a",
+      "bytes": 921
+    },
+    {
+      "path": "data/routines/curfew.json",
+      "sha256": "fb97eef8c1a3dee05c1959df8de4ea6e76514d49d14c158edf9955fe296efbde",
+      "bytes": 388
+    },
+    {
+      "path": "data/routines/early-riser.json",
+      "sha256": "61d2eafcbcb3bc2bad2b04758b211f06743496262678e06a6ef9815522d140cc",
+      "bytes": 935
+    },
+    {
+      "path": "data/routines/priest.json",
+      "sha256": "670d55f77be33786a124178252872f963df6e69b3ddf4992cf7415656a9d63c3",
+      "bytes": 921
+    },
+    {
+      "path": "data/routines/sunday.json",
+      "sha256": "b233b4fcdb94967131fc0d20f1608fb71571e4949bf02f037332e285bd93c348",
+      "bytes": 436
+    },
+    {
+      "path": "data/routines/tavern-closed.json",
+      "sha256": "bfb17d2d4f72a59f2000c79a5e7aa9d57e9175dbd2cb570d8df0f2c57b8b9e1c",
+      "bytes": 309
+    },
+    {
+      "path": "data/routines/tavern-keeper.json",
+      "sha256": "6a5c37728fdd5179959a65d1c37fbdf4d4eb121865fc483083fd5d275cf3d688",
+      "bytes": 683
+    },
+    {
+      "path": "data/routines/unclean-days.json",
+      "sha256": "3b6734ce836f771a2a905e9a22174baf56f7d5c4fc3d81100451a864e66f6f4a",
+      "bytes": 474
+    },
+    {
+      "path": "data/seasonal-events/seasonal-events.json",
+      "sha256": "8cfe1e539852b7dc5cebe4a6b607a9c832ec3d93adcbd8051c39b1cd534ad93d",
+      "bytes": 2000
+    },
+    {
+      "path": "data/sins/sins.json",
+      "sha256": "7a1a2d2b27543bf2e4e9296e62a103986e135a14fa65807165aa96639e08ce36",
+      "bytes": 1044
+    },
+    {
+      "path": "data/skills/skills.json",
+      "sha256": "3591e19f7070322a0c86ce072d0038c28e324a5172a6a6c81ebe98dbd9b79654",
+      "bytes": 1530
+    },
+    {
+      "path": "data/starts/default.json",
+      "sha256": "cec28b041236704f9b1504c5c1e1a5a43129cb5dee14cce17d967a9a2fcd99f1",
+      "bytes": 1497
+    },
+    {
+      "path": "data/talents/charm-speaker.json",
+      "sha256": "86c54e2344f097e4d59ca2aba1abff50cb2f74463e8915128769d47d05fabb0a",
+      "bytes": 3454
+    },
+    {
+      "path": "data/talents/confessor.json",
+      "sha256": "da17871db3c6d8328a4465c9ecb87d88a097afe02e9d2359662f862a3170d3ba",
+      "bytes": 3640
+    },
+    {
+      "path": "data/talents/exorcist.json",
+      "sha256": "a9797552c1197482d45fd2edad0d17636a12e6d2b356bc7ba60a58d060fb8087",
+      "bytes": 4013
+    },
+    {
+      "path": "data/talents/folk-healer.json",
+      "sha256": "093fae2e7e892cd0926b00a4ed177c7f0557b0d9f47dcb64eb67cbcc5fd712c5",
+      "bytes": 3577
+    },
+    {
+      "path": "data/talents/servant-of-the-horned-one.json",
+      "sha256": "ebc8e13382ddad94c1d6600c338504fb393dcb9829a5b80e862f1836407a833f",
+      "bytes": 4446
+    },
+    {
+      "path": "data/talk-tones/talk-tones.json",
+      "sha256": "64cb1b9592852a4db993b271e89cb7ffcce6e7f4275cef91534ecd8e33753a65",
+      "bytes": 1411
+    },
+    {
+      "path": "data/tasks/tasks.json",
+      "sha256": "3300dd876979a5cee9382660c5967624f0ef7195adb4bb45c54437eb18b6a12b",
+      "bytes": 2725
+    },
+    {
+      "path": "data/traits/traits.json",
+      "sha256": "ddfc1ae3745355f084d60b1f3d49ef85217a89e5e54b45c9f84ba6d6e5cb9345",
+      "bytes": 2521
+    },
+    {
+      "path": "data/trees/charm-speaker.json",
+      "sha256": "3bc06d7100ab335d662560271b75f7beba1285004d96f59b37956b0c27cd8837",
+      "bytes": 1376
+    },
+    {
+      "path": "data/trees/confessor.json",
+      "sha256": "0e1fb9873fefb3af1ef31eae57506a13aa37a6ccc29d085cf0696e18e10cbd37",
+      "bytes": 1379
+    },
+    {
+      "path": "data/trees/exorcist.json",
+      "sha256": "f70cbbdcd2957537e4415d2957cd845d73519b21083bc090f8239f2e94f40bbd",
+      "bytes": 1384
+    },
+    {
+      "path": "data/trees/folk-healer.json",
+      "sha256": "a2bf8b0d4dc51f7b2de988a8274ab771ce7430fbb239de06d544884c76b068f2",
+      "bytes": 1379
+    },
+    {
+      "path": "data/trees/servant-of-the-horned-one.json",
+      "sha256": "0fec62ad55fd067b3a48d34d6da85934b416ccd438ba27899eeafb447c59841d",
+      "bytes": 1581
+    },
+    {
+      "path": "data/village-rules/default.json",
+      "sha256": "c4862a2a4304e771603595d589f5a800cbf0087925478a767c38ada9b7bd2ebb",
+      "bytes": 4323
+    },
+    {
+      "path": "data/villagers/baba-neda.json",
+      "sha256": "34233b09a9fd03dde6645a91d026721c8b2c6f789832d7a40d38fcef2a186c13",
+      "bytes": 1268
+    },
+    {
+      "path": "data/villagers/chorbadzhi-dimo.json",
+      "sha256": "f8afbf4642352857831df3e817921dc503779ace3b9d7c58341604baf97dd15f",
+      "bytes": 984
+    },
+    {
+      "path": "data/villagers/krastyo.json",
+      "sha256": "6b7adafce888a4ccb31545a5fd207f5835f157982d13d871edb828b4d28249f7",
+      "bytes": 1019
+    },
+    {
+      "path": "data/villagers/petko.json",
+      "sha256": "9a602ff16b7f7eda207e10b57f51d1551e0c5ea3cfc49c7b26c7f542e115388e",
+      "bytes": 931
+    },
+    {
+      "path": "data/villagers/pop-stoyan.json",
+      "sha256": "9996a2a53a6bc7cdb8bf3f690890fd24114767418cfc2c6115ceea310712d117",
+      "bytes": 1027
+    },
+    {
+      "path": "data/villagers/radka.json",
+      "sha256": "b60b860cf49046856af1d3a56948cd0cc5a09b1d431a5048ac93d8bef5d38b00",
+      "bytes": 992
+    },
+    {
+      "path": "data/villagers/todor.json",
+      "sha256": "ca316c6418188954b054b09d8e5db939be7886afc11d09f92e388ec250109d65",
+      "bytes": 956
+    },
+    {
+      "path": "data/villagers/velika.json",
+      "sha256": "51d3570abc0c2685b2fc89df72c3554cf769312f6aaf98b0c00038c4732c1dac",
+      "bytes": 1005
+    },
+    {
+      "path": "data/virtues/virtues.json",
+      "sha256": "62e87331b1c04e633c302d6b0e0576042c379fd90b03019afc689734cdf3291e",
+      "bytes": 902
+    },
+    {
+      "path": "data/zones/monastery.json",
+      "sha256": "60aba1bd50e1db4f327566769755278d70fd65f9f83028f5ed07e58462b37bf3",
+      "bytes": 4303
+    },
+    {
+      "path": "data/zones/samodivi-forest.json",
+      "sha256": "ba64871b0b4d87572603c58519fc84671c27daf4dbffdef4037199a68063eecf",
+      "bytes": 8429
+    },
+    {
+      "path": "data/zones/village.json",
+      "sha256": "ed3448e70b8023d2898d7fa1c5cf83363a26c781f80088cdd55e4b8941614fa9",
+      "bytes": 8531
+    },
+    {
+      "path": "locales/en.json",
+      "sha256": "d94f98f9483cceeaef23263550e8e140130725ee57c008e8b5cca135196e2e39",
+      "bytes": 165108
+    },
+    {
+      "path": "maps/monastery.tmj",
+      "sha256": "b97a49ffcfc9267cefea1536d6136951dedb6318db0b92323b9d3fdf8a38496e",
+      "bytes": 142650
+    },
+    {
+      "path": "maps/samodivi-forest.tmj",
+      "sha256": "f56a7cb3aa5d8b432f90ff7fca620cfc3cedff198dddf2369f98098cb429757e",
+      "bytes": 437641
+    },
+    {
+      "path": "maps/tilesets/forest.png",
+      "sha256": "d2b8f840f18960489f575c8552c24313aad9d45337e2bd6a44b2d4ef9a1c06b0",
+      "bytes": 4392
+    },
+    {
+      "path": "maps/tilesets/monastery.png",
+      "sha256": "49c74197be2168fa1fcc40a3bc4c9427436fc986218a08adc9d8e7e7da222011",
+      "bytes": 4392
+    },
+    {
+      "path": "maps/tilesets/village.png",
+      "sha256": "864dbd968defa54b42eb0a92746fe23e485cc3123a240e6db2dc9b4d022eb2e7",
+      "bytes": 4368
+    },
+    {
+      "path": "maps/village-1779.tmj",
+      "sha256": "312db78a4241c8ada1f0256a21917ddab6bfda4c72d0d10be76cd5b3511b91f2",
+      "bytes": 157509
+    },
+    {
+      "path": "maps/village.tmj",
+      "sha256": "1f6589c558c15e10157716fa96196bfffd47a3972d50663c62ef5f1bb91325d8",
+      "bytes": 195034
+    },
+    {
+      "path": "ink/baba-neda.ink",
+      "sha256": "51e60b1f76f1f341cafd63229d57b80d5925fab77e5be0ceeb3edd764f3fd788",
+      "bytes": 1535
+    },
+    {
+      "path": "ink/chorbadzhi-dimo.ink",
+      "sha256": "5755739f78e3dea18c1fa56011803c3163ae67f1742a07b9a0debe7c08aefeec",
+      "bytes": 1605
+    },
+    {
+      "path": "ink/forest-spirit.ink",
+      "sha256": "135a4048c6e17b48f207e75cefaa520d81ec6f5966a6df0c4447aae768c6889c",
+      "bytes": 2377
+    },
+    {
+      "path": "ink/krastyo.ink",
+      "sha256": "4b3b53ba02cffc2c6e34a425626087c02ab4c3b314e132ae77876fd63ddb3f47",
+      "bytes": 1156
+    },
+    {
+      "path": "ink/petko.ink",
+      "sha256": "67b86c3e7a6edaf01b6c7687810ff117e03fdd995b8ddea736243bd3c3577638",
+      "bytes": 1280
+    },
+    {
+      "path": "ink/pop-stoyan.ink",
+      "sha256": "5bf83b7f9264d47d67c02fb47f81c2b67cf05f995f7b37b1b6a07ab1b827e507",
+      "bytes": 1290
+    },
+    {
+      "path": "ink/prologue-accusation.ink",
+      "sha256": "7e2a07d72273443b7a2a33170e17e27f685f8c0a969c016a2570688d8593be65",
+      "bytes": 1872
+    },
+    {
+      "path": "ink/prologue-byre.ink",
+      "sha256": "4b3a173692b69e61cac5007ef4f6b1332c1d166825484fc66937c13dcd7e9553",
+      "bytes": 1502
+    },
+    {
+      "path": "ink/prologue-crossroads.ink",
+      "sha256": "762f7f6267bf89c21bab07002c7bca11339a7d758cfe756193581e29689fe6ed",
+      "bytes": 1773
+    },
+    {
+      "path": "ink/prologue-home.ink",
+      "sha256": "ff4403dcee6304751d59c7a04243fe58b0a80cd41844533701edd7b5701365f6",
+      "bytes": 2309
+    },
+    {
+      "path": "ink/prologue-neighbour.ink",
+      "sha256": "10654f1b69340136698d7a4a587030286f01130d243b722421013b9d84888e17",
+      "bytes": 1629
+    },
+    {
+      "path": "ink/prologue-pyre.ink",
+      "sha256": "64d5af7b705622d0cddcefde8838f145e3aaafb3b30ae7b1bdacec494f68b06a",
+      "bytes": 1687
+    },
+    {
+      "path": "ink/prologue-trial.ink",
+      "sha256": "94e80c2ef750abf871744a4245a3464d47c84ee1174d52d5e7a9c062c579e268",
+      "bytes": 1724
+    },
+    {
+      "path": "ink/radka.ink",
+      "sha256": "b9ab523ce9f15a45c1d465b911bbc2e80655773b08fd41aba2f75482740e9911",
+      "bytes": 1184
+    },
+    {
+      "path": "ink/todor.ink",
+      "sha256": "65689127f4dbc2282d5af44299489ba33e1f515469f91a0e1c3d18e4ade77ced",
+      "bytes": 1323
+    },
+    {
+      "path": "ink/velika.ink",
+      "sha256": "af2b2147bd77dfffa6f948dad7ef8d4aa17530ef0c3cc1b58152d57062d3b899",
+      "bytes": 1344
+    }
+  ],
+  "hash": "dfa2c4e4dbf9cd92011e780a8b6ba00e91942a45c742ddf4b1325d0b1a62e4a0"
+}

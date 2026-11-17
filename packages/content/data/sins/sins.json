@@ -1,0 +1,51 @@
+[
+  {
+    "id": "pride",
+    "tier": "demo",
+    "nameKey": "sin.pride.name",
+    "descKey": "sin.pride.desc",
+    "blocks": ["humility"]
+  },
+  {
+    "id": "wrath",
+    "tier": "demo",
+    "nameKey": "sin.wrath.name",
+    "descKey": "sin.wrath.desc",
+    "blocks": ["patience", "mercy"]
+  },
+  {
+    "id": "cruelty",
+    "tier": "demo",
+    "nameKey": "sin.cruelty.name",
+    "descKey": "sin.cruelty.desc",
+    "blocks": ["mercy", "compassion"]
+  },
+  {
+    "id": "curiosity",
+    "tier": "demo",
+    "nameKey": "sin.curiosity.name",
+    "descKey": "sin.curiosity.desc",
+    "blocks": ["patience"]
+  },
+  {
+    "id": "vengefulness",
+    "tier": "demo",
+    "nameKey": "sin.vengefulness.name",
+    "descKey": "sin.vengefulness.desc",
+    "blocks": ["mercy"]
+  },
+  {
+    "id": "greed",
+    "tier": "demo",
+    "nameKey": "sin.greed.name",
+    "descKey": "sin.greed.desc",
+    "blocks": ["compassion"]
+  },
+  {
+    "id": "envy",
+    "tier": "demo",
+    "nameKey": "sin.envy.name",
+    "descKey": "sin.envy.desc",
+    "blocks": ["loyalty"]
+  }
+]

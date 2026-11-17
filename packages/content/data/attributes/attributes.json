@@ -1,0 +1,38 @@
+[
+  {
+    "id": "vigor",
+    "tier": "demo",
+    "nameKey": "attribute.vigor.name",
+    "descKey": "attribute.vigor.desc"
+  },
+  {
+    "id": "agility",
+    "tier": "demo",
+    "nameKey": "attribute.agility.name",
+    "descKey": "attribute.agility.desc"
+  },
+  {
+    "id": "wits",
+    "tier": "demo",
+    "nameKey": "attribute.wits.name",
+    "descKey": "attribute.wits.desc"
+  },
+  {
+    "id": "cunning",
+    "tier": "demo",
+    "nameKey": "attribute.cunning.name",
+    "descKey": "attribute.cunning.desc"
+  },
+  {
+    "id": "resolve",
+    "tier": "demo",
+    "nameKey": "attribute.resolve.name",
+    "descKey": "attribute.resolve.desc"
+  },
+  {
+    "id": "presence",
+    "tier": "demo",
+    "nameKey": "attribute.presence.name",
+    "descKey": "attribute.presence.desc"
+  }
+]

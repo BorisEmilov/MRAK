@@ -1,0 +1,520 @@
+[
+  {
+    "id": "unclean-days",
+    "tier": "demo",
+    "nameKey": "festival.unclean-days.name",
+    "descKey": "festival.unclean-days.desc",
+    "origin": "folklore",
+    "start": {
+      "fixed": {
+        "month": 12,
+        "day": 25
+      }
+    },
+    "nights": 12,
+    "nightLengthMultiplier": 1.2,
+    "specialNights": [
+      {
+        "night": 1,
+        "event": "koledari-procession"
+      }
+    ],
+    "threatKey": "festival.unclean-days.threat",
+    "threats": ["karakondzhul"],
+    "rules": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.1
+        }
+      }
+    ],
+    "quests": ["unclean-days-chapter"],
+    "rites": [
+      {
+        "id": "tar-crosses",
+        "nameKey": "rite.unclean-days.tar-crosses.name",
+        "descKey": "rite.unclean-days.tar-crosses.desc",
+        "fromNight": 1,
+        "options": [
+          {
+            "labelKey": "rite.unclean-days.tar-crosses.draw-crosses",
+            "id": "draw-crosses",
+            "effects": [
+              {
+                "addStat": "hysteria",
+                "value": -5
+              },
+              {
+                "addStat": "village-corruption",
+                "value": -3
+              }
+            ]
+          },
+          {
+            "labelKey": "rite.unclean-days.tar-crosses.leave-doors-bare",
+            "id": "leave-doors-bare",
+            "effects": [
+              {
+                "giveItem": "lamp-oil",
+                "qty": 1
+              },
+              {
+                "addStat": "rep-lesser-demons",
+                "value": 5
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onEnd": [
+      {
+        "milestone": "festival-unclean-days"
+      }
+    ]
+  },
+  {
+    "id": "enyovden",
+    "tier": "full",
+    "nameKey": "festival.enyovden.name",
+    "descKey": "festival.enyovden.desc",
+    "origin": "folklore",
+    "start": {
+      "fixed": {
+        "month": 6,
+        "day": 24
+      }
+    },
+    "nights": 5,
+    "threatKey": "festival.enyovden.threat",
+    "rules": [
+      {
+        "rule": "enyovden-potency"
+      }
+    ],
+    "quests": ["enyovden-chapter"],
+    "rites": [
+      {
+        "id": "dew-and-shadow",
+        "nameKey": "rite.enyovden.dew-and-shadow.name",
+        "descKey": "rite.enyovden.dew-and-shadow.desc",
+        "fromNight": 1,
+        "options": [
+          {
+            "labelKey": "rite.enyovden.dew-and-shadow.read-the-shadow",
+            "id": "read-the-shadow",
+            "check": {
+              "skill": "lore",
+              "difficulty": "average"
+            },
+            "effects": [
+              {
+                "addStat": "sanity",
+                "value": 5
+              },
+              {
+                "setFlag": "enyovden-rite-done"
+              }
+            ],
+            "failEffects": [
+              {
+                "addStat": "sanity",
+                "value": -8
+              },
+              {
+                "setFlag": "enyovden-rite-done"
+              }
+            ]
+          },
+          {
+            "labelKey": "rite.enyovden.dew-and-shadow.gather-before-dawn",
+            "id": "gather-before-dawn",
+            "effects": [
+              {
+                "giveItem": "st-johns-wort",
+                "qty": 3
+              },
+              {
+                "setFlag": "enyovden-rite-done"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onEnd": [
+      {
+        "milestone": "festival-enyovden"
+      }
+    ]
+  },
+  {
+    "id": "kukeri",
+    "tier": "full",
+    "nameKey": "festival.kukeri.name",
+    "descKey": "festival.kukeri.desc",
+    "origin": "folklore",
+    "start": {
+      "easterOffsetDays": -49
+    },
+    "nights": 7,
+    "specialNights": [
+      {
+        "night": 1,
+        "event": "empty-mask"
+      }
+    ],
+    "threatKey": "festival.kukeri.threat",
+    "threats": ["lesser-bes"],
+    "rules": [
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 0.8
+        }
+      }
+    ],
+    "quests": ["kukeri-chapter"],
+    "rites": [
+      {
+        "id": "the-masks",
+        "nameKey": "rite.kukeri.the-masks.name",
+        "descKey": "rite.kukeri.the-masks.desc",
+        "fromNight": 1,
+        "options": [
+          {
+            "labelKey": "rite.kukeri.the-masks.ring-the-bells",
+            "id": "ring-the-bells",
+            "check": {
+              "skill": "faith",
+              "difficulty": "average"
+            },
+            "effects": [
+              {
+                "rule": "surface-possessions"
+              },
+              {
+                "addStat": "hysteria",
+                "value": -10
+              },
+              {
+                "setFlag": "kukeri-rite-done"
+              }
+            ],
+            "failEffects": [
+              {
+                "addStat": "hysteria",
+                "value": 5
+              },
+              {
+                "setFlag": "kukeri-rite-done"
+              }
+            ]
+          },
+          {
+            "labelKey": "rite.kukeri.the-masks.wear-the-empty-mask",
+            "id": "wear-the-empty-mask",
+            "effects": [
+              {
+                "setStat": "notice",
+                "value": 0
+              },
+              {
+                "addStat": "guardian-suspicion",
+                "value": 10
+              },
+              {
+                "addStat": "corruption",
+                "value": 5
+              },
+              {
+                "setFlag": "kukeri-rite-done"
+              }
+            ]
+          },
+          {
+            "labelKey": "rite.kukeri.the-masks.follow-the-empty-mask",
+            "id": "follow-the-empty-mask",
+            "check": {
+              "skill": "investigation",
+              "difficulty": "hard"
+            },
+            "effects": [
+              {
+                "milestone": "truth-discovered"
+              },
+              {
+                "addStat": "sanity",
+                "value": -5
+              },
+              {
+                "setFlag": "kukeri-rite-done"
+              }
+            ],
+            "failEffects": [
+              {
+                "addStat": "sanity",
+                "value": -12
+              },
+              {
+                "setFlag": "kukeri-rite-done"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onEnd": [
+      {
+        "milestone": "festival-kukeri"
+      }
+    ]
+  },
+  {
+    "id": "nestinari",
+    "tier": "full",
+    "nameKey": "festival.nestinari.name",
+    "descKey": "festival.nestinari.desc",
+    "origin": "folklore",
+    "start": {
+      "fixed": {
+        "month": 5,
+        "day": 21
+      }
+    },
+    "nights": 5,
+    "threatKey": "festival.nestinari.threat",
+    "threats": ["lesser-bes"],
+    "rules": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.1
+        }
+      }
+    ],
+    "quests": ["nestinari-chapter"],
+    "rites": [
+      {
+        "id": "ember-dance",
+        "nameKey": "rite.nestinari.ember-dance.name",
+        "descKey": "rite.nestinari.ember-dance.desc",
+        "fromNight": 1,
+        "options": [
+          {
+            "labelKey": "rite.nestinari.ember-dance.dance-on-embers",
+            "id": "dance-on-embers",
+            "check": {
+              "skill": "faith",
+              "difficulty": "dire"
+            },
+            "effects": [
+              {
+                "addStat": "faith",
+                "value": 15
+              },
+              {
+                "addStat": "corruption",
+                "value": -10
+              },
+              {
+                "setFlag": "nestinari-rite-done"
+              }
+            ],
+            "failEffects": [
+              {
+                "addStat": "guardian-health",
+                "value": -30
+              },
+              {
+                "addStat": "sanity",
+                "value": -10
+              },
+              {
+                "setFlag": "nestinari-rite-done"
+              }
+            ]
+          },
+          {
+            "labelKey": "rite.nestinari.ember-dance.keep-the-drum",
+            "id": "keep-the-drum",
+            "effects": [
+              {
+                "addStat": "faith",
+                "value": 3
+              },
+              {
+                "setFlag": "nestinari-rite-done"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onEnd": [
+      {
+        "milestone": "festival-nestinari"
+      }
+    ]
+  },
+  {
+    "id": "rusalia-week",
+    "tier": "full",
+    "nameKey": "festival.rusalia-week.name",
+    "descKey": "festival.rusalia-week.desc",
+    "origin": "folklore",
+    "start": {
+      "easterOffsetDays": 50
+    },
+    "nights": 7,
+    "threatKey": "festival.rusalia-week.threat",
+    "threats": [],
+    "rules": [
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.2
+        }
+      }
+    ],
+    "quests": ["rusalia-week-chapter"],
+    "rites": [
+      {
+        "id": "rusaltsi-dance",
+        "nameKey": "rite.rusalia-week.rusaltsi-dance.name",
+        "descKey": "rite.rusalia-week.rusaltsi-dance.desc",
+        "fromNight": 1,
+        "options": [
+          {
+            "labelKey": "rite.rusalia-week.rusaltsi-dance.heal-the-taken",
+            "id": "heal-the-taken",
+            "check": {
+              "skill": "faith",
+              "difficulty": "hard"
+            },
+            "effects": [
+              {
+                "addStat": "hysteria",
+                "value": -10
+              },
+              {
+                "addStat": "rep-forest-spirit",
+                "value": 5
+              },
+              {
+                "setFlag": "rusalia-week-rite-done"
+              }
+            ],
+            "failEffects": [
+              {
+                "addStat": "rep-forest-spirit",
+                "value": -10
+              },
+              {
+                "setFlag": "rusalia-week-rite-done"
+              }
+            ]
+          },
+          {
+            "labelKey": "rite.rusalia-week.rusaltsi-dance.stay-indoors",
+            "id": "stay-indoors",
+            "effects": [
+              {
+                "addStat": "faith",
+                "value": 2
+              },
+              {
+                "setFlag": "rusalia-week-rite-done"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onEnd": [
+      {
+        "milestone": "festival-rusalia-week"
+      }
+    ]
+  },
+  {
+    "id": "zadushnitsa",
+    "tier": "full",
+    "nameKey": "festival.zadushnitsa.name",
+    "descKey": "festival.zadushnitsa.desc",
+    "origin": "folklore",
+    "start": {
+      "fixed": {
+        "month": 11,
+        "day": 2
+      }
+    },
+    "nights": 7,
+    "threatKey": "festival.zadushnitsa.threat",
+    "threats": ["returned"],
+    "rules": [
+      {
+        "rule": "restless-dead"
+      }
+    ],
+    "quests": ["zadushnitsa-chapter"],
+    "rites": [
+      {
+        "id": "feed-the-dead",
+        "nameKey": "rite.zadushnitsa.feed-the-dead.name",
+        "descKey": "rite.zadushnitsa.feed-the-dead.desc",
+        "fromNight": 1,
+        "options": [
+          {
+            "labelKey": "rite.zadushnitsa.feed-the-dead.pour-wine",
+            "id": "pour-wine",
+            "effects": [
+              {
+                "addStat": "hysteria",
+                "value": -10
+              },
+              {
+                "addStat": "faith",
+                "value": 5
+              },
+              {
+                "setFlag": "zadushnitsa-rite-done"
+              }
+            ]
+          },
+          {
+            "labelKey": "rite.zadushnitsa.feed-the-dead.ask-the-ancestors",
+            "id": "ask-the-ancestors",
+            "check": {
+              "skill": "faith",
+              "difficulty": "hard"
+            },
+            "effects": [
+              {
+                "milestone": "truth-discovered"
+              },
+              {
+                "setFlag": "zadushnitsa-rite-done"
+              }
+            ],
+            "failEffects": [
+              {
+                "addStat": "sanity",
+                "value": -10
+              },
+              {
+                "setFlag": "zadushnitsa-rite-done"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "onEnd": [
+      {
+        "milestone": "festival-zadushnitsa"
+      }
+    ]
+  }
+]

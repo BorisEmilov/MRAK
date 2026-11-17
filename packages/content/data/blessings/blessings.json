@@ -1,0 +1,161 @@
+[
+  {
+    "id": "consecrated-oil-blessing",
+    "tier": "demo",
+    "nameKey": "blessing.consecrated-oil-blessing.name",
+    "descKey": "blessing.consecrated-oil-blessing.desc",
+    "origin": "folklore",
+    "appliesTo": ["lantern"],
+    "materials": [
+      {
+        "item": "consecrated-oil",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "faith",
+      "difficulty": "average"
+    },
+    "duration": {
+      "uses": 5
+    },
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "context": "vs-demon"
+        }
+      }
+    ],
+    "power": "holy"
+  },
+  {
+    "id": "red-thread-blessing",
+    "tier": "demo",
+    "nameKey": "blessing.red-thread-blessing.name",
+    "descKey": "blessing.red-thread-blessing.desc",
+    "origin": "folklore",
+    "appliesTo": ["amulet"],
+    "materials": [
+      {
+        "item": "red-thread",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "survival",
+      "difficulty": "easy"
+    },
+    "duration": {
+      "nights": 3
+    },
+    "effects": [
+      {
+        "modifier": {
+          "shadowDice": -1,
+          "context": "vs-evil-eye"
+        }
+      }
+    ],
+    "power": "folk"
+  },
+  {
+    "id": "horseshoe-iron",
+    "tier": "demo",
+    "nameKey": "blessing.horseshoe-iron.name",
+    "descKey": "blessing.horseshoe-iron.desc",
+    "origin": "folklore",
+    "appliesTo": ["weapon", "amulet"],
+    "materials": [
+      {
+        "item": "iron",
+        "qty": 2
+      }
+    ],
+    "check": {
+      "skill": "survival",
+      "difficulty": "average"
+    },
+    "duration": {
+      "permanent": true
+    },
+    "effects": [
+      {
+        "rule": "damage-tier-bonus",
+        "params": {
+          "tiers": 1,
+          "against": "creature"
+        }
+      }
+    ],
+    "power": "folk"
+  },
+  {
+    "id": "holy-water-blessing",
+    "tier": "demo",
+    "nameKey": "blessing.holy-water-blessing.name",
+    "descKey": "blessing.holy-water-blessing.desc",
+    "origin": "folklore",
+    "appliesTo": ["weapon", "amulet", "clothing"],
+    "materials": [
+      {
+        "item": "holy-water",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "faith",
+      "difficulty": "easy"
+    },
+    "duration": {
+      "uses": 3
+    },
+    "power": "holy",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "context": "vs-demon"
+        }
+      }
+    ],
+    "conflictsWith": []
+  },
+  {
+    "id": "grave-earth",
+    "tier": "demo",
+    "nameKey": "blessing.grave-earth.name",
+    "descKey": "blessing.grave-earth.desc",
+    "origin": "invented",
+    "appliesTo": ["amulet", "tool"],
+    "materials": [
+      {
+        "item": "grave-moss",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "occultism",
+      "difficulty": "average"
+    },
+    "duration": {
+      "nights": 3
+    },
+    "power": "dark",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "occultism"
+        }
+      },
+      {
+        "modifier": {
+          "statBonus": "notice",
+          "value": 5
+        }
+      }
+    ],
+    "conflictsWith": []
+  }
+]

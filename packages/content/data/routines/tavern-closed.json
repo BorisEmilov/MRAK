@@ -1,0 +1,20 @@
+{
+  "id": "tavern-closed",
+  "tier": "demo",
+  "nameKey": "routine.tavern-closed.name",
+  "priority": 5,
+  "when": {
+    "flag": "tavern-closed"
+  },
+  "window": {
+    "from": "17:00",
+    "to": "23:00"
+  },
+  "blocks": [
+    {
+      "at": "17:00",
+      "activity": "rest",
+      "place": "home"
+    }
+  ]
+}

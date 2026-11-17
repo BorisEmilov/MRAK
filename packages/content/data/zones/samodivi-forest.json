@@ -1,0 +1,379 @@
+{
+  "id": "samodivi-forest",
+  "tier": "demo",
+  "nameKey": "zone.samodivi-forest.name",
+  "descKey": "zone.samodivi-forest.desc",
+  "map": "maps/samodivi-forest.tmj",
+  "defaultVariant": "wild",
+  "variants": [
+    {
+      "id": "burned",
+      "nameKey": "zone.samodivi-forest.variant.burned",
+      "when": {
+        "flag": "forest-burned"
+      }
+    },
+    {
+      "id": "hostile",
+      "nameKey": "zone.samodivi-forest.variant.hostile",
+      "when": {
+        "flag": "forest-hostile"
+      }
+    },
+    {
+      "id": "allied",
+      "nameKey": "zone.samodivi-forest.variant.allied",
+      "when": {
+        "flag": "samodivi-allied"
+      }
+    },
+    {
+      "id": "wild",
+      "nameKey": "zone.samodivi-forest.variant.wild"
+    }
+  ],
+  "fog": 0.8,
+  "pois": [
+    {
+      "id": "samodiva-circle",
+      "kind": "samodiva-circle",
+      "nameKey": "zone.samodivi-forest.poi.samodiva-circle.name",
+      "action": "ritual",
+      "descKey": "zone.samodivi-forest.poi.samodiva-circle.desc",
+      "effects": [
+        {
+          "addStat": "sanity",
+          "value": -4
+        },
+        {
+          "narrate": "zone.samodivi-forest.poi.samodiva-circle.narration"
+        },
+        {
+          "giveItem": "samodiva-pendant",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "crossroads",
+      "kind": "crossroads",
+      "nameKey": "zone.samodivi-forest.poi.crossroads.name",
+      "action": "ritual",
+      "descKey": "zone.samodivi-forest.poi.crossroads.desc",
+      "effects": [
+        {
+          "narrate": "zone.samodivi-forest.poi.crossroads.narration"
+        }
+      ]
+    },
+    {
+      "id": "old-oak",
+      "kind": "shrine",
+      "nameKey": "zone.samodivi-forest.poi.old-oak.name",
+      "action": "talk",
+      "descKey": "zone.samodivi-forest.poi.old-oak.desc",
+      "effects": [
+        {
+          "addStat": "sanity",
+          "value": 4
+        },
+        {
+          "narrate": "zone.samodivi-forest.poi.old-oak.narration"
+        }
+      ],
+      "dialogue": "forest-spirit"
+    },
+    {
+      "id": "spring",
+      "kind": "well",
+      "nameKey": "zone.samodivi-forest.poi.spring.name",
+      "action": "use",
+      "descKey": "zone.samodivi-forest.poi.spring.desc",
+      "effects": [
+        {
+          "addStat": "sanity",
+          "value": 6
+        },
+        {
+          "giveItem": "brides-mirror",
+          "qty": 1
+        }
+      ]
+    },
+    {
+      "id": "herbs",
+      "kind": "herbs",
+      "nameKey": "zone.samodivi-forest.poi.herbs.name",
+      "action": "gather",
+      "descKey": "zone.samodivi-forest.poi.herbs.desc",
+      "effects": [],
+      "gather": {
+        "item": "st-johns-wort",
+        "qty": 2,
+        "potency": 1,
+        "when": {
+          "date": {
+            "from": "06-01",
+            "to": "07-31"
+          }
+        },
+        "regrowDays": 3,
+        "tint": "#e8c030"
+      },
+      "once": false
+    },
+    {
+      "id": "hunters-cache",
+      "kind": "oil-store",
+      "nameKey": "zone.samodivi-forest.poi.hunters-cache.name",
+      "action": "gather",
+      "descKey": "zone.samodivi-forest.poi.hunters-cache.desc",
+      "effects": [
+        {
+          "giveItem": "lamp-oil",
+          "qty": 3
+        }
+      ]
+    },
+    {
+      "id": "bone-cairn",
+      "kind": "ruin",
+      "nameKey": "zone.samodivi-forest.poi.bone-cairn.name",
+      "action": "investigate",
+      "descKey": "zone.samodivi-forest.poi.bone-cairn.desc",
+      "effects": [
+        {
+          "addStat": "sanity",
+          "value": -3
+        },
+        {
+          "narrate": "zone.samodivi-forest.poi.bone-cairn.narration"
+        },
+        {
+          "grantCollectible": "grimoire-page-moon"
+        }
+      ]
+    },
+    {
+      "id": "yarrow-meadow",
+      "kind": "herbs",
+      "nameKey": "zone.samodivi-forest.poi.yarrow-meadow.name",
+      "action": "gather",
+      "descKey": "zone.samodivi-forest.poi.yarrow-meadow.desc",
+      "effects": [],
+      "gather": {
+        "item": "yarrow",
+        "qty": 2,
+        "potency": 1,
+        "when": {
+          "date": {
+            "from": "05-01",
+            "to": "09-15"
+          }
+        },
+        "regrowDays": 3,
+        "tint": "#f0f0e0"
+      },
+      "once": false
+    },
+    {
+      "id": "juniper",
+      "kind": "herbs",
+      "nameKey": "zone.samodivi-forest.poi.juniper.name",
+      "action": "gather",
+      "descKey": "zone.samodivi-forest.poi.juniper.desc",
+      "effects": [],
+      "gather": {
+        "item": "juniper",
+        "qty": 2,
+        "potency": 1,
+        "regrowDays": 2,
+        "tint": "#3a4a7a"
+      },
+      "once": false
+    },
+    {
+      "id": "mistletoe-oak",
+      "kind": "herbs",
+      "nameKey": "zone.samodivi-forest.poi.mistletoe-oak.name",
+      "action": "gather",
+      "descKey": "zone.samodivi-forest.poi.mistletoe-oak.desc",
+      "effects": [],
+      "gather": {
+        "item": "mistletoe",
+        "qty": 1,
+        "potency": 1,
+        "when": {
+          "all": [
+            {
+              "date": {
+                "from": "12-01",
+                "to": "02-28"
+              }
+            },
+            {
+              "moon": ["waxing-crescent", "first-quarter", "waxing-gibbous", "full"]
+            }
+          ]
+        },
+        "regrowDays": 3,
+        "tint": "#c8d8a0"
+      },
+      "once": false
+    },
+    {
+      "id": "fern-hollow",
+      "kind": "herbs",
+      "nameKey": "zone.samodivi-forest.poi.fern-hollow.name",
+      "action": "gather",
+      "descKey": "zone.samodivi-forest.poi.fern-hollow.desc",
+      "effects": [],
+      "gather": {
+        "item": "fern-blossom",
+        "qty": 1,
+        "potency": 2,
+        "when": {
+          "all": [
+            {
+              "date": {
+                "from": "06-23",
+                "to": "06-24"
+              }
+            },
+            {
+              "phase": "night"
+            }
+          ]
+        },
+        "regrowDays": 365,
+        "tint": "#ff7a30"
+      },
+      "once": false
+    },
+    {
+      "id": "elder-bush",
+      "kind": "herbs",
+      "nameKey": "zone.samodivi-forest.poi.elder-bush.name",
+      "action": "gather",
+      "descKey": "zone.samodivi-forest.poi.elder-bush.desc",
+      "effects": [],
+      "gather": {
+        "item": "elder",
+        "qty": 2,
+        "potency": 1,
+        "when": {
+          "date": {
+            "from": "05-15",
+            "to": "06-30"
+          }
+        },
+        "regrowDays": 3,
+        "tint": "#f4ecd0"
+      },
+      "once": false
+    },
+    {
+      "id": "wormwood",
+      "kind": "herbs",
+      "nameKey": "zone.samodivi-forest.poi.wormwood.name",
+      "action": "gather",
+      "descKey": "zone.samodivi-forest.poi.wormwood.desc",
+      "effects": [],
+      "gather": {
+        "item": "wormwood",
+        "qty": 2,
+        "potency": 1,
+        "when": {
+          "date": {
+            "from": "06-01",
+            "to": "08-31"
+          }
+        },
+        "regrowDays": 3,
+        "tint": "#a8b0a0"
+      },
+      "once": false
+    }
+  ],
+  "paths": {
+    "nodes": [
+      {
+        "id": "edge",
+        "exit": true
+      },
+      {
+        "id": "crossroads"
+      },
+      {
+        "id": "glade"
+      },
+      {
+        "id": "oak"
+      },
+      {
+        "id": "spring"
+      },
+      {
+        "id": "deep"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e-edge-crossroads",
+        "from": "edge",
+        "to": "crossroads"
+      },
+      {
+        "id": "e-edge-glade",
+        "from": "edge",
+        "to": "glade",
+        "shift": "mist"
+      },
+      {
+        "id": "e-crossroads-glade",
+        "from": "crossroads",
+        "to": "glade",
+        "shift": "mist"
+      },
+      {
+        "id": "e-glade-oak",
+        "from": "glade",
+        "to": "oak"
+      },
+      {
+        "id": "e-glade-spring",
+        "from": "glade",
+        "to": "spring",
+        "shift": "fork"
+      },
+      {
+        "id": "e-oak-spring",
+        "from": "oak",
+        "to": "spring",
+        "shift": "fork"
+      },
+      {
+        "id": "e-spring-deep",
+        "from": "spring",
+        "to": "deep"
+      },
+      {
+        "id": "e-dead-road",
+        "from": "crossroads",
+        "to": "spring",
+        "when": {
+          "phase": "night"
+        }
+      },
+      {
+        "id": "e-bone-path",
+        "from": "oak",
+        "to": "deep",
+        "when": {
+          "stat": "corruption",
+          ">=": 50
+        }
+      }
+    ]
+  }
+}

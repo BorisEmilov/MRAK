@@ -1,0 +1,221 @@
+[
+  {
+    "id": "crossroads-tongue",
+    "tier": "demo",
+    "nameKey": "talent.crossroads-tongue.name",
+    "descKey": "talent.crossroads-tongue.desc",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "persuasion"
+        }
+      },
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "persuasion",
+          "perDebt": 10
+        }
+      },
+      {
+        "setFlag": "horned-mark"
+      }
+    ]
+  },
+  {
+    "id": "devils-luck",
+    "tier": "demo",
+    "nameKey": "talent.devils-luck.name",
+    "descKey": "talent.devils-luck.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "night",
+          "effects": [
+            {
+              "rule": "reroll-check"
+            },
+            {
+              "addDebt": "devils-luck"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "black-candle",
+    "tier": "demo",
+    "nameKey": "talent.black-candle.name",
+    "descKey": "talent.black-candle.desc",
+    "effects": [
+      {
+        "rule": "light-invisible-to-creatures"
+      },
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "stealth",
+          "perDebt": 15
+        }
+      }
+    ]
+  },
+  {
+    "id": "silver-tongue",
+    "tier": "demo",
+    "nameKey": "talent.silver-tongue.name",
+    "descKey": "talent.silver-tongue.desc",
+    "effects": [
+      {
+        "rule": "sin-options-always-available"
+      }
+    ]
+  },
+  {
+    "id": "friend-of-the-collector",
+    "tier": "demo",
+    "nameKey": "talent.friend-of-the-collector.name",
+    "descKey": "talent.friend-of-the-collector.desc",
+    "effects": [
+      {
+        "rule": "debt-collection-tier-shift",
+        "params": {
+          "tiers": -1
+        }
+      }
+    ]
+  },
+  {
+    "id": "horned-shadow",
+    "tier": "demo",
+    "nameKey": "talent.horned-shadow.name",
+    "descKey": "talent.horned-shadow.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "night",
+          "effects": [
+            {
+              "rule": "shift-notice-to-villager"
+            }
+          ]
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "affinity-gain-rate",
+          "factor": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "borrowed-strength",
+    "tier": "full",
+    "nameKey": "talent.borrowed-strength.name",
+    "descKey": "talent.borrowed-strength.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "night",
+          "effects": [
+            {
+              "rule": "borrow-attribute",
+              "params": {
+                "amount": 1
+              }
+            },
+            {
+              "addDebt": "borrowed-strength"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "whisper-to-the-possessed",
+    "tier": "full",
+    "nameKey": "talent.whisper-to-the-possessed.name",
+    "descKey": "talent.whisper-to-the-possessed.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "night",
+          "effects": [
+            {
+              "rule": "command-possessed"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "contract-reader",
+    "tier": "full",
+    "nameKey": "talent.contract-reader.name",
+    "descKey": "talent.contract-reader.desc",
+    "effects": [
+      {
+        "rule": "reveal-hidden-clause",
+        "params": {
+          "count": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "midnight-anywhere",
+    "tier": "full",
+    "nameKey": "talent.midnight-anywhere.name",
+    "descKey": "talent.midnight-anywhere.desc",
+    "effects": [
+      {
+        "rule": "pacts-anywhere-at-midnight"
+      }
+    ]
+  },
+  {
+    "id": "sovereign-of-debt",
+    "tier": "full",
+    "nameKey": "talent.sovereign-of-debt.name",
+    "descKey": "talent.sovereign-of-debt.desc",
+    "effects": [
+      {
+        "rule": "debt-scaling-multiplier",
+        "params": {
+          "factor": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "horned-crown",
+    "tier": "full",
+    "nameKey": "talent.horned-crown.name",
+    "descKey": "talent.horned-crown.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "generation",
+          "effects": [
+            {
+              "rule": "banish-named-demon"
+            },
+            {
+              "addDebt": "horned-crown"
+            }
+          ]
+        }
+      }
+    ]
+  }
+]

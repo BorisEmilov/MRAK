@@ -1,0 +1,82 @@
+[
+  {
+    "id": "pact-minor",
+    "tier": "demo",
+    "nameKey": "debt-source.pact-minor.name",
+    "creditor": "horned-one",
+    "amount": 5,
+    "kind": "pact"
+  },
+  {
+    "id": "devils-luck",
+    "tier": "demo",
+    "nameKey": "debt-source.devils-luck.name",
+    "creditor": "horned-one",
+    "amount": 2,
+    "kind": "talent"
+  },
+  {
+    "id": "borrowed-strength",
+    "tier": "full",
+    "nameKey": "debt-source.borrowed-strength.name",
+    "creditor": "horned-one",
+    "amount": 3,
+    "kind": "talent"
+  },
+  {
+    "id": "horned-crown",
+    "tier": "full",
+    "nameKey": "debt-source.horned-crown.name",
+    "creditor": "horned-one",
+    "amount": 10,
+    "kind": "talent"
+  },
+  {
+    "id": "dark-talent",
+    "tier": "demo",
+    "nameKey": "debt-source.dark-talent.name",
+    "creditor": "horned-one",
+    "kind": "talent",
+    "amount": 1
+  },
+  {
+    "id": "forest-favour",
+    "tier": "demo",
+    "nameKey": "debt-source.forest-favour.name",
+    "creditor": "forest-spirit",
+    "kind": "favour",
+    "amount": 6
+  },
+  {
+    "id": "aga-loan",
+    "tier": "demo",
+    "nameKey": "debt-source.aga-loan.name",
+    "creditor": "aga",
+    "kind": "loan",
+    "amount": 8
+  },
+  {
+    "id": "broken-promise",
+    "tier": "demo",
+    "nameKey": "debt-source.broken-promise.name",
+    "creditor": "village",
+    "kind": "promise",
+    "amount": 4
+  },
+  {
+    "id": "bound-demon",
+    "tier": "demo",
+    "nameKey": "debt-source.bound-demon.name",
+    "creditor": "named-demon",
+    "kind": "promise",
+    "amount": 15
+  },
+  {
+    "id": "inherited-pact",
+    "tier": "demo",
+    "nameKey": "debt-source.inherited-pact.name",
+    "creditor": "horned-one",
+    "amount": 10,
+    "kind": "pact"
+  }
+]

@@ -1,0 +1,282 @@
+[
+  {
+    "id": "badnik",
+    "tier": "demo",
+    "termKey": "glossary.badnik.term",
+    "descKey": "glossary.badnik.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "baene",
+    "tier": "demo",
+    "termKey": "glossary.baene.term",
+    "descKey": "glossary.baene.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "bes",
+    "tier": "demo",
+    "termKey": "glossary.bes.term",
+    "descKey": "glossary.bes.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "budni-vecher",
+    "tier": "demo",
+    "termKey": "glossary.budni-vecher.term",
+    "descKey": "glossary.budni-vecher.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "enyovden",
+    "tier": "demo",
+    "termKey": "glossary.enyovden.term",
+    "descKey": "glossary.enyovden.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "gaida",
+    "tier": "demo",
+    "termKey": "glossary.gaida.term",
+    "descKey": "glossary.gaida.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "karakondzhul",
+    "tier": "demo",
+    "termKey": "glossary.karakondzhul.term",
+    "descKey": "glossary.karakondzhul.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "koledari",
+    "tier": "demo",
+    "termKey": "glossary.koledari.term",
+    "descKey": "glossary.koledari.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "kolivo",
+    "tier": "demo",
+    "termKey": "glossary.kolivo.term",
+    "descKey": "glossary.kolivo.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "kuker",
+    "tier": "demo",
+    "termKey": "glossary.kuker.term",
+    "descKey": "glossary.kuker.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "kurban",
+    "tier": "demo",
+    "termKey": "glossary.kurban.term",
+    "descKey": "glossary.kurban.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "leene-na-kurshum",
+    "tier": "demo",
+    "termKey": "glossary.leene-na-kurshum.term",
+    "descKey": "glossary.leene-na-kurshum.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "magiya",
+    "tier": "demo",
+    "termKey": "glossary.magiya.term",
+    "descKey": "glossary.magiya.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "magyosnitsa",
+    "tier": "demo",
+    "termKey": "glossary.magyosnitsa.term",
+    "descKey": "glossary.magyosnitsa.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "martenitsa",
+    "tier": "demo",
+    "termKey": "glossary.martenitsa.term",
+    "descKey": "glossary.martenitsa.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "mora",
+    "tier": "demo",
+    "termKey": "glossary.mora.term",
+    "descKey": "glossary.mora.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "mrasni-dni",
+    "tier": "demo",
+    "termKey": "glossary.mrasni-dni.term",
+    "descKey": "glossary.mrasni-dni.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "navi",
+    "tier": "demo",
+    "termKey": "glossary.navi.term",
+    "descKey": "glossary.navi.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "nestinari",
+    "tier": "demo",
+    "termKey": "glossary.nestinari.term",
+    "descKey": "glossary.nestinari.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "nechistiya",
+    "tier": "demo",
+    "termKey": "glossary.nechistiya.term",
+    "descKey": "glossary.nechistiya.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "pitka",
+    "tier": "demo",
+    "termKey": "glossary.pitka.term",
+    "descKey": "glossary.pitka.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "rogatiya",
+    "tier": "demo",
+    "termKey": "glossary.rogatiya.term",
+    "descKey": "glossary.rogatiya.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "rusalska-nedelya",
+    "tier": "demo",
+    "termKey": "glossary.rusalska-nedelya.term",
+    "descKey": "glossary.rusalska-nedelya.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "samodiva",
+    "tier": "demo",
+    "termKey": "glossary.samodiva.term",
+    "descKey": "glossary.samodiva.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "stopan",
+    "tier": "demo",
+    "termKey": "glossary.stopan.term",
+    "descKey": "glossary.stopan.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "survachka",
+    "tier": "demo",
+    "termKey": "glossary.survachka.term",
+    "descKey": "glossary.survachka.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "talasam",
+    "tier": "demo",
+    "termKey": "glossary.talasam.term",
+    "descKey": "glossary.talasam.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "uroki",
+    "tier": "demo",
+    "termKey": "glossary.uroki.term",
+    "descKey": "glossary.uroki.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "vampir",
+    "tier": "demo",
+    "termKey": "glossary.vampir.term",
+    "descKey": "glossary.vampir.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "vampirdzhiya",
+    "tier": "demo",
+    "termKey": "glossary.vampirdzhiya.term",
+    "descKey": "glossary.vampirdzhiya.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "vgradena-senka",
+    "tier": "demo",
+    "termKey": "glossary.vgradena-senka.term",
+    "descKey": "glossary.vgradena-senka.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "yordanovden",
+    "tier": "demo",
+    "termKey": "glossary.yordanovden.term",
+    "descKey": "glossary.yordanovden.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "zadushnitsa",
+    "tier": "demo",
+    "termKey": "glossary.zadushnitsa.term",
+    "descKey": "glossary.zadushnitsa.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "znaharka",
+    "tier": "demo",
+    "termKey": "glossary.znaharka.term",
+    "descKey": "glossary.znaharka.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  },
+  {
+    "id": "zmey",
+    "tier": "demo",
+    "termKey": "glossary.zmey.term",
+    "descKey": "glossary.zmey.desc",
+    "category": "folklore",
+    "origin": "folklore"
+  }
+]

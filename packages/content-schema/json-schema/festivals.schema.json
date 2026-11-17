@@ -1,0 +1,142 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/Festival"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Festival"
+      }
+    }
+  ],
+  "$defs": {
+    "Festival": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "full"
+          ]
+        },
+        "nameKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        },
+        "descKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        },
+        "origin": {
+          "type": "string",
+          "enum": [
+            "folklore",
+            "history",
+            "invented"
+          ]
+        },
+        "start": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "fixed": {
+                  "type": "object",
+                  "properties": {
+                    "month": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 12
+                    },
+                    "day": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 31
+                    }
+                  },
+                  "required": [
+                    "month",
+                    "day"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "fixed"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "easterOffsetDays": {
+                  "type": "integer",
+                  "minimum": -70,
+                  "maximum": 70
+                }
+              },
+              "required": [
+                "easterOffsetDays"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "nights": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 14
+        },
+        "nightLengthMultiplier": {
+          "default": 1,
+          "type": "number",
+          "minimum": 0.5,
+          "maximum": 2
+        },
+        "specialNights": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "night": {
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 9007199254740991
+              },
+              "event": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "description": "Reference to a event"
+              }
+            },
+            "required": [
+              "night",
+              "event"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "nameKey",
+        "descKey",
+        "origin",
+        "start",
+        "nights"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

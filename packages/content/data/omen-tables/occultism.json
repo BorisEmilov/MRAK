@@ -1,0 +1,39 @@
+{
+  "id": "occultism",
+  "tier": "demo",
+  "context": "occultism",
+  "successGood": {
+    "descKey": "omen.occultism.success-good",
+    "effects": []
+  },
+  "successNone": {
+    "descKey": "omen.occultism.success-none",
+    "effects": []
+  },
+  "successBad": {
+    "descKey": "omen.occultism.success-bad",
+    "effects": [
+      {
+        "addStat": "notice",
+        "value": 2
+      }
+    ]
+  },
+  "failureGood": {
+    "descKey": "omen.occultism.failure-good",
+    "effects": []
+  },
+  "failureNone": {
+    "descKey": "omen.occultism.failure-none",
+    "effects": []
+  },
+  "failureBad": {
+    "descKey": "omen.occultism.failure-bad",
+    "effects": [
+      {
+        "addStat": "notice",
+        "value": 3
+      }
+    ]
+  }
+}

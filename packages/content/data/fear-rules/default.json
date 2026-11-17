@@ -1,0 +1,1036 @@
+{
+  "id": "default",
+  "tier": "demo",
+  "sanity": {
+    "tiers": [
+      {
+        "below": 0.7,
+        "effects": ["filter"]
+      },
+      {
+        "below": 0.5,
+        "effects": ["filter", "whispers"],
+        "whisperKeys": ["whisper.name", "whisper.behind-you", "whisper.the-water"]
+      },
+      {
+        "below": 0.35,
+        "effects": ["filter", "whispers", "moving-objects"],
+        "whisperKeys": [
+          "whisper.name",
+          "whisper.they-know",
+          "whisper.the-water",
+          "whisper.open-the-door"
+        ]
+      },
+      {
+        "below": 0.2,
+        "effects": ["filter", "whispers", "moving-objects", "staring"],
+        "whisperKeys": ["whisper.they-know", "whisper.open-the-door", "whisper.you-did-this"]
+      }
+    ],
+    "shocks": {
+      "demonLearned": 8,
+      "forbiddenPerNotice": 0.5,
+      "causes": {
+        "sacrifice": 15,
+        "demon-sighting": 12,
+        "possession-witnessed": 10,
+        "failed-ritual": 8
+      }
+    },
+    "restore": {
+      "homeZones": ["village"],
+      "dawnAtHome": 20,
+      "faithDivisor": 20,
+      "lightPerHour": 1,
+      "restPerHour": 4
+    }
+  },
+  "hysteria": {
+    "stages": {
+      "rumours": 40,
+      "accusations": 60,
+      "mob": 80
+    },
+    "decayPerDawn": 3,
+    "lowVillageSanity": {
+      "below": 40,
+      "factor": 1.5
+    },
+    "incidents": {
+      "death": 8,
+      "absentAtDawn": 3
+    },
+    "suspicionStat": "suspicion",
+    "guardianStat": "guardian-suspicion",
+    "guardianSuspicion": {
+      "absentAtDawn": 5,
+      "broken": 10,
+      "failedConfrontation": 10
+    },
+    "rumourStrength": 10,
+    "traitMultipliers": {
+      "herb-woman": 1.5,
+      "outsider": 1.3,
+      "widow": 1.2,
+      "educated": 1.1
+    },
+    "guardianRumourWeight": 1.2,
+    "accusationSuspicion": 15,
+    "guardianAccusableAt": 70,
+    "mob": {
+      "skill": "persuasion",
+      "context": "hysteria-calming",
+      "difficulty": "average",
+      "joinFear": 50,
+      "lynchAt": 85,
+      "beatAt": 70,
+      "calmRelief": 15,
+      "sparedRelief": 10,
+      "targetDiedRelief": 10,
+      "beaten": {
+        "fear": 30,
+        "health": 40
+      },
+      "guardianBeatenEffects": [
+        {
+          "addStat": "sanity",
+          "value": -20
+        },
+        {
+          "addStat": "guardian-suspicion",
+          "value": -30
+        },
+        {
+          "addStat": "hysteria",
+          "value": -15
+        }
+      ],
+      "exploitEffects": [
+        {
+          "addStat": "corruption",
+          "value": 5
+        },
+        {
+          "addStat": "guardian-suspicion",
+          "value": -20
+        }
+      ]
+    },
+    "lynching": {
+      "cause": "lynching",
+      "aftermathRelief": 20,
+      "innocentEffects": [
+        {
+          "addStat": "village-corruption",
+          "value": 15
+        },
+        {
+          "addStat": "creature-strength-rate",
+          "value": 0.1
+        },
+        {
+          "setFlag": "innocent-lynched"
+        }
+      ],
+      "complicitEffects": [
+        {
+          "addStat": "corruption",
+          "value": 10
+        }
+      ]
+    }
+  },
+  "director": {
+    "mix": {
+      "noise": 45,
+      "seed": 35
+    },
+    "hallucination": {
+      "base": 0.2,
+      "pivot": 50,
+      "max": 0.6,
+      "perCorruption": 0.3
+    },
+    "fire": {
+      "base": 0.15,
+      "tensionDivisor": 100,
+      "recentPenalty": 0.1,
+      "min": 0.05,
+      "max": 0.7
+    },
+    "targets": {
+      "settle": 15,
+      "buildFrom": 25,
+      "buildTo": 60,
+      "peak": 85,
+      "release": 10
+    },
+    "settleShare": 0.2,
+    "peakAround": "03:33",
+    "peakHalfWidth": 60,
+    "decayPerTick": {
+      "settle": 4,
+      "build": 2,
+      "peak": 2,
+      "release": 12
+    },
+    "budget": {
+      "perNight": 140,
+      "shares": {
+        "settle": 0.1,
+        "build": 0.4,
+        "peak": 0.4,
+        "release": 0.1
+      },
+      "chapterIntensity": {
+        "unclean-days": 1.2
+      }
+    },
+    "peakCost": 20,
+    "quiet": {
+      "min": 30,
+      "max": 60
+    },
+    "zoneFactor": 2,
+    "offZoneFactor": 0.5,
+    "logSize": 300
+  },
+  "evidence": {
+    "windowMinutes": 120,
+    "photograph": {
+      "real": 0.85,
+      "hallucination": 0.1
+    },
+    "witness": {
+      "real": 0.75,
+      "hallucination": 0.15,
+      "minAffinity": 0
+    },
+    "relic": {
+      "real": 0.8,
+      "hallucination": 0.2,
+      "tag": "holy"
+    }
+  },
+  "possession": {
+    "advance": {
+      "base": 0.35,
+      "perRank": 0.05,
+      "min": 0.05,
+      "max": 0.95
+    },
+    "vulnerability": {
+      "fear": 2,
+      "lowFaith": 1,
+      "faithStat": "villager-faith"
+    },
+    "falseSymptomChance": 0.2
+  },
+  "exorcism": {
+    "skill": "exorcism",
+    "context": "exorcism-cast-out",
+    "difficulty": "average",
+    "preparation": {
+      "maxItems": 4,
+      "holyTag": "holy",
+      "circleItem": "salt"
+    },
+    "sanityPerTaunt": 3,
+    "maxTaunts": 4,
+    "expulsion": {
+      "rounds": 6,
+      "goal": 100,
+      "press": {
+        "progress": 30,
+        "sanity": 8
+      },
+      "hold": {
+        "progress": 15,
+        "sanity": 3
+      },
+      "pushPerRank": 5,
+      "breakBelow": 0.15
+    },
+    "success": {
+      "hostFear": 30
+    },
+    "failure": {
+      "guardianJumpChance": 0.25,
+      "sanity": 10
+    },
+    "bindDebt": "bound-demon"
+  },
+  "factions": [
+    {
+      "id": "horned-one",
+      "nameKey": "faction.horned-one.name",
+      "stat": "rep-horned-one",
+      "hostileTo": ["forest-spirit", "church"],
+      "hostility": 0.5
+    },
+    {
+      "id": "forest-spirit",
+      "nameKey": "faction.forest-spirit.name",
+      "stat": "rep-forest-spirit",
+      "hostileTo": ["horned-one", "church"],
+      "hostility": 0.5
+    },
+    {
+      "id": "lesser-demons",
+      "nameKey": "faction.lesser-demons.name",
+      "stat": "rep-lesser-demons",
+      "hostileTo": ["church"],
+      "hostility": 0.5
+    },
+    {
+      "id": "church",
+      "nameKey": "faction.church.name",
+      "stat": "rep-church",
+      "hostileTo": ["horned-one", "lesser-demons", "forest-spirit"],
+      "hostility": 0.5
+    },
+    {
+      "id": "zlatno",
+      "nameKey": "faction.zlatno.name",
+      "stat": "rep-zlatno",
+      "hostileTo": ["forest-spirit"],
+      "hostility": 0.5
+    }
+  ],
+  "pacts": {
+    "sinReinforce": 5
+  },
+  "sacrifices": [
+    {
+      "id": "crypt-offering",
+      "nameKey": "sacrifice.crypt-offering.name",
+      "zone": "monastery",
+      "items": [
+        {
+          "item": "incense",
+          "qty": 1
+        }
+      ],
+      "escalation": 1,
+      "effects": [
+        {
+          "addStat": "faith",
+          "value": 5
+        },
+        {
+          "addStat": "rep-church",
+          "value": 5
+        }
+      ],
+      "witnessChance": 0.1,
+      "witnessedHysteria": 0,
+      "witnessedSuspicion": 0
+    },
+    {
+      "id": "immured-shadow",
+      "nameKey": "sacrifice.immured-shadow.name",
+      "zone": "village",
+      "items": [
+        {
+          "item": "red-thread",
+          "qty": 1
+        }
+      ],
+      "escalation": 0,
+      "targeted": true,
+      "doomDays": {
+        "min": 30,
+        "max": 40
+      },
+      "effects": [
+        {
+          "addStat": "village-corruption",
+          "value": 25
+        },
+        {
+          "addStat": "corruption",
+          "value": 20
+        },
+        {
+          "rule": "sanity-shock",
+          "params": {
+            "cause": "sacrifice"
+          }
+        },
+        {
+          "addStat": "rep-horned-one",
+          "value": 5
+        }
+      ],
+      "witnessChance": 0.4,
+      "witnessedHysteria": 10,
+      "witnessedSuspicion": 20
+    },
+    {
+      "id": "blood-offering",
+      "nameKey": "sacrifice.blood-offering.name",
+      "zone": "samodivi-forest",
+      "items": [],
+      "escalation": 0,
+      "effects": [
+        {
+          "rule": "sanity-shock",
+          "params": {
+            "cause": "sacrifice"
+          }
+        },
+        {
+          "addStat": "rep-forest-spirit",
+          "value": 10
+        }
+      ],
+      "witnessChance": 0.2,
+      "witnessedHysteria": 5,
+      "witnessedSuspicion": 10
+    }
+  ],
+  "night": {
+    "homeZone": "village",
+    "healthStat": "guardian-health",
+    "spawns": [
+      {
+        "zone": "samodivi-forest",
+        "poi": "crossroads"
+      },
+      {
+        "zone": "samodivi-forest",
+        "poi": "bone-cairn"
+      },
+      {
+        "zone": "samodivi-forest",
+        "poi": "old-oak"
+      },
+      {
+        "zone": "monastery",
+        "poi": "monks-graves"
+      },
+      {
+        "zone": "monastery",
+        "poi": "crypt"
+      },
+      {
+        "zone": "village",
+        "poi": "cemetery"
+      }
+    ],
+    "originCandidates": [
+      {
+        "zone": "samodivi-forest",
+        "poi": "bone-cairn"
+      },
+      {
+        "zone": "samodivi-forest",
+        "poi": "spring"
+      },
+      {
+        "zone": "samodivi-forest",
+        "poi": "samodiva-circle"
+      },
+      {
+        "zone": "monastery",
+        "poi": "crypt"
+      },
+      {
+        "zone": "monastery",
+        "poi": "monks-graves"
+      }
+    ],
+    "originEffects": [
+      {
+        "addStat": "hysteria",
+        "value": -5
+      },
+      {
+        "narrate": "night.origin-found"
+      }
+    ],
+    "returnEffects": [
+      {
+        "addStat": "hysteria",
+        "value": -3
+      }
+    ],
+    "spawnChance": {
+      "settle": 0.1,
+      "build": 0.25,
+      "peak": 0.4,
+      "release": 0.1
+    },
+    "maxActive": 2,
+    "flashFuel": 0.25,
+    "strikeDamage": 25,
+    "skills": {
+      "strike": "combat",
+      "dodge": "survival",
+      "flee": "survival",
+      "sneak": "stealth",
+      "ritual": "faith",
+      "lastBreath": "faith"
+    },
+    "lastBreathHealth": 30
+  },
+  "endless": {
+    "maxDarkness": 10,
+    "mysteries": [
+      {
+        "id": "soured-milk",
+        "nameKey": "endless.soured-milk.name",
+        "questionKey": "endless.soured-milk.question",
+        "suspects": 3,
+        "culpritTraits": ["widow", "herb-woman", "outsider"],
+        "whyGuiltyKey": "endless.soured-milk.guilty",
+        "whyInnocentKey": "endless.soured-milk.innocent",
+        "causes": [
+          {
+            "id": "evil-eye",
+            "nameKey": "endless.cause.evil-eye"
+          },
+          {
+            "id": "spoiled-pail",
+            "nameKey": "endless.cause.spoiled-pail"
+          }
+        ],
+        "remedies": [
+          {
+            "id": "lead-pouring",
+            "nameKey": "endless.remedy.lead-pouring",
+            "action": "confront"
+          },
+          {
+            "id": "accuse",
+            "nameKey": "endless.remedy.accuse",
+            "action": "accuse"
+          }
+        ],
+        "solution": {
+          "cause": "evil-eye",
+          "remedy": "lead-pouring"
+        },
+        "clues": [
+          {
+            "id": "seen-at-the-byre",
+            "nameKey": "endless.clue.seen-at-the-byre.name",
+            "descKey": "endless.clue.seen-at-the-byre.desc",
+            "reliability": "solid",
+            "about": "culprit"
+          },
+          {
+            "id": "praise-without-spit",
+            "nameKey": "endless.clue.praise-without-spit.name",
+            "descKey": "endless.clue.praise-without-spit.desc",
+            "reliability": "solid",
+            "about": "culprit",
+            "place": {
+              "zone": "village",
+              "poi": "well"
+            },
+            "check": {
+              "skill": "investigation",
+              "difficulty": "average"
+            }
+          },
+          {
+            "id": "alibi",
+            "nameKey": "endless.clue.alibi.name",
+            "descKey": "endless.clue.alibi.desc",
+            "reliability": "solid",
+            "about": "innocent"
+          },
+          {
+            "id": "lead-shapes",
+            "nameKey": "endless.clue.lead-shapes.name",
+            "descKey": "endless.clue.lead-shapes.desc",
+            "reliability": "solid",
+            "about": "cause",
+            "place": {
+              "zone": "village",
+              "poi": "church"
+            }
+          },
+          {
+            "id": "false-word",
+            "nameKey": "endless.clue.false-word.name",
+            "descKey": "endless.clue.false-word.desc",
+            "reliability": "doubtful",
+            "about": "liar"
+          }
+        ],
+        "deadlineNight": 7,
+        "right": {
+          "descKey": "endless.outcome.right",
+          "effects": [
+            {
+              "addStat": "hysteria",
+              "value": -10
+            },
+            {
+              "milestone": "mystery-minor"
+            }
+          ]
+        },
+        "wrong": {
+          "descKey": "endless.outcome.wrong",
+          "effects": [
+            {
+              "addStat": "village-corruption",
+              "value": 10
+            },
+            {
+              "addStat": "hysteria",
+              "value": 10
+            }
+          ]
+        },
+        "unsolved": {
+          "descKey": "endless.outcome.unsolved",
+          "effects": [
+            {
+              "addStat": "hysteria",
+              "value": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": "moved-boundary-stones",
+        "nameKey": "endless.moved-boundary-stones.name",
+        "questionKey": "endless.moved-boundary-stones.question",
+        "suspects": 3,
+        "culpritTraits": ["debtor", "miller", "notable"],
+        "whyGuiltyKey": "endless.moved-boundary-stones.guilty",
+        "whyInnocentKey": "endless.moved-boundary-stones.innocent",
+        "causes": [
+          {
+            "id": "greed",
+            "nameKey": "endless.cause.greed"
+          },
+          {
+            "id": "bes",
+            "nameKey": "endless.cause.bes"
+          }
+        ],
+        "remedies": [
+          {
+            "id": "confront",
+            "nameKey": "endless.remedy.confront",
+            "action": "confront"
+          },
+          {
+            "id": "accuse",
+            "nameKey": "endless.remedy.accuse",
+            "action": "accuse"
+          }
+        ],
+        "solution": {
+          "cause": "greed",
+          "remedy": "confront"
+        },
+        "clues": [
+          {
+            "id": "mud-on-boots",
+            "nameKey": "endless.clue.mud-on-boots.name",
+            "descKey": "endless.clue.mud-on-boots.desc",
+            "reliability": "solid",
+            "about": "culprit"
+          },
+          {
+            "id": "new-furrow",
+            "nameKey": "endless.clue.new-furrow.name",
+            "descKey": "endless.clue.new-furrow.desc",
+            "reliability": "solid",
+            "about": "culprit",
+            "place": {
+              "zone": "village",
+              "poi": "mill"
+            },
+            "check": {
+              "skill": "survival",
+              "difficulty": "average"
+            }
+          },
+          {
+            "id": "at-the-tavern",
+            "nameKey": "endless.clue.at-the-tavern.name",
+            "descKey": "endless.clue.at-the-tavern.desc",
+            "reliability": "solid",
+            "about": "innocent"
+          },
+          {
+            "id": "drag-marks",
+            "nameKey": "endless.clue.drag-marks.name",
+            "descKey": "endless.clue.drag-marks.desc",
+            "reliability": "solid",
+            "about": "cause",
+            "place": {
+              "zone": "village",
+              "poi": "mill"
+            }
+          },
+          {
+            "id": "a-convenient-story",
+            "nameKey": "endless.clue.a-convenient-story.name",
+            "descKey": "endless.clue.a-convenient-story.desc",
+            "reliability": "doubtful",
+            "about": "liar"
+          }
+        ],
+        "deadlineNight": 7,
+        "right": {
+          "descKey": "endless.outcome.right",
+          "effects": [
+            {
+              "addStat": "hysteria",
+              "value": -10
+            },
+            {
+              "milestone": "mystery-minor"
+            }
+          ]
+        },
+        "wrong": {
+          "descKey": "endless.outcome.wrong",
+          "effects": [
+            {
+              "addStat": "village-corruption",
+              "value": 10
+            },
+            {
+              "addStat": "hysteria",
+              "value": 10
+            }
+          ]
+        },
+        "unsolved": {
+          "descKey": "endless.outcome.unsolved",
+          "effects": [
+            {
+              "addStat": "hysteria",
+              "value": 5
+            }
+          ]
+        }
+      },
+      {
+        "id": "whispering-grave",
+        "nameKey": "endless.whispering-grave.name",
+        "questionKey": "endless.whispering-grave.question",
+        "suspects": 3,
+        "culpritTraits": ["sexton", "outsider", "educated"],
+        "whyGuiltyKey": "endless.whispering-grave.guilty",
+        "whyInnocentKey": "endless.whispering-grave.innocent",
+        "causes": [
+          {
+            "id": "vampire-fear",
+            "nameKey": "endless.cause.vampire-fear"
+          },
+          {
+            "id": "grave-robbery",
+            "nameKey": "endless.cause.grave-robbery"
+          }
+        ],
+        "remedies": [
+          {
+            "id": "exhume",
+            "nameKey": "endless.remedy.exhume",
+            "action": "exhume"
+          },
+          {
+            "id": "accuse",
+            "nameKey": "endless.remedy.accuse",
+            "action": "accuse"
+          }
+        ],
+        "solution": {
+          "cause": "vampire-fear",
+          "remedy": "exhume"
+        },
+        "clues": [
+          {
+            "id": "spade-marks",
+            "nameKey": "endless.clue.spade-marks.name",
+            "descKey": "endless.clue.spade-marks.desc",
+            "reliability": "solid",
+            "about": "culprit",
+            "place": {
+              "zone": "village",
+              "poi": "cemetery"
+            }
+          },
+          {
+            "id": "hawthorn-splinters",
+            "nameKey": "endless.clue.hawthorn-splinters.name",
+            "descKey": "endless.clue.hawthorn-splinters.desc",
+            "reliability": "solid",
+            "about": "culprit",
+            "check": {
+              "skill": "investigation",
+              "difficulty": "hard"
+            }
+          },
+          {
+            "id": "kept-the-wake",
+            "nameKey": "endless.clue.kept-the-wake.name",
+            "descKey": "endless.clue.kept-the-wake.desc",
+            "reliability": "solid",
+            "about": "innocent"
+          },
+          {
+            "id": "stake-in-the-coffin",
+            "nameKey": "endless.clue.stake-in-the-coffin.name",
+            "descKey": "endless.clue.stake-in-the-coffin.desc",
+            "reliability": "solid",
+            "about": "cause",
+            "place": {
+              "zone": "village",
+              "poi": "cemetery"
+            }
+          },
+          {
+            "id": "pointed-finger",
+            "nameKey": "endless.clue.pointed-finger.name",
+            "descKey": "endless.clue.pointed-finger.desc",
+            "reliability": "doubtful",
+            "about": "liar"
+          }
+        ],
+        "deadlineNight": 7,
+        "right": {
+          "descKey": "endless.outcome.right",
+          "effects": [
+            {
+              "addStat": "hysteria",
+              "value": -10
+            },
+            {
+              "milestone": "mystery-minor"
+            }
+          ]
+        },
+        "wrong": {
+          "descKey": "endless.outcome.wrong",
+          "effects": [
+            {
+              "addStat": "village-corruption",
+              "value": 10
+            },
+            {
+              "addStat": "hysteria",
+              "value": 10
+            }
+          ]
+        },
+        "unsolved": {
+          "descKey": "endless.outcome.unsolved",
+          "effects": [
+            {
+              "addStat": "hysteria",
+              "value": 5
+            }
+          ]
+        }
+      }
+    ],
+    "possessions": {
+      "maxRank": 2,
+      "perYear": {
+        "min": 0,
+        "max": 2
+      },
+      "combineFrom": 4
+    },
+    "harvests": [
+      {
+        "id": "rich-harvest",
+        "nameKey": "harvest.rich-harvest",
+        "weight": 3,
+        "effects": [
+          {
+            "giveItem": "bread",
+            "qty": 40,
+            "to": "storage"
+          },
+          {
+            "addStat": "prosperity-score",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "id": "fair-harvest",
+        "nameKey": "harvest.fair-harvest",
+        "weight": 4,
+        "effects": [
+          {
+            "giveItem": "bread",
+            "qty": 20,
+            "to": "storage"
+          }
+        ]
+      },
+      {
+        "id": "blight",
+        "nameKey": "harvest.blight",
+        "weight": 2,
+        "effects": [
+          {
+            "addStat": "hysteria",
+            "value": 8
+          },
+          {
+            "addStat": "prosperity-score",
+            "value": -10
+          }
+        ]
+      },
+      {
+        "id": "flood",
+        "nameKey": "harvest.flood",
+        "weight": 1,
+        "minDarkness": 2,
+        "effects": [
+          {
+            "addStat": "prosperity-score",
+            "value": -20
+          },
+          {
+            "addStat": "village-repair",
+            "value": -30
+          }
+        ]
+      },
+      {
+        "id": "fever",
+        "nameKey": "harvest.fever",
+        "weight": 1,
+        "minDarkness": 4,
+        "effects": [
+          {
+            "rule": "sicken-villager"
+          },
+          {
+            "addStat": "hysteria",
+            "value": 10
+          }
+        ]
+      },
+      {
+        "id": "fire",
+        "nameKey": "harvest.fire",
+        "weight": 1,
+        "minDarkness": 6,
+        "effects": [
+          {
+            "addStat": "prosperity-score",
+            "value": -30
+          },
+          {
+            "addStat": "village-corruption",
+            "value": 5
+          }
+        ]
+      }
+    ],
+    "goals": [
+      {
+        "id": "thriving-village",
+        "category": "village",
+        "nameKey": "goal.thriving-village",
+        "metric": "prosperity",
+        "target": 300,
+        "legacy": 10
+      },
+      {
+        "id": "fifty-souls",
+        "category": "village",
+        "nameKey": "goal.fifty-souls",
+        "metric": "population",
+        "target": 50,
+        "legacy": 10
+      },
+      {
+        "id": "master-builder",
+        "category": "village",
+        "nameKey": "goal.master-builder",
+        "metric": "building-levels",
+        "target": 12,
+        "legacy": 10
+      },
+      {
+        "id": "five-generations",
+        "category": "lineage",
+        "nameKey": "goal.five-generations",
+        "metric": "generation",
+        "target": 5,
+        "legacy": 15
+      },
+      {
+        "id": "century",
+        "category": "lineage",
+        "nameKey": "goal.century",
+        "metric": "endless-years",
+        "target": 100,
+        "legacy": 25
+      },
+      {
+        "id": "into-the-dark",
+        "category": "lineage",
+        "nameKey": "goal.into-the-dark",
+        "metric": "darkness-best",
+        "target": 5,
+        "legacy": 15
+      },
+      {
+        "id": "twenty-truths",
+        "category": "collection",
+        "nameKey": "goal.twenty-truths",
+        "metric": "mysteries-solved",
+        "target": 20,
+        "legacy": 15
+      },
+      {
+        "id": "keeper-of-things",
+        "category": "collection",
+        "nameKey": "goal.keeper-of-things",
+        "metric": "collection-found",
+        "target": 40,
+        "legacy": 10
+      }
+    ],
+    "relics": [
+      {
+        "id": "relic-grave-candle",
+        "darkness": 3,
+        "tree": "exorcist",
+        "cell": "C1",
+        "talent": "relic-grave-candle"
+      },
+      {
+        "id": "relic-water-whisper",
+        "darkness": 5,
+        "tree": "folk-healer",
+        "cell": "B1",
+        "talent": "relic-water-whisper"
+      },
+      {
+        "id": "relic-quiet-feet",
+        "darkness": 7,
+        "tree": "confessor",
+        "cell": "C1",
+        "talent": "relic-quiet-feet"
+      },
+      {
+        "id": "relic-salt-circle",
+        "darkness": 10,
+        "tree": "charm-speaker",
+        "cell": "B1",
+        "talent": "relic-salt-circle"
+      }
+    ]
+  }
+}

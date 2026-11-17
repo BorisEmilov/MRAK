@@ -1,0 +1,80 @@
+{
+  "id": "mamnik",
+  "tier": "demo",
+  "nameKey": "demon.mamnik.name",
+  "epithetKey": "demon.mamnik.epithet",
+  "trueNameKey": "demon.mamnik.true-name",
+  "loreKey": "demon.mamnik.lore",
+  "rank": 2,
+  "origin": "invented",
+  "seal": {
+    "formKey": "demon.mamnik.seal.form",
+    "mediumKey": "demon.mamnik.seal.medium"
+  },
+  "symptoms": [
+    {
+      "stage": 1,
+      "descKey": "demon.mamnik.symptom-1"
+    },
+    {
+      "stage": 2,
+      "descKey": "demon.mamnik.symptom-2"
+    },
+    {
+      "stage": 3,
+      "descKey": "demon.mamnik.symptom-3"
+    },
+    {
+      "stage": 4,
+      "descKey": "demon.mamnik.symptom-4"
+    },
+    {
+      "stage": 5,
+      "descKey": "demon.mamnik.symptom-5"
+    }
+  ],
+  "weaknesses": [
+    {
+      "descKey": "demon.mamnik.weakness-1",
+      "item": "salt"
+    },
+    {
+      "descKey": "demon.mamnik.weakness-2"
+    },
+    {
+      "descKey": "demon.mamnik.weakness-3"
+    }
+  ],
+  "desires": ["demon.mamnik.desire-1", "demon.mamnik.desire-2"],
+  "maxStage": 5,
+  "phrases": ["demon.mamnik.phrase-1", "demon.mamnik.phrase-2", "demon.mamnik.phrase-3"],
+  "taunts": {
+    "pact": "demon.mamnik.taunt.pact",
+    "sacrifice": "demon.mamnik.taunt.sacrifice",
+    "death": "demon.mamnik.taunt.death",
+    "lynching": "demon.mamnik.taunt.lynching",
+    "debt": "demon.mamnik.taunt.debt"
+  },
+  "fragments": [
+    {
+      "id": "grimoire",
+      "source": "grimoire",
+      "textKey": "demon.mamnik.fragment.grimoire"
+    },
+    {
+      "id": "grave",
+      "source": "grave",
+      "textKey": "demon.mamnik.fragment.grave"
+    },
+    {
+      "id": "photograph",
+      "source": "photograph",
+      "textKey": "demon.mamnik.fragment.photograph"
+    },
+    {
+      "id": "confession",
+      "source": "confession",
+      "textKey": "demon.mamnik.fragment.confession"
+    }
+  ]
+}

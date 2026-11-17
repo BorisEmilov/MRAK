@@ -1,0 +1,88 @@
+{
+  "id": "inn",
+  "tier": "full",
+  "nameKey": "building.inn.name",
+  "descKey": "building.inn.desc",
+  "icon": "building.inn",
+  "levels": [
+    {
+      "level": 1,
+      "descKey": "building.inn.level-1",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 30
+          },
+          {
+            "item": "bread",
+            "qty": 6
+          }
+        ],
+        "labourDays": 8
+      },
+      "prosperity": 15,
+      "effects": [
+        {
+          "setFlag": "trader-visits"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "descKey": "building.inn.level-2",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 45
+          },
+          {
+            "item": "iron",
+            "qty": 4
+          }
+        ],
+        "labourDays": 14
+      },
+      "minProsperity": 2,
+      "prosperity": 20,
+      "effects": [
+        {
+          "modifier": {
+            "multiply": "hysteria-gain-rate",
+            "factor": 0.9
+          }
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "descKey": "building.inn.level-3",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 70
+          },
+          {
+            "item": "iron",
+            "qty": 8
+          },
+          {
+            "item": "silver-coin",
+            "qty": 3
+          }
+        ],
+        "labourDays": 22
+      },
+      "minProsperity": 3,
+      "prosperity": 30,
+      "effects": [
+        {
+          "setFlag": "fair-held"
+        }
+      ]
+    }
+  ],
+  "poi": "tavern"
+}

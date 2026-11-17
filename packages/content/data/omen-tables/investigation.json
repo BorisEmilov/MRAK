@@ -1,0 +1,61 @@
+{
+  "id": "investigation",
+  "tier": "demo",
+  "context": "investigation",
+  "successGood": {
+    "descKey": "omen.investigation.success-good",
+    "effects": []
+  },
+  "successNone": {
+    "descKey": "omen.investigation.success-none",
+    "effects": []
+  },
+  "successBad": {
+    "descKey": "omen.investigation.success-bad",
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 3
+      }
+    ]
+  },
+  "failureGood": {
+    "descKey": "omen.investigation.failure-good",
+    "effects": []
+  },
+  "failureNone": {
+    "descKey": "omen.investigation.failure-none",
+    "effects": []
+  },
+  "failureBad": {
+    "descKey": "omen.investigation.failure-bad",
+    "effects": [
+      {
+        "addStat": "notice",
+        "value": 3
+      }
+    ]
+  },
+  "successGreat": {
+    "descKey": "omen.investigation.success-great",
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": 5
+      }
+    ]
+  },
+  "failureDire": {
+    "descKey": "omen.investigation.failure-dire",
+    "effects": [
+      {
+        "addStat": "notice",
+        "value": 6
+      },
+      {
+        "addStat": "sanity",
+        "value": -5
+      }
+    ]
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "id": "folk-healer",
+  "tier": "demo",
+  "nameKey": "tree.folk-healer.name",
+  "descKey": "tree.folk-healer.desc",
+  "kind": "calling",
+  "rowCosts": [5, 10, 15, 20],
+  "columns": 3,
+  "nodes": [
+    {
+      "cell": "A1",
+      "talent": "midwifes-hands"
+    },
+    {
+      "cell": "B1",
+      "talent": "herb-lore"
+    },
+    {
+      "cell": "C1",
+      "talent": "grit"
+    },
+    {
+      "cell": "A2",
+      "talent": "steady-lead",
+      "requires": ["A1"]
+    },
+    {
+      "cell": "B2",
+      "talent": "dawn-gathering",
+      "requires": ["B1"]
+    },
+    {
+      "cell": "C2",
+      "talent": "fever-breaker",
+      "requires": ["C1", "A1"]
+    },
+    {
+      "cell": "A3",
+      "talent": "bonesetter",
+      "requires": ["A2"],
+      "tier": "full"
+    },
+    {
+      "cell": "B3",
+      "talent": "tincture-master",
+      "requires": ["B2"],
+      "tier": "full"
+    },
+    {
+      "cell": "C3",
+      "talent": "kitchen-garden",
+      "requires": ["C2"],
+      "tier": "full"
+    },
+    {
+      "cell": "A4",
+      "talent": "breath-of-life",
+      "requires": ["A3"],
+      "tier": "full"
+    },
+    {
+      "cell": "B4",
+      "talent": "enyos-blessing",
+      "requires": ["B3"],
+      "tier": "full"
+    },
+    {
+      "cell": "C4",
+      "talent": "the-village-remembers",
+      "requires": ["C3"],
+      "tier": "full"
+    }
+  ],
+  "calling": "znaharka"
+}

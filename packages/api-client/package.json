@@ -1,0 +1,17 @@
+{
+  "name": "@mrak/api-client",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Typed client for services/online-api, generated from its OpenAPI spec.",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit"
+  }
+}

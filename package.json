@@ -1,0 +1,40 @@
+{
+  "name": "mrak",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@12.18.0",
+  "engines": {
+    "node": ">=24.0.0",
+    "pnpm": ">=12.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev --filter=@mrak/game",
+    "dev:all": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "husky",
+    "content:validate": "pnpm --filter @mrak/content-schema run validate",
+    "content:manifest": "pnpm --filter @mrak/content-schema run manifest",
+    "content:schema": "pnpm --filter @mrak/content-schema run json-schema"
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "@types/node": "24.19.2",
+    "eslint": "10.15.0",
+    "eslint-config-prettier": "10.1.8",
+    "eslint-plugin-react-hooks": "7.1.1",
+    "eslint-plugin-react-refresh": "0.5.8",
+    "globals": "17.14.0",
+    "husky": "9.1.7",
+    "lint-staged": "17.6.1",
+    "prettier": "3.10.1",
+    "prettier-plugin-astro": "1.1.2",
+    "turbo": "2.11.11",
+    "typescript": "6.0.3",
+    "typescript-eslint": "8.72.2"
+  }
+}

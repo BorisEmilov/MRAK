@@ -1,0 +1,251 @@
+[
+  {
+    "id": "night-survived",
+    "tier": "demo",
+    "reasonKey": "milestone.night-survived",
+    "amount": 2,
+    "repeat": "always",
+    "on": {
+      "event": "time/dawn"
+    }
+  },
+  {
+    "id": "zone-discovered",
+    "tier": "demo",
+    "reasonKey": "milestone.zone-discovered",
+    "amount": 5,
+    "repeat": "per-target",
+    "on": {
+      "event": "world/zoneEntered",
+      "match": {
+        "firstVisit": true
+      }
+    }
+  },
+  {
+    "id": "chapter-survived",
+    "tier": "demo",
+    "reasonKey": "milestone.chapter-survived",
+    "amount": 25,
+    "repeat": "always",
+    "on": {
+      "event": "time/chapterEnded"
+    }
+  },
+  {
+    "id": "clue-found",
+    "tier": "demo",
+    "reasonKey": "milestone.clue-found",
+    "amount": 2,
+    "repeat": "per-target",
+    "on": {
+      "event": "mystery/clueFound"
+    }
+  },
+  {
+    "id": "first-sighting",
+    "tier": "demo",
+    "reasonKey": "milestone.first-sighting",
+    "amount": 3,
+    "repeat": "per-target",
+    "on": {
+      "event": "photo/layerRevealed"
+    }
+  },
+  {
+    "id": "demon-learned",
+    "tier": "demo",
+    "reasonKey": "milestone.demon-learned",
+    "amount": 5,
+    "repeat": "per-target",
+    "on": {
+      "event": "journal/learned"
+    }
+  },
+  {
+    "id": "recipe-discovered",
+    "tier": "demo",
+    "reasonKey": "milestone.recipe-discovered",
+    "amount": 3,
+    "repeat": "per-target",
+    "on": {
+      "event": "alchemy/discovered"
+    }
+  },
+  {
+    "id": "tale-heard",
+    "tier": "demo",
+    "reasonKey": "milestone.tale-heard",
+    "amount": 2,
+    "repeat": "per-target",
+    "on": {
+      "event": "journal/collectibleGranted"
+    }
+  },
+  {
+    "id": "memory-recalled",
+    "tier": "demo",
+    "reasonKey": "milestone.memory-recalled",
+    "amount": 4,
+    "repeat": "per-target",
+    "on": {
+      "event": "collection/memoryRecalled",
+      "match": {
+        "first": true
+      }
+    }
+  },
+  {
+    "id": "cabinet-set",
+    "tier": "demo",
+    "reasonKey": "milestone.cabinet-set",
+    "amount": 5,
+    "repeat": "per-target",
+    "on": {
+      "event": "cabinet/setCompleted"
+    }
+  },
+  {
+    "id": "collection-complete",
+    "tier": "demo",
+    "reasonKey": "milestone.collection-complete",
+    "amount": 10,
+    "repeat": "per-target",
+    "on": {
+      "event": "collection/completed"
+    }
+  },
+  {
+    "id": "night-objective",
+    "tier": "demo",
+    "reasonKey": "milestone.night-objective",
+    "amount": 5,
+    "repeat": "always"
+  },
+  {
+    "id": "truth-discovered",
+    "tier": "demo",
+    "reasonKey": "milestone.truth-discovered",
+    "amount": 10,
+    "repeat": "per-target"
+  },
+  {
+    "id": "villager-arc",
+    "tier": "demo",
+    "reasonKey": "milestone.villager-arc",
+    "amount": 10,
+    "repeat": "per-target"
+  },
+  {
+    "id": "exorcism-lesser",
+    "tier": "demo",
+    "reasonKey": "milestone.exorcism-lesser",
+    "amount": 8,
+    "repeat": "always"
+  },
+  {
+    "id": "exorcism-named",
+    "tier": "demo",
+    "reasonKey": "milestone.exorcism-named",
+    "amount": 20,
+    "repeat": "always"
+  },
+  {
+    "id": "exorcism-prince",
+    "tier": "demo",
+    "reasonKey": "milestone.exorcism-prince",
+    "amount": 40,
+    "repeat": "always"
+  },
+  {
+    "id": "mystery-minor",
+    "tier": "demo",
+    "reasonKey": "milestone.mystery-minor",
+    "amount": 15,
+    "repeat": "per-target"
+  },
+  {
+    "id": "mystery-chapter",
+    "tier": "demo",
+    "reasonKey": "milestone.mystery-chapter",
+    "amount": 30,
+    "repeat": "per-target"
+  },
+  {
+    "id": "mystery-major",
+    "tier": "demo",
+    "reasonKey": "milestone.mystery-major",
+    "amount": 50,
+    "repeat": "per-target"
+  },
+  {
+    "id": "mystery-lesson",
+    "tier": "demo",
+    "reasonKey": "milestone.mystery-lesson",
+    "amount": 10,
+    "repeat": "per-target"
+  },
+  {
+    "id": "building-finished",
+    "tier": "demo",
+    "reasonKey": "milestone.building-finished",
+    "amount": 6,
+    "repeat": "per-target"
+  },
+  {
+    "id": "pact-signed",
+    "tier": "demo",
+    "reasonKey": "milestone.pact-signed",
+    "amount": 5,
+    "repeat": "per-target"
+  },
+  {
+    "id": "route-milestone",
+    "tier": "demo",
+    "reasonKey": "milestone.route-milestone",
+    "amount": 40,
+    "repeat": "per-target"
+  },
+  {
+    "id": "festival-unclean-days",
+    "tier": "demo",
+    "reasonKey": "milestone.festival-unclean-days",
+    "amount": 10,
+    "repeat": "always"
+  },
+  {
+    "id": "festival-kukeri",
+    "tier": "full",
+    "reasonKey": "milestone.festival-kukeri",
+    "amount": 10,
+    "repeat": "always"
+  },
+  {
+    "id": "festival-nestinari",
+    "tier": "full",
+    "reasonKey": "milestone.festival-nestinari",
+    "amount": 10,
+    "repeat": "always"
+  },
+  {
+    "id": "festival-rusalia-week",
+    "tier": "full",
+    "reasonKey": "milestone.festival-rusalia-week",
+    "amount": 10,
+    "repeat": "always"
+  },
+  {
+    "id": "festival-enyovden",
+    "tier": "full",
+    "reasonKey": "milestone.festival-enyovden",
+    "amount": 10,
+    "repeat": "always"
+  },
+  {
+    "id": "festival-zadushnitsa",
+    "tier": "full",
+    "reasonKey": "milestone.festival-zadushnitsa",
+    "amount": 10,
+    "repeat": "always"
+  }
+]

@@ -1,0 +1,81 @@
+{
+  "id": "crossroads-bargain",
+  "tier": "demo",
+  "nameKey": "pact.crossroads-bargain.name",
+  "offerKey": "pact.crossroads-bargain.offer",
+  "creditor": "horned-one",
+  "zone": "samodivi-forest",
+  "window": {
+    "from": "00:00",
+    "to": "01:00"
+  },
+  "offerEffects": [
+    {
+      "addClue": "m1-name"
+    },
+    {
+      "setFlag": "true-name-learned"
+    },
+    {
+      "milestone": "pact-signed"
+    },
+    {
+      "addStat": "rep-horned-one",
+      "value": 15
+    },
+    {
+      "addStat": "route-serve",
+      "value": 10
+    },
+    {
+      "addStat": "route-pure",
+      "value": -100
+    }
+  ],
+  "visibleTerms": ["pact.crossroads-bargain.term-1", "pact.crossroads-bargain.term-2"],
+  "hiddenClauses": [
+    {
+      "id": "the-bell-cracks",
+      "descKey": "pact.crossroads-bargain.clause.the-bell-cracks",
+      "trigger": {
+        "when": {
+          "flag": "entered-church-after-pact"
+        }
+      },
+      "effects": [
+        {
+          "setFlag": "bell-cracked"
+        },
+        {
+          "addStat": "hysteria",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "id": "fever-in-the-house",
+      "descKey": "pact.crossroads-bargain.clause.fever-in-the-house",
+      "trigger": {
+        "delayNights": {
+          "min": 2,
+          "max": 9
+        }
+      },
+      "effects": [
+        {
+          "rule": "sicken-villager",
+          "params": {
+            "closestAffinity": true
+          }
+        }
+      ]
+    }
+  ],
+  "debt": "pact-minor",
+  "unlocksTree": "servant-of-the-horned-one",
+  "sin": "pride",
+  "blood": {
+    "stat": "sanity-max",
+    "amount": 5
+  }
+}

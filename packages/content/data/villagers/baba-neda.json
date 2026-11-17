@@ -1,0 +1,63 @@
+{
+  "id": "baba-neda",
+  "tier": "demo",
+  "nameKey": "villager.baba-neda.name",
+  "tradeKey": "villager.baba-neda.trade",
+  "bioKey": "villager.baba-neda.bio",
+  "age": 71,
+  "sex": "female",
+  "traits": ["widow", "herb-woman", "elder"],
+  "fears": ["fire", "witchcraft"],
+  "startingFear": 15,
+  "relationships": [
+    {
+      "villager": "velika",
+      "affinity": 60
+    },
+    {
+      "villager": "pop-stoyan",
+      "affinity": -20
+    },
+    {
+      "villager": "radka",
+      "affinity": 30
+    }
+  ],
+  "secrets": [
+    {
+      "id": "stanas-ashes",
+      "descKey": "villager.baba-neda.secret.stanas-ashes",
+      "revealWhen": {
+        "all": [
+          {
+            "flag": "neda-trusts-guardian"
+          },
+          {
+            "stat": "fear",
+            "villager": "baba-neda",
+            "<": 50
+          }
+        ]
+      },
+      "effects": [
+        {
+          "nameFragment": "mamnik",
+          "fragment": "confession"
+        }
+      ]
+    }
+  ],
+  "home": "house-neda",
+  "work": "garden",
+  "routine": "early-riser",
+  "look": {
+    "skin": "#c99a78",
+    "hair": "#d0ccc4",
+    "clothes": "#4a3a2a",
+    "accent": "#8a2a22",
+    "headwear": "kerchief",
+    "beard": false,
+    "build": "stooped"
+  },
+  "dialogue": "baba-neda"
+}

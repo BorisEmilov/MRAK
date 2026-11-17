@@ -1,0 +1,84 @@
+{
+  "id": "herbalists-hut",
+  "tier": "demo",
+  "nameKey": "building.herbalists-hut.name",
+  "descKey": "building.herbalists-hut.desc",
+  "levels": [
+    {
+      "level": 1,
+      "descKey": "building.herbalists-hut.level-1",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 15
+          }
+        ],
+        "labourDays": 4
+      },
+      "effects": [
+        {
+          "modifier": {
+            "statBonus": "herb-cap",
+            "value": 10
+          }
+        },
+        {
+          "rule": "enable-fever-cures"
+        }
+      ],
+      "prosperity": 10
+    },
+    {
+      "level": 2,
+      "descKey": "building.herbalists-hut.level-2",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 27
+          },
+          {
+            "item": "iron",
+            "qty": 2
+          }
+        ],
+        "labourDays": 7
+      },
+      "effects": [
+        {
+          "rule": "herbs-no-spoilage"
+        }
+      ],
+      "prosperity": 20
+    },
+    {
+      "level": 3,
+      "descKey": "building.herbalists-hut.level-3",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 49
+          },
+          {
+            "item": "iron",
+            "qty": 4
+          }
+        ],
+        "labourDays": 13
+      },
+      "effects": [
+        {
+          "modifier": {
+            "statBonus": "herbs-per-day",
+            "value": 2
+          }
+        }
+      ],
+      "prosperity": 30
+    }
+  ],
+  "icon": "building.herbalists-hut",
+  "poi": "garden"
+}

@@ -1,0 +1,51 @@
+{
+  "id": "priests-acolyte",
+  "tier": "demo",
+  "nameKey": "calling.priests-acolyte.name",
+  "descKey": "calling.priests-acolyte.desc",
+  "attributeBonuses": ["resolve", "presence"],
+  "callingSkills": ["faith", "exorcism", "lore", "persuasion"],
+  "startingRanks": ["faith", "exorcism", "lore"],
+  "trees": ["exorcist", "confessor"],
+  "startingGear": [
+    {
+      "item": "incense",
+      "qty": 3
+    },
+    {
+      "item": "holy-water",
+      "qty": 2
+    },
+    {
+      "item": "lamp-oil",
+      "qty": 4
+    }
+  ],
+  "ability": {
+    "nameKey": "calling.priests-acolyte.ability.name",
+    "descKey": "calling.priests-acolyte.ability.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "night",
+          "effects": [
+            {
+              "addStat": "sanity",
+              "value": 15
+            },
+            {
+              "modifier": {
+                "convertOmen": "bad-to-none"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "defaultVirtue": "mercy",
+  "defaultSin": "pride",
+  "startingFaith": 55,
+  "startingEquipment": ["wooden-cross", "censer", "cassock"]
+}

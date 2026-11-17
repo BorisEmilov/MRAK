@@ -1,0 +1,2141 @@
+{
+  "$comment": "MRAK icon manifest: game name -> game-icons.net source (CC BY 3.0). Generate docs and sprite with `pnpm --filter @mrak/ui-kit icons`.",
+  "license": "CC-BY-3.0",
+  "icons": [
+    {
+      "name": "resource.light",
+      "category": "resource",
+      "source": "lantern-flame",
+      "author": "lorc",
+      "meaning": "Light: lamp oil and candles that keep the dark away."
+    },
+    {
+      "name": "resource.food",
+      "category": "resource",
+      "source": "bread",
+      "author": "delapouite",
+      "meaning": "Food stores of the household and village."
+    },
+    {
+      "name": "resource.sanity",
+      "category": "resource",
+      "source": "brain",
+      "author": "lorc",
+      "meaning": "Sanity (shown without numbers)."
+    },
+    {
+      "name": "resource.faith",
+      "category": "resource",
+      "source": "prayer-beads",
+      "author": "delapouite",
+      "meaning": "Faith."
+    },
+    {
+      "name": "resource.corruption",
+      "category": "resource",
+      "source": "evil-hand",
+      "author": "lorc",
+      "meaning": "Corruption of the guardian."
+    },
+    {
+      "name": "resource.hysteria",
+      "category": "resource",
+      "source": "screaming",
+      "author": "lorc",
+      "meaning": "Village hysteria."
+    },
+    {
+      "name": "resource.revelation",
+      "category": "resource",
+      "source": "open-book",
+      "author": "lorc",
+      "meaning": "Revelation, spent on talents."
+    },
+    {
+      "name": "resource.coin",
+      "category": "resource",
+      "source": "two-coins",
+      "author": "delapouite",
+      "meaning": "Grosh (coin)."
+    },
+    {
+      "name": "phase.dawn",
+      "category": "phase",
+      "source": "sunrise",
+      "author": "lorc",
+      "meaning": "Dawn."
+    },
+    {
+      "name": "phase.day",
+      "category": "phase",
+      "source": "sunbeams",
+      "author": "lorc",
+      "meaning": "Day."
+    },
+    {
+      "name": "phase.dusk",
+      "category": "phase",
+      "source": "sunset",
+      "author": "delapouite",
+      "meaning": "Dusk."
+    },
+    {
+      "name": "phase.night",
+      "category": "phase",
+      "source": "night-sky",
+      "author": "lorc",
+      "meaning": "Night."
+    },
+    {
+      "name": "phase.moon",
+      "category": "phase",
+      "source": "moon-orbit",
+      "author": "delapouite",
+      "meaning": "Moon phase."
+    },
+    {
+      "name": "action.talk",
+      "category": "action",
+      "source": "talk",
+      "author": "skoll",
+      "meaning": "Talk to someone."
+    },
+    {
+      "name": "action.gather",
+      "category": "action",
+      "source": "herbs-bundle",
+      "author": "delapouite",
+      "meaning": "Gather herbs or materials."
+    },
+    {
+      "name": "action.pray",
+      "category": "action",
+      "source": "prayer",
+      "author": "lorc",
+      "meaning": "Pray."
+    },
+    {
+      "name": "action.ritual",
+      "category": "action",
+      "source": "pentagram-rose",
+      "author": "lorc",
+      "meaning": "Perform a ritual."
+    },
+    {
+      "name": "action.accuse",
+      "category": "action",
+      "source": "pointing",
+      "author": "lorc",
+      "meaning": "Accuse a villager (irreversible)."
+    },
+    {
+      "name": "action.photograph",
+      "category": "action",
+      "source": "photo-camera",
+      "author": "delapouite",
+      "meaning": "Photograph (daguerreotype, from 1858)."
+    },
+    {
+      "name": "action.investigate",
+      "category": "action",
+      "source": "magnifying-glass",
+      "author": "lorc",
+      "meaning": "Investigate a place or object."
+    },
+    {
+      "name": "action.rest",
+      "category": "action",
+      "source": "night-sleep",
+      "author": "delapouite",
+      "meaning": "Rest until a later hour."
+    },
+    {
+      "name": "action.build",
+      "category": "action",
+      "source": "hammer-nails",
+      "author": "lorc",
+      "meaning": "Build or upgrade a building."
+    },
+    {
+      "name": "action.use",
+      "category": "action",
+      "source": "hand",
+      "author": "sbed",
+      "meaning": "Use an item."
+    },
+    {
+      "name": "ui.close",
+      "category": "ui",
+      "source": "cross-mark",
+      "author": "lorc",
+      "meaning": "Close."
+    },
+    {
+      "name": "ui.menu",
+      "category": "ui",
+      "source": "hamburger-menu",
+      "author": "delapouite",
+      "meaning": "Menu."
+    },
+    {
+      "name": "ui.glossary",
+      "category": "ui",
+      "source": "tied-scroll",
+      "author": "lorc",
+      "meaning": "Glossary."
+    },
+    {
+      "name": "ui.options",
+      "category": "ui",
+      "source": "cog",
+      "author": "lorc",
+      "meaning": "Options."
+    },
+    {
+      "name": "ui.save",
+      "category": "ui",
+      "source": "quill-ink",
+      "author": "lorc",
+      "meaning": "Save."
+    },
+    {
+      "name": "ui.load",
+      "category": "ui",
+      "source": "scroll-unfurled",
+      "author": "lorc",
+      "meaning": "Load."
+    },
+    {
+      "name": "ui.undo",
+      "category": "ui",
+      "source": "anticlockwise-rotation",
+      "author": "delapouite",
+      "meaning": "Undo."
+    },
+    {
+      "name": "ui.warning",
+      "category": "ui",
+      "source": "hazard-sign",
+      "author": "lorc",
+      "meaning": "Warning."
+    },
+    {
+      "name": "ui.info",
+      "category": "ui",
+      "source": "info",
+      "author": "delapouite",
+      "meaning": "Information."
+    },
+    {
+      "name": "ui.locked",
+      "category": "ui",
+      "source": "padlock",
+      "author": "lorc",
+      "meaning": "Locked."
+    },
+    {
+      "name": "ui.check",
+      "category": "ui",
+      "source": "check-mark",
+      "author": "delapouite",
+      "meaning": "Done or confirmed."
+    },
+    {
+      "name": "ui.search",
+      "category": "ui",
+      "source": "magnifying-glass",
+      "author": "lorc",
+      "meaning": "Search."
+    },
+    {
+      "name": "ui.keyboard",
+      "category": "ui",
+      "source": "keyboard",
+      "author": "delapouite",
+      "meaning": "Keyboard."
+    },
+    {
+      "name": "ui.gamepad",
+      "category": "ui",
+      "source": "gamepad",
+      "author": "delapouite",
+      "meaning": "Gamepad."
+    },
+    {
+      "name": "ui.caption",
+      "category": "ui",
+      "source": "speaker",
+      "author": "delapouite",
+      "meaning": "Sound cue (captions)."
+    },
+    {
+      "name": "ui.journal",
+      "category": "ui",
+      "source": "black-book",
+      "author": "willdabeast",
+      "meaning": "Journal."
+    },
+    {
+      "name": "ui.map",
+      "category": "ui",
+      "source": "treasure-map",
+      "author": "lorc",
+      "meaning": "Map."
+    },
+    {
+      "name": "ui.inventory",
+      "category": "ui",
+      "source": "knapsack",
+      "author": "lorc",
+      "meaning": "Inventory."
+    },
+    {
+      "name": "ui.hint",
+      "category": "ui",
+      "source": "light-bulb",
+      "author": "lorc",
+      "meaning": "Hint."
+    },
+    {
+      "name": "ui.achievements",
+      "category": "ui",
+      "source": "trophy-cup",
+      "author": "delapouite",
+      "meaning": "Achievements."
+    },
+    {
+      "name": "ui.irreversible",
+      "category": "ui",
+      "source": "broken-shield",
+      "author": "lorc",
+      "meaning": "Irreversible action."
+    },
+    {
+      "name": "attribute.vigor",
+      "category": "attribute",
+      "source": "muscle-up",
+      "author": "lorc",
+      "meaning": "Vigor."
+    },
+    {
+      "name": "attribute.agility",
+      "category": "attribute",
+      "source": "sprint",
+      "author": "lorc",
+      "meaning": "Agility."
+    },
+    {
+      "name": "attribute.wits",
+      "category": "attribute",
+      "source": "brainstorm",
+      "author": "lorc",
+      "meaning": "Wits."
+    },
+    {
+      "name": "attribute.cunning",
+      "category": "attribute",
+      "source": "fox-head",
+      "author": "lorc",
+      "meaning": "Cunning."
+    },
+    {
+      "name": "attribute.resolve",
+      "category": "attribute",
+      "source": "fist",
+      "author": "skoll",
+      "meaning": "Resolve."
+    },
+    {
+      "name": "attribute.presence",
+      "category": "attribute",
+      "source": "public-speaker",
+      "author": "delapouite",
+      "meaning": "Presence."
+    },
+    {
+      "name": "skill.combat",
+      "category": "skill",
+      "source": "crossed-axes",
+      "author": "lorc",
+      "meaning": "Combat."
+    },
+    {
+      "name": "skill.stealth",
+      "category": "skill",
+      "source": "hood",
+      "author": "lorc",
+      "meaning": "Stealth."
+    },
+    {
+      "name": "skill.investigation",
+      "category": "skill",
+      "source": "magnifying-glass",
+      "author": "lorc",
+      "meaning": "Investigation."
+    },
+    {
+      "name": "skill.lore",
+      "category": "skill",
+      "source": "book-cover",
+      "author": "lorc",
+      "meaning": "Lore."
+    },
+    {
+      "name": "skill.herbalism",
+      "category": "skill",
+      "source": "herbs-bundle",
+      "author": "delapouite",
+      "meaning": "Herbalism."
+    },
+    {
+      "name": "skill.occultism",
+      "category": "skill",
+      "source": "pentacle",
+      "author": "skoll",
+      "meaning": "Occultism."
+    },
+    {
+      "name": "skill.survival",
+      "category": "skill",
+      "source": "campfire",
+      "author": "lorc",
+      "meaning": "Survival."
+    },
+    {
+      "name": "skill.exorcism",
+      "category": "skill",
+      "source": "holy-water",
+      "author": "delapouite",
+      "meaning": "Exorcism."
+    },
+    {
+      "name": "skill.persuasion",
+      "category": "skill",
+      "source": "shaking-hands",
+      "author": "delapouite",
+      "meaning": "Persuasion."
+    },
+    {
+      "name": "calling.priests-acolyte",
+      "category": "calling",
+      "source": "prayer",
+      "author": "lorc",
+      "meaning": "The priest's acolyte."
+    },
+    {
+      "name": "calling.znaharka",
+      "category": "calling",
+      "source": "mortar",
+      "author": "delapouite",
+      "meaning": "The znaharka (folk healer)."
+    },
+    {
+      "name": "tree.charm-speaker",
+      "category": "tree",
+      "source": "spell-book",
+      "author": "delapouite",
+      "meaning": "Charm-speaker tree."
+    },
+    {
+      "name": "tree.confessor",
+      "category": "tree",
+      "source": "monk-face",
+      "author": "delapouite",
+      "meaning": "Confessor tree."
+    },
+    {
+      "name": "tree.exorcist",
+      "category": "tree",
+      "source": "holy-symbol",
+      "author": "lorc",
+      "meaning": "Exorcist tree."
+    },
+    {
+      "name": "tree.folk-healer",
+      "category": "tree",
+      "source": "healing",
+      "author": "delapouite",
+      "meaning": "Folk-healer tree."
+    },
+    {
+      "name": "tree.servant-of-the-horned-one",
+      "category": "tree",
+      "source": "goat",
+      "author": "skoll",
+      "meaning": "Servant of the Horned One tree."
+    },
+    {
+      "name": "talent.baene",
+      "category": "talent",
+      "source": "lips",
+      "author": "lorc",
+      "meaning": "Baene: whispered charm."
+    },
+    {
+      "name": "talent.red-thread",
+      "category": "talent",
+      "source": "sewing-string",
+      "author": "delapouite",
+      "meaning": "Red thread."
+    },
+    {
+      "name": "talent.listening-to-water",
+      "category": "talent",
+      "source": "water-drop",
+      "author": "sbed",
+      "meaning": "Listening to water."
+    },
+    {
+      "name": "talent.charm-the-lesser",
+      "category": "talent",
+      "source": "charm",
+      "author": "lorc",
+      "meaning": "Charm the lesser spirits."
+    },
+    {
+      "name": "talent.knotwork",
+      "category": "talent",
+      "source": "knot",
+      "author": "delapouite",
+      "meaning": "Knotwork."
+    },
+    {
+      "name": "talent.speak-with-the-forest",
+      "category": "talent",
+      "source": "forest",
+      "author": "delapouite",
+      "meaning": "Speak with the forest."
+    },
+    {
+      "name": "talent.turning-charm",
+      "category": "talent",
+      "source": "spiral-arrow",
+      "author": "lorc",
+      "meaning": "Turning charm."
+    },
+    {
+      "name": "talent.woven-ward",
+      "category": "talent",
+      "source": "spider-web",
+      "author": "lorc",
+      "meaning": "Woven ward."
+    },
+    {
+      "name": "talent.moon-lore",
+      "category": "talent",
+      "source": "tarot-18-the-moon",
+      "author": "caro-asercion",
+      "meaning": "Moon lore."
+    },
+    {
+      "name": "talent.unmaking",
+      "category": "talent",
+      "source": "broken-pottery",
+      "author": "delapouite",
+      "meaning": "Unmaking."
+    },
+    {
+      "name": "talent.ward-the-village",
+      "category": "talent",
+      "source": "huts-village",
+      "author": "delapouite",
+      "meaning": "Ward the village."
+    },
+    {
+      "name": "talent.samodivas-favour",
+      "category": "talent",
+      "source": "fairy",
+      "author": "lorc",
+      "meaning": "Samodiva's favour."
+    },
+    {
+      "name": "talent.listening-ear",
+      "category": "talent",
+      "source": "hearing-disabled",
+      "author": "skoll",
+      "meaning": "Listening ear."
+    },
+    {
+      "name": "talent.parish-register",
+      "category": "talent",
+      "source": "bookmarklet",
+      "author": "lorc",
+      "meaning": "Parish register."
+    },
+    {
+      "name": "talent.seal-of-confession",
+      "category": "talent",
+      "source": "wax-seal",
+      "author": "lorc",
+      "meaning": "Seal of confession."
+    },
+    {
+      "name": "talent.calm-the-flock",
+      "category": "talent",
+      "source": "sheep",
+      "author": "delapouite",
+      "meaning": "Calm the flock."
+    },
+    {
+      "name": "talent.read-the-faces",
+      "category": "talent",
+      "source": "eye-target",
+      "author": "delapouite",
+      "meaning": "Read the faces."
+    },
+    {
+      "name": "talent.penance",
+      "category": "talent",
+      "source": "kneeling",
+      "author": "delapouite",
+      "meaning": "Penance."
+    },
+    {
+      "name": "talent.voice-of-reason",
+      "category": "talent",
+      "source": "scales",
+      "author": "lorc",
+      "meaning": "Voice of reason."
+    },
+    {
+      "name": "talent.sins-laid-bare",
+      "category": "talent",
+      "source": "bleeding-heart",
+      "author": "lorc",
+      "meaning": "Sins laid bare."
+    },
+    {
+      "name": "talent.absolution",
+      "category": "talent",
+      "source": "dove",
+      "author": "lorc",
+      "meaning": "Absolution."
+    },
+    {
+      "name": "talent.peacemaker",
+      "category": "talent",
+      "source": "olive",
+      "author": "delapouite",
+      "meaning": "Peacemaker."
+    },
+    {
+      "name": "talent.judgement-of-souls",
+      "category": "talent",
+      "source": "angel-wings",
+      "author": "lorc",
+      "meaning": "Judgement of souls."
+    },
+    {
+      "name": "talent.sign-of-the-cross",
+      "category": "talent",
+      "source": "cross-flare",
+      "author": "lorc",
+      "meaning": "Sign of the cross."
+    },
+    {
+      "name": "talent.grit",
+      "category": "talent",
+      "source": "stone-pile",
+      "author": "delapouite",
+      "meaning": "Grit (ranked)."
+    },
+    {
+      "name": "talent.incense-bearer",
+      "category": "talent",
+      "source": "incense",
+      "author": "lorc",
+      "meaning": "Incense bearer."
+    },
+    {
+      "name": "talent.know-the-enemy",
+      "category": "talent",
+      "source": "daemon-skull",
+      "author": "lorc",
+      "meaning": "Know the enemy."
+    },
+    {
+      "name": "talent.litany",
+      "category": "talent",
+      "source": "scroll-quill",
+      "author": "delapouite",
+      "meaning": "Litany."
+    },
+    {
+      "name": "talent.holy-water-discipline",
+      "category": "talent",
+      "source": "water-flask",
+      "author": "delapouite",
+      "meaning": "Holy-water discipline."
+    },
+    {
+      "name": "talent.binding-word",
+      "category": "talent",
+      "source": "crossed-chains",
+      "author": "lorc",
+      "meaning": "Binding word."
+    },
+    {
+      "name": "talent.unbroken",
+      "category": "talent",
+      "source": "shield-reflect",
+      "author": "lorc",
+      "meaning": "Unbroken."
+    },
+    {
+      "name": "talent.consecrator",
+      "category": "talent",
+      "source": "candle-holder",
+      "author": "lorc",
+      "meaning": "Consecrator."
+    },
+    {
+      "name": "talent.rite-of-casting-out",
+      "category": "talent",
+      "source": "exploding-planet",
+      "author": "delapouite",
+      "meaning": "Rite of casting out."
+    },
+    {
+      "name": "talent.shepherd-of-souls",
+      "category": "talent",
+      "source": "shepherds-crook",
+      "author": "generalace135",
+      "meaning": "Shepherd of souls."
+    },
+    {
+      "name": "talent.bell-of-theophany",
+      "category": "talent",
+      "source": "ringing-bell",
+      "author": "lorc",
+      "meaning": "Bell of Theophany."
+    },
+    {
+      "name": "talent.midwifes-hands",
+      "category": "talent",
+      "source": "glowing-hands",
+      "author": "lorc",
+      "meaning": "Midwife's hands."
+    },
+    {
+      "name": "talent.herb-lore",
+      "category": "talent",
+      "source": "plant-roots",
+      "author": "delapouite",
+      "meaning": "Herb lore."
+    },
+    {
+      "name": "talent.steady-lead",
+      "category": "talent",
+      "source": "melting-metal",
+      "author": "delapouite",
+      "meaning": "Steady lead (lead pouring)."
+    },
+    {
+      "name": "talent.dawn-gathering",
+      "category": "talent",
+      "source": "basket",
+      "author": "delapouite",
+      "meaning": "Dawn gathering."
+    },
+    {
+      "name": "talent.fever-breaker",
+      "category": "talent",
+      "source": "thermometer-scale",
+      "author": "lorc",
+      "meaning": "Fever breaker."
+    },
+    {
+      "name": "talent.bonesetter",
+      "category": "talent",
+      "source": "broken-bone",
+      "author": "lorc",
+      "meaning": "Bonesetter."
+    },
+    {
+      "name": "talent.tincture-master",
+      "category": "talent",
+      "source": "round-potion",
+      "author": "caro-asercion",
+      "meaning": "Tincture master."
+    },
+    {
+      "name": "talent.kitchen-garden",
+      "category": "talent",
+      "source": "sprout",
+      "author": "lorc",
+      "meaning": "Kitchen garden."
+    },
+    {
+      "name": "talent.breath-of-life",
+      "category": "talent",
+      "source": "lungs",
+      "author": "delapouite",
+      "meaning": "Breath of life."
+    },
+    {
+      "name": "talent.enyos-blessing",
+      "category": "talent",
+      "source": "flower-emblem",
+      "author": "delapouite",
+      "meaning": "Enyo's blessing (Enyovden herbs)."
+    },
+    {
+      "name": "talent.the-village-remembers",
+      "category": "talent",
+      "source": "family-tree",
+      "author": "delapouite",
+      "meaning": "The village remembers."
+    },
+    {
+      "name": "talent.crossroads-tongue",
+      "category": "talent",
+      "source": "crossroad",
+      "author": "delapouite",
+      "meaning": "Crossroads tongue."
+    },
+    {
+      "name": "talent.devils-luck",
+      "category": "talent",
+      "source": "rolling-dices",
+      "author": "delapouite",
+      "meaning": "Devil's luck."
+    },
+    {
+      "name": "talent.black-candle",
+      "category": "talent",
+      "source": "candle-flame",
+      "author": "lorc",
+      "meaning": "Black candle."
+    },
+    {
+      "name": "talent.silver-tongue",
+      "category": "talent",
+      "source": "tongue",
+      "author": "delapouite",
+      "meaning": "Silver tongue."
+    },
+    {
+      "name": "talent.friend-of-the-collector",
+      "category": "talent",
+      "source": "hooded-figure",
+      "author": "darkzaitzev",
+      "meaning": "Friend of the Collector."
+    },
+    {
+      "name": "talent.horned-shadow",
+      "category": "talent",
+      "source": "horned-skull",
+      "author": "lorc",
+      "meaning": "Horned shadow."
+    },
+    {
+      "name": "talent.borrowed-strength",
+      "category": "talent",
+      "source": "biceps",
+      "author": "delapouite",
+      "meaning": "Borrowed strength."
+    },
+    {
+      "name": "talent.whisper-to-the-possessed",
+      "category": "talent",
+      "source": "daemon-pull",
+      "author": "delapouite",
+      "meaning": "Whisper to the possessed."
+    },
+    {
+      "name": "talent.contract-reader",
+      "category": "talent",
+      "source": "contract",
+      "author": "delapouite",
+      "meaning": "Contract reader."
+    },
+    {
+      "name": "talent.midnight-anywhere",
+      "category": "talent",
+      "source": "midnight-claw",
+      "author": "lorc",
+      "meaning": "Midnight anywhere."
+    },
+    {
+      "name": "talent.sovereign-of-debt",
+      "category": "talent",
+      "source": "chained-heart",
+      "author": "lorc",
+      "meaning": "Sovereign of debt."
+    },
+    {
+      "name": "talent.horned-crown",
+      "category": "talent",
+      "source": "crown-of-thorns",
+      "author": "lorc",
+      "meaning": "Horned crown."
+    },
+    {
+      "name": "omen.good",
+      "category": "omen",
+      "source": "sun-radiations",
+      "author": "lorc",
+      "meaning": "Good omen."
+    },
+    {
+      "name": "omen.none",
+      "category": "omen",
+      "source": "feather",
+      "author": "lorc",
+      "meaning": "No omen."
+    },
+    {
+      "name": "omen.bad",
+      "category": "omen",
+      "source": "raven",
+      "author": "lorc",
+      "meaning": "Bad omen."
+    },
+    {
+      "name": "debt.debt",
+      "category": "debt",
+      "source": "chained-heart",
+      "author": "lorc",
+      "meaning": "Debt to the Horned One."
+    },
+    {
+      "name": "debt.pact-minor",
+      "category": "debt",
+      "source": "contract",
+      "author": "delapouite",
+      "meaning": "Minor pact."
+    },
+    {
+      "name": "debt.inherited-pact",
+      "category": "debt",
+      "source": "scroll-unfurled",
+      "author": "lorc",
+      "meaning": "A forebear's pact, owed by the heir."
+    },
+    {
+      "name": "debt.devils-luck",
+      "category": "debt",
+      "source": "rolling-dices",
+      "author": "delapouite",
+      "meaning": "Devil's luck."
+    },
+    {
+      "name": "debt.borrowed-strength",
+      "category": "debt",
+      "source": "biceps",
+      "author": "delapouite",
+      "meaning": "Borrowed strength."
+    },
+    {
+      "name": "debt.horned-crown",
+      "category": "debt",
+      "source": "crown-of-thorns",
+      "author": "lorc",
+      "meaning": "Horned crown."
+    },
+    {
+      "name": "building.chapel",
+      "category": "building",
+      "source": "church",
+      "author": "delapouite",
+      "meaning": "Chapel."
+    },
+    {
+      "name": "building.herbalists-hut",
+      "category": "building",
+      "source": "hut",
+      "author": "delapouite",
+      "meaning": "Herbalist's hut."
+    },
+    {
+      "name": "building.watchtower",
+      "category": "building",
+      "source": "stone-tower",
+      "author": "lorc",
+      "meaning": "Watchtower."
+    },
+    {
+      "name": "villager-state.calm",
+      "category": "villager-state",
+      "source": "meditation",
+      "author": "lorc",
+      "meaning": "Calm."
+    },
+    {
+      "name": "villager-state.afraid",
+      "category": "villager-state",
+      "source": "terror",
+      "author": "lorc",
+      "meaning": "Afraid."
+    },
+    {
+      "name": "villager-state.suspicious",
+      "category": "villager-state",
+      "source": "suspicious",
+      "author": "lorc",
+      "meaning": "Suspicious."
+    },
+    {
+      "name": "villager-state.possessed",
+      "category": "villager-state",
+      "source": "evil-eyes",
+      "author": "skoll",
+      "meaning": "Possessed."
+    },
+    {
+      "name": "villager-state.sick",
+      "category": "villager-state",
+      "source": "vomiting",
+      "author": "lorc",
+      "meaning": "Sick."
+    },
+    {
+      "name": "villager-state.dead",
+      "category": "villager-state",
+      "source": "tombstone",
+      "author": "sbed",
+      "meaning": "Dead."
+    },
+    {
+      "name": "villager-state.missing",
+      "category": "villager-state",
+      "source": "dust-cloud",
+      "author": "lorc",
+      "meaning": "Missing."
+    },
+    {
+      "name": "villager-state.hostile",
+      "category": "villager-state",
+      "source": "enrage",
+      "author": "delapouite",
+      "meaning": "Hostile."
+    },
+    {
+      "name": "villager-state.friendly",
+      "category": "villager-state",
+      "source": "shaking-hands",
+      "author": "delapouite",
+      "meaning": "Friendly."
+    },
+    {
+      "name": "event.noise",
+      "category": "event",
+      "source": "sound-waves",
+      "author": "skoll",
+      "meaning": "Noise: small unsettling event."
+    },
+    {
+      "name": "event.seed",
+      "category": "event",
+      "source": "sprout",
+      "author": "lorc",
+      "meaning": "Seed: starts a mystery or quest."
+    },
+    {
+      "name": "event.hallucination",
+      "category": "event",
+      "source": "spiral-bloom",
+      "author": "lorc",
+      "meaning": "Hallucination (never real)."
+    },
+    {
+      "name": "event.set-piece",
+      "category": "event",
+      "source": "theater-curtains",
+      "author": "delapouite",
+      "meaning": "Set piece."
+    },
+    {
+      "name": "achievement.prologue",
+      "category": "achievement",
+      "source": "burning-dot",
+      "author": "lorc",
+      "meaning": "Prologue complete."
+    },
+    {
+      "name": "achievement.first-night",
+      "category": "achievement",
+      "source": "night-sky",
+      "author": "lorc",
+      "meaning": "First night survived."
+    },
+    {
+      "name": "achievement.koledari",
+      "category": "achievement",
+      "source": "hunting-horn",
+      "author": "lorc",
+      "meaning": "Koledari escorted."
+    },
+    {
+      "name": "achievement.lead",
+      "category": "achievement",
+      "source": "melting-metal",
+      "author": "delapouite",
+      "meaning": "Lead poured."
+    },
+    {
+      "name": "achievement.first-exorcism",
+      "category": "achievement",
+      "source": "holy-water",
+      "author": "delapouite",
+      "meaning": "First exorcism."
+    },
+    {
+      "name": "achievement.true-name",
+      "category": "achievement",
+      "source": "spell-book",
+      "author": "delapouite",
+      "meaning": "True name learned."
+    },
+    {
+      "name": "achievement.board",
+      "category": "achievement",
+      "source": "cork-hat",
+      "author": "delapouite",
+      "meaning": "Board (achievement)."
+    },
+    {
+      "name": "achievement.m1-right",
+      "category": "achievement",
+      "source": "check-mark",
+      "author": "delapouite",
+      "meaning": "First mystery solved correctly."
+    },
+    {
+      "name": "achievement.m1-wrong",
+      "category": "achievement",
+      "source": "cross-mark",
+      "author": "lorc",
+      "meaning": "First mystery solved wrongly."
+    },
+    {
+      "name": "achievement.no-dawn-penalty",
+      "category": "achievement",
+      "source": "sunrise",
+      "author": "lorc",
+      "meaning": "No dawn penalty."
+    },
+    {
+      "name": "achievement.pact",
+      "category": "achievement",
+      "source": "contract",
+      "author": "delapouite",
+      "meaning": "Pact sealed."
+    },
+    {
+      "name": "achievement.debt-paid",
+      "category": "achievement",
+      "source": "breaking-chain",
+      "author": "skoll",
+      "meaning": "Debt paid."
+    },
+    {
+      "name": "achievement.calling-answered",
+      "category": "achievement",
+      "source": "bell-shield",
+      "author": "lorc",
+      "meaning": "Calling answered."
+    },
+    {
+      "name": "achievement.moonless",
+      "category": "achievement",
+      "source": "evil-moon",
+      "author": "lorc",
+      "meaning": "Moonless night."
+    },
+    {
+      "name": "achievement.theophany",
+      "category": "achievement",
+      "source": "holy-water",
+      "author": "delapouite",
+      "meaning": "Theophany."
+    },
+    {
+      "name": "faction.village",
+      "category": "faction",
+      "source": "huts-village",
+      "author": "delapouite",
+      "meaning": "The village of Mrak."
+    },
+    {
+      "name": "faction.church",
+      "category": "faction",
+      "source": "church",
+      "author": "delapouite",
+      "meaning": "The Church."
+    },
+    {
+      "name": "faction.ottoman-authority",
+      "category": "faction",
+      "source": "fez",
+      "author": "delapouite",
+      "meaning": "Ottoman authority (the aga)."
+    },
+    {
+      "name": "faction.haiduti",
+      "category": "faction",
+      "source": "bandit",
+      "author": "delapouite",
+      "meaning": "Haiduti (mountain outlaws)."
+    },
+    {
+      "name": "faction.horned-one",
+      "category": "faction",
+      "source": "goat",
+      "author": "skoll",
+      "meaning": "The Horned One."
+    },
+    {
+      "name": "faction.forest-spirits",
+      "category": "faction",
+      "source": "fairy",
+      "author": "lorc",
+      "meaning": "Forest spirits (samodivi)."
+    },
+    {
+      "name": "faction.the-dead",
+      "category": "faction",
+      "source": "tombstone",
+      "author": "sbed",
+      "meaning": "The dead."
+    },
+    {
+      "name": "poi.church",
+      "category": "poi",
+      "source": "church",
+      "author": "delapouite",
+      "meaning": "A church or chapel."
+    },
+    {
+      "name": "poi.tavern",
+      "category": "poi",
+      "source": "beer-stein",
+      "author": "lorc",
+      "meaning": "A tavern."
+    },
+    {
+      "name": "poi.house",
+      "category": "poi",
+      "source": "house",
+      "author": "delapouite",
+      "meaning": "A villager's house."
+    },
+    {
+      "name": "poi.mill",
+      "category": "poi",
+      "source": "water-mill",
+      "author": "caro-asercion",
+      "meaning": "A water mill."
+    },
+    {
+      "name": "poi.cemetery",
+      "category": "poi",
+      "source": "tombstone",
+      "author": "sbed",
+      "meaning": "A cemetery."
+    },
+    {
+      "name": "poi.grave",
+      "category": "poi",
+      "source": "tombstone",
+      "author": "sbed",
+      "meaning": "A single grave."
+    },
+    {
+      "name": "poi.well",
+      "category": "poi",
+      "source": "well",
+      "author": "delapouite",
+      "meaning": "A well or a spring."
+    },
+    {
+      "name": "poi.shrine",
+      "category": "poi",
+      "source": "candle-light",
+      "author": "lorc",
+      "meaning": "A place of prayer: a shrine, an altar, a sacred tree."
+    },
+    {
+      "name": "poi.bonfire",
+      "category": "poi",
+      "source": "campfire",
+      "author": "lorc",
+      "meaning": "A fire that keeps burning."
+    },
+    {
+      "name": "poi.oil-store",
+      "category": "poi",
+      "source": "oil-drum",
+      "author": "skoll",
+      "meaning": "A store of lamp oil."
+    },
+    {
+      "name": "poi.herbs",
+      "category": "poi",
+      "source": "herbs-bundle",
+      "author": "delapouite",
+      "meaning": "Herbs to gather."
+    },
+    {
+      "name": "poi.ruin",
+      "category": "poi",
+      "source": "broken-wall",
+      "author": "delapouite",
+      "meaning": "A ruin or something buried."
+    },
+    {
+      "name": "poi.samodiva-circle",
+      "category": "poi",
+      "source": "fairy",
+      "author": "lorc",
+      "meaning": "A samodiva circle: where the forest maidens dance."
+    },
+    {
+      "name": "poi.crossroads",
+      "category": "poi",
+      "source": "crossroad",
+      "author": "delapouite",
+      "meaning": "A crossroads."
+    },
+    {
+      "name": "poi.gate",
+      "category": "poi",
+      "source": "gate",
+      "author": "delapouite",
+      "meaning": "A gate or a way through."
+    },
+    {
+      "name": "poi.you",
+      "category": "poi",
+      "source": "position-marker",
+      "author": "delapouite",
+      "meaning": "Where you are on the map."
+    },
+    {
+      "name": "need.cold",
+      "category": "need",
+      "source": "thermometer-cold",
+      "author": "delapouite",
+      "meaning": "Cold: a villager is freezing (firewood keeps homes warm)."
+    },
+    {
+      "name": "need.hunger",
+      "category": "need",
+      "source": "knife-fork",
+      "author": "lorc",
+      "meaning": "Hunger: a villager needs bread."
+    },
+    {
+      "name": "task.firewood",
+      "category": "task",
+      "source": "wood-pile",
+      "author": "delapouite",
+      "meaning": "Task: firewood (also the woodpile on the map)."
+    },
+    {
+      "name": "task.garlic",
+      "category": "task",
+      "source": "garlic",
+      "author": "delapouite",
+      "meaning": "Task: garlic and herbs."
+    },
+    {
+      "name": "task.amulets",
+      "category": "task",
+      "source": "gem-pendant",
+      "author": "lorc",
+      "meaning": "Task: red-thread amulets."
+    },
+    {
+      "name": "task.watch",
+      "category": "task",
+      "source": "spyglass",
+      "author": "lorc",
+      "meaning": "Task: night watch."
+    },
+    {
+      "name": "task.food",
+      "category": "task",
+      "source": "cooking-pot",
+      "author": "delapouite",
+      "meaning": "Task: bake bread."
+    },
+    {
+      "name": "task.repairs",
+      "category": "task",
+      "source": "hand-saw",
+      "author": "delapouite",
+      "meaning": "Task: repairs."
+    },
+    {
+      "name": "task.ritual-prep",
+      "category": "task",
+      "source": "candles",
+      "author": "delapouite",
+      "meaning": "Task: ritual preparation."
+    },
+    {
+      "name": "villager-state.returned",
+      "category": "villager-state",
+      "source": "coffin",
+      "author": "lorc",
+      "meaning": "Returned: a badly buried dead who walks at night."
+    },
+    {
+      "name": "ui.relationships",
+      "category": "ui",
+      "source": "three-friends",
+      "author": "delapouite",
+      "meaning": "Relationships between villagers."
+    },
+    {
+      "name": "item.holy-water",
+      "category": "item",
+      "source": "holy-water",
+      "author": "delapouite",
+      "meaning": "Holy water."
+    },
+    {
+      "name": "item.theophany-water",
+      "category": "item",
+      "source": "drop",
+      "author": "lorc",
+      "meaning": "Theophany water, blessed once a year."
+    },
+    {
+      "name": "item.incense",
+      "category": "item",
+      "source": "incense",
+      "author": "lorc",
+      "meaning": "Incense."
+    },
+    {
+      "name": "item.lamp-oil",
+      "category": "item",
+      "source": "oil-drum",
+      "author": "skoll",
+      "meaning": "Lamp oil for the lantern."
+    },
+    {
+      "name": "item.consecrated-oil",
+      "category": "item",
+      "source": "vial",
+      "author": "sbed",
+      "meaning": "Consecrated oil."
+    },
+    {
+      "name": "item.beeswax",
+      "category": "item",
+      "source": "honeycomb",
+      "author": "lorc",
+      "meaning": "Beeswax."
+    },
+    {
+      "name": "item.red-thread",
+      "category": "item",
+      "source": "sewing-string",
+      "author": "delapouite",
+      "meaning": "Red thread."
+    },
+    {
+      "name": "item.lead",
+      "category": "item",
+      "source": "metal-bar",
+      "author": "lorc",
+      "meaning": "Lead for pouring."
+    },
+    {
+      "name": "item.garlic",
+      "category": "item",
+      "source": "garlic",
+      "author": "delapouite",
+      "meaning": "Garlic."
+    },
+    {
+      "name": "item.st-johns-wort",
+      "category": "item",
+      "source": "sunflower",
+      "author": "delapouite",
+      "meaning": "St John's wort."
+    },
+    {
+      "name": "item.yarrow",
+      "category": "item",
+      "source": "daisy",
+      "author": "lorc",
+      "meaning": "Yarrow."
+    },
+    {
+      "name": "item.salt",
+      "category": "item",
+      "source": "salt-shaker",
+      "author": "lorc",
+      "meaning": "Salt."
+    },
+    {
+      "name": "item.firewood",
+      "category": "item",
+      "source": "wood-pile",
+      "author": "delapouite",
+      "meaning": "Firewood."
+    },
+    {
+      "name": "item.iron",
+      "category": "item",
+      "source": "anvil",
+      "author": "lorc",
+      "meaning": "Iron."
+    },
+    {
+      "name": "item.bread",
+      "category": "item",
+      "source": "bread",
+      "author": "delapouite",
+      "meaning": "Bread."
+    },
+    {
+      "name": "item.calming-tea",
+      "category": "item",
+      "source": "teapot-leaves",
+      "author": "delapouite",
+      "meaning": "Calming tea."
+    },
+    {
+      "name": "item.fever-brew",
+      "category": "item",
+      "source": "bubbling-flask",
+      "author": "lorc",
+      "meaning": "Fever brew."
+    },
+    {
+      "name": "item.garlic-braid",
+      "category": "item",
+      "source": "knot",
+      "author": "delapouite",
+      "meaning": "Garlic braid."
+    },
+    {
+      "name": "item.red-thread-amulet",
+      "category": "item",
+      "source": "heart-necklace",
+      "author": "delapouite",
+      "meaning": "Red-thread amulet."
+    },
+    {
+      "name": "item.hawthorn-stake",
+      "category": "item",
+      "source": "stake-hammer",
+      "author": "delapouite",
+      "meaning": "Hawthorn stake."
+    },
+    {
+      "name": "item.juniper",
+      "category": "item",
+      "source": "elderberry",
+      "author": "lorc",
+      "meaning": "Juniper berries."
+    },
+    {
+      "name": "item.mistletoe",
+      "category": "item",
+      "source": "leaf-swirl",
+      "author": "lorc",
+      "meaning": "Mistletoe."
+    },
+    {
+      "name": "item.grave-moss",
+      "category": "item",
+      "source": "grave-flowers",
+      "author": "delapouite",
+      "meaning": "Grave moss."
+    },
+    {
+      "name": "item.elder",
+      "category": "item",
+      "source": "flower-emblem",
+      "author": "delapouite",
+      "meaning": "Elderflower."
+    },
+    {
+      "name": "item.wormwood",
+      "category": "item",
+      "source": "grass",
+      "author": "delapouite",
+      "meaning": "Wormwood."
+    },
+    {
+      "name": "item.basil",
+      "category": "item",
+      "source": "herbs-bundle",
+      "author": "delapouite",
+      "meaning": "Basil."
+    },
+    {
+      "name": "item.zdravets",
+      "category": "item",
+      "source": "curled-leaf",
+      "author": "lorc",
+      "meaning": "Zdravets (wild geranium)."
+    },
+    {
+      "name": "item.fern-blossom",
+      "category": "item",
+      "source": "fire-flower",
+      "author": "delapouite",
+      "meaning": "Fern blossom."
+    },
+    {
+      "name": "item.mistletoe-charm",
+      "category": "item",
+      "source": "bowen-knot",
+      "author": "delapouite",
+      "meaning": "Mistletoe charm."
+    },
+    {
+      "name": "item.grave-salve",
+      "category": "item",
+      "source": "poison-bottle",
+      "author": "lorc",
+      "meaning": "Grave salve."
+    },
+    {
+      "name": "item.seeing-tincture",
+      "category": "item",
+      "source": "magic-potion",
+      "author": "delapouite",
+      "meaning": "Tincture of seeing."
+    },
+    {
+      "name": "item.zdravets-wreath",
+      "category": "item",
+      "source": "laurel-crown",
+      "author": "lorc",
+      "meaning": "Zdravets wreath."
+    },
+    {
+      "name": "item.elder-syrup",
+      "category": "item",
+      "source": "round-bottom-flask",
+      "author": "lorc",
+      "meaning": "Elderflower syrup."
+    },
+    {
+      "name": "item.daguerreotype-camera",
+      "category": "item",
+      "source": "photo-camera",
+      "author": "delapouite",
+      "meaning": "Daguerreotype camera."
+    },
+    {
+      "name": "item.photographic-plate",
+      "category": "item",
+      "source": "metal-plate",
+      "author": "delapouite",
+      "meaning": "Silvered photographic plate."
+    },
+    {
+      "name": "item.zlatno-gold-coin",
+      "category": "item",
+      "source": "coins",
+      "author": "delapouite",
+      "meaning": "The Zlatno gold coin (cursed)."
+    },
+    {
+      "name": "item.brides-mirror",
+      "category": "item",
+      "source": "mirror-mirror",
+      "author": "lorc",
+      "meaning": "The bride's mirror (cursed)."
+    },
+    {
+      "name": "item.rag-doll",
+      "category": "item",
+      "source": "voodoo-doll",
+      "author": "lorc",
+      "meaning": "The rag doll (cursed)."
+    },
+    {
+      "name": "item.samodiva-pendant",
+      "category": "item",
+      "source": "gem-pendant",
+      "author": "lorc",
+      "meaning": "The samodiva pendant (cursed)."
+    },
+    {
+      "name": "collection.herbs",
+      "category": "collection",
+      "source": "flower-emblem",
+      "author": "delapouite",
+      "meaning": "Collection: herbs."
+    },
+    {
+      "name": "collection.recipes",
+      "category": "collection",
+      "source": "scroll-quill",
+      "author": "delapouite",
+      "meaning": "Collection: recipes."
+    },
+    {
+      "name": "collection.grimoire",
+      "category": "collection",
+      "source": "spell-book",
+      "author": "delapouite",
+      "meaning": "Collection: grimoire pages."
+    },
+    {
+      "name": "collection.relics",
+      "category": "collection",
+      "source": "jawbone",
+      "author": "lorc",
+      "meaning": "Collection: relics."
+    },
+    {
+      "name": "collection.tales",
+      "category": "collection",
+      "source": "book-pile",
+      "author": "delapouite",
+      "meaning": "Collection: folk tales."
+    },
+    {
+      "name": "collection.songs",
+      "category": "collection",
+      "source": "lyre",
+      "author": "lorc",
+      "meaning": "Collection: songs."
+    },
+    {
+      "name": "collection.cursed",
+      "category": "collection",
+      "source": "cursed-star",
+      "author": "lorc",
+      "meaning": "Collection: cursed objects."
+    },
+    {
+      "name": "collection.photos",
+      "category": "collection",
+      "source": "archive-register",
+      "author": "delapouite",
+      "meaning": "Collection: photographs."
+    },
+    {
+      "name": "collection.memories",
+      "category": "collection",
+      "source": "crystal-ball",
+      "author": "lorc",
+      "meaning": "Collection: memories of cursed objects."
+    },
+    {
+      "name": "ui.weight",
+      "category": "ui",
+      "source": "weight",
+      "author": "delapouite",
+      "meaning": "Carried weight."
+    },
+    {
+      "name": "ui.sort",
+      "category": "ui",
+      "source": "swap-bag",
+      "author": "lorc",
+      "meaning": "Sort."
+    },
+    {
+      "name": "ui.compare",
+      "category": "ui",
+      "source": "scales",
+      "author": "lorc",
+      "meaning": "Compare two items."
+    },
+    {
+      "name": "ui.mortar",
+      "category": "ui",
+      "source": "pestle-mortar",
+      "author": "skoll",
+      "meaning": "The mortar (alchemy)."
+    },
+    {
+      "name": "ui.cabinet",
+      "category": "ui",
+      "source": "trophies-shelf",
+      "author": "delapouite",
+      "meaning": "The cellar cabinet."
+    },
+    {
+      "name": "ui.storage",
+      "category": "ui",
+      "source": "chest",
+      "author": "delapouite",
+      "meaning": "The house store."
+    },
+    {
+      "name": "ui.collection",
+      "category": "ui",
+      "source": "bookshelf",
+      "author": "delapouite",
+      "meaning": "The collection."
+    },
+    {
+      "name": "layer.presence",
+      "category": "layer",
+      "source": "ghost",
+      "author": "lorc",
+      "meaning": "Photo layer: a presence."
+    },
+    {
+      "name": "layer.possessed",
+      "category": "layer",
+      "source": "haunting",
+      "author": "lorc",
+      "meaning": "Photo layer: a possessed person."
+    },
+    {
+      "name": "layer.symbol",
+      "category": "layer",
+      "source": "all-seeing-eye",
+      "author": "delapouite",
+      "meaning": "Photo layer: a hidden symbol."
+    },
+    {
+      "name": "achievement.herbalist",
+      "category": "achievement",
+      "source": "flower-emblem",
+      "author": "delapouite",
+      "meaning": "Achievement: every herb in its season."
+    },
+    {
+      "name": "achievement.songs-of-mrak",
+      "category": "achievement",
+      "source": "lyre",
+      "author": "lorc",
+      "meaning": "Achievement: songs of Mrak."
+    },
+    {
+      "name": "achievement.cabinet-of-curiosities",
+      "category": "achievement",
+      "source": "trophies-shelf",
+      "author": "delapouite",
+      "meaning": "Achievement: every cursed object under glass."
+    },
+    {
+      "name": "skill.faith",
+      "category": "skill",
+      "source": "candle-holder",
+      "author": "lorc",
+      "meaning": "Faith: prayers, consecrations and keeping your nerve."
+    },
+    {
+      "name": "gear.lantern",
+      "category": "gear",
+      "source": "lantern-flame",
+      "author": "lorc",
+      "meaning": "Lantern: light is life, and your only weapon."
+    },
+    {
+      "name": "gear.wooden-cross",
+      "category": "gear",
+      "source": "cross-flare",
+      "author": "lorc",
+      "meaning": "Wooden cross: an amulet against lesser demons."
+    },
+    {
+      "name": "gear.knife",
+      "category": "gear",
+      "source": "bowie-knife",
+      "author": "lorc",
+      "meaning": "Knife: a plain iron blade."
+    },
+    {
+      "name": "gear.censer",
+      "category": "gear",
+      "source": "incense",
+      "author": "lorc",
+      "meaning": "Censer: its smoke is a prayer."
+    },
+    {
+      "name": "gear.cassock",
+      "category": "gear",
+      "source": "hood",
+      "author": "lorc",
+      "meaning": "Cassock: clothing of the church."
+    },
+    {
+      "name": "gear.sheepskin-coat",
+      "category": "gear",
+      "source": "sheep",
+      "author": "delapouite",
+      "meaning": "Sheepskin coat (kozhuh): warm clothing for nights outside."
+    },
+    {
+      "name": "gear.blue-bead",
+      "category": "gear",
+      "source": "gem-pendant",
+      "author": "lorc",
+      "meaning": "Blue bead: an amulet against the evil eye."
+    },
+    {
+      "name": "check.dice",
+      "category": "check",
+      "source": "rolling-dices",
+      "author": "delapouite",
+      "meaning": "A check: Fate dice against Shadow dice."
+    },
+    {
+      "name": "check.success",
+      "category": "check",
+      "source": "check-mark",
+      "author": "delapouite",
+      "meaning": "Success symbol on a Fate die."
+    },
+    {
+      "name": "check.failure",
+      "category": "check",
+      "source": "cross-mark",
+      "author": "lorc",
+      "meaning": "Failure symbol on a Shadow die."
+    },
+    {
+      "name": "check.sun",
+      "category": "check",
+      "source": "sun-radiations",
+      "author": "lorc",
+      "meaning": "Good omen symbol (sun)."
+    },
+    {
+      "name": "check.moon",
+      "category": "check",
+      "source": "evil-moon",
+      "author": "lorc",
+      "meaning": "Bad omen symbol (moon)."
+    },
+    {
+      "name": "check.great",
+      "category": "check",
+      "source": "sunrise",
+      "author": "lorc",
+      "meaning": "An extreme good omen."
+    },
+    {
+      "name": "check.dire",
+      "category": "check",
+      "source": "night-sky",
+      "author": "lorc",
+      "meaning": "An extreme bad omen."
+    },
+    {
+      "name": "ui.character",
+      "category": "ui",
+      "source": "hooded-figure",
+      "author": "darkzaitzev",
+      "meaning": "Character sheet: the guardian, their gifts and their debts."
+    },
+    {
+      "name": "ui.talents",
+      "category": "ui",
+      "source": "spiral-bloom",
+      "author": "lorc",
+      "meaning": "Talent trees: what Revelation can buy."
+    },
+    {
+      "name": "ui.heir",
+      "category": "ui",
+      "source": "family-tree",
+      "author": "delapouite",
+      "meaning": "Pass this journal entry to the heir."
+    },
+    {
+      "name": "ui.note",
+      "category": "ui",
+      "source": "scroll-quill",
+      "author": "delapouite",
+      "meaning": "A note in your own hand."
+    },
+    {
+      "name": "ui.virtue",
+      "category": "ui",
+      "source": "angel-wings",
+      "author": "lorc",
+      "meaning": "Your virtue: acting by it strengthens your faith."
+    },
+    {
+      "name": "ui.sin",
+      "category": "ui",
+      "source": "horned-skull",
+      "author": "lorc",
+      "meaning": "Your sin: with corruption it speaks for you."
+    },
+    {
+      "name": "ui.demons",
+      "category": "ui",
+      "source": "daemon-skull",
+      "author": "lorc",
+      "meaning": "Demons you have learned about."
+    },
+    {
+      "name": "ui.bestiary",
+      "category": "ui",
+      "source": "midnight-claw",
+      "author": "lorc",
+      "meaning": "Creatures of the night you have met."
+    },
+    {
+      "name": "ui.clues",
+      "category": "ui",
+      "source": "magnifying-glass",
+      "author": "lorc",
+      "meaning": "Clues of the mysteries."
+    },
+    {
+      "name": "ui.blessing",
+      "category": "ui",
+      "source": "holy-water",
+      "author": "delapouite",
+      "meaning": "Bless a piece of gear."
+    },
+    {
+      "name": "ui.upgrade",
+      "category": "ui",
+      "source": "anvil",
+      "author": "lorc",
+      "meaning": "Improve gear at the workshop."
+    },
+    {
+      "name": "ui.pact",
+      "category": "ui",
+      "source": "contract",
+      "author": "delapouite",
+      "meaning": "A pact: power now, a price later."
+    },
+    {
+      "name": "debt.dark-talent",
+      "category": "debt",
+      "source": "goat",
+      "author": "skoll",
+      "meaning": "A gift of the Horned One, bought with a dark talent."
+    },
+    {
+      "name": "debt.forest-favour",
+      "category": "debt",
+      "source": "forest",
+      "author": "delapouite",
+      "meaning": "A favour asked of the forest."
+    },
+    {
+      "name": "debt.aga-loan",
+      "category": "debt",
+      "source": "coins",
+      "author": "delapouite",
+      "meaning": "The aga's loan."
+    },
+    {
+      "name": "debt.broken-promise",
+      "category": "debt",
+      "source": "broken-pottery",
+      "author": "delapouite",
+      "meaning": "A promise to the village, broken."
+    },
+    {
+      "name": "debt.bound-demon",
+      "category": "debt",
+      "source": "daemon-skull",
+      "author": "lorc",
+      "meaning": "A demon bound by the guardian: it will come to collect."
+    },
+    {
+      "name": "choice.empathy",
+      "category": "choice",
+      "source": "shaking-hands",
+      "author": "delapouite",
+      "meaning": "A choice of empathy: kindness, comfort, help."
+    },
+    {
+      "name": "choice.threat",
+      "category": "choice",
+      "source": "fist",
+      "author": "skoll",
+      "meaning": "A threatening choice: pressure, anger, force."
+    },
+    {
+      "name": "choice.lie",
+      "category": "choice",
+      "source": "domino-mask",
+      "author": "lorc",
+      "meaning": "A lie: what you say is not what you mean."
+    },
+    {
+      "name": "choice.occult",
+      "category": "choice",
+      "source": "pentacle",
+      "author": "skoll",
+      "meaning": "An occult choice: charms, signs, the other world."
+    },
+    {
+      "name": "ui.quest",
+      "category": "ui",
+      "source": "flag-objective",
+      "author": "delapouite",
+      "meaning": "Quests: what you set out to do."
+    },
+    {
+      "name": "ui.candle",
+      "category": "ui",
+      "source": "candle-flame",
+      "author": "lorc",
+      "meaning": "A candle goes out: something cannot be undone."
+    },
+    {
+      "name": "ui.history",
+      "category": "ui",
+      "source": "scroll-unfurled",
+      "author": "lorc",
+      "meaning": "What was said so far."
+    },
+    {
+      "name": "building.workshop",
+      "category": "building",
+      "source": "anvil",
+      "author": "lorc",
+      "meaning": "Workshop: tools, iron and silver."
+    },
+    {
+      "name": "building.school",
+      "category": "building",
+      "source": "open-book",
+      "author": "lorc",
+      "meaning": "School: letters for the children."
+    },
+    {
+      "name": "building.inn",
+      "category": "building",
+      "source": "beer-stein",
+      "author": "lorc",
+      "meaning": "Inn: a roof for travellers."
+    },
+    {
+      "name": "talent.relic-grave-candle",
+      "category": "talent",
+      "source": "candle-flame",
+      "author": "lorc",
+      "meaning": "Relic: the grave candle."
+    },
+    {
+      "name": "talent.relic-water-whisper",
+      "category": "talent",
+      "source": "water-drop",
+      "author": "sbed",
+      "meaning": "Relic: water whisper."
+    },
+    {
+      "name": "talent.relic-quiet-feet",
+      "category": "talent",
+      "source": "footprint",
+      "author": "lorc",
+      "meaning": "Relic: quiet feet."
+    },
+    {
+      "name": "talent.relic-salt-circle",
+      "category": "talent",
+      "source": "crystal-cluster",
+      "author": "lorc",
+      "meaning": "Relic: the salt circle."
+    }
+  ]
+}

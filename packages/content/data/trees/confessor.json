@@ -1,0 +1,75 @@
+{
+  "id": "confessor",
+  "tier": "demo",
+  "nameKey": "tree.confessor.name",
+  "descKey": "tree.confessor.desc",
+  "kind": "calling",
+  "rowCosts": [5, 10, 15, 20],
+  "columns": 3,
+  "nodes": [
+    {
+      "cell": "A1",
+      "talent": "listening-ear"
+    },
+    {
+      "cell": "B1",
+      "talent": "grit"
+    },
+    {
+      "cell": "C1",
+      "talent": "parish-register"
+    },
+    {
+      "cell": "A2",
+      "talent": "seal-of-confession",
+      "requires": ["A1"]
+    },
+    {
+      "cell": "B2",
+      "talent": "calm-the-flock",
+      "requires": ["B1"]
+    },
+    {
+      "cell": "C2",
+      "talent": "read-the-faces",
+      "requires": ["C1"]
+    },
+    {
+      "cell": "A3",
+      "talent": "penance",
+      "requires": ["A2"],
+      "tier": "full"
+    },
+    {
+      "cell": "B3",
+      "talent": "voice-of-reason",
+      "requires": ["B2"],
+      "tier": "full"
+    },
+    {
+      "cell": "C3",
+      "talent": "sins-laid-bare",
+      "requires": ["C2", "A2"],
+      "tier": "full"
+    },
+    {
+      "cell": "A4",
+      "talent": "absolution",
+      "requires": ["A3"],
+      "tier": "full"
+    },
+    {
+      "cell": "B4",
+      "talent": "peacemaker",
+      "requires": ["B3"],
+      "tier": "full"
+    },
+    {
+      "cell": "C4",
+      "talent": "judgement-of-souls",
+      "requires": ["C3"],
+      "tier": "full"
+    }
+  ],
+  "calling": "priests-acolyte"
+}

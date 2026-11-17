@@ -1,0 +1,92 @@
+{
+  "id": "chapel",
+  "tier": "demo",
+  "nameKey": "building.chapel.name",
+  "descKey": "building.chapel.desc",
+  "levels": [
+    {
+      "level": 1,
+      "descKey": "building.chapel.level-1",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 20
+          },
+          {
+            "item": "beeswax",
+            "qty": 5
+          }
+        ],
+        "labourDays": 6
+      },
+      "effects": [
+        {
+          "rule": "enable-chapel-services"
+        }
+      ],
+      "prosperity": 10
+    },
+    {
+      "level": 2,
+      "descKey": "building.chapel.level-2",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 36
+          },
+          {
+            "item": "beeswax",
+            "qty": 9
+          }
+        ],
+        "labourDays": 11
+      },
+      "effects": [
+        {
+          "modifier": {
+            "statBonus": "oil-cap",
+            "value": 10
+          }
+        },
+        {
+          "rule": "enable-crypt-altar"
+        }
+      ],
+      "prosperity": 20
+    },
+    {
+      "level": 3,
+      "descKey": "building.chapel.level-3",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 65
+          },
+          {
+            "item": "beeswax",
+            "qty": 16
+          },
+          {
+            "item": "iron",
+            "qty": 4
+          }
+        ],
+        "labourDays": 20
+      },
+      "effects": [
+        {
+          "rule": "relic-shrine",
+          "params": {
+            "sanityBonus": 10
+          }
+        }
+      ],
+      "prosperity": 30
+    }
+  ],
+  "icon": "building.chapel",
+  "poi": "church"
+}

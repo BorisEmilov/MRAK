@@ -1,0 +1,72 @@
+[
+  {
+    "id": "combat",
+    "tier": "demo",
+    "nameKey": "skill.combat.name",
+    "descKey": "skill.combat.desc",
+    "attribute": "vigor"
+  },
+  {
+    "id": "stealth",
+    "tier": "demo",
+    "nameKey": "skill.stealth.name",
+    "descKey": "skill.stealth.desc",
+    "attribute": "agility"
+  },
+  {
+    "id": "investigation",
+    "tier": "demo",
+    "nameKey": "skill.investigation.name",
+    "descKey": "skill.investigation.desc",
+    "attribute": "wits"
+  },
+  {
+    "id": "lore",
+    "tier": "demo",
+    "nameKey": "skill.lore.name",
+    "descKey": "skill.lore.desc",
+    "attribute": "wits"
+  },
+  {
+    "id": "herbalism",
+    "tier": "demo",
+    "nameKey": "skill.herbalism.name",
+    "descKey": "skill.herbalism.desc",
+    "attribute": "wits"
+  },
+  {
+    "id": "occultism",
+    "tier": "demo",
+    "nameKey": "skill.occultism.name",
+    "descKey": "skill.occultism.desc",
+    "attribute": "cunning"
+  },
+  {
+    "id": "survival",
+    "tier": "demo",
+    "nameKey": "skill.survival.name",
+    "descKey": "skill.survival.desc",
+    "attribute": "cunning"
+  },
+  {
+    "id": "exorcism",
+    "tier": "demo",
+    "nameKey": "skill.exorcism.name",
+    "descKey": "skill.exorcism.desc",
+    "attribute": "resolve"
+  },
+  {
+    "id": "faith",
+    "tier": "demo",
+    "nameKey": "skill.faith.name",
+    "descKey": "skill.faith.desc",
+    "attribute": "resolve"
+  },
+  {
+    "id": "persuasion",
+    "tier": "demo",
+    "nameKey": "skill.persuasion.name",
+    "descKey": "skill.persuasion.desc",
+    "attribute": "presence"
+  }
+]

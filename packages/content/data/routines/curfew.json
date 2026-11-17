@@ -1,0 +1,26 @@
+{
+  "id": "curfew",
+  "tier": "demo",
+  "nameKey": "routine.curfew.name",
+  "priority": 30,
+  "when": {
+    "stat": "hysteria",
+    ">=": 60
+  },
+  "window": {
+    "from": "16:00",
+    "to": "06:00"
+  },
+  "blocks": [
+    {
+      "at": "16:00",
+      "activity": "rest",
+      "place": "home"
+    },
+    {
+      "at": "19:00",
+      "activity": "sleep",
+      "place": "home"
+    }
+  ]
+}

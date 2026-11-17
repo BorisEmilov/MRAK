@@ -1,0 +1,75 @@
+{
+  "id": "charm-speaker",
+  "tier": "demo",
+  "nameKey": "tree.charm-speaker.name",
+  "descKey": "tree.charm-speaker.desc",
+  "kind": "calling",
+  "rowCosts": [5, 10, 15, 20],
+  "columns": 3,
+  "nodes": [
+    {
+      "cell": "A1",
+      "talent": "baene"
+    },
+    {
+      "cell": "B1",
+      "talent": "red-thread"
+    },
+    {
+      "cell": "C1",
+      "talent": "listening-to-water"
+    },
+    {
+      "cell": "A2",
+      "talent": "charm-the-lesser",
+      "requires": ["A1"]
+    },
+    {
+      "cell": "B2",
+      "talent": "knotwork",
+      "requires": ["B1"]
+    },
+    {
+      "cell": "C2",
+      "talent": "speak-with-the-forest",
+      "requires": ["C1"]
+    },
+    {
+      "cell": "A3",
+      "talent": "turning-charm",
+      "requires": ["A2"],
+      "tier": "full"
+    },
+    {
+      "cell": "B3",
+      "talent": "woven-ward",
+      "requires": ["B2"],
+      "tier": "full"
+    },
+    {
+      "cell": "C3",
+      "talent": "moon-lore",
+      "requires": ["C2"],
+      "tier": "full"
+    },
+    {
+      "cell": "A4",
+      "talent": "unmaking",
+      "requires": ["A3"],
+      "tier": "full"
+    },
+    {
+      "cell": "B4",
+      "talent": "ward-the-village",
+      "requires": ["B3"],
+      "tier": "full"
+    },
+    {
+      "cell": "C4",
+      "talent": "samodivas-favour",
+      "requires": ["C3"],
+      "tier": "full"
+    }
+  ],
+  "calling": "znaharka"
+}

@@ -1,0 +1,274 @@
+[
+  {
+    "id": "bad-dream",
+    "tier": "demo",
+    "creditor": "horned-one",
+    "severity": "minor",
+    "descKey": "debt-collection.bad-dream.desc",
+    "weight": 3,
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -10
+      }
+    ]
+  },
+  {
+    "id": "sour-milk",
+    "tier": "demo",
+    "creditor": "horned-one",
+    "severity": "minor",
+    "descKey": "debt-collection.sour-milk.desc",
+    "weight": 2,
+    "effects": [
+      {
+        "takeItem": "bread",
+        "qty": 2,
+        "from": "storage"
+      },
+      {
+        "addStat": "hysteria",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "id": "knock-at-the-door",
+    "tier": "demo",
+    "creditor": "horned-one",
+    "severity": "major",
+    "descKey": "debt-collection.knock-at-the-door.desc",
+    "weight": 2,
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -20
+      },
+      {
+        "addStat": "notice",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "id": "fever-in-a-house",
+    "tier": "demo",
+    "creditor": "horned-one",
+    "severity": "major",
+    "descKey": "debt-collection.fever-in-a-house.desc",
+    "weight": 2,
+    "effects": [
+      {
+        "rule": "sicken-villager",
+        "params": {
+          "closestAffinity": true
+        }
+      },
+      {
+        "addStat": "hysteria",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "clause-comes-due",
+    "tier": "demo",
+    "creditor": "horned-one",
+    "severity": "grave",
+    "descKey": "debt-collection.clause-comes-due.desc",
+    "weight": 1,
+    "effects": [
+      {
+        "addStat": "corruption",
+        "value": 8
+      },
+      {
+        "addStat": "sanity",
+        "value": -25
+      },
+      {
+        "addStat": "hysteria",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "id": "lost-path",
+    "tier": "demo",
+    "creditor": "forest-spirit",
+    "severity": "minor",
+    "descKey": "debt-collection.lost-path.desc",
+    "weight": 3,
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -8
+      }
+    ]
+  },
+  {
+    "id": "withered-herbs",
+    "tier": "demo",
+    "creditor": "forest-spirit",
+    "severity": "minor",
+    "descKey": "debt-collection.withered-herbs.desc",
+    "weight": 2,
+    "effects": [
+      {
+        "takeItem": "st-johns-wort",
+        "qty": 2,
+        "from": "storage"
+      },
+      {
+        "addStat": "sanity",
+        "value": -4
+      }
+    ]
+  },
+  {
+    "id": "samodivi-dance",
+    "tier": "demo",
+    "creditor": "forest-spirit",
+    "severity": "major",
+    "descKey": "debt-collection.samodivi-dance.desc",
+    "weight": 1,
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -18
+      },
+      {
+        "addStat": "hysteria",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "id": "forest-takes-one",
+    "tier": "demo",
+    "creditor": "forest-spirit",
+    "severity": "grave",
+    "descKey": "debt-collection.forest-takes-one.desc",
+    "weight": 1,
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -30
+      },
+      {
+        "addStat": "hysteria",
+        "value": 12
+      }
+    ]
+  },
+  {
+    "id": "aga-collector",
+    "tier": "demo",
+    "creditor": "aga",
+    "severity": "minor",
+    "descKey": "debt-collection.aga-collector.desc",
+    "weight": 3,
+    "effects": [
+      {
+        "takeItem": "firewood",
+        "qty": 4,
+        "from": "storage"
+      },
+      {
+        "takeItem": "bread",
+        "qty": 2,
+        "from": "storage"
+      }
+    ]
+  },
+  {
+    "id": "aga-shame",
+    "tier": "demo",
+    "creditor": "aga",
+    "severity": "major",
+    "descKey": "debt-collection.aga-shame.desc",
+    "weight": 2,
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 8
+      },
+      {
+        "addStat": "prosperity-score",
+        "value": -10
+      }
+    ]
+  },
+  {
+    "id": "aga-soldiers",
+    "tier": "demo",
+    "creditor": "aga",
+    "severity": "grave",
+    "descKey": "debt-collection.aga-soldiers.desc",
+    "weight": 1,
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 15
+      },
+      {
+        "addStat": "prosperity-score",
+        "value": -25
+      },
+      {
+        "addStat": "sanity",
+        "value": -10
+      }
+    ]
+  },
+  {
+    "id": "cold-shoulder",
+    "tier": "demo",
+    "creditor": "village",
+    "severity": "minor",
+    "descKey": "debt-collection.cold-shoulder.desc",
+    "weight": 3,
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "id": "whispers-at-the-well",
+    "tier": "demo",
+    "creditor": "village",
+    "severity": "major",
+    "descKey": "debt-collection.whispers-at-the-well.desc",
+    "weight": 2,
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 10
+      },
+      {
+        "addStat": "faith",
+        "value": -5
+      }
+    ]
+  },
+  {
+    "id": "they-stop-asking",
+    "tier": "demo",
+    "creditor": "village",
+    "severity": "grave",
+    "descKey": "debt-collection.they-stop-asking.desc",
+    "weight": 1,
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 15
+      },
+      {
+        "addStat": "faith",
+        "value": -10
+      }
+    ]
+  }
+]

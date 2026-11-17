@@ -1,0 +1,95 @@
+{
+  "id": "school",
+  "tier": "full",
+  "nameKey": "building.school.name",
+  "descKey": "building.school.desc",
+  "icon": "building.school",
+  "levels": [
+    {
+      "level": 1,
+      "descKey": "building.school.level-1",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 25
+          },
+          {
+            "item": "beeswax",
+            "qty": 4
+          }
+        ],
+        "labourDays": 8
+      },
+      "minProsperity": 2,
+      "prosperity": 15,
+      "effects": [
+        {
+          "modifier": {
+            "statBonus": "journal-pages",
+            "value": 2
+          }
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "descKey": "building.school.level-2",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 40
+          },
+          {
+            "item": "beeswax",
+            "qty": 8
+          }
+        ],
+        "labourDays": 14
+      },
+      "minProsperity": 3,
+      "prosperity": 20,
+      "effects": [
+        {
+          "unlockTree": "confessor"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "descKey": "building.school.level-3",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 70
+          },
+          {
+            "item": "iron",
+            "qty": 6
+          },
+          {
+            "item": "beeswax",
+            "qty": 12
+          }
+        ],
+        "labourDays": 24
+      },
+      "minProsperity": 4,
+      "prosperity": 35,
+      "requires": {
+        "stat": "year",
+        ">=": 1856
+      },
+      "effects": [
+        {
+          "modifier": {
+            "statBonus": "sanity-max",
+            "value": 5
+          }
+        }
+      ]
+    }
+  ]
+}

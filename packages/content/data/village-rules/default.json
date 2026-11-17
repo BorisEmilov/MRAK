@@ -1,0 +1,204 @@
+{
+  "id": "default",
+  "tier": "demo",
+  "zone": "village",
+  "fear": {
+    "contagionRate": 0.02,
+    "contagionCap": 5,
+    "proximityWeight": 0.25,
+    "faithDamping": 0.5,
+    "tagMultiplier": 1.5,
+    "needFearPerHour": 1,
+    "darkFearPerHour": 1,
+    "solitudeFearPerHour": 1,
+    "deathOfCloseRelation": 25,
+    "deathInVillage": 5,
+    "closeAffinity": 50,
+    "returnedSighting": 10,
+    "decayPerDawn": 5,
+    "decayWhenHysterical": 3,
+    "hysteriaThreshold": 60,
+    "terrifiedAt": 80,
+    "calmBelow": 60,
+    "panicAt": 100,
+    "nightTaskMaxFear": 80,
+    "maskedFactor": 0.3
+  },
+  "needs": {
+    "hungerPerHour": 3,
+    "mealRelief": 45,
+    "mealItem": "bread",
+    "portionsPerItem": 4,
+    "coldReliefByDay": 4,
+    "coldPerNightHour": {
+      "winter": 6,
+      "spring": 2,
+      "summer": 0,
+      "autumn": 3
+    },
+    "warmthAtHome": 6,
+    "unheatedFactor": 0.5,
+    "firewoodItem": "firewood",
+    "firewoodPerHome": 1,
+    "faithDecayPerDay": 2,
+    "prayFaithPerHour": 6,
+    "threshold": 70
+  },
+  "health": {
+    "lossPerHour": 3,
+    "critical": 90,
+    "regenPerHour": 0.5,
+    "sickBelow": 50,
+    "recoveredAt": 75
+  },
+  "tasks": {
+    "carryOver": 0.5,
+    "repairStat": "village-repair",
+    "repairDecayPerDawn": 3,
+    "watchStat": "night-watch"
+  },
+  "death": {
+    "unquietCauses": ["violence", "drowning", "suicide", "lynching"],
+    "returnAfterNights": 1,
+    "sextonTrait": "sexton",
+    "priestTrait": "priest",
+    "riteItems": [
+      {
+        "item": "incense",
+        "qty": 1
+      }
+    ],
+    "layToRestItems": [
+      {
+        "item": "garlic",
+        "qty": 2
+      }
+    ],
+    "returnedSanityHit": 8,
+    "grave": "cemetery"
+  },
+  "possession": {
+    "sleepwalkPlace": "well",
+    "sleepwalkFrom": "02:00",
+    "sleepwalkTo": "03:00"
+  },
+  "growth": {
+    "constructionTask": "construction",
+    "prosperityLevels": [0, 80, 180, 300, 420],
+    "levelEffects": [
+      {
+        "level": 2,
+        "effects": [
+          {
+            "setFlag": "trader-visits"
+          }
+        ]
+      },
+      {
+        "level": 3,
+        "effects": [
+          {
+            "setFlag": "craftsmen-arrive"
+          }
+        ]
+      },
+      {
+        "level": 4,
+        "effects": [
+          {
+            "setFlag": "fair-held"
+          }
+        ]
+      },
+      {
+        "level": 5,
+        "effects": [
+          {
+            "setFlag": "town-charter"
+          }
+        ]
+      }
+    ],
+    "prosperity": {
+      "perResident": 1.5,
+      "chapterObserved": 10,
+      "death": 4,
+      "lynching": 20,
+      "debtCollected": 5,
+      "decayPerYear": 12
+    },
+    "population": {
+      "adultAge": 16,
+      "elderAge": 55,
+      "maxAge": 92,
+      "oldAgeDeath": 0.02,
+      "marriageChance": 0.35,
+      "birthChance": 0.3,
+      "outsiderChance": [0.25, 0.45, 0.6, 0.75, 0.9],
+      "flightChance": 0.08,
+      "cap": 150
+    },
+    "names": {
+      "female": [
+        "name.dobra",
+        "name.mara",
+        "name.stoyna",
+        "name.rada",
+        "name.vela",
+        "name.yana",
+        "name.kalina",
+        "name.tsveta"
+      ],
+      "male": [
+        "name.hristo",
+        "name.kostadin",
+        "name.vulko",
+        "name.ivan",
+        "name.nikola",
+        "name.georgi",
+        "name.angel",
+        "name.rusi"
+      ]
+    },
+    "trades": [
+      "trade.shepherd",
+      "trade.weaver",
+      "trade.smith",
+      "trade.miller",
+      "trade.potter",
+      "trade.beekeeper"
+    ],
+    "secrets": [
+      {
+        "id": "fled-a-blood-feud",
+        "descKey": "secret.newcomer.fled-a-blood-feud",
+        "minProsperity": 1
+      },
+      {
+        "id": "debt-to-the-aga",
+        "descKey": "secret.newcomer.debt-to-the-aga",
+        "minProsperity": 1
+      },
+      {
+        "id": "buried-a-child-unbaptized",
+        "descKey": "secret.newcomer.buried-a-child-unbaptized",
+        "minProsperity": 1
+      },
+      {
+        "id": "haidut-courier",
+        "descKey": "secret.newcomer.haidut-courier",
+        "minProsperity": 2
+      },
+      {
+        "id": "zlatevi-kin",
+        "descKey": "secret.newcomer.zlatevi-kin",
+        "minProsperity": 3
+      },
+      {
+        "id": "read-the-black-book",
+        "descKey": "secret.newcomer.read-the-black-book",
+        "minProsperity": 4
+      }
+    ]
+  }
+}

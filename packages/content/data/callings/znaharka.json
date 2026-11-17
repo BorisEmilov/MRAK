@@ -1,0 +1,48 @@
+{
+  "id": "znaharka",
+  "tier": "demo",
+  "nameKey": "calling.znaharka.name",
+  "descKey": "calling.znaharka.desc",
+  "attributeBonuses": ["wits", "cunning"],
+  "callingSkills": ["herbalism", "occultism", "survival", "persuasion"],
+  "startingRanks": ["herbalism", "occultism", "survival"],
+  "trees": ["folk-healer", "charm-speaker"],
+  "startingGear": [
+    {
+      "item": "lead",
+      "qty": 3
+    },
+    {
+      "item": "red-thread",
+      "qty": 3
+    },
+    {
+      "item": "lamp-oil",
+      "qty": 4
+    }
+  ],
+  "ability": {
+    "nameKey": "calling.znaharka.ability.name",
+    "descKey": "calling.znaharka.ability.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "day",
+          "effects": [
+            {
+              "rule": "lead-pouring-diagnose"
+            },
+            {
+              "setFlag": "lead-poured"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "defaultVirtue": "compassion",
+  "defaultSin": "wrath",
+  "startingFaith": 40,
+  "startingEquipment": ["knife", "sheepskin-coat"]
+}

@@ -1,0 +1,344 @@
+{
+  "id": "girl-without-a-shadow",
+  "tier": "demo",
+  "nameKey": "mystery.girl-without-a-shadow.name",
+  "questionKey": "mystery.girl-without-a-shadow.question",
+  "chapter": "unclean-days",
+  "deadlineNight": 12,
+  "suspects": [
+    {
+      "villager": "krastyo",
+      "whyGuiltyKey": "mystery.girl-without-a-shadow.krastyo.guilty",
+      "whyInnocentKey": "mystery.girl-without-a-shadow.krastyo.innocent"
+    },
+    {
+      "villager": "baba-neda",
+      "whyGuiltyKey": "mystery.girl-without-a-shadow.neda.guilty",
+      "whyInnocentKey": "mystery.girl-without-a-shadow.neda.innocent"
+    },
+    {
+      "villager": "todor",
+      "whyGuiltyKey": "mystery.girl-without-a-shadow.todor.guilty",
+      "whyInnocentKey": "mystery.girl-without-a-shadow.todor.innocent"
+    }
+  ],
+  "causes": [
+    {
+      "id": "immured-shadow",
+      "nameKey": "mystery.girl-without-a-shadow.cause.immured-shadow"
+    },
+    {
+      "id": "samodiva-theft",
+      "nameKey": "mystery.girl-without-a-shadow.cause.samodiva-theft"
+    },
+    {
+      "id": "demon-in-her",
+      "nameKey": "mystery.girl-without-a-shadow.cause.demon-in-her"
+    }
+  ],
+  "remedies": [
+    {
+      "id": "exhume-the-thread",
+      "nameKey": "mystery.girl-without-a-shadow.remedy.exhume-the-thread",
+      "action": "exhume"
+    },
+    {
+      "id": "exorcise-mara",
+      "nameKey": "mystery.girl-without-a-shadow.remedy.exorcise-mara",
+      "action": "exorcise"
+    },
+    {
+      "id": "burn-the-charms",
+      "nameKey": "mystery.girl-without-a-shadow.remedy.burn-the-charms",
+      "action": "burn"
+    },
+    {
+      "id": "drive-out-the-stranger",
+      "nameKey": "mystery.girl-without-a-shadow.remedy.drive-out-the-stranger",
+      "action": "accuse"
+    },
+    {
+      "id": "confront-the-miller",
+      "nameKey": "mystery.girl-without-a-shadow.remedy.confront-the-miller",
+      "action": "confront"
+    }
+  ],
+  "clues": [
+    {
+      "id": "g-no-shadow",
+      "nameKey": "clue.g-no-shadow.name",
+      "descKey": "clue.g-no-shadow.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "radka"
+        }
+      ],
+      "supports": ["cause:immured-shadow", "cause:samodiva-theft"],
+      "refutes": []
+    },
+    {
+      "id": "g-measured",
+      "nameKey": "clue.g-measured.name",
+      "descKey": "clue.g-measured.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "radka",
+          "when": {
+            "flag": "mara-shadow-gone"
+          }
+        }
+      ],
+      "supports": ["cause:immured-shadow", "opportunity:krastyo"],
+      "refutes": []
+    },
+    {
+      "id": "g-fresh-mortar",
+      "nameKey": "clue.g-fresh-mortar.name",
+      "descKey": "clue.g-fresh-mortar.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "village",
+          "poi": "mill",
+          "check": {
+            "skill": "investigation",
+            "difficulty": "average"
+          }
+        }
+      ],
+      "supports": ["culprit:krastyo", "remedy:exhume-the-thread"],
+      "refutes": []
+    },
+    {
+      "id": "g-red-sleeve",
+      "nameKey": "clue.g-red-sleeve.name",
+      "descKey": "clue.g-red-sleeve.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "velika"
+        }
+      ],
+      "supports": ["culprit:krastyo"],
+      "refutes": []
+    },
+    {
+      "id": "g-mill-debt",
+      "nameKey": "clue.g-mill-debt.name",
+      "descKey": "clue.g-mill-debt.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "chorbadzhi-dimo"
+        }
+      ],
+      "supports": ["motive:krastyo"],
+      "refutes": []
+    },
+    {
+      "id": "g-wheel-voice",
+      "nameKey": "clue.g-wheel-voice.name",
+      "descKey": "clue.g-wheel-voice.desc",
+      "reliability": "doubtful",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "krastyo"
+        }
+      ],
+      "supports": ["culprit:krastyo", "cause:immured-shadow"],
+      "refutes": []
+    },
+    {
+      "id": "g-neda-threads",
+      "nameKey": "clue.g-neda-threads.name",
+      "descKey": "clue.g-neda-threads.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "village",
+          "poi": "garden"
+        }
+      ],
+      "supports": ["culprit:baba-neda"],
+      "refutes": []
+    },
+    {
+      "id": "g-neda-alibi",
+      "nameKey": "clue.g-neda-alibi.name",
+      "descKey": "clue.g-neda-alibi.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "velika",
+          "when": {
+            "flag": "mara-shadow-gone"
+          }
+        }
+      ],
+      "supports": [],
+      "refutes": ["culprit:baba-neda"]
+    },
+    {
+      "id": "g-priest-saw",
+      "nameKey": "clue.g-priest-saw.name",
+      "descKey": "clue.g-priest-saw.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "pop-stoyan"
+        }
+      ],
+      "supports": ["culprit:todor"],
+      "refutes": [],
+      "liar": {
+        "villager": "pop-stoyan",
+        "secret": "zlatno-silver"
+      }
+    },
+    {
+      "id": "g-todor-cord",
+      "nameKey": "clue.g-todor-cord.name",
+      "descKey": "clue.g-todor-cord.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "todor"
+        }
+      ],
+      "supports": [],
+      "refutes": ["culprit:todor"]
+    },
+    {
+      "id": "g-dance-ring",
+      "nameKey": "clue.g-dance-ring.name",
+      "descKey": "clue.g-dance-ring.desc",
+      "reliability": "doubtful",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "samodivi-forest"
+        }
+      ],
+      "supports": ["cause:samodiva-theft"],
+      "refutes": []
+    },
+    {
+      "id": "g-ballad",
+      "nameKey": "clue.g-ballad.name",
+      "descKey": "clue.g-ballad.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "collectible",
+          "ref": "song-of-the-mill"
+        }
+      ],
+      "supports": ["cause:immured-shadow", "remedy:exhume-the-thread"],
+      "refutes": []
+    }
+  ],
+  "solution": {
+    "culprit": "krastyo",
+    "cause": "immured-shadow",
+    "remedy": "exhume-the-thread"
+  },
+  "outcomes": [
+    {
+      "culprit": "krastyo",
+      "descKey": "mystery.girl-without-a-shadow.outcome.krastyo",
+      "effects": [
+        {
+          "setFlag": "mara-saved"
+        },
+        {
+          "addStat": "hysteria",
+          "value": -20
+        },
+        {
+          "addStat": "faith",
+          "value": 5
+        }
+      ]
+    },
+    {
+      "culprit": "baba-neda",
+      "descKey": "mystery.girl-without-a-shadow.outcome.neda",
+      "effects": [
+        {
+          "setFlag": "mara-died"
+        },
+        {
+          "setStat": "suspicion",
+          "villager": "baba-neda",
+          "value": 100
+        },
+        {
+          "addStat": "hysteria",
+          "value": 20
+        },
+        {
+          "addStat": "village-corruption",
+          "value": 10
+        }
+      ]
+    },
+    {
+      "culprit": "todor",
+      "descKey": "mystery.girl-without-a-shadow.outcome.todor",
+      "effects": [
+        {
+          "setFlag": "mara-died"
+        },
+        {
+          "setStat": "suspicion",
+          "villager": "todor",
+          "value": 100
+        },
+        {
+          "addStat": "hysteria",
+          "value": 15
+        },
+        {
+          "addStat": "village-corruption",
+          "value": 5
+        }
+      ]
+    }
+  ],
+  "partial": {
+    "descKey": "mystery.girl-without-a-shadow.partial",
+    "effects": [
+      {
+        "setFlag": "mara-died"
+      },
+      {
+        "addStat": "hysteria",
+        "value": 5
+      }
+    ]
+  },
+  "unsolved": {
+    "descKey": "mystery.girl-without-a-shadow.unsolved",
+    "effects": [
+      {
+        "setFlag": "mara-died"
+      },
+      {
+        "addStat": "hysteria",
+        "value": 10
+      }
+    ]
+  }
+}

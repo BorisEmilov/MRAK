@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$ref": "#/$defs/Modifier",
+  "$defs": {
+    "Modifier": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "fateDice": {
+              "type": "integer",
+              "minimum": -3,
+              "maximum": 3
+            },
+            "skill": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a skill"
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            },
+            "perDebt": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "fateDice"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "shadowDice": {
+              "type": "integer",
+              "minimum": -3,
+              "maximum": 3
+            },
+            "skill": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a skill"
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            }
+          },
+          "required": [
+            "shadowDice"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "statBonus": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "statBonus",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "multiply": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "factor": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 10
+            }
+          },
+          "required": [
+            "multiply",
+            "factor"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "convertOmen": {
+              "type": "string",
+              "enum": [
+                "bad-to-none",
+                "none-to-good",
+                "good-to-bad"
+              ]
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            }
+          },
+          "required": [
+            "convertOmen"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

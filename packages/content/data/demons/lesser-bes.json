@@ -1,0 +1,61 @@
+{
+  "id": "lesser-bes",
+  "tier": "demo",
+  "nameKey": "demon.lesser-bes.name",
+  "epithetKey": "demon.lesser-bes.epithet",
+  "trueNameKey": "demon.lesser-bes.true-name",
+  "loreKey": "demon.lesser-bes.lore",
+  "rank": 1,
+  "origin": "folklore",
+  "seal": null,
+  "symptoms": [
+    {
+      "stage": 1,
+      "descKey": "demon.lesser-bes.symptom-1"
+    },
+    {
+      "stage": 2,
+      "descKey": "demon.lesser-bes.symptom-2"
+    },
+    {
+      "stage": 3,
+      "descKey": "demon.lesser-bes.symptom-3"
+    }
+  ],
+  "weaknesses": [
+    {
+      "descKey": "demon.lesser-bes.weakness-1",
+      "item": "incense"
+    },
+    {
+      "descKey": "demon.lesser-bes.weakness-2",
+      "item": "holy-water"
+    }
+  ],
+  "desires": ["demon.lesser-bes.desire-1"],
+  "maxStage": 3,
+  "phrases": [
+    "demon.lesser-bes.phrase-1",
+    "demon.lesser-bes.phrase-2",
+    "demon.lesser-bes.phrase-3"
+  ],
+  "taunts": {
+    "pact": "demon.lesser-bes.taunt.pact",
+    "sacrifice": "demon.lesser-bes.taunt.sacrifice",
+    "death": "demon.lesser-bes.taunt.death",
+    "lynching": "demon.lesser-bes.taunt.lynching",
+    "debt": "demon.lesser-bes.taunt.debt"
+  },
+  "fragments": [
+    {
+      "id": "grimoire",
+      "source": "grimoire",
+      "textKey": "demon.lesser-bes.fragment.grimoire"
+    },
+    {
+      "id": "confession",
+      "source": "confession",
+      "textKey": "demon.lesser-bes.fragment.confession"
+    }
+  ]
+}

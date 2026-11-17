@@ -1,0 +1,57 @@
+{
+  "id": "early-riser",
+  "tier": "demo",
+  "nameKey": "routine.early-riser.name",
+  "blocks": [
+    {
+      "at": "00:00",
+      "activity": "sleep",
+      "place": "home"
+    },
+    {
+      "at": "05:00",
+      "activity": "chores",
+      "place": "home"
+    },
+    {
+      "at": "06:00",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "06:30",
+      "activity": "work",
+      "place": "work"
+    },
+    {
+      "at": "11:30",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "12:30",
+      "activity": "work",
+      "place": "work"
+    },
+    {
+      "at": "16:30",
+      "activity": "wander",
+      "place": "cemetery"
+    },
+    {
+      "at": "17:30",
+      "activity": "socialize",
+      "place": "well"
+    },
+    {
+      "at": "18:30",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "19:30",
+      "activity": "sleep",
+      "place": "home"
+    }
+  ]
+}

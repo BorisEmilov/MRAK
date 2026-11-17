@@ -1,0 +1,209 @@
+[
+  {
+    "id": "grimoire-page-mamnik",
+    "tier": "demo",
+    "nameKey": "collectible.grimoire-page-mamnik.name",
+    "descKey": "collectible.grimoire-page-mamnik.desc",
+    "kind": "grimoire-page",
+    "origin": "invented",
+    "journalPages": 2,
+    "forbidden": true,
+    "grants": [
+      {
+        "addClue": "m1-name"
+      },
+      {
+        "setFlag": "true-name-learned"
+      },
+      {
+        "nameFragment": "mamnik",
+        "fragment": "grimoire"
+      }
+    ]
+  },
+  {
+    "id": "seal-of-three-rings",
+    "tier": "demo",
+    "nameKey": "collectible.seal-of-three-rings.name",
+    "descKey": "collectible.seal-of-three-rings.desc",
+    "kind": "grimoire-page",
+    "origin": "invented",
+    "journalPages": 1,
+    "forbidden": true,
+    "grants": [
+      {
+        "addClue": "m1-seal"
+      }
+    ]
+  },
+  {
+    "id": "tale-of-the-water-bride",
+    "tier": "demo",
+    "nameKey": "collectible.tale-of-the-water-bride.name",
+    "descKey": "collectible.tale-of-the-water-bride.desc",
+    "kind": "folk-tale",
+    "origin": "invented",
+    "journalPages": 1,
+    "grants": [
+      {
+        "narrate": "narrate.tale-of-the-water-bride"
+      }
+    ],
+    "source": {
+      "talk": "baba-neda",
+      "minAffinity": 0
+    }
+  },
+  {
+    "id": "daguerreotype-cemetery",
+    "tier": "full",
+    "nameKey": "collectible.daguerreotype-cemetery.name",
+    "descKey": "collectible.daguerreotype-cemetery.desc",
+    "kind": "daguerreotype",
+    "origin": "invented",
+    "journalPages": 1,
+    "minYear": 1858
+  },
+  {
+    "id": "song-of-the-sleeping-bride",
+    "tier": "demo",
+    "nameKey": "collectible.song-of-the-sleeping-bride.name",
+    "descKey": "collectible.song-of-the-sleeping-bride.desc",
+    "kind": "song",
+    "origin": "folklore",
+    "journalPages": 1,
+    "forbidden": false,
+    "grants": [],
+    "source": {
+      "talk": "velika"
+    }
+  },
+  {
+    "id": "song-of-the-mill",
+    "tier": "demo",
+    "nameKey": "collectible.song-of-the-mill.name",
+    "descKey": "collectible.song-of-the-mill.desc",
+    "kind": "song",
+    "origin": "folklore",
+    "journalPages": 1,
+    "forbidden": false,
+    "grants": [],
+    "source": {
+      "talk": "krastyo",
+      "minAffinity": 5
+    }
+  },
+  {
+    "id": "song-of-the-haiduti",
+    "tier": "demo",
+    "nameKey": "collectible.song-of-the-haiduti.name",
+    "descKey": "collectible.song-of-the-haiduti.desc",
+    "kind": "song",
+    "origin": "history",
+    "journalPages": 1,
+    "forbidden": false,
+    "grants": [
+      {
+        "setFlag": "haidut-seen-at-tavern"
+      }
+    ],
+    "source": {
+      "talk": "radka",
+      "minAffinity": 10
+    }
+  },
+  {
+    "id": "tale-of-the-grave-digger",
+    "tier": "demo",
+    "nameKey": "collectible.tale-of-the-grave-digger.name",
+    "descKey": "collectible.tale-of-the-grave-digger.desc",
+    "kind": "folk-tale",
+    "origin": "folklore",
+    "journalPages": 1,
+    "forbidden": false,
+    "grants": [],
+    "source": {
+      "talk": "petko"
+    }
+  },
+  {
+    "id": "tale-of-the-karakondzhul",
+    "tier": "demo",
+    "nameKey": "collectible.tale-of-the-karakondzhul.name",
+    "descKey": "collectible.tale-of-the-karakondzhul.desc",
+    "kind": "folk-tale",
+    "origin": "folklore",
+    "journalPages": 1,
+    "forbidden": false,
+    "grants": [],
+    "source": {
+      "talk": "pop-stoyan",
+      "when": {
+        "chapter": "unclean-days"
+      }
+    }
+  },
+  {
+    "id": "tale-of-the-borrowed-name",
+    "tier": "demo",
+    "nameKey": "collectible.tale-of-the-borrowed-name.name",
+    "descKey": "collectible.tale-of-the-borrowed-name.desc",
+    "kind": "folk-tale",
+    "origin": "invented",
+    "journalPages": 1,
+    "forbidden": false,
+    "grants": [],
+    "source": {
+      "talk": "todor",
+      "minAffinity": 5
+    }
+  },
+  {
+    "id": "relic-st-ivan-finger",
+    "tier": "demo",
+    "nameKey": "collectible.relic-st-ivan-finger.name",
+    "descKey": "collectible.relic-st-ivan-finger.desc",
+    "kind": "relic",
+    "origin": "history",
+    "journalPages": 1,
+    "forbidden": false,
+    "grants": [
+      {
+        "addStat": "faith",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "relic-koledar-staff",
+    "tier": "demo",
+    "nameKey": "collectible.relic-koledar-staff.name",
+    "descKey": "collectible.relic-koledar-staff.desc",
+    "kind": "relic",
+    "origin": "folklore",
+    "journalPages": 1,
+    "forbidden": false,
+    "grants": [
+      {
+        "addStat": "sanity",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "grimoire-page-moon",
+    "tier": "demo",
+    "nameKey": "collectible.grimoire-page-moon.name",
+    "descKey": "collectible.grimoire-page-moon.desc",
+    "kind": "grimoire-page",
+    "origin": "invented",
+    "journalPages": 1,
+    "forbidden": true,
+    "grants": [
+      {
+        "addStat": "notice",
+        "value": 5
+      }
+    ]
+  }
+]

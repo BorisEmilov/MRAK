@@ -1,0 +1,51 @@
+[
+  {
+    "id": "stanas-eyes",
+    "tier": "full",
+    "nameKey": "bloodline-node.stanas-eyes.name",
+    "descKey": "bloodline-node.stanas-eyes.desc",
+    "level": 2,
+    "cost": 12,
+    "requires": ["watchful-blood"],
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "investigation"
+        }
+      }
+    ]
+  },
+  {
+    "id": "hardy-stock",
+    "tier": "full",
+    "nameKey": "bloodline-node.hardy-stock.name",
+    "descKey": "bloodline-node.hardy-stock.desc",
+    "level": 2,
+    "cost": 12,
+    "requires": ["watchful-blood"],
+    "effects": [
+      {
+        "modifier": {
+          "statBonus": "sanity-max",
+          "value": 10
+        }
+      }
+    ]
+  },
+  {
+    "id": "the-red-thread",
+    "tier": "full",
+    "nameKey": "bloodline-node.the-red-thread.name",
+    "descKey": "bloodline-node.the-red-thread.desc",
+    "level": 2,
+    "cost": 12,
+    "requires": ["the-family-icon"],
+    "effects": [
+      {
+        "giveItem": "red-thread-amulet",
+        "qty": 1
+      }
+    ]
+  }
+]

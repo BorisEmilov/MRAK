@@ -1,0 +1,99 @@
+[
+  {
+    "id": "karakondzhul",
+    "tier": "demo",
+    "nameKey": "creature.karakondzhul.name",
+    "descKey": "creature.karakondzhul.desc",
+    "origin": "folklore",
+    "threat": 3,
+    "health": 60,
+    "resistanceTier": 1,
+    "weaknesses": [
+      {
+        "kind": "fire",
+        "descKey": "creature.karakondzhul.weakness-fire"
+      },
+      {
+        "kind": "time",
+        "descKey": "creature.karakondzhul.weakness-cock"
+      },
+      {
+        "kind": "rite",
+        "descKey": "creature.karakondzhul.weakness-tar"
+      },
+      {
+        "kind": "item",
+        "item": "salt",
+        "descKey": "creature.karakondzhul.weakness-salt"
+      }
+    ],
+    "zones": ["village", "samodivi-forest"],
+    "activeWhen": {
+      "chapter": "unclean-days"
+    },
+    "ai": {
+      "speed": 1.8,
+      "sight": 4,
+      "hearing": 1,
+      "fleeLight": true,
+      "memory": 5,
+      "damage": 20
+    }
+  },
+  {
+    "id": "lesser-bes",
+    "tier": "demo",
+    "nameKey": "creature.lesser-bes.name",
+    "descKey": "creature.lesser-bes.desc",
+    "origin": "folklore",
+    "threat": 1,
+    "health": 20,
+    "resistanceTier": 0,
+    "weaknesses": [
+      {
+        "kind": "item",
+        "item": "holy-water",
+        "descKey": "creature.lesser-bes.weakness-water"
+      },
+      {
+        "kind": "light",
+        "descKey": "creature.lesser-bes.weakness-light"
+      }
+    ],
+    "zones": ["samodivi-forest", "monastery", "village"],
+    "ai": {
+      "speed": 2.4,
+      "sight": 3,
+      "hearing": 1.2,
+      "fleeLight": true,
+      "memory": 3,
+      "damage": 8
+    }
+  },
+  {
+    "id": "returned",
+    "tier": "demo",
+    "nameKey": "creature.returned.name",
+    "descKey": "creature.returned.desc",
+    "origin": "folklore",
+    "threat": 2,
+    "health": 45,
+    "resistanceTier": 1,
+    "weaknesses": [
+      {
+        "kind": "item",
+        "item": "garlic",
+        "descKey": "creature.returned.weakness-garlic"
+      }
+    ],
+    "zones": ["village", "monastery"],
+    "ai": {
+      "speed": 1.2,
+      "sight": 5,
+      "hearing": 0.6,
+      "fleeLight": false,
+      "memory": 8,
+      "damage": 15
+    }
+  }
+]

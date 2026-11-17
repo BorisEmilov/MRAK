@@ -1,0 +1,169 @@
+[
+  {
+    "id": "lantern",
+    "tier": "demo",
+    "nameKey": "gear.lantern.name",
+    "descKey": "gear.lantern.desc",
+    "slot": "lantern",
+    "blessingSlots": 2,
+    "lightRadius": 4,
+    "icon": "gear.lantern",
+    "upgrades": [
+      {
+        "id": "brass-hood",
+        "nameKey": "gear.lantern.upgrade.brass-hood",
+        "materials": [
+          {
+            "item": "iron",
+            "qty": 1
+          },
+          {
+            "item": "beeswax",
+            "qty": 1
+          }
+        ],
+        "blessingSlots": 1,
+        "effects": []
+      }
+    ]
+  },
+  {
+    "id": "wooden-cross",
+    "tier": "demo",
+    "nameKey": "gear.wooden-cross.name",
+    "descKey": "gear.wooden-cross.desc",
+    "slot": "amulet",
+    "blessingSlots": 1,
+    "effects": [
+      {
+        "modifier": {
+          "shadowDice": -1,
+          "context": "vs-lesser-bes"
+        }
+      }
+    ],
+    "icon": "gear.wooden-cross"
+  },
+  {
+    "id": "knife",
+    "tier": "demo",
+    "nameKey": "gear.knife.name",
+    "descKey": "gear.knife.desc",
+    "slot": "weapon",
+    "blessingSlots": 1,
+    "damageTier": 1,
+    "icon": "gear.knife",
+    "upgrades": [
+      {
+        "id": "whetted",
+        "nameKey": "gear.knife.upgrade.whetted",
+        "materials": [
+          {
+            "item": "iron",
+            "qty": 1
+          }
+        ],
+        "blessingSlots": 1,
+        "effects": [
+          {
+            "modifier": {
+              "fateDice": 1,
+              "skill": "combat"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "censer",
+    "tier": "demo",
+    "nameKey": "gear.censer.name",
+    "descKey": "gear.censer.desc",
+    "slot": "tool",
+    "blessingSlots": 1,
+    "icon": "gear.censer",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "faith",
+          "context": "vs-demon"
+        }
+      }
+    ]
+  },
+  {
+    "id": "cassock",
+    "tier": "demo",
+    "nameKey": "gear.cassock.name",
+    "descKey": "gear.cassock.desc",
+    "slot": "clothing",
+    "blessingSlots": 1,
+    "icon": "gear.cassock",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "persuasion",
+          "context": "hysteria-calming"
+        }
+      }
+    ]
+  },
+  {
+    "id": "sheepskin-coat",
+    "tier": "demo",
+    "nameKey": "gear.sheepskin-coat.name",
+    "descKey": "gear.sheepskin-coat.desc",
+    "slot": "clothing",
+    "blessingSlots": 1,
+    "icon": "gear.sheepskin-coat",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "survival"
+        }
+      }
+    ],
+    "upgrades": [
+      {
+        "id": "lined-pockets",
+        "nameKey": "gear.sheepskin-coat.upgrade.lined-pockets",
+        "materials": [
+          {
+            "item": "red-thread",
+            "qty": 2
+          }
+        ],
+        "blessingSlots": 0,
+        "effects": [
+          {
+            "modifier": {
+              "statBonus": "pack-slots",
+              "value": 2
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "blue-bead",
+    "tier": "demo",
+    "nameKey": "gear.blue-bead.name",
+    "descKey": "gear.blue-bead.desc",
+    "slot": "amulet",
+    "blessingSlots": 1,
+    "icon": "gear.blue-bead",
+    "effects": [
+      {
+        "modifier": {
+          "shadowDice": -1,
+          "context": "vs-evil-eye"
+        }
+      }
+    ]
+  }
+]

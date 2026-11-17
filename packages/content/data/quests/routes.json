@@ -1,0 +1,109 @@
+[
+  {
+    "id": "the-forests-oath",
+    "tier": "demo",
+    "nameKey": "quest.the-forests-oath.name",
+    "kind": "route",
+    "icon": "faction.forest-spirits",
+    "excludes": ["clear-the-grove"],
+    "startWhen": {
+      "flag": "forest-spirit-heard"
+    },
+    "failWhen": {
+      "flag": "forest-hostile"
+    },
+    "stages": [
+      {
+        "id": "answer",
+        "descKey": "quest.the-forests-oath.answer",
+        "objectives": [
+          {
+            "id": "promise",
+            "descKey": "quest.the-forests-oath.promise",
+            "condition": {
+              "flag": "samodivi-allied"
+            },
+            "marker": {
+              "zone": "samodivi-forest",
+              "poi": "old-oak"
+            }
+          }
+        ]
+      },
+      {
+        "id": "keep",
+        "descKey": "quest.the-forests-oath.keep",
+        "noReturn": true,
+        "objectives": [
+          {
+            "id": "enyovden",
+            "descKey": "quest.the-forests-oath.enyovden",
+            "condition": {
+              "date": {
+                "from": "06-24",
+                "to": "06-24"
+              }
+            }
+          }
+        ],
+        "onComplete": [
+          {
+            "milestone": "route-milestone"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "clear-the-grove",
+    "tier": "demo",
+    "nameKey": "quest.clear-the-grove.name",
+    "kind": "villager",
+    "icon": "faction.village",
+    "excludes": ["the-forests-oath"],
+    "startWhen": {
+      "flag": "grove-agreed"
+    },
+    "failWhen": {
+      "flag": "samodivi-allied"
+    },
+    "stages": [
+      {
+        "id": "defy",
+        "descKey": "quest.clear-the-grove.defy",
+        "objectives": [
+          {
+            "id": "defy",
+            "descKey": "quest.clear-the-grove.defy-o",
+            "condition": {
+              "flag": "forest-hostile"
+            },
+            "marker": {
+              "zone": "samodivi-forest",
+              "poi": "old-oak"
+            }
+          }
+        ]
+      },
+      {
+        "id": "fire",
+        "descKey": "quest.clear-the-grove.fire",
+        "noReturn": true,
+        "objectives": [
+          {
+            "id": "burn",
+            "descKey": "quest.clear-the-grove.burn",
+            "condition": {
+              "flag": "forest-burned"
+            }
+          }
+        ],
+        "onComplete": [
+          {
+            "milestone": "route-milestone"
+          }
+        ]
+      }
+    ]
+  }
+]

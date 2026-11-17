@@ -1,0 +1,684 @@
+/* ---------------------------------------------------------------- icon */
+.mrak-icon {
+  display: inline-flex;
+  flex: none;
+  vertical-align: middle;
+  color: inherit;
+}
+.mrak-icon svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.mrak-icon[data-tone='resource'],
+.mrak-icon[data-tone='action'],
+.mrak-icon[data-tone='talent'],
+.mrak-icon[data-tone='achievement'] {
+  color: var(--mrak-color-accent);
+}
+.mrak-icon[data-tone='debt'],
+.mrak-icon[data-tone='danger'] {
+  color: var(--mrak-color-danger);
+}
+.mrak-icon[data-tone='good'] {
+  color: var(--mrak-good);
+}
+.mrak-icon[data-tone='bad'] {
+  color: var(--mrak-bad);
+}
+.mrak-icon[data-tone='info'] {
+  color: var(--mrak-info);
+}
+.mrak-icon[data-tone='muted'] {
+  color: var(--mrak-color-text-muted);
+}
+.mrak-icon-trigger {
+  display: inline-flex;
+  border-radius: var(--mrak-radius);
+  cursor: help;
+}
+
+/* ---------------------------------------------------------------- tooltip */
+.mrak-tooltip {
+  position: fixed;
+  z-index: 1000;
+  max-width: min(22rem, calc(100vw - 16px));
+  padding: var(--mrak-space-2) var(--mrak-space-3);
+  background: var(--mrak-parchment-100);
+  color: var(--mrak-ink-900);
+  border: 1px solid var(--mrak-ink-900);
+  border-radius: var(--mrak-radius);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+  font-family: var(--mrak-font-text);
+  font-size: var(--mrak-text-sm);
+  line-height: 1.4;
+  animation: mrak-fade-in var(--mrak-duration) ease-out;
+}
+.mrak-tooltip-title {
+  display: block;
+  font-weight: 700;
+  font-size: var(--mrak-text-md);
+}
+.mrak-tooltip-desc {
+  display: block;
+  margin-top: var(--mrak-space-1);
+}
+.mrak-tooltip-extra {
+  display: block;
+  margin-top: var(--mrak-space-2);
+  padding-top: var(--mrak-space-2);
+  border-top: 1px solid rgba(28, 20, 16, 0.25);
+}
+.mrak-tooltip .mrak-icon[data-tone] {
+  color: var(--mrak-ink-900);
+}
+
+@keyframes mrak-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------- panel */
+.mrak-panel {
+  position: relative;
+  background-color: var(--mrak-color-surface);
+  background-image: var(--mrak-hatch);
+  border: 1px solid var(--mrak-color-rule);
+  border-radius: var(--mrak-radius);
+  box-shadow:
+    var(--mrak-engraved),
+    0 20px 60px rgba(0, 0, 0, 0.6);
+  padding: var(--mrak-space-5);
+  color: var(--mrak-color-text);
+}
+.mrak-panel[data-variant='parchment'] {
+  background-color: var(--mrak-parchment-100);
+  background-image: none;
+  color: var(--mrak-ink-900);
+  box-shadow:
+    inset 0 0 0 3px var(--mrak-parchment-100),
+    inset 0 0 0 4px rgba(28, 20, 16, 0.5);
+}
+.mrak-panel-header {
+  display: flex;
+  align-items: center;
+  gap: var(--mrak-space-3);
+  margin-bottom: var(--mrak-space-4);
+}
+.mrak-panel-title {
+  margin: 0;
+  font-size: var(--mrak-text-xl);
+  flex: 1;
+}
+.mrak-panel-actions {
+  display: flex;
+  gap: var(--mrak-space-2);
+}
+.mrak-panel::before,
+.mrak-panel::after {
+  content: '';
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: var(--mrak-color-rule);
+  transform: rotate(45deg);
+  top: -4px;
+}
+.mrak-panel::before {
+  left: calc(50% - 3.5px);
+}
+.mrak-panel::after {
+  top: auto;
+  bottom: -4px;
+  left: calc(50% - 3.5px);
+}
+
+/* ---------------------------------------------------------------- button */
+.mrak-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mrak-space-2);
+  min-height: var(--mrak-hit);
+  min-width: var(--mrak-hit);
+  padding: var(--mrak-space-2) var(--mrak-space-4);
+  font-family: var(--mrak-font-text);
+  font-size: var(--mrak-text-md);
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-decoration: none;
+  color: var(--mrak-color-text);
+  background: transparent;
+  border: 1px solid var(--mrak-color-rule);
+  border-radius: var(--mrak-radius);
+  box-shadow:
+    inset 0 0 0 2px var(--mrak-color-surface),
+    inset 0 0 0 3px rgba(107, 86, 66, 0.55);
+  cursor: pointer;
+  transition:
+    background-color var(--mrak-duration),
+    border-color var(--mrak-duration);
+}
+.mrak-button:hover {
+  border-color: var(--mrak-color-accent);
+  background-color: var(--mrak-color-hover);
+}
+.mrak-button:active {
+  transform: translateY(1px);
+}
+.mrak-button:focus-visible {
+  outline: 2px solid var(--mrak-color-focus);
+  outline-offset: 2px;
+}
+.mrak-button[data-variant='primary'] {
+  background-color: var(--mrak-gold-400);
+  color: var(--mrak-ink-900);
+  border-color: var(--mrak-gold-400);
+  box-shadow:
+    inset 0 0 0 2px var(--mrak-gold-400),
+    inset 0 0 0 3px rgba(28, 20, 16, 0.45);
+}
+.mrak-button[data-variant='primary']:hover {
+  background-color: var(--mrak-gold-200);
+}
+.mrak-button[data-variant='primary']:active {
+  background-color: var(--mrak-gold-600);
+}
+.mrak-button[data-variant='danger'] {
+  background-color: var(--mrak-blood-600);
+  border-color: var(--mrak-blood-400);
+  box-shadow:
+    inset 0 0 0 2px var(--mrak-blood-600),
+    inset 0 0 0 3px rgba(242, 232, 210, 0.35);
+}
+.mrak-button[data-variant='danger']:hover {
+  background-color: var(--mrak-blood-800);
+}
+.mrak-button[data-variant='ghost'] {
+  border-color: transparent;
+  box-shadow: none;
+}
+/* Secondary and ghost buttons on paper (parchment panels): ink instead of parchment text. */
+.mrak-panel[data-variant='parchment']
+  .mrak-button:not([data-variant='primary'], [data-variant='danger']) {
+  color: var(--mrak-ink-900);
+  border-color: rgba(28, 20, 16, 0.55);
+  box-shadow: none;
+}
+.mrak-panel[data-variant='parchment']
+  .mrak-button:not([data-variant='primary'], [data-variant='danger']):hover {
+  background-color: var(--mrak-parchment-300);
+}
+.mrak-button[data-size='lg'] {
+  min-height: 3.25rem;
+  font-size: var(--mrak-text-lg);
+}
+.mrak-button[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}
+.mrak-button[aria-busy='true'] .mrak-icon {
+  animation: mrak-flicker 1.2s ease-in-out infinite alternate;
+}
+.mrak-button-body {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+.mrak-button-consequence {
+  font-size: var(--mrak-text-xs);
+  font-weight: 400;
+  color: inherit;
+  opacity: 0.85;
+}
+@keyframes mrak-flicker {
+  from {
+    opacity: 0.45;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* ---------------------------------------------------------------- cost */
+.mrak-cost {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--mrak-space-2);
+  font-size: var(--mrak-text-sm);
+  font-weight: 700;
+}
+.mrak-cost-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15em;
+}
+
+/* ---------------------------------------------------------------- icon button */
+.mrak-icon-button {
+  padding: var(--mrak-space-2);
+}
+.mrak-icon-button[aria-pressed='true'] {
+  border-color: var(--mrak-color-danger);
+  background-color: var(--mrak-color-hover);
+}
+
+/* ---------------------------------------------------------------- tabs */
+.mrak-tablist {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mrak-space-1);
+  border-bottom: 1px solid var(--mrak-color-rule);
+  margin-bottom: var(--mrak-space-4);
+}
+.mrak-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mrak-space-2);
+  min-height: var(--mrak-hit);
+  padding: var(--mrak-space-2) var(--mrak-space-4);
+  font: 700 var(--mrak-text-md) var(--mrak-font-text);
+  color: var(--mrak-color-text-muted);
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+}
+.mrak-tab:hover {
+  color: var(--mrak-color-text);
+}
+.mrak-tab[aria-selected='true'] {
+  color: var(--mrak-color-highlight);
+  border-bottom-color: var(--mrak-color-danger);
+}
+.mrak-tab:focus-visible {
+  outline: 2px solid var(--mrak-color-focus);
+  outline-offset: -2px;
+}
+/* Tabs on paper (parchment panels): ink text, the selected one underlined in blood. */
+.mrak-panel[data-variant='parchment'] .mrak-tablist {
+  border-bottom-color: rgba(28, 20, 16, 0.45);
+}
+.mrak-panel[data-variant='parchment'] .mrak-tab {
+  color: rgba(28, 20, 16, 0.72);
+}
+.mrak-panel[data-variant='parchment'] .mrak-tab:hover,
+.mrak-panel[data-variant='parchment'] .mrak-tab[aria-selected='true'] {
+  color: var(--mrak-ink-900);
+}
+.mrak-panel[data-variant='parchment'] .mrak-tab:focus-visible {
+  outline-color: var(--mrak-ink-900);
+}
+
+/* ---------------------------------------------------------------- modal */
+.mrak-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 900;
+  display: grid;
+  place-items: center;
+  padding: var(--mrak-space-4);
+  background: rgba(5, 3, 2, 0.72);
+  animation: mrak-fade-in var(--mrak-duration) ease-out;
+}
+.mrak-modal {
+  width: min(34rem, 100%);
+  max-height: calc(100vh - 2rem);
+  overflow: auto;
+}
+.mrak-modal[data-size='lg'] {
+  width: min(52rem, 100%);
+}
+.mrak-modal[data-size='xl'] {
+  width: min(72rem, 100%);
+}
+.mrak-modal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: var(--mrak-space-3);
+  margin-top: var(--mrak-space-5);
+}
+.mrak-confirm-warning {
+  display: flex;
+  align-items: center;
+  gap: var(--mrak-space-2);
+  color: var(--mrak-color-danger);
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- toast */
+.mrak-toasts {
+  position: fixed;
+  z-index: 950;
+  left: 50%;
+  bottom: var(--mrak-space-5);
+  transform: translateX(-50%);
+  width: min(30rem, calc(100vw - 32px));
+  pointer-events: none;
+}
+.mrak-toasts > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mrak-space-2);
+}
+.mrak-toast {
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  gap: var(--mrak-space-3);
+  padding: var(--mrak-space-2) var(--mrak-space-2) var(--mrak-space-2) var(--mrak-space-4);
+  background: var(--mrak-color-raised);
+  border: 1px solid var(--mrak-color-rule);
+  border-left: 4px solid var(--mrak-color-accent);
+  border-radius: var(--mrak-radius);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  font-size: var(--mrak-text-sm);
+  animation: mrak-fade-in var(--mrak-duration) ease-out;
+}
+.mrak-toast[data-tone='good'] {
+  border-left-color: var(--mrak-good);
+}
+.mrak-toast[data-tone='bad'] {
+  border-left-color: var(--mrak-bad);
+}
+.mrak-toast-message {
+  flex: 1;
+}
+
+/* ---------------------------------------------------------------- progress meter */
+.mrak-meter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mrak-space-2);
+  min-width: 10rem;
+}
+.mrak-meter-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+.mrak-meter-label {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--mrak-space-2);
+  font-size: var(--mrak-text-xs);
+  color: var(--mrak-color-text-muted);
+}
+.mrak-meter-track {
+  position: relative;
+  height: 0.6rem;
+  background: var(--mrak-earth-800);
+  border: 1px solid var(--mrak-color-rule);
+  border-radius: 1px;
+  overflow: hidden;
+}
+.mrak-meter-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--mrak-gold-600), var(--mrak-gold-400));
+  transition: width var(--mrak-duration) ease-out;
+}
+.mrak-meter[data-tone='danger'] .mrak-meter-fill {
+  background: linear-gradient(90deg, var(--mrak-blood-600), var(--mrak-blood-400));
+}
+.mrak-meter[data-tone='faith'] .mrak-meter-fill {
+  background: linear-gradient(90deg, #5e7f9a, var(--mrak-info));
+}
+/* Qualitative meters (sanity): a smoky edge instead of a precise end. */
+.mrak-meter[data-qualitative='true'] .mrak-meter-fill {
+  mask-image: linear-gradient(90deg, #000 85%, transparent);
+}
+
+/* ---------------------------------------------------------------- resource counter */
+.mrak-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mrak-space-2);
+  min-height: var(--mrak-hit);
+  padding: 0 var(--mrak-space-2);
+  border-radius: var(--mrak-radius);
+  font-size: var(--mrak-text-lg);
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.mrak-counter-max {
+  font-size: var(--mrak-text-sm);
+  color: var(--mrak-color-text-muted);
+}
+.mrak-counter[data-low='true'] .mrak-counter-value {
+  color: var(--mrak-bad);
+}
+.mrak-delta {
+  font-size: var(--mrak-text-xs);
+  font-weight: 700;
+  animation: mrak-fade-in var(--mrak-duration) ease-out;
+}
+.mrak-delta[data-sign='+'] {
+  color: var(--mrak-good);
+}
+.mrak-delta[data-sign='-'] {
+  color: var(--mrak-bad);
+}
+
+/* ---------------------------------------------------------------- item slot */
+.mrak-slot {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  padding: 0;
+  color: var(--mrak-color-accent);
+  background-color: var(--mrak-color-raised);
+  background-image: var(--mrak-hatch);
+  border: 1px solid var(--mrak-color-rule);
+  border-radius: var(--mrak-radius);
+  box-shadow:
+    inset 0 0 0 2px var(--mrak-color-raised),
+    inset 0 0 0 3px rgba(107, 86, 66, 0.5);
+  font-family: var(--mrak-font-text);
+}
+button.mrak-slot {
+  cursor: pointer;
+}
+button.mrak-slot:hover {
+  border-color: var(--mrak-color-accent);
+}
+.mrak-slot[data-size='sm'] {
+  width: var(--mrak-hit);
+  height: var(--mrak-hit);
+}
+.mrak-slot[data-size='lg'] {
+  width: 5.5rem;
+  height: 5.5rem;
+}
+.mrak-slot[data-selected='true'] {
+  border-color: var(--mrak-color-danger);
+  box-shadow: inset 0 0 0 2px var(--mrak-color-danger);
+}
+.mrak-slot[data-empty='true'] {
+  color: var(--mrak-color-text-muted);
+}
+.mrak-slot[aria-disabled='true'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.mrak-slot-qty {
+  position: absolute;
+  right: 2px;
+  bottom: 1px;
+  min-width: 1.4em;
+  padding: 0 0.2em;
+  font-size: var(--mrak-text-xs);
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--mrak-color-text);
+  background: rgba(14, 10, 8, 0.85);
+  border-radius: 2px;
+}
+
+/* ---------------------------------------------------------------- portrait */
+.mrak-portrait {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--mrak-space-1);
+}
+.mrak-portrait-frame {
+  position: relative;
+  width: 5rem;
+  height: 6rem;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--mrak-earth-800);
+  border: 1px solid var(--mrak-color-rule);
+  border-radius: 50% 50% var(--mrak-radius) var(--mrak-radius) / 35% 35% var(--mrak-radius)
+    var(--mrak-radius);
+  box-shadow:
+    inset 0 0 0 3px var(--mrak-earth-800),
+    inset 0 0 0 4px rgba(224, 169, 74, 0.45);
+}
+.mrak-portrait[data-size='sm'] .mrak-portrait-frame {
+  width: 3rem;
+  height: 3.6rem;
+}
+.mrak-portrait[data-size='lg'] .mrak-portrait-frame {
+  width: 8rem;
+  height: 9.6rem;
+}
+.mrak-portrait-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.mrak-portrait-monogram {
+  font-family: var(--mrak-font-display);
+  font-size: var(--mrak-text-xl);
+  color: var(--mrak-color-highlight);
+}
+.mrak-portrait[data-dead='true'] .mrak-portrait-frame {
+  filter: grayscale(1) brightness(0.7);
+}
+.mrak-portrait-name {
+  font-size: var(--mrak-text-sm);
+  font-weight: 700;
+  text-align: center;
+}
+.mrak-portrait-states {
+  display: flex;
+  gap: var(--mrak-space-1);
+}
+
+/* ---------------------------------------------------------------- key hint */
+.mrak-keyhint {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mrak-space-1);
+  font-size: var(--mrak-text-xs);
+  white-space: nowrap;
+}
+.mrak-key {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  padding: 0 0.4rem;
+  font: 700 var(--mrak-text-xs) var(--mrak-font-text);
+  color: var(--mrak-color-text);
+  background: var(--mrak-earth-800);
+  border: 1px solid var(--mrak-color-rule);
+  border-bottom-width: 3px;
+  border-radius: var(--mrak-radius);
+}
+.mrak-key[data-pad] {
+  border-radius: 999px;
+  border-bottom-width: 1px;
+}
+.mrak-key[data-pad='a'] {
+  color: #8fbf72;
+}
+.mrak-key[data-pad='b'] {
+  color: #e07a5f;
+}
+.mrak-key[data-pad='x'] {
+  color: #86b3d1;
+}
+.mrak-key[data-pad='y'] {
+  color: #e0a94a;
+}
+.mrak-keyhint-label {
+  color: var(--mrak-color-text-muted);
+}
+
+/* ---------------------------------------------------------------- context menu */
+.mrak-menu {
+  position: fixed;
+  z-index: 1000;
+  min-width: 14rem;
+  max-width: min(22rem, calc(100vw - 16px));
+  margin: 0;
+  padding: var(--mrak-space-1);
+  list-style: none;
+  background: var(--mrak-color-surface);
+  border: 1px solid var(--mrak-color-rule);
+  border-radius: var(--mrak-radius);
+  box-shadow:
+    var(--mrak-engraved),
+    0 12px 32px rgba(0, 0, 0, 0.6);
+  animation: mrak-fade-in var(--mrak-duration) ease-out;
+}
+.mrak-menuitem {
+  display: flex;
+  align-items: center;
+  gap: var(--mrak-space-3);
+  width: 100%;
+  min-height: var(--mrak-hit);
+  padding: var(--mrak-space-2) var(--mrak-space-3);
+  font: var(--mrak-text-md) var(--mrak-font-text);
+  text-align: left;
+  color: var(--mrak-color-text);
+  background: transparent;
+  border: 0;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.mrak-menuitem:hover,
+.mrak-menuitem:focus-visible {
+  background: var(--mrak-color-hover);
+  outline: 2px solid var(--mrak-color-focus);
+  outline-offset: -2px;
+}
+.mrak-menuitem[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.mrak-menuitem[data-danger='true'] {
+  color: var(--mrak-color-danger);
+}
+.mrak-menuitem-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.mrak-menuitem-detail {
+  font-size: var(--mrak-text-xs);
+  color: var(--mrak-color-text-muted);
+}
+.mrak-portrait-caption {
+  font-size: var(--mrak-text-xs);
+  font-weight: 400;
+  color: var(--mrak-color-text-muted);
+}
+/* Tooltip/ContextMenu wrapper: owns events and the ref without affecting layout. */
+.mrak-tooltip-anchor {
+  display: contents;
+}

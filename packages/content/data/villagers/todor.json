@@ -1,0 +1,48 @@
+{
+  "id": "todor",
+  "tier": "demo",
+  "nameKey": "villager.todor.name",
+  "tradeKey": "villager.todor.trade",
+  "bioKey": "villager.todor.bio",
+  "age": 26,
+  "sex": "male",
+  "traits": ["outsider", "educated"],
+  "fears": ["solitude", "being-ridiculed"],
+  "startingFear": 10,
+  "relationships": [
+    {
+      "villager": "velika",
+      "affinity": 80
+    },
+    {
+      "villager": "pop-stoyan",
+      "affinity": 40
+    },
+    {
+      "villager": "krastyo",
+      "affinity": -10
+    }
+  ],
+  "secrets": [
+    {
+      "id": "bucharest-letter",
+      "descKey": "villager.todor.secret.bucharest-letter",
+      "revealWhen": {
+        "flag": "todor-letter-found"
+      }
+    }
+  ],
+  "home": "house-todor",
+  "work": "church",
+  "routine": "common",
+  "look": {
+    "skin": "#e0b08c",
+    "hair": "#2a1e16",
+    "clothes": "#3a4a3a",
+    "accent": "#d8d0c0",
+    "headwear": "none",
+    "beard": false,
+    "build": "slim"
+  },
+  "dialogue": "todor"
+}

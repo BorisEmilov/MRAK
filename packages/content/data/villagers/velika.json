@@ -1,0 +1,52 @@
+{
+  "id": "velika",
+  "tier": "demo",
+  "nameKey": "villager.velika.name",
+  "tradeKey": "villager.velika.trade",
+  "bioKey": "villager.velika.bio",
+  "age": 19,
+  "sex": "female",
+  "traits": ["bride", "weaver"],
+  "fears": ["water", "solitude"],
+  "startingFear": 10,
+  "relationships": [
+    {
+      "villager": "todor",
+      "affinity": 80
+    },
+    {
+      "villager": "baba-neda",
+      "affinity": 60
+    },
+    {
+      "villager": "radka",
+      "affinity": 20
+    },
+    {
+      "villager": "krastyo",
+      "affinity": 30
+    }
+  ],
+  "secrets": [
+    {
+      "id": "reading-lessons",
+      "descKey": "villager.velika.secret.reading-lessons",
+      "revealWhen": {
+        "clue": "m1-carvings"
+      }
+    }
+  ],
+  "home": "house-velika",
+  "work": "house-velika",
+  "routine": "common",
+  "look": {
+    "skin": "#e2b592",
+    "hair": "#5a3418",
+    "clothes": "#e8e0cc",
+    "accent": "#b02a2a",
+    "headwear": "none",
+    "beard": false,
+    "build": "slim"
+  },
+  "dialogue": "velika"
+}

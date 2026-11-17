@@ -1,0 +1,93 @@
+[
+  {
+    "id": "light-keepers",
+    "tier": "demo",
+    "nameKey": "bloodline-node.light-keepers.name",
+    "descKey": "bloodline-node.light-keepers.desc",
+    "level": 1,
+    "cost": 5,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "oil-consumption-rate",
+          "factor": 0.9
+        }
+      }
+    ]
+  },
+  {
+    "id": "grandmothers-remedies",
+    "tier": "demo",
+    "nameKey": "bloodline-node.grandmothers-remedies.name",
+    "descKey": "bloodline-node.grandmothers-remedies.desc",
+    "level": 1,
+    "cost": 5,
+    "effects": [
+      {
+        "giveItem": "calming-tea",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "the-family-icon",
+    "tier": "demo",
+    "nameKey": "bloodline-node.the-family-icon.name",
+    "descKey": "bloodline-node.the-family-icon.desc",
+    "level": 1,
+    "cost": 8,
+    "effects": [
+      {
+        "modifier": {
+          "statBonus": "faith",
+          "value": 5
+        }
+      }
+    ]
+  },
+  {
+    "id": "watchful-blood",
+    "tier": "demo",
+    "nameKey": "bloodline-node.watchful-blood.name",
+    "descKey": "bloodline-node.watchful-blood.desc",
+    "level": 1,
+    "cost": 5,
+    "effects": [
+      {
+        "modifier": {
+          "statBonus": "sanity-max",
+          "value": 5
+        }
+      }
+    ]
+  },
+  {
+    "id": "house-of-the-bell",
+    "tier": "demo",
+    "nameKey": "bloodline-node.house-of-the-bell.name",
+    "descKey": "bloodline-node.house-of-the-bell.desc",
+    "level": 1,
+    "cost": 6,
+    "effects": [
+      {
+        "rule": "start-with-watchtower"
+      }
+    ]
+  },
+  {
+    "id": "letters-kept",
+    "tier": "demo",
+    "nameKey": "bloodline-node.letters-kept.name",
+    "descKey": "bloodline-node.letters-kept.desc",
+    "level": 1,
+    "cost": 8,
+    "effects": [
+      {
+        "modifier": {
+          "statBonus": "journal-pages",
+          "value": 4
+        }
+      }
+    ]
+  }
+]

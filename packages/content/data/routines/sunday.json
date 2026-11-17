@@ -1,0 +1,28 @@
+{
+  "id": "sunday",
+  "tier": "demo",
+  "nameKey": "routine.sunday.name",
+  "priority": 10,
+  "days": [0],
+  "window": {
+    "from": "07:30",
+    "to": "13:00"
+  },
+  "blocks": [
+    {
+      "at": "07:30",
+      "activity": "pray",
+      "place": "church"
+    },
+    {
+      "at": "10:30",
+      "activity": "socialize",
+      "place": "well"
+    },
+    {
+      "at": "12:00",
+      "activity": "eat",
+      "place": "home"
+    }
+  ]
+}

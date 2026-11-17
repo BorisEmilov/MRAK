@@ -1,0 +1,44 @@
+[
+  {
+    "id": "mercy",
+    "tier": "demo",
+    "nameKey": "virtue.mercy.name",
+    "descKey": "virtue.mercy.desc"
+  },
+  {
+    "id": "compassion",
+    "tier": "demo",
+    "nameKey": "virtue.compassion.name",
+    "descKey": "virtue.compassion.desc"
+  },
+  {
+    "id": "courage",
+    "tier": "demo",
+    "nameKey": "virtue.courage.name",
+    "descKey": "virtue.courage.desc"
+  },
+  {
+    "id": "truthfulness",
+    "tier": "demo",
+    "nameKey": "virtue.truthfulness.name",
+    "descKey": "virtue.truthfulness.desc"
+  },
+  {
+    "id": "loyalty",
+    "tier": "demo",
+    "nameKey": "virtue.loyalty.name",
+    "descKey": "virtue.loyalty.desc"
+  },
+  {
+    "id": "patience",
+    "tier": "demo",
+    "nameKey": "virtue.patience.name",
+    "descKey": "virtue.patience.desc"
+  },
+  {
+    "id": "humility",
+    "tier": "demo",
+    "nameKey": "virtue.humility.name",
+    "descKey": "virtue.humility.desc"
+  }
+]

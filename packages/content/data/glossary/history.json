@@ -1,0 +1,162 @@
+[
+  {
+    "id": "aga",
+    "tier": "demo",
+    "termKey": "glossary.aga.term",
+    "descKey": "glossary.aga.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "bedel-i-askeri",
+    "tier": "demo",
+    "termKey": "glossary.bedel-i-askeri.term",
+    "descKey": "glossary.bedel-i-askeri.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "chitalishte",
+    "tier": "demo",
+    "termKey": "glossary.chitalishte.term",
+    "descKey": "glossary.chitalishte.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "chorbadzhiya",
+    "tier": "demo",
+    "termKey": "glossary.chorbadzhiya.term",
+    "descKey": "glossary.chorbadzhiya.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "cizye",
+    "tier": "demo",
+    "termKey": "glossary.cizye.term",
+    "descKey": "glossary.cizye.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "daskal",
+    "tier": "demo",
+    "termKey": "glossary.daskal.term",
+    "descKey": "glossary.daskal.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "grosh",
+    "tier": "demo",
+    "termKey": "glossary.grosh.term",
+    "descKey": "glossary.grosh.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "haidut",
+    "tier": "demo",
+    "termKey": "glossary.haidut.term",
+    "descKey": "glossary.haidut.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "kadi",
+    "tier": "demo",
+    "termKey": "glossary.kadi.term",
+    "descKey": "glossary.kadi.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "kiliyno-uchilishte",
+    "tier": "demo",
+    "termKey": "glossary.kiliyno-uchilishte.term",
+    "descKey": "glossary.kiliyno-uchilishte.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "klisar",
+    "tier": "demo",
+    "termKey": "glossary.klisar.term",
+    "descKey": "glossary.klisar.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "kmet",
+    "tier": "demo",
+    "termKey": "glossary.kmet.term",
+    "descKey": "glossary.kmet.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "konak",
+    "tier": "demo",
+    "termKey": "glossary.konak.term",
+    "descKey": "glossary.konak.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "mehana",
+    "tier": "demo",
+    "termKey": "glossary.mehana.term",
+    "descKey": "glossary.mehana.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "pomaks",
+    "tier": "demo",
+    "termKey": "glossary.pomaks.term",
+    "descKey": "glossary.pomaks.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "sancak",
+    "tier": "demo",
+    "termKey": "glossary.sancak.term",
+    "descKey": "glossary.sancak.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "tanzimat",
+    "tier": "demo",
+    "termKey": "glossary.tanzimat.term",
+    "descKey": "glossary.tanzimat.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "voivoda",
+    "tier": "demo",
+    "termKey": "glossary.voivoda.term",
+    "descKey": "glossary.voivoda.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "yatak",
+    "tier": "demo",
+    "termKey": "glossary.yatak.term",
+    "descKey": "glossary.yatak.desc",
+    "category": "history",
+    "origin": "history"
+  },
+  {
+    "id": "zaptiye",
+    "tier": "demo",
+    "termKey": "glossary.zaptiye.term",
+    "descKey": "glossary.zaptiye.desc",
+    "category": "history",
+    "origin": "history"
+  }
+]

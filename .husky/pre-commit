@@ -1,0 +1,10 @@
+#!/bin/sh
+# 1. Secret scan of staged changes (blocking). Install: https://github.com/gitleaks/gitleaks#installing
+if ! command -v gitleaks >/dev/null 2>&1; then
+  echo "pre-commit: gitleaks is not installed. Install it before committing (see README)." >&2
+  exit 1
+fi
+gitleaks git --pre-commit --staged --redact --no-banner --config .gitleaks.toml || exit 1
+
+# 2. Lint + format staged files.
+pnpm exec lint-staged

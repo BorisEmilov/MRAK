@@ -1,0 +1,29 @@
+{
+  "name": "@mrak/core",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pure TypeScript game rules. No Phaser, no React, no DOM.",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --coverage",
+    "simulate": "tsx scripts/simulate.ts",
+    "simulate:fear": "tsx scripts/simulate-fear.ts"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "5.1.0",
+    "tsx": "4.23.15",
+    "vitest": "5.1.0"
+  },
+  "dependencies": {
+    "@mrak/content-schema": "workspace:*",
+    "zod": "4.6.7"
+  }
+}

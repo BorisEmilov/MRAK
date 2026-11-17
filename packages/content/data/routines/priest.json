@@ -1,0 +1,57 @@
+{
+  "id": "priest",
+  "tier": "demo",
+  "nameKey": "routine.priest.name",
+  "blocks": [
+    {
+      "at": "00:00",
+      "activity": "sleep",
+      "place": "home"
+    },
+    {
+      "at": "05:30",
+      "activity": "pray",
+      "place": "church"
+    },
+    {
+      "at": "07:00",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "07:30",
+      "activity": "work",
+      "place": "work"
+    },
+    {
+      "at": "12:00",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "13:00",
+      "activity": "work",
+      "place": "work"
+    },
+    {
+      "at": "17:00",
+      "activity": "pray",
+      "place": "church"
+    },
+    {
+      "at": "18:30",
+      "activity": "socialize",
+      "place": "well"
+    },
+    {
+      "at": "19:00",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "20:30",
+      "activity": "sleep",
+      "place": "home"
+    }
+  ]
+}

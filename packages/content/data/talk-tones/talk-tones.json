@@ -1,0 +1,77 @@
+[
+  {
+    "id": "plain",
+    "tier": "demo",
+    "textKey": "talk-tone.plain",
+    "tags": [],
+    "affinity": 0,
+    "fear": 0,
+    "order": 0
+  },
+  {
+    "id": "comfort",
+    "tier": "demo",
+    "textKey": "talk-tone.comfort",
+    "tags": ["virtue:compassion", "virtue:mercy"],
+    "affinity": 2,
+    "fear": -5,
+    "order": 1
+  },
+  {
+    "id": "listen",
+    "tier": "demo",
+    "textKey": "talk-tone.listen",
+    "tags": ["virtue:patience", "virtue:humility"],
+    "affinity": 1,
+    "fear": -2,
+    "order": 2
+  },
+  {
+    "id": "promise",
+    "tier": "demo",
+    "textKey": "talk-tone.promise",
+    "tags": ["virtue:loyalty", "virtue:courage"],
+    "affinity": 3,
+    "fear": -3,
+    "order": 3
+  },
+  {
+    "id": "press",
+    "tier": "demo",
+    "textKey": "talk-tone.press",
+    "tags": ["sin:wrath"],
+    "affinity": -2,
+    "fear": 6,
+    "order": 4
+  },
+  {
+    "id": "boast",
+    "tier": "demo",
+    "textKey": "talk-tone.boast",
+    "tags": ["sin:pride"],
+    "affinity": -1,
+    "fear": 0,
+    "order": 5
+  },
+  {
+    "id": "pry",
+    "tier": "demo",
+    "textKey": "talk-tone.pry",
+    "tags": ["sin:curiosity"],
+    "affinity": -1,
+    "fear": 3,
+    "order": 6
+  },
+  {
+    "id": "horned-voice",
+    "tier": "demo",
+    "textKey": "talk-tone.horned-voice",
+    "tags": ["sin:cruelty"],
+    "affinity": -4,
+    "fear": 12,
+    "order": 7,
+    "when": {
+      "flag": "horned-mark"
+    }
+  }
+]

@@ -1,0 +1,174 @@
+[
+  {
+    "id": "baene",
+    "tier": "demo",
+    "nameKey": "talent.baene.name",
+    "descKey": "talent.baene.desc",
+    "effects": [
+      {
+        "rule": "charm-off-evil-eye"
+      }
+    ]
+  },
+  {
+    "id": "red-thread",
+    "tier": "demo",
+    "nameKey": "talent.red-thread.name",
+    "descKey": "talent.red-thread.desc",
+    "effects": [
+      {
+        "unlockRecipe": "red-thread-amulet"
+      }
+    ]
+  },
+  {
+    "id": "listening-to-water",
+    "tier": "demo",
+    "nameKey": "talent.listening-to-water.name",
+    "descKey": "talent.listening-to-water.desc",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "occultism",
+          "context": "possession-detection"
+        }
+      }
+    ]
+  },
+  {
+    "id": "charm-the-lesser",
+    "tier": "demo",
+    "nameKey": "talent.charm-the-lesser.name",
+    "descKey": "talent.charm-the-lesser.desc",
+    "effects": [
+      {
+        "rule": "banish-lesser-bes-without-ritual"
+      }
+    ]
+  },
+  {
+    "id": "knotwork",
+    "tier": "demo",
+    "nameKey": "talent.knotwork.name",
+    "descKey": "talent.knotwork.desc",
+    "effects": [
+      {
+        "rule": "amulet-extra-charge",
+        "params": {
+          "charges": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "speak-with-the-forest",
+    "tier": "demo",
+    "nameKey": "talent.speak-with-the-forest.name",
+    "descKey": "talent.speak-with-the-forest.desc",
+    "effects": [
+      {
+        "rule": "forest-bargain-discount",
+        "params": {
+          "memories": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "turning-charm",
+    "tier": "full",
+    "nameKey": "talent.turning-charm.name",
+    "descKey": "talent.turning-charm.desc",
+    "effects": [
+      {
+        "rule": "reflect-magiya",
+        "params": {
+          "corruption": 5
+        }
+      }
+    ]
+  },
+  {
+    "id": "woven-ward",
+    "tier": "full",
+    "nameKey": "talent.woven-ward.name",
+    "descKey": "talent.woven-ward.desc",
+    "effects": [
+      {
+        "rule": "ward-house",
+        "params": {
+          "progressionFactor": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "moon-lore",
+    "tier": "full",
+    "nameKey": "talent.moon-lore.name",
+    "descKey": "talent.moon-lore.desc",
+    "effects": [
+      {
+        "rule": "keep-light-when-moon-pulled",
+        "params": {
+          "fraction": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "unmaking",
+    "tier": "full",
+    "nameKey": "talent.unmaking.name",
+    "descKey": "talent.unmaking.desc",
+    "effects": [
+      {
+        "rule": "destroy-magiya-remotely"
+      }
+    ]
+  },
+  {
+    "id": "ward-the-village",
+    "tier": "full",
+    "nameKey": "talent.ward-the-village.name",
+    "descKey": "talent.ward-the-village.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "chapter",
+          "effects": [
+            {
+              "rule": "ward-all-houses"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "samodivas-favour",
+    "tier": "full",
+    "nameKey": "talent.samodivas-favour.name",
+    "descKey": "talent.samodivas-favour.desc",
+    "effects": [
+      {
+        "rule": "samodiva-circles-heal"
+      }
+    ]
+  },
+  {
+    "id": "relic-salt-circle",
+    "tier": "demo",
+    "nameKey": "talent.relic-salt-circle.name",
+    "descKey": "talent.relic-salt-circle.desc",
+    "effects": [
+      {
+        "modifier": {
+          "convertOmen": "bad-to-none"
+        }
+      }
+    ]
+  }
+]

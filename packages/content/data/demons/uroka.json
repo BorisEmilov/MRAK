@@ -1,0 +1,72 @@
+{
+  "id": "uroka",
+  "tier": "full",
+  "nameKey": "demon.uroka.name",
+  "epithetKey": "demon.uroka.epithet",
+  "trueNameKey": "demon.uroka.true-name",
+  "loreKey": "demon.uroka.lore",
+  "rank": 2,
+  "origin": "invented",
+  "seal": {
+    "formKey": "demon.uroka.seal.form",
+    "mediumKey": "demon.uroka.seal.medium"
+  },
+  "symptoms": [
+    {
+      "stage": 1,
+      "descKey": "demon.uroka.symptom-1"
+    },
+    {
+      "stage": 2,
+      "descKey": "demon.uroka.symptom-2"
+    },
+    {
+      "stage": 3,
+      "descKey": "demon.uroka.symptom-3"
+    },
+    {
+      "stage": 4,
+      "descKey": "demon.uroka.symptom-4"
+    },
+    {
+      "stage": 5,
+      "descKey": "demon.uroka.symptom-5"
+    }
+  ],
+  "weaknesses": [
+    {
+      "descKey": "demon.uroka.weakness-1",
+      "item": "red-thread"
+    },
+    {
+      "descKey": "demon.uroka.weakness-2"
+    }
+  ],
+  "desires": ["demon.uroka.desire-1"],
+  "maxStage": 5,
+  "phrases": ["demon.uroka.phrase-1", "demon.uroka.phrase-2", "demon.uroka.phrase-3"],
+  "taunts": {
+    "pact": "demon.uroka.taunt.pact",
+    "sacrifice": "demon.uroka.taunt.sacrifice",
+    "death": "demon.uroka.taunt.death",
+    "lynching": "demon.uroka.taunt.lynching",
+    "debt": "demon.uroka.taunt.debt"
+  },
+  "fragments": [
+    {
+      "id": "grimoire",
+      "source": "grimoire",
+      "textKey": "demon.uroka.fragment.grimoire"
+    },
+    {
+      "id": "grave",
+      "source": "grave",
+      "textKey": "demon.uroka.fragment.grave"
+    },
+    {
+      "id": "photograph",
+      "source": "photograph",
+      "textKey": "demon.uroka.fragment.photograph"
+    }
+  ]
+}

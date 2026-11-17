@@ -1,0 +1,354 @@
+{
+  "id": "village",
+  "tier": "demo",
+  "nameKey": "zone.village.name",
+  "descKey": "zone.village.desc",
+  "map": "maps/village.tmj",
+  "defaultVariant": "intact",
+  "variants": [
+    {
+      "id": "year-1779",
+      "nameKey": "zone.village.variant.year-1779",
+      "when": {
+        "flag": "prologue-active"
+      },
+      "map": "maps/village-1779.tmj"
+    },
+    {
+      "id": "mourning",
+      "nameKey": "zone.village.variant.mourning",
+      "when": {
+        "flag": "innocent-lynched"
+      }
+    },
+    {
+      "id": "intact",
+      "nameKey": "zone.village.variant.intact"
+    }
+  ],
+  "fog": 0.35,
+  "pois": [
+    {
+      "id": "church",
+      "kind": "church",
+      "nameKey": "zone.village.poi.church.name",
+      "action": "pray",
+      "descKey": "zone.village.poi.church.desc",
+      "effects": [
+        {
+          "addStat": "sanity",
+          "value": 3
+        }
+      ]
+    },
+    {
+      "id": "chapel-oil",
+      "kind": "oil-store",
+      "nameKey": "zone.village.poi.chapel-oil.name",
+      "action": "gather",
+      "descKey": "zone.village.poi.chapel-oil.desc",
+      "effects": [
+        {
+          "giveItem": "lamp-oil",
+          "qty": 6
+        }
+      ]
+    },
+    {
+      "id": "cemetery",
+      "kind": "cemetery",
+      "nameKey": "zone.village.poi.cemetery.name",
+      "action": "pray",
+      "descKey": "zone.village.poi.cemetery.desc",
+      "effects": [
+        {
+          "narrate": "zone.village.poi.cemetery.narration"
+        }
+      ]
+    },
+    {
+      "id": "old-grave",
+      "kind": "grave",
+      "nameKey": "zone.village.poi.old-grave.name",
+      "action": "investigate",
+      "descKey": "zone.village.poi.old-grave.desc",
+      "effects": [
+        {
+          "narrate": "zone.village.poi.old-grave.narration"
+        },
+        {
+          "giveItem": "rag-doll",
+          "qty": 1
+        },
+        {
+          "nameFragment": "mamnik",
+          "fragment": "grave"
+        }
+      ]
+    },
+    {
+      "id": "well",
+      "kind": "well",
+      "nameKey": "zone.village.poi.well.name",
+      "action": "use",
+      "descKey": "zone.village.poi.well.desc",
+      "effects": [
+        {
+          "narrate": "zone.village.poi.well.narration"
+        }
+      ]
+    },
+    {
+      "id": "bonfire",
+      "kind": "bonfire",
+      "nameKey": "zone.village.poi.bonfire.name",
+      "action": "rest",
+      "descKey": "zone.village.poi.bonfire.desc",
+      "effects": [
+        {
+          "addStat": "sanity",
+          "value": 2
+        }
+      ]
+    },
+    {
+      "id": "tavern",
+      "kind": "tavern",
+      "nameKey": "zone.village.poi.tavern.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.tavern.desc",
+      "effects": [
+        {
+          "narrate": "zone.village.poi.tavern.narration"
+        }
+      ]
+    },
+    {
+      "id": "mill",
+      "kind": "mill",
+      "nameKey": "zone.village.poi.mill.name",
+      "action": "investigate",
+      "descKey": "zone.village.poi.mill.desc",
+      "effects": [
+        {
+          "narrate": "zone.village.poi.mill.narration"
+        }
+      ]
+    },
+    {
+      "id": "house-stoyan",
+      "kind": "house",
+      "nameKey": "zone.village.poi.house-stoyan.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.house-stoyan.desc"
+    },
+    {
+      "id": "house-petko",
+      "kind": "house",
+      "nameKey": "zone.village.poi.house-petko.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.house-petko.desc"
+    },
+    {
+      "id": "house-radka",
+      "kind": "house",
+      "nameKey": "zone.village.poi.house-radka.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.house-radka.desc"
+    },
+    {
+      "id": "house-dimo",
+      "kind": "house",
+      "nameKey": "zone.village.poi.house-dimo.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.house-dimo.desc"
+    },
+    {
+      "id": "house-todor",
+      "kind": "house",
+      "nameKey": "zone.village.poi.house-todor.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.house-todor.desc"
+    },
+    {
+      "id": "house-velika",
+      "kind": "house",
+      "nameKey": "zone.village.poi.house-velika.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.house-velika.desc"
+    },
+    {
+      "id": "house-neda",
+      "kind": "house",
+      "nameKey": "zone.village.poi.house-neda.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.house-neda.desc"
+    },
+    {
+      "id": "house-krastyo",
+      "kind": "house",
+      "nameKey": "zone.village.poi.house-krastyo.name",
+      "action": "talk",
+      "descKey": "zone.village.poi.house-krastyo.desc"
+    },
+    {
+      "id": "woodpile",
+      "kind": "woodpile",
+      "nameKey": "zone.village.poi.woodpile.name",
+      "action": "investigate",
+      "descKey": "zone.village.poi.woodpile.desc",
+      "effects": [
+        {
+          "narrate": "zone.village.poi.woodpile.narration"
+        }
+      ]
+    },
+    {
+      "id": "garden",
+      "kind": "herbs",
+      "nameKey": "zone.village.poi.garden.name",
+      "action": "gather",
+      "descKey": "zone.village.poi.garden.desc",
+      "effects": [],
+      "gather": {
+        "item": "garlic",
+        "qty": 1,
+        "potency": 1,
+        "regrowDays": 1,
+        "tint": "#f0ead8"
+      },
+      "once": false
+    },
+    {
+      "id": "basil-pots",
+      "kind": "herbs",
+      "nameKey": "zone.village.poi.basil-pots.name",
+      "action": "gather",
+      "descKey": "zone.village.poi.basil-pots.desc",
+      "effects": [],
+      "gather": {
+        "item": "basil",
+        "qty": 2,
+        "potency": 1,
+        "when": {
+          "date": {
+            "from": "06-01",
+            "to": "10-15"
+          }
+        },
+        "regrowDays": 2,
+        "tint": "#6a9a4a"
+      },
+      "once": false
+    },
+    {
+      "id": "grave-moss",
+      "kind": "herbs",
+      "nameKey": "zone.village.poi.grave-moss.name",
+      "action": "gather",
+      "descKey": "zone.village.poi.grave-moss.desc",
+      "effects": [],
+      "gather": {
+        "item": "grave-moss",
+        "qty": 1,
+        "potency": 1,
+        "when": {
+          "phase": "night"
+        },
+        "regrowDays": 2,
+        "tint": "#8a9a8a"
+      },
+      "once": false
+    },
+    {
+      "id": "guardian-house",
+      "kind": "house",
+      "nameKey": "zone.village.poi.guardian-house.name",
+      "action": "use",
+      "descKey": "zone.village.poi.guardian-house.desc",
+      "effects": [],
+      "once": false
+    },
+    {
+      "id": "stana-house",
+      "kind": "ruin",
+      "nameKey": "zone.village.poi.stana-house.name",
+      "descKey": "zone.village.poi.stana-house.desc",
+      "action": "rest",
+      "once": false,
+      "dialogue": "prologue-home"
+    },
+    {
+      "id": "marija-gate",
+      "kind": "house",
+      "nameKey": "zone.village.poi.marija-gate.name",
+      "descKey": "zone.village.poi.marija-gate.desc",
+      "action": "talk",
+      "once": false,
+      "dialogue": "prologue-neighbour"
+    },
+    {
+      "id": "byre",
+      "kind": "mill",
+      "nameKey": "zone.village.poi.byre.name",
+      "descKey": "zone.village.poi.byre.desc",
+      "action": "investigate",
+      "once": false,
+      "dialogue": "prologue-byre"
+    },
+    {
+      "id": "crossroads-stone",
+      "kind": "crossroads",
+      "nameKey": "zone.village.poi.crossroads-stone.name",
+      "descKey": "zone.village.poi.crossroads-stone.desc",
+      "action": "investigate",
+      "once": false,
+      "dialogue": "prologue-crossroads"
+    },
+    {
+      "id": "church-porch",
+      "kind": "church",
+      "nameKey": "zone.village.poi.church-porch.name",
+      "descKey": "zone.village.poi.church-porch.desc",
+      "action": "talk",
+      "once": false,
+      "dialogue": "prologue-accusation"
+    },
+    {
+      "id": "elders-oak",
+      "kind": "shrine",
+      "nameKey": "zone.village.poi.elders-oak.name",
+      "descKey": "zone.village.poi.elders-oak.desc",
+      "action": "talk",
+      "once": false,
+      "dialogue": "prologue-trial"
+    },
+    {
+      "id": "forest-edge",
+      "kind": "gate",
+      "nameKey": "zone.village.poi.forest-edge.name",
+      "descKey": "zone.village.poi.forest-edge.desc",
+      "action": "use",
+      "once": false,
+      "dialogue": "prologue-pyre"
+    }
+  ],
+  "paths": {
+    "nodes": [
+      {
+        "id": "plaza",
+        "exit": true
+      },
+      {
+        "id": "west-bank"
+      }
+    ],
+    "edges": [
+      {
+        "id": "bridge",
+        "from": "plaza",
+        "to": "west-bank"
+      }
+    ]
+  }
+}

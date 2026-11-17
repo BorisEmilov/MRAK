@@ -1,0 +1,1082 @@
+{
+  "flags": [
+    {
+      "id": "prologue-complete",
+      "description": "The 1779 prologue was finished."
+    },
+    {
+      "id": "koledari-escorted",
+      "description": "The guardian escorted the koledari on Christmas night."
+    },
+    {
+      "id": "lead-poured",
+      "description": "Lead pouring was performed on a villager."
+    },
+    {
+      "id": "true-name-learned",
+      "description": "Any demon's true name was learned."
+    },
+    {
+      "id": "bell-rang-333",
+      "description": "The church bell rang by itself at 3:33."
+    },
+    {
+      "id": "velika-sleepwalked",
+      "description": "Velika was seen sleepwalking toward the forest well."
+    },
+    {
+      "id": "m1-solved-dimo",
+      "description": "M1 concluded naming Dimo."
+    },
+    {
+      "id": "dimo-fled",
+      "description": "Dimo fled to Zlatno after being exposed."
+    },
+    {
+      "id": "velika-saved",
+      "description": "Velika survived the Unclean Days."
+    },
+    {
+      "id": "velika-drowned",
+      "description": "Velika walked into the water at Theophany dawn."
+    },
+    {
+      "id": "neda-condemned",
+      "description": "The village condemned Baba Neda."
+    },
+    {
+      "id": "innocent-lynched",
+      "description": "The mob killed an innocent villager."
+    },
+    {
+      "id": "krastyo-handed-to-aga",
+      "description": "Krastyo was handed over to the aga's men."
+    },
+    {
+      "id": "mill-stopped",
+      "description": "The mill is not working."
+    },
+    {
+      "id": "tavern-closed",
+      "description": "Radka's tavern is closed."
+    },
+    {
+      "id": "forest-hostile",
+      "description": "The forest spirit is hostile for this generation."
+    },
+    {
+      "id": "forest-burned",
+      "description": "The Samodivi Forest has burned."
+    },
+    {
+      "id": "monastery-consecrated",
+      "description": "The monastery ruins were reconsecrated."
+    },
+    {
+      "id": "stoyan-confessed",
+      "description": "Pop Stoyan confessed taking Zlatno's silver."
+    },
+    {
+      "id": "neda-trusts-guardian",
+      "description": "Baba Neda trusts the guardian with her family's secret."
+    },
+    {
+      "id": "mill-wheel-heard",
+      "description": "The guardian heard the voice in the mill wheel."
+    },
+    {
+      "id": "haidut-seen-at-tavern",
+      "description": "A haidut was seen in Radka's loft."
+    },
+    {
+      "id": "petko-confessed-graves",
+      "description": "Petko confessed the empty graves of 1829."
+    },
+    {
+      "id": "todor-letter-found",
+      "description": "Todor's letter from Bucharest was found."
+    },
+    {
+      "id": "bell-cracked",
+      "description": "The church bell has cracked."
+    },
+    {
+      "id": "entered-church-after-pact",
+      "description": "The guardian entered the church after signing a pact."
+    },
+    {
+      "id": "debt-entry-paid",
+      "description": "A debt entry was paid off completely."
+    },
+    {
+      "id": "tree-rows-1-2-complete",
+      "description": "All row 1–2 talents of one tree were bought."
+    },
+    {
+      "id": "night-without-lantern",
+      "description": "A night was survived without lighting the lantern."
+    },
+    {
+      "id": "chapter-unclean-days-complete",
+      "description": "The Unclean Days chapter ended."
+    },
+    {
+      "id": "theophany-dawn",
+      "description": "Theophany dawn was reached."
+    },
+    {
+      "id": "moon-pulled-down",
+      "description": "The forest spirit pulled the moon down: pitch-black night, lantern radius halved (light.md rule 5)."
+    },
+    {
+      "id": "samodivi-allied",
+      "description": "The samodivi count the guardian as a friend: the forest shows its allied variant."
+    },
+    {
+      "id": "horned-mark",
+      "description": "The guardian carries the mark of the crossroads (dark talents)."
+    },
+    {
+      "id": "virtuous",
+      "description": "The guardian acted by their virtue three times this chapter."
+    },
+    {
+      "id": "dimo-asked-grove",
+      "description": "Dimo asked the guardian to clear the old grove."
+    },
+    {
+      "id": "grove-agreed",
+      "description": "The guardian agreed to clear the grove with Dimo."
+    },
+    {
+      "id": "forest-spirit-heard",
+      "description": "The guardian spoke with the one in the forest."
+    },
+    {
+      "id": "petko-saw-crossroads",
+      "description": "Petko told of a man at the crossroads at midnight."
+    },
+    {
+      "id": "radka-trusts-guardian",
+      "description": "Radka trusts the guardian with her secret."
+    },
+    {
+      "id": "register-noticed",
+      "description": "The guardian noticed the priest hiding the burial register."
+    },
+    {
+      "id": "todor-keeps-board",
+      "description": "Todor helps keep the clues in order."
+    },
+    {
+      "id": "velika-told-dream",
+      "description": "Velika told the guardian her dream of the river."
+    },
+    {
+      "id": "shared-dream",
+      "description": "The village dreamed the same dream."
+    },
+    {
+      "id": "sleepwalkers-at-lake",
+      "description": "Sleepwalkers were found at the mill pond."
+    },
+    {
+      "id": "calf-with-human-eyes",
+      "description": "A calf was born with human eyes."
+    },
+    {
+      "id": "grave-disturbed",
+      "description": "A fresh grave was found disturbed."
+    },
+    {
+      "id": "icon-wept",
+      "description": "The church icon wept."
+    },
+    {
+      "id": "mara-shadow-gone",
+      "description": "Mara, Radka's daughter, casts no shadow."
+    },
+    {
+      "id": "mara-saved",
+      "description": "Mara's shadow was given back."
+    },
+    {
+      "id": "mara-died",
+      "description": "Mara died of the lost shadow."
+    },
+    {
+      "id": "night-origin-found",
+      "description": "Tonight's origin of the evil was found."
+    },
+    {
+      "id": "trader-visits",
+      "description": "Prosperity or the inn brings traders."
+    },
+    {
+      "id": "craftsmen-arrive",
+      "description": "Prosperity 3: craftsmen settle in Mrak."
+    },
+    {
+      "id": "fair-held",
+      "description": "A yearly fair is held."
+    },
+    {
+      "id": "town-charter",
+      "description": "Prosperity 5: Mrak is a small town."
+    },
+    {
+      "id": "enyovden-rite-done",
+      "description": "Enyovden rite performed."
+    },
+    {
+      "id": "kukeri-rite-done",
+      "description": "Kukeri rite performed."
+    },
+    {
+      "id": "nestinari-rite-done",
+      "description": "Nestinari rite performed."
+    },
+    {
+      "id": "rusalia-week-rite-done",
+      "description": "Rusalia rite performed."
+    },
+    {
+      "id": "zadushnitsa-rite-done",
+      "description": "Zadushnitsa rite performed."
+    },
+    {
+      "id": "prologue-active",
+      "description": "Stana's last days (1779) are being played."
+    },
+    {
+      "id": "prologue-doll-sewn",
+      "description": "Stana sewed the doll and whispered Kalina's name into it."
+    },
+    {
+      "id": "prologue-neighbour-visited",
+      "description": "Stana brought Marija the remedy."
+    },
+    {
+      "id": "prologue-woke-forest",
+      "description": "Stana woke with forest mud on her feet and no memory of the night."
+    },
+    {
+      "id": "prologue-byre-visited",
+      "description": "Stana saw the sick cattle of Mrak."
+    },
+    {
+      "id": "prologue-cattle-touched",
+      "description": "Stana laid her hands on the dying cow."
+    },
+    {
+      "id": "prologue-saw-dragan",
+      "description": "Stana saw Dragan Zlatev come back from the crossroads."
+    },
+    {
+      "id": "prologue-coin-mark",
+      "description": "Stana saw the mark on the coin Dragan dropped: a key with three teeth."
+    },
+    {
+      "id": "prologue-accused",
+      "description": "Stana was named a witch before the church."
+    },
+    {
+      "id": "prologue-named-dragan",
+      "description": "Stana accused Dragan before the village."
+    },
+    {
+      "id": "prologue-judged",
+      "description": "The elders judged Stana under the oak."
+    },
+    {
+      "id": "prologue-kalina-given",
+      "description": "Stana gave Kalina to Ivan Svetlev."
+    }
+  ],
+  "stats": [
+    {
+      "id": "sanity",
+      "scope": "guardian",
+      "min": 0,
+      "max": 200,
+      "default": 76,
+      "description": "Current Sanity."
+    },
+    {
+      "id": "sanity-max",
+      "scope": "guardian",
+      "min": 0,
+      "max": 200,
+      "default": 76,
+      "description": "Maximum Sanity (60 + 8 × Resolve + bonuses)."
+    },
+    {
+      "id": "faith",
+      "scope": "guardian",
+      "min": 0,
+      "max": 100,
+      "default": 40,
+      "description": "Faith track."
+    },
+    {
+      "id": "corruption",
+      "scope": "guardian",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "Corruption track."
+    },
+    {
+      "id": "notice",
+      "scope": "guardian",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "Forbidden knowledge: how much the demons notice the guardian (\"seen by demons\"). Hidden."
+    },
+    {
+      "id": "debt",
+      "scope": "guardian",
+      "min": 0,
+      "max": 1000,
+      "default": 0,
+      "description": "Total Debt."
+    },
+    {
+      "id": "revelation",
+      "scope": "guardian",
+      "min": 0,
+      "max": 100000,
+      "default": 0,
+      "description": "Unspent Revelation."
+    },
+    {
+      "id": "journal-pages",
+      "scope": "guardian",
+      "min": 0,
+      "max": 200,
+      "default": 24,
+      "description": "Journal capacity in pages."
+    },
+    {
+      "id": "oil-consumption-rate",
+      "scope": "guardian",
+      "min": 0.1,
+      "max": 5,
+      "default": 1,
+      "description": "Multiplier on lantern oil consumption."
+    },
+    {
+      "id": "healing-potency",
+      "scope": "guardian",
+      "min": 0.1,
+      "max": 5,
+      "default": 1,
+      "description": "Multiplier on healing items."
+    },
+    {
+      "id": "injury-duration-rate",
+      "scope": "guardian",
+      "min": 0.1,
+      "max": 5,
+      "default": 1,
+      "description": "Multiplier on injury duration."
+    },
+    {
+      "id": "incense-duration-rate",
+      "scope": "guardian",
+      "min": 0.1,
+      "max": 5,
+      "default": 1,
+      "description": "Multiplier on incense duration."
+    },
+    {
+      "id": "hysteria",
+      "scope": "village",
+      "min": 0,
+      "max": 100,
+      "default": 10,
+      "description": "Village hysteria."
+    },
+    {
+      "id": "hysteria-gain-rate",
+      "scope": "village",
+      "min": 0.1,
+      "max": 5,
+      "default": 1,
+      "description": "Multiplier on hysteria gains."
+    },
+    {
+      "id": "village-corruption",
+      "scope": "village",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "Collective stain of the village."
+    },
+    {
+      "id": "prosperity-score",
+      "scope": "village",
+      "min": 0,
+      "max": 500,
+      "default": 0,
+      "description": "Score behind prosperity levels."
+    },
+    {
+      "id": "oil-cap",
+      "scope": "village",
+      "min": 0,
+      "max": 500,
+      "default": 20,
+      "description": "Village oil storage cap."
+    },
+    {
+      "id": "herb-cap",
+      "scope": "village",
+      "min": 0,
+      "max": 500,
+      "default": 20,
+      "description": "Village herb storage cap."
+    },
+    {
+      "id": "herbs-per-day",
+      "scope": "village",
+      "min": 0,
+      "max": 50,
+      "default": 0,
+      "description": "Passive herb production per day."
+    },
+    {
+      "id": "watch-defence",
+      "scope": "village",
+      "min": 0,
+      "max": 500,
+      "default": 0,
+      "description": "Defence value of the night watch."
+    },
+    {
+      "id": "creature-strength-rate",
+      "scope": "world",
+      "min": 0.1,
+      "max": 10,
+      "default": 1,
+      "description": "Multiplier on creature strength."
+    },
+    {
+      "id": "debt-collection-rate",
+      "scope": "world",
+      "min": 0.1,
+      "max": 10,
+      "default": 1,
+      "description": "Multiplier on debt collection chance."
+    },
+    {
+      "id": "fear",
+      "scope": "villager",
+      "min": 0,
+      "max": 100,
+      "default": 10,
+      "description": "A villager's fear."
+    },
+    {
+      "id": "suspicion",
+      "scope": "villager",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "How much the village suspects a villager."
+    },
+    {
+      "id": "night-index",
+      "scope": "world",
+      "min": 0,
+      "max": 14,
+      "default": 0,
+      "description": "Night number within the chapter."
+    },
+    {
+      "id": "year",
+      "scope": "world",
+      "min": 1700,
+      "max": 2100,
+      "default": 1834,
+      "description": "In-world year (Julian)."
+    },
+    {
+      "id": "generation",
+      "scope": "world",
+      "min": 1,
+      "max": 99,
+      "default": 1,
+      "description": "Generation of the guardian bloodline (1 = the first guardian of the pact)."
+    },
+    {
+      "id": "nights-survived",
+      "scope": "world",
+      "min": 0,
+      "max": 100000,
+      "default": 0,
+      "description": "Nights survived in this chronicle."
+    },
+    {
+      "id": "dawn-penalties",
+      "scope": "world",
+      "min": 0,
+      "max": 100000,
+      "default": 0,
+      "description": "Dawn penalties suffered in this chapter."
+    },
+    {
+      "id": "exorcisms-completed",
+      "scope": "world",
+      "min": 0,
+      "max": 100000,
+      "default": 0,
+      "description": "Successful exorcisms in this chronicle."
+    },
+    {
+      "id": "propositions-supported",
+      "scope": "world",
+      "min": 0,
+      "max": 100000,
+      "default": 0,
+      "description": "Deduction-board propositions fully supported."
+    },
+    {
+      "id": "legacy",
+      "scope": "profile",
+      "min": 0,
+      "max": 100000,
+      "default": 0,
+      "description": "Unspent Legacy (Bloodline Tree)."
+    },
+    {
+      "id": "hunger",
+      "scope": "villager",
+      "min": 0,
+      "max": 100,
+      "default": 20,
+      "description": "A villager's hunger (100 = starving)."
+    },
+    {
+      "id": "cold",
+      "scope": "villager",
+      "min": 0,
+      "max": 100,
+      "default": 10,
+      "description": "How cold a villager is (100 = freezing)."
+    },
+    {
+      "id": "villager-faith",
+      "scope": "villager",
+      "min": 0,
+      "max": 100,
+      "default": 50,
+      "description": "A villager's faith; it damps their fear."
+    },
+    {
+      "id": "health",
+      "scope": "villager",
+      "min": 0,
+      "max": 100,
+      "default": 100,
+      "description": "A villager's health (0 = dead)."
+    },
+    {
+      "id": "night-watch",
+      "scope": "village",
+      "min": 0,
+      "max": 500,
+      "default": 0,
+      "description": "Defence of tonight's night watch."
+    },
+    {
+      "id": "village-repair",
+      "scope": "village",
+      "min": 0,
+      "max": 100,
+      "default": 60,
+      "description": "State of roofs and shutters; poor repair makes homes colder."
+    },
+    {
+      "id": "pack-slots",
+      "scope": "guardian",
+      "description": "Extra pack slots (talents, gear).",
+      "min": 0,
+      "max": 40,
+      "default": 0
+    },
+    {
+      "id": "carry-weight",
+      "scope": "guardian",
+      "description": "Extra carry weight (talents, gear).",
+      "min": 0,
+      "max": 40,
+      "default": 0
+    },
+    {
+      "id": "affinity-gain-rate",
+      "scope": "guardian",
+      "min": 0.1,
+      "max": 5,
+      "default": 1,
+      "description": "Multiplier of affinity gained by talking to villagers."
+    },
+    {
+      "id": "guardian-suspicion",
+      "scope": "guardian",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "How much the village suspects the guardian (docs/systems/hysteria.md)."
+    },
+    {
+      "id": "rep-horned-one",
+      "scope": "guardian",
+      "min": -100,
+      "max": 100,
+      "default": 0,
+      "description": "Reputation with The Horned One (docs/systems/pacts.md → Factions)."
+    },
+    {
+      "id": "rep-forest-spirit",
+      "scope": "guardian",
+      "min": -100,
+      "max": 100,
+      "default": 0,
+      "description": "Reputation with The forest spirit (docs/systems/pacts.md → Factions)."
+    },
+    {
+      "id": "rep-lesser-demons",
+      "scope": "guardian",
+      "min": -100,
+      "max": 100,
+      "default": 0,
+      "description": "Reputation with The lesser demons (docs/systems/pacts.md → Factions)."
+    },
+    {
+      "id": "rep-church",
+      "scope": "guardian",
+      "min": -100,
+      "max": 100,
+      "default": 0,
+      "description": "Reputation with The Church (docs/systems/pacts.md → Factions)."
+    },
+    {
+      "id": "rep-zlatno",
+      "scope": "guardian",
+      "min": -100,
+      "max": 100,
+      "default": 0,
+      "description": "Reputation with The Zlatno bloodline (docs/systems/pacts.md → Factions)."
+    },
+    {
+      "id": "route-expose",
+      "scope": "world",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "Route marker: expose (docs/GDD.md §11)."
+    },
+    {
+      "id": "route-break",
+      "scope": "world",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "Route marker: break (docs/GDD.md §11)."
+    },
+    {
+      "id": "route-steal",
+      "scope": "world",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "Route marker: steal (docs/GDD.md §11)."
+    },
+    {
+      "id": "route-forest",
+      "scope": "world",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "Route marker: forest (docs/GDD.md §11)."
+    },
+    {
+      "id": "route-serve",
+      "scope": "world",
+      "min": 0,
+      "max": 100,
+      "default": 0,
+      "description": "Route marker: serve (docs/GDD.md §11)."
+    },
+    {
+      "id": "route-pure",
+      "scope": "world",
+      "min": 0,
+      "max": 100,
+      "default": 100,
+      "description": "Route marker: pure (docs/GDD.md §11)."
+    },
+    {
+      "id": "guardian-health",
+      "scope": "guardian",
+      "min": 0,
+      "max": 100,
+      "default": 100,
+      "description": "The guardian's health at night (docs/systems/combat.md; 0 = Last Breath)."
+    },
+    {
+      "id": "creature-cunning-rate",
+      "scope": "world",
+      "min": 0.1,
+      "max": 10,
+      "default": 1,
+      "description": "Multiplies creature sight and hearing (Darkness levels)."
+    }
+  ],
+  "rules": [
+    {
+      "id": "after-exorcism-calm",
+      "description": "Calm host and village after an exorcism.",
+      "params": ["hostFear", "hysteria"]
+    },
+    {
+      "id": "alchemy-extra-dose",
+      "description": "Brews yield extra doses.",
+      "params": ["doses"]
+    },
+    {
+      "id": "amulet-extra-charge",
+      "description": "Crafted amulets get extra charges.",
+      "params": ["charges"]
+    },
+    {
+      "id": "assign-penance",
+      "description": "Assign penance to a villager.",
+      "params": ["fear", "affinity"]
+    },
+    {
+      "id": "auto-identify-herbs",
+      "description": "Herbs are identified automatically."
+    },
+    {
+      "id": "banish-lesser-bes-without-ritual",
+      "description": "Banish a lesser bes without the full ritual."
+    },
+    {
+      "id": "banish-lesser-besove",
+      "description": "Banish every lesser bes in the village."
+    },
+    {
+      "id": "banish-named-demon",
+      "description": "Banish a named demon instantly."
+    },
+    {
+      "id": "bind-without-seal",
+      "description": "Bind phase allowed without the seal.",
+      "params": ["extraShadowDice"]
+    },
+    {
+      "id": "bless-slot-free",
+      "description": "Bless one gear slot without materials."
+    },
+    {
+      "id": "borrow-attribute",
+      "description": "Raise an attribute until dawn.",
+      "params": ["amount"]
+    },
+    {
+      "id": "can-always-confront-mob",
+      "description": "The guardian may always attempt to stop a mob."
+    },
+    {
+      "id": "censer-light-source",
+      "description": "A lit censer counts as a light source.",
+      "params": ["radius"]
+    },
+    {
+      "id": "charm-off-evil-eye",
+      "description": "Remove stage-1 evil-eye and fever symptoms."
+    },
+    {
+      "id": "command-possessed",
+      "description": "Command a possessed villager."
+    },
+    {
+      "id": "confession-reveals-secret-hint",
+      "description": "Confession reveals a secret hint once per chapter."
+    },
+    {
+      "id": "damage-tier-bonus",
+      "description": "Raise weapon damage tier against a target type.",
+      "params": ["tiers", "against"]
+    },
+    {
+      "id": "dawn-herb-potency",
+      "description": "Herbs picked at dawn gain potency.",
+      "params": ["bonus"]
+    },
+    {
+      "id": "debt-collection-tier-shift",
+      "description": "Shift debt collection severity.",
+      "params": ["tiers"]
+    },
+    {
+      "id": "debt-scaling-multiplier",
+      "description": "Multiply debt scaling.",
+      "params": ["factor"]
+    },
+    {
+      "id": "destroy-magiya-remotely",
+      "description": "Destroy a magiya remotely."
+    },
+    {
+      "id": "enable-chapel-services",
+      "description": "Chapel services and vigils become available."
+    },
+    {
+      "id": "enable-crypt-altar",
+      "description": "Crypt altar offerings become available."
+    },
+    {
+      "id": "enable-fever-cures",
+      "description": "Fever brews can be made."
+    },
+    {
+      "id": "enyovden-potency",
+      "description": "Enyovden herb potency multiplier.",
+      "params": ["multiplier"]
+    },
+    {
+      "id": "exorcism-jump-immunity",
+      "description": "Failed exorcisms cannot jump to the guardian."
+    },
+    {
+      "id": "fever-cured-in-one-day",
+      "description": "Fevers are cured in one day."
+    },
+    {
+      "id": "forest-bargain-discount",
+      "description": "Forest bargains cost fewer memories.",
+      "params": ["memories"]
+    },
+    {
+      "id": "healed-villagers-protect",
+      "description": "Healing protects the guardian from mobs.",
+      "params": ["minHealed", "affinity"]
+    },
+    {
+      "id": "herb-potency-event",
+      "description": "Seasonal herb potency multiplier.",
+      "params": ["multiplier"]
+    },
+    {
+      "id": "herbs-no-spoilage",
+      "description": "Herbal remedies do not lose doses over time."
+    },
+    {
+      "id": "holy-water-double-use",
+      "description": "Holy water doses have two uses."
+    },
+    {
+      "id": "keep-light-when-moon-pulled",
+      "description": "Keep part of the light radius under a pulled-down moon.",
+      "params": ["fraction"]
+    },
+    {
+      "id": "last-breath-auto-success",
+      "description": "The next Last Breath check succeeds."
+    },
+    {
+      "id": "lead-pouring-calms",
+      "description": "Lead pouring reduces fear.",
+      "params": ["fear"]
+    },
+    {
+      "id": "lead-pouring-diagnose",
+      "description": "Reveal a villager's fear source and whether it is unnatural."
+    },
+    {
+      "id": "light-invisible-to-creatures",
+      "description": "The guardian's light is invisible to creatures."
+    },
+    {
+      "id": "mark-lies",
+      "description": "Mark lies in dialogue with a chance.",
+      "params": ["baseChance", "perWits"]
+    },
+    {
+      "id": "mark-one-innocent-suspect",
+      "description": "Mark one wrong suspect as innocent per mystery."
+    },
+    {
+      "id": "pacts-anywhere-at-midnight",
+      "description": "Pacts may be signed anywhere at midnight."
+    },
+    {
+      "id": "reflect-magiya",
+      "description": "Reflect a magiya onto its maker.",
+      "params": ["corruption"]
+    },
+    {
+      "id": "relic-shrine",
+      "description": "Relic shrine: dawn Sanity recovery bonus.",
+      "params": ["sanityBonus"]
+    },
+    {
+      "id": "reroll-check",
+      "description": "Reroll a whole check."
+    },
+    {
+      "id": "reveal-hidden-clause",
+      "description": "Reveal hidden pact clauses.",
+      "params": ["count"]
+    },
+    {
+      "id": "safe-zone",
+      "description": "A fixed light makes a safe zone where nothing spawns.",
+      "params": ["radius"]
+    },
+    {
+      "id": "samodiva-circles-heal",
+      "description": "Samodivi circles heal instead of draining."
+    },
+    {
+      "id": "shift-notice-to-villager",
+      "description": "Shift Notice onto a villager for a night."
+    },
+    {
+      "id": "show-villager-fear-words",
+      "description": "Show villagers' fear as words."
+    },
+    {
+      "id": "sicken-villager",
+      "description": "A villager falls ill.",
+      "params": ["closestAffinity"]
+    },
+    {
+      "id": "sin-options-always-available",
+      "description": "Sin options available without dominance."
+    },
+    {
+      "id": "start-with-watchtower",
+      "description": "New chronicles start with the watchtower at level 1."
+    },
+    {
+      "id": "symptoms-visible-earlier",
+      "description": "Possession symptoms are visible earlier.",
+      "params": ["stages"]
+    },
+    {
+      "id": "treat-gathering-as-enyovden",
+      "description": "Treat one gathering as on Enyovden."
+    },
+    {
+      "id": "true-name-reveals-weakness",
+      "description": "Learning a true name reveals one weakness."
+    },
+    {
+      "id": "ward-all-houses",
+      "description": "Ward every house for one night."
+    },
+    {
+      "id": "ward-house",
+      "description": "Ward a house against possession progression.",
+      "params": ["progressionFactor"]
+    },
+    {
+      "id": "attribute-max-6",
+      "description": "Lets one attribute reach 6.",
+      "params": ["attribute"]
+    },
+    {
+      "id": "sanity-shock",
+      "description": "A sanity shock by cause (fear-rules sanity.shocks.causes): sacrifices, demon sightings…",
+      "params": ["cause"]
+    },
+    {
+      "id": "construction-labour",
+      "description": "Labour days for the building under way.",
+      "params": ["days"]
+    },
+    {
+      "id": "surface-possessions",
+      "description": "Hidden possessions show their symptoms."
+    },
+    {
+      "id": "restless-dead",
+      "description": "Every badly buried villager returns at once."
+    }
+  ],
+  "contexts": [
+    {
+      "id": "vs-demon",
+      "description": "Any check against a demon."
+    },
+    {
+      "id": "vs-creature",
+      "description": "Any check against a bestiary creature."
+    },
+    {
+      "id": "vs-evil-eye",
+      "description": "Checks against the evil eye (uroki)."
+    },
+    {
+      "id": "vs-lesser-bes",
+      "description": "Checks against lesser besove."
+    },
+    {
+      "id": "exorcism-identify",
+      "description": "Exorcism phase 1."
+    },
+    {
+      "id": "exorcism-bind",
+      "description": "Exorcism phase 2."
+    },
+    {
+      "id": "exorcism-confront",
+      "description": "Exorcism phase 3."
+    },
+    {
+      "id": "exorcism-cast-out",
+      "description": "Exorcism phase 4."
+    },
+    {
+      "id": "persuasion-private",
+      "description": "Persuasion in a private conversation."
+    },
+    {
+      "id": "hysteria-calming",
+      "description": "Checks that reduce hysteria."
+    },
+    {
+      "id": "possession-detection",
+      "description": "Checks to detect possession."
+    },
+    {
+      "id": "investigation",
+      "description": "Investigation checks."
+    },
+    {
+      "id": "alchemy",
+      "description": "Brewing checks."
+    },
+    {
+      "id": "persuasion",
+      "description": "Persuasion checks."
+    },
+    {
+      "id": "herbalism",
+      "description": "Herbalism checks."
+    },
+    {
+      "id": "occultism",
+      "description": "Occultism checks."
+    },
+    {
+      "id": "blessing",
+      "description": "Blessing gear."
+    }
+  ]
+}

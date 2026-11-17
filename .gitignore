@@ -1,0 +1,32 @@
+node_modules/
+dist/
+build/
+coverage/
+.turbo/
+.astro/
+*.tsbuildinfo
+**/src/generated/
+
+# env / secrets
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/*
+!.vscode/extensions.json
+
+# logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# generated assets
+apps/game/public/assets/
+storybook-static/
+packages/core/sim-out/

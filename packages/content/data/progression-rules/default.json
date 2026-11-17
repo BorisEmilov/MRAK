@@ -1,0 +1,144 @@
+[
+  {
+    "id": "default",
+    "tier": "demo",
+    "attributes": {
+      "base": 2,
+      "playerPoints": 1,
+      "creationMax": 4,
+      "cap": 5,
+      "absoluteMax": 6,
+      "costPerRating": 10,
+      "derived": [
+        {
+          "stat": "sanity-max",
+          "attribute": "resolve",
+          "per": 8
+        },
+        {
+          "stat": "pack-slots",
+          "attribute": "vigor",
+          "per": 1
+        },
+        {
+          "stat": "carry-weight",
+          "attribute": "vigor",
+          "per": 2
+        }
+      ]
+    },
+    "skills": {
+      "callingCap": 2,
+      "otherCap": 1,
+      "maxCap": 5,
+      "thresholdFactor": 6,
+      "capCost": 5,
+      "foreignCapExtra": 5,
+      "practice": {
+        "failure": 2,
+        "success": 1,
+        "goodOmen": 2,
+        "hardBonus": 1,
+        "use": 1
+      },
+      "repeatMinutes": 10,
+      "dailyUseCap": 6,
+      "uses": {
+        "gather": "herbalism",
+        "talk": "persuasion",
+        "photograph": "investigation",
+        "grind": "herbalism"
+      }
+    },
+    "trees": {
+      "secondNativeCost": 20,
+      "foreignAccess": 30,
+      "foreignPerTalent": 5,
+      "softCapLifetime": 600,
+      "softCapFactor": 1.25
+    },
+    "checks": {
+      "maxFate": 8,
+      "difficulty": {
+        "easy": 1,
+        "average": 2,
+        "hard": 3,
+        "daunting": 4,
+        "dire": 5
+      },
+      "lowSanity": {
+        "below": 50,
+        "shadow": 1
+      },
+      "veryLowSanity": {
+        "below": 25,
+        "shadow": 2
+      },
+      "darkness": 1,
+      "sacred": -1,
+      "sacredZones": ["monastery"],
+      "faithCancels": 60,
+      "corruptionTurns": 50,
+      "extremeOmen": 3
+    },
+    "debt": {
+      "chancePer5": 0.03,
+      "maxChance": 0.6,
+      "major": 70,
+      "grave": 120,
+      "darkScalingMax": 3
+    },
+    "virtue": {
+      "faith": 2,
+      "boonFate": 1,
+      "virtuousAfter": 3,
+      "virtuousFlag": "virtuous",
+      "virtuousEffects": [
+        {
+          "modifier": {
+            "fateDice": 1,
+            "skill": "faith"
+          }
+        }
+      ]
+    },
+    "sin": {
+      "corruption": 2,
+      "takeoverMax": 0.5,
+      "blockAt": 50
+    },
+    "notice": {
+      "learnDemon": 3,
+      "forbiddenCollectible": 5,
+      "occultismCheck": 1,
+      "darkTalent": 2,
+      "dawnDecay": 1,
+      "directorDivisor": 50,
+      "occultSkills": ["occultism"]
+    },
+    "journal": {
+      "noteLength": 500,
+      "maxNotes": 100
+    },
+    "gear": {
+      "workshopZone": "village"
+    },
+    "lineage": {
+      "guardianStartAge": 25,
+      "heirAge": 16,
+      "retireAge": 50,
+      "apprenticeMinAge": 10,
+      "maxChildren": 3,
+      "childChance": 0.4,
+      "inheritedPactDebt": "inherited-pact",
+      "legacy": {
+        "perRevelation": 25,
+        "chapter": 5,
+        "mystery": 3,
+        "building": 2,
+        "route": 5,
+        "year": 1
+      }
+    }
+  }
+]

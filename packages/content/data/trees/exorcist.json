@@ -1,0 +1,75 @@
+{
+  "id": "exorcist",
+  "tier": "demo",
+  "nameKey": "tree.exorcist.name",
+  "descKey": "tree.exorcist.desc",
+  "kind": "calling",
+  "rowCosts": [5, 10, 15, 20],
+  "columns": 3,
+  "nodes": [
+    {
+      "cell": "A1",
+      "talent": "sign-of-the-cross"
+    },
+    {
+      "cell": "B1",
+      "talent": "grit"
+    },
+    {
+      "cell": "C1",
+      "talent": "incense-bearer"
+    },
+    {
+      "cell": "A2",
+      "talent": "know-the-enemy",
+      "requires": ["A1"]
+    },
+    {
+      "cell": "B2",
+      "talent": "litany",
+      "requires": ["B1"]
+    },
+    {
+      "cell": "C2",
+      "talent": "holy-water-discipline",
+      "requires": ["C1"]
+    },
+    {
+      "cell": "A3",
+      "talent": "binding-word",
+      "requires": ["A2"],
+      "tier": "full"
+    },
+    {
+      "cell": "B3",
+      "talent": "unbroken",
+      "requires": ["B2"],
+      "tier": "full"
+    },
+    {
+      "cell": "C3",
+      "talent": "consecrator",
+      "requires": ["C2", "B2"],
+      "tier": "full"
+    },
+    {
+      "cell": "A4",
+      "talent": "rite-of-casting-out",
+      "requires": ["A3"],
+      "tier": "full"
+    },
+    {
+      "cell": "B4",
+      "talent": "shepherd-of-souls",
+      "requires": ["B3"],
+      "tier": "full"
+    },
+    {
+      "cell": "C4",
+      "talent": "bell-of-theophany",
+      "requires": ["C3"],
+      "tier": "full"
+    }
+  ],
+  "calling": "priests-acolyte"
+}

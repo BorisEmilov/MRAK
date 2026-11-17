@@ -1,0 +1,180 @@
+[
+  {
+    "id": "listening-ear",
+    "tier": "demo",
+    "nameKey": "talent.listening-ear.name",
+    "descKey": "talent.listening-ear.desc",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "persuasion",
+          "context": "persuasion-private"
+        }
+      }
+    ]
+  },
+  {
+    "id": "parish-register",
+    "tier": "demo",
+    "nameKey": "talent.parish-register.name",
+    "descKey": "talent.parish-register.desc",
+    "effects": [
+      {
+        "rule": "show-villager-fear-words"
+      }
+    ]
+  },
+  {
+    "id": "seal-of-confession",
+    "tier": "demo",
+    "nameKey": "talent.seal-of-confession.name",
+    "descKey": "talent.seal-of-confession.desc",
+    "effects": [
+      {
+        "rule": "confession-reveals-secret-hint"
+      }
+    ]
+  },
+  {
+    "id": "calm-the-flock",
+    "tier": "demo",
+    "nameKey": "talent.calm-the-flock.name",
+    "descKey": "talent.calm-the-flock.desc",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "persuasion",
+          "context": "hysteria-calming"
+        }
+      }
+    ]
+  },
+  {
+    "id": "read-the-faces",
+    "tier": "demo",
+    "nameKey": "talent.read-the-faces.name",
+    "descKey": "talent.read-the-faces.desc",
+    "effects": [
+      {
+        "rule": "mark-lies",
+        "params": {
+          "baseChance": 0.5,
+          "perWits": 0.1
+        }
+      }
+    ]
+  },
+  {
+    "id": "penance",
+    "tier": "full",
+    "nameKey": "talent.penance.name",
+    "descKey": "talent.penance.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "day",
+          "effects": [
+            {
+              "rule": "assign-penance",
+              "params": {
+                "fear": -30,
+                "affinity": 10
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "voice-of-reason",
+    "tier": "full",
+    "nameKey": "talent.voice-of-reason.name",
+    "descKey": "talent.voice-of-reason.desc",
+    "effects": [
+      {
+        "rule": "can-always-confront-mob"
+      }
+    ]
+  },
+  {
+    "id": "sins-laid-bare",
+    "tier": "full",
+    "nameKey": "talent.sins-laid-bare.name",
+    "descKey": "talent.sins-laid-bare.desc",
+    "effects": [
+      {
+        "rule": "symptoms-visible-earlier",
+        "params": {
+          "stages": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "absolution",
+    "tier": "full",
+    "nameKey": "talent.absolution.name",
+    "descKey": "talent.absolution.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "generation",
+          "effects": [
+            {
+              "addStat": "corruption",
+              "value": -25
+            },
+            {
+              "addStat": "faith",
+              "value": 10
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "peacemaker",
+    "tier": "full",
+    "nameKey": "talent.peacemaker.name",
+    "descKey": "talent.peacemaker.desc",
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 0.7
+        }
+      }
+    ]
+  },
+  {
+    "id": "judgement-of-souls",
+    "tier": "full",
+    "nameKey": "talent.judgement-of-souls.name",
+    "descKey": "talent.judgement-of-souls.desc",
+    "effects": [
+      {
+        "rule": "mark-one-innocent-suspect"
+      }
+    ]
+  },
+  {
+    "id": "relic-quiet-feet",
+    "tier": "demo",
+    "nameKey": "talent.relic-quiet-feet.name",
+    "descKey": "talent.relic-quiet-feet.desc",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "stealth"
+        }
+      }
+    ]
+  }
+]

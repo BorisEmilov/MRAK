@@ -1,0 +1,89 @@
+[
+  {
+    "id": "default",
+    "tier": "demo",
+    "zone": "village",
+    "spawn": "default",
+    "minute": 960,
+    "lantern": "lantern",
+    "effects": [
+      {
+        "giveItem": "lamp-oil",
+        "qty": 4
+      },
+      {
+        "giveItem": "lamp-oil",
+        "qty": 4,
+        "to": "storage"
+      },
+      {
+        "giveItem": "bread",
+        "qty": 8,
+        "to": "storage"
+      },
+      {
+        "giveItem": "firewood",
+        "qty": 12,
+        "to": "storage"
+      },
+      {
+        "giveItem": "red-thread",
+        "qty": 3,
+        "to": "storage"
+      },
+      {
+        "giveItem": "beeswax",
+        "qty": 2,
+        "to": "storage"
+      },
+      {
+        "giveItem": "garlic",
+        "qty": 2,
+        "to": "storage"
+      },
+      {
+        "giveItem": "salt",
+        "qty": 2,
+        "to": "storage"
+      },
+      {
+        "giveItem": "holy-water",
+        "qty": 1,
+        "to": "storage"
+      }
+    ]
+  },
+  {
+    "id": "prologue",
+    "tier": "demo",
+    "zone": "village",
+    "spawn": "default",
+    "minute": 420,
+    "lantern": "lantern",
+    "date": {
+      "year": 1779,
+      "month": 6,
+      "day": 21
+    },
+    "effects": [
+      {
+        "setFlag": "prologue-active"
+      },
+      {
+        "startQuest": "prologue"
+      },
+      {
+        "giveItem": "lamp-oil",
+        "qty": 3
+      },
+      {
+        "giveItem": "red-thread",
+        "qty": 2
+      },
+      {
+        "giveItem": "bread",
+        "qty": 3
+      }
+    ]
+  }
+]

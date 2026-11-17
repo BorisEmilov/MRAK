@@ -1,0 +1,189 @@
+[
+  {
+    "id": "prologue",
+    "tier": "demo",
+    "nameKey": "achievement.prologue.name",
+    "descKey": "achievement.prologue.desc",
+    "condition": {
+      "flag": "prologue-complete"
+    }
+  },
+  {
+    "id": "first-night",
+    "tier": "demo",
+    "nameKey": "achievement.first-night.name",
+    "descKey": "achievement.first-night.desc",
+    "condition": {
+      "stat": "nights-survived",
+      ">=": 1
+    }
+  },
+  {
+    "id": "koledari",
+    "tier": "demo",
+    "nameKey": "achievement.koledari.name",
+    "descKey": "achievement.koledari.desc",
+    "condition": {
+      "flag": "koledari-escorted"
+    }
+  },
+  {
+    "id": "lead",
+    "tier": "demo",
+    "nameKey": "achievement.lead.name",
+    "descKey": "achievement.lead.desc",
+    "condition": {
+      "flag": "lead-poured"
+    }
+  },
+  {
+    "id": "first-exorcism",
+    "tier": "demo",
+    "nameKey": "achievement.first-exorcism.name",
+    "descKey": "achievement.first-exorcism.desc",
+    "condition": {
+      "stat": "exorcisms-completed",
+      ">=": 1
+    }
+  },
+  {
+    "id": "true-name",
+    "tier": "demo",
+    "nameKey": "achievement.true-name.name",
+    "descKey": "achievement.true-name.desc",
+    "condition": {
+      "flag": "true-name-learned"
+    }
+  },
+  {
+    "id": "board",
+    "tier": "demo",
+    "nameKey": "achievement.board.name",
+    "descKey": "achievement.board.desc",
+    "condition": {
+      "stat": "propositions-supported",
+      ">=": 5
+    }
+  },
+  {
+    "id": "m1-right",
+    "tier": "full",
+    "nameKey": "achievement.m1-right.name",
+    "descKey": "achievement.m1-right.desc",
+    "condition": {
+      "all": [
+        {
+          "mysteryConcluded": "wasting-bride",
+          "correct": true
+        },
+        {
+          "flag": "velika-saved"
+        }
+      ]
+    }
+  },
+  {
+    "id": "m1-wrong",
+    "tier": "full",
+    "nameKey": "achievement.m1-wrong.name",
+    "descKey": "achievement.m1-wrong.desc",
+    "condition": {
+      "flag": "innocent-lynched"
+    },
+    "hidden": true
+  },
+  {
+    "id": "no-dawn-penalty",
+    "tier": "full",
+    "nameKey": "achievement.no-dawn-penalty.name",
+    "descKey": "achievement.no-dawn-penalty.desc",
+    "condition": {
+      "all": [
+        {
+          "flag": "chapter-unclean-days-complete"
+        },
+        {
+          "stat": "dawn-penalties",
+          "==": 0
+        }
+      ]
+    }
+  },
+  {
+    "id": "pact",
+    "tier": "full",
+    "nameKey": "achievement.pact.name",
+    "descKey": "achievement.pact.desc",
+    "condition": {
+      "pactSigned": "crossroads-bargain"
+    },
+    "hidden": true
+  },
+  {
+    "id": "debt-paid",
+    "tier": "full",
+    "nameKey": "achievement.debt-paid.name",
+    "descKey": "achievement.debt-paid.desc",
+    "condition": {
+      "flag": "debt-entry-paid"
+    }
+  },
+  {
+    "id": "calling-answered",
+    "tier": "demo",
+    "nameKey": "achievement.calling-answered.name",
+    "descKey": "achievement.calling-answered.desc",
+    "condition": {
+      "flag": "tree-rows-1-2-complete"
+    }
+  },
+  {
+    "id": "moonless",
+    "tier": "demo",
+    "nameKey": "achievement.moonless.name",
+    "descKey": "achievement.moonless.desc",
+    "condition": {
+      "flag": "night-without-lantern"
+    },
+    "hidden": true
+  },
+  {
+    "id": "theophany",
+    "tier": "full",
+    "nameKey": "achievement.theophany.name",
+    "descKey": "achievement.theophany.desc",
+    "condition": {
+      "flag": "theophany-dawn"
+    }
+  },
+  {
+    "id": "herbalist",
+    "tier": "demo",
+    "nameKey": "achievement.herbalist.name",
+    "descKey": "achievement.herbalist.desc",
+    "condition": {
+      "collection": "herbs",
+      ">=": "all"
+    }
+  },
+  {
+    "id": "songs-of-mrak",
+    "tier": "demo",
+    "nameKey": "achievement.songs-of-mrak.name",
+    "descKey": "achievement.songs-of-mrak.desc",
+    "condition": {
+      "collection": "songs",
+      ">=": 3
+    }
+  },
+  {
+    "id": "cabinet-of-curiosities",
+    "tier": "demo",
+    "nameKey": "achievement.cabinet-of-curiosities.name",
+    "descKey": "achievement.cabinet-of-curiosities.desc",
+    "condition": {
+      "collection": "cursed",
+      ">=": "all"
+    }
+  }
+]

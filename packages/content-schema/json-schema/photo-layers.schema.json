@@ -1,0 +1,1230 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/PhotoLayer"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/PhotoLayer"
+      }
+    }
+  ],
+  "$defs": {
+    "PhotoLayer": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "full"
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "presence",
+            "possessed",
+            "symbol"
+          ]
+        },
+        "nameKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        },
+        "descKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        },
+        "target": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "villager": {
+                  "anyOf": [
+                    {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                      "description": "Reference to a villager"
+                    },
+                    {
+                      "type": "string",
+                      "const": "*"
+                    }
+                  ]
+                },
+                "possessed": {
+                  "anyOf": [
+                    {
+                      "type": "boolean",
+                      "const": true
+                    },
+                    {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                      "description": "Reference to a demon"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "villager"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "zone": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a zone"
+                },
+                "poi": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "required": [
+                "zone",
+                "poi"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "zone": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a zone"
+                }
+              },
+              "required": [
+                "zone"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "when": {
+          "$ref": "#/$defs/Condition"
+        },
+        "effects": {
+          "default": [],
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Effect"
+          }
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "kind",
+        "nameKey",
+        "descKey",
+        "target"
+      ],
+      "additionalProperties": false
+    },
+    "Condition": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "all": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              }
+            }
+          },
+          "required": [
+            "all"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "any": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              }
+            }
+          },
+          "required": [
+            "any"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "not": {
+              "$ref": "#/$defs/Condition"
+            }
+          },
+          "required": [
+            "not"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "flag": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a flag"
+            }
+          },
+          "required": [
+            "flag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "stat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "villager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            ">=": {
+              "type": "number"
+            },
+            ">": {
+              "type": "number"
+            },
+            "<=": {
+              "type": "number"
+            },
+            "<": {
+              "type": "number"
+            },
+            "==": {
+              "type": "number"
+            },
+            "!=": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "stat"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "hasItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "qty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "in": {
+              "type": "string",
+              "enum": [
+                "pack",
+                "storage"
+              ]
+            }
+          },
+          "required": [
+            "hasItem"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "clue": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a clue"
+            }
+          },
+          "required": [
+            "clue"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "talent": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a talent"
+            }
+          },
+          "required": [
+            "talent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "calling": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a calling"
+            }
+          },
+          "required": [
+            "calling"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "pactSigned": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a pact"
+            }
+          },
+          "required": [
+            "pactSigned"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "chapter": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a festival"
+            }
+          },
+          "required": [
+            "chapter"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "phase": {
+              "type": "string",
+              "enum": [
+                "dawn",
+                "day",
+                "dusk",
+                "night"
+              ]
+            }
+          },
+          "required": [
+            "phase"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "villagerAlive": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "villagerAlive"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "possessionRevealed": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "possessionRevealed"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quest": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a quest"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "done",
+                "failed"
+              ]
+            },
+            "stage": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "quest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mysteryConcluded": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a mystery"
+            },
+            "correct": {
+              "type": "boolean"
+            },
+            "culprit": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "mysteryConcluded"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "chance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "chance"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                },
+                "to": {
+                  "type": "string",
+                  "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                }
+              },
+              "required": [
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "date"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "moon": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "new",
+                  "waxing-crescent",
+                  "first-quarter",
+                  "waxing-gibbous",
+                  "full",
+                  "waning-gibbous",
+                  "last-quarter",
+                  "waning-crescent"
+                ]
+              }
+            }
+          },
+          "required": [
+            "moon"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "festivalDay": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a festival"
+            }
+          },
+          "required": [
+            "festivalDay"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "collection": {
+              "type": "string",
+              "enum": [
+                "herbs",
+                "recipes",
+                "grimoire",
+                "relics",
+                "tales",
+                "songs",
+                "cursed",
+                "photos",
+                "memories"
+              ]
+            },
+            ">=": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string",
+                  "const": "all"
+                }
+              ]
+            },
+            ">": {
+              "type": "number"
+            },
+            "<=": {
+              "type": "number"
+            },
+            "<": {
+              "type": "number"
+            },
+            "==": {
+              "type": "number"
+            },
+            "!=": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "collection"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Condition mini-language (docs/systems/conditions-effects.md)"
+    },
+    "Effect": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "setFlag": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a flag"
+            }
+          },
+          "required": [
+            "setFlag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "clearFlag": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a flag"
+            }
+          },
+          "required": [
+            "clearFlag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "addStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "value": {
+              "type": "number"
+            },
+            "villager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "addStat",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "setStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "value": {
+              "type": "number"
+            },
+            "villager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "setStat",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "giveItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "qty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "to": {
+              "type": "string",
+              "enum": [
+                "pack",
+                "storage"
+              ]
+            }
+          },
+          "required": [
+            "giveItem",
+            "qty"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "takeItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "qty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "from": {
+              "type": "string",
+              "enum": [
+                "pack",
+                "storage"
+              ]
+            }
+          },
+          "required": [
+            "takeItem",
+            "qty"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "addClue": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a clue"
+            }
+          },
+          "required": [
+            "addClue"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "grantCollectible": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a collectible"
+            }
+          },
+          "required": [
+            "grantCollectible"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "startQuest": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a quest"
+            }
+          },
+          "required": [
+            "startQuest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "startMystery": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a mystery"
+            }
+          },
+          "required": [
+            "startMystery"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "failQuest": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a quest"
+            }
+          },
+          "required": [
+            "failQuest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "addDebt": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a debt-source"
+            }
+          },
+          "required": [
+            "addDebt"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "changeAffinity": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            "with": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            "value": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "changeAffinity",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "startPossession": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            },
+            "host": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "startPossession",
+            "host"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "killVillager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            "cause": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "killVillager",
+            "cause"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "triggerEvent": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a event"
+            }
+          },
+          "required": [
+            "triggerEvent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "unlockTree": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a tree"
+            }
+          },
+          "required": [
+            "unlockTree"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "unlockRecipe": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a recipe"
+            }
+          },
+          "required": [
+            "unlockRecipe"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "setZoneVariant": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a zone"
+            },
+            "variant": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "setZoneVariant",
+            "variant"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "modifier": {
+              "$ref": "#/$defs/Modifier"
+            }
+          },
+          "required": [
+            "modifier"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "ability": {
+              "type": "object",
+              "properties": {
+                "uses": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9
+                },
+                "per": {
+                  "type": "string",
+                  "enum": [
+                    "day",
+                    "night",
+                    "chapter",
+                    "year",
+                    "generation"
+                  ]
+                },
+                "check": {
+                  "type": "object",
+                  "properties": {
+                    "skill": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                      "description": "Reference to a skill"
+                    },
+                    "difficulty": {
+                      "type": "string",
+                      "enum": [
+                        "easy",
+                        "average",
+                        "hard",
+                        "daunting",
+                        "dire"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "skill",
+                    "difficulty"
+                  ],
+                  "additionalProperties": false
+                },
+                "cooldown": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10080
+                },
+                "cost": {
+                  "type": "object",
+                  "properties": {
+                    "sanity": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "light": {
+                      "type": "number",
+                      "minimum": 0.05,
+                      "maximum": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "effects": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Effect"
+                  }
+                }
+              },
+              "required": [
+                "uses",
+                "per",
+                "effects"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "ability"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "rule": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a rule"
+            },
+            "params": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": [
+                  "number",
+                  "string",
+                  "boolean"
+                ]
+              }
+            }
+          },
+          "required": [
+            "rule"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "milestone": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a milestone"
+            }
+          },
+          "required": [
+            "milestone"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "learnDemon": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            }
+          },
+          "required": [
+            "learnDemon"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "learnCreature": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a creature"
+            }
+          },
+          "required": [
+            "learnCreature"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "narrate": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+              "description": "Reference to a loc"
+            }
+          },
+          "required": [
+            "narrate"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "if": {
+              "$ref": "#/$defs/Condition"
+            },
+            "then": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Effect"
+              }
+            },
+            "else": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Effect"
+              }
+            }
+          },
+          "required": [
+            "if",
+            "then"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Effect mini-language (docs/systems/conditions-effects.md)"
+    },
+    "Modifier": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "fateDice": {
+              "type": "integer",
+              "minimum": -3,
+              "maximum": 3
+            },
+            "skill": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a skill"
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            },
+            "perDebt": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "fateDice"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "shadowDice": {
+              "type": "integer",
+              "minimum": -3,
+              "maximum": 3
+            },
+            "skill": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a skill"
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            }
+          },
+          "required": [
+            "shadowDice"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "statBonus": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "statBonus",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "multiply": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "factor": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 10
+            }
+          },
+          "required": [
+            "multiply",
+            "factor"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "convertOmen": {
+              "type": "string",
+              "enum": [
+                "bad-to-none",
+                "none-to-good",
+                "good-to-bad"
+              ]
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            }
+          },
+          "required": [
+            "convertOmen"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    }
+  }
+}

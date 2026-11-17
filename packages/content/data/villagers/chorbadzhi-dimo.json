@@ -1,0 +1,48 @@
+{
+  "id": "chorbadzhi-dimo",
+  "tier": "demo",
+  "nameKey": "villager.chorbadzhi-dimo.name",
+  "tradeKey": "villager.chorbadzhi-dimo.trade",
+  "bioKey": "villager.chorbadzhi-dimo.bio",
+  "age": 47,
+  "sex": "male",
+  "traits": ["notable", "debtor"],
+  "fears": ["aga", "debt", "dark"],
+  "startingFear": 20,
+  "relationships": [
+    {
+      "villager": "pop-stoyan",
+      "affinity": 30
+    },
+    {
+      "villager": "krastyo",
+      "affinity": -40
+    },
+    {
+      "villager": "radka",
+      "affinity": -10
+    }
+  ],
+  "secrets": [
+    {
+      "id": "the-magiya",
+      "descKey": "villager.chorbadzhi-dimo.secret.the-magiya",
+      "revealWhen": {
+        "clue": "m1-magiya"
+      }
+    }
+  ],
+  "home": "house-dimo",
+  "work": "well",
+  "routine": "common",
+  "look": {
+    "skin": "#d4a07a",
+    "hair": "#3a2a1e",
+    "clothes": "#2f3d5c",
+    "accent": "#a83c2a",
+    "headwear": "kalpak",
+    "beard": false,
+    "build": "broad"
+  },
+  "dialogue": "chorbadzhi-dimo"
+}

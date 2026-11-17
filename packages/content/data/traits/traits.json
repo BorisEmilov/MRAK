@@ -1,0 +1,129 @@
+[
+  {
+    "id": "miller",
+    "tier": "demo",
+    "nameKey": "trait.miller.name",
+    "descKey": "trait.miller.desc",
+    "taskEfficiency": {
+      "food": 1.25,
+      "repairs": 1.25
+    }
+  },
+  {
+    "id": "widow",
+    "tier": "demo",
+    "nameKey": "trait.widow.name",
+    "descKey": "trait.widow.desc",
+    "fearGain": 0.9
+  },
+  {
+    "id": "notable",
+    "tier": "demo",
+    "nameKey": "trait.notable.name",
+    "descKey": "trait.notable.desc",
+    "taskEfficiency": {
+      "firewood": 0.75,
+      "repairs": 0.75,
+      "watch": 0.75
+    }
+  },
+  {
+    "id": "debtor",
+    "tier": "demo",
+    "nameKey": "trait.debtor.name",
+    "descKey": "trait.debtor.desc",
+    "fearGain": 1.2
+  },
+  {
+    "id": "priest",
+    "tier": "demo",
+    "nameKey": "trait.priest.name",
+    "descKey": "trait.priest.desc",
+    "taskEfficiency": {
+      "ritual-prep": 1.5
+    },
+    "spread": 0.75
+  },
+  {
+    "id": "elder",
+    "tier": "demo",
+    "nameKey": "trait.elder.name",
+    "descKey": "trait.elder.desc",
+    "taskEfficiency": {
+      "firewood": 0.75,
+      "repairs": 0.75
+    },
+    "coldRate": 1.25
+  },
+  {
+    "id": "herb-woman",
+    "tier": "demo",
+    "nameKey": "trait.herb-woman.name",
+    "descKey": "trait.herb-woman.desc",
+    "taskEfficiency": {
+      "garlic": 1.25,
+      "amulets": 1.25
+    }
+  },
+  {
+    "id": "bride",
+    "tier": "demo",
+    "nameKey": "trait.bride.name",
+    "descKey": "trait.bride.desc",
+    "spread": 1.25
+  },
+  {
+    "id": "outsider",
+    "tier": "demo",
+    "nameKey": "trait.outsider.name",
+    "descKey": "trait.outsider.desc",
+    "fearGain": 0.85
+  },
+  {
+    "id": "educated",
+    "tier": "demo",
+    "nameKey": "trait.educated.name",
+    "descKey": "trait.educated.desc",
+    "taskEfficiency": {
+      "watch": 1.25,
+      "firewood": 0.75
+    }
+  },
+  {
+    "id": "sexton",
+    "tier": "demo",
+    "nameKey": "trait.sexton.name",
+    "descKey": "trait.sexton.desc",
+    "taskEfficiency": {
+      "repairs": 1.25
+    }
+  },
+  {
+    "id": "innkeeper",
+    "tier": "demo",
+    "nameKey": "trait.innkeeper.name",
+    "descKey": "trait.innkeeper.desc",
+    "taskEfficiency": {
+      "food": 1.5
+    },
+    "hungerRate": 0.9
+  },
+  {
+    "id": "weaver",
+    "tier": "demo",
+    "nameKey": "trait.weaver.name",
+    "descKey": "trait.weaver.desc",
+    "taskEfficiency": {
+      "amulets": 1.5
+    }
+  },
+  {
+    "id": "strong",
+    "tier": "demo",
+    "nameKey": "trait.strong.name",
+    "descKey": "trait.strong.desc",
+    "taskEfficiency": {
+      "firewood": 1.25
+    }
+  }
+]

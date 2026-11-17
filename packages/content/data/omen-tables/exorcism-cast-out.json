@@ -1,0 +1,44 @@
+{
+  "id": "exorcism-cast-out",
+  "tier": "demo",
+  "context": "exorcism-cast-out",
+  "successGood": {
+    "descKey": "omen.exorcism-cast-out.success-good",
+    "effects": [
+      {
+        "addStat": "faith",
+        "value": 3
+      }
+    ]
+  },
+  "successNone": {
+    "descKey": "omen.exorcism-cast-out.success-none",
+    "effects": []
+  },
+  "successBad": {
+    "descKey": "omen.exorcism-cast-out.success-bad",
+    "effects": [
+      {
+        "addStat": "notice",
+        "value": 10
+      }
+    ]
+  },
+  "failureGood": {
+    "descKey": "omen.exorcism-cast-out.failure-good",
+    "effects": []
+  },
+  "failureNone": {
+    "descKey": "omen.exorcism-cast-out.failure-none",
+    "effects": []
+  },
+  "failureBad": {
+    "descKey": "omen.exorcism-cast-out.failure-bad",
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -10
+      }
+    ]
+  }
+}

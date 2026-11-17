@@ -1,0 +1,89 @@
+{
+  "id": "workshop",
+  "tier": "full",
+  "nameKey": "building.workshop.name",
+  "descKey": "building.workshop.desc",
+  "icon": "building.workshop",
+  "levels": [
+    {
+      "level": 1,
+      "descKey": "building.workshop.level-1",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 20
+          },
+          {
+            "item": "iron",
+            "qty": 4
+          }
+        ],
+        "labourDays": 6
+      },
+      "prosperity": 10,
+      "effects": [
+        {
+          "rule": "bless-slot-free"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "descKey": "building.workshop.level-2",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 36
+          },
+          {
+            "item": "iron",
+            "qty": 8
+          }
+        ],
+        "labourDays": 11
+      },
+      "minProsperity": 2,
+      "prosperity": 20,
+      "effects": [
+        {
+          "unlockRecipe": "consecrated-oil"
+        }
+      ]
+    },
+    {
+      "level": 3,
+      "descKey": "building.workshop.level-3",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 65
+          },
+          {
+            "item": "iron",
+            "qty": 14
+          },
+          {
+            "item": "red-thread",
+            "qty": 1
+          }
+        ],
+        "labourDays": 20
+      },
+      "minProsperity": 3,
+      "prosperity": 30,
+      "blood": "immured-shadow",
+      "effects": [
+        {
+          "modifier": {
+            "statBonus": "watch-defence",
+            "value": 10
+          }
+        }
+      ]
+    }
+  ],
+  "poi": "mill"
+}

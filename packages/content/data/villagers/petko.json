@@ -1,0 +1,48 @@
+{
+  "id": "petko",
+  "tier": "demo",
+  "nameKey": "villager.petko.name",
+  "tradeKey": "villager.petko.trade",
+  "bioKey": "villager.petko.bio",
+  "age": 60,
+  "sex": "male",
+  "traits": ["elder", "sexton"],
+  "fears": ["death"],
+  "startingFear": 20,
+  "relationships": [
+    {
+      "villager": "pop-stoyan",
+      "affinity": 50
+    },
+    {
+      "villager": "radka",
+      "affinity": 40
+    },
+    {
+      "villager": "krastyo",
+      "affinity": 20
+    }
+  ],
+  "secrets": [
+    {
+      "id": "empty-graves",
+      "descKey": "villager.petko.secret.empty-graves",
+      "revealWhen": {
+        "flag": "petko-confessed-graves"
+      }
+    }
+  ],
+  "home": "house-petko",
+  "work": "cemetery",
+  "routine": "early-riser",
+  "look": {
+    "skin": "#c48f6c",
+    "hair": "#9a948a",
+    "clothes": "#3b3530",
+    "accent": "#6d6a5a",
+    "headwear": "cap",
+    "beard": true,
+    "build": "stooped"
+  },
+  "dialogue": "petko"
+}

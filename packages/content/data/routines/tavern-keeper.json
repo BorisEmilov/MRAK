@@ -1,0 +1,42 @@
+{
+  "id": "tavern-keeper",
+  "tier": "demo",
+  "nameKey": "routine.tavern-keeper.name",
+  "blocks": [
+    {
+      "at": "00:00",
+      "activity": "sleep",
+      "place": "home"
+    },
+    {
+      "at": "07:00",
+      "activity": "chores",
+      "place": "home"
+    },
+    {
+      "at": "08:00",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "08:30",
+      "activity": "work",
+      "place": "work"
+    },
+    {
+      "at": "13:00",
+      "activity": "eat",
+      "place": "work"
+    },
+    {
+      "at": "13:30",
+      "activity": "work",
+      "place": "work"
+    },
+    {
+      "at": "23:00",
+      "activity": "sleep",
+      "place": "home"
+    }
+  ]
+}

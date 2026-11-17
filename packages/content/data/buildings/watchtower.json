@@ -1,0 +1,88 @@
+{
+  "id": "watchtower",
+  "tier": "demo",
+  "nameKey": "building.watchtower.name",
+  "descKey": "building.watchtower.desc",
+  "levels": [
+    {
+      "level": 1,
+      "descKey": "building.watchtower.level-1",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 20
+          },
+          {
+            "item": "iron",
+            "qty": 2
+          }
+        ],
+        "labourDays": 5
+      },
+      "effects": [
+        {
+          "modifier": {
+            "statBonus": "watch-defence",
+            "value": 10
+          }
+        }
+      ],
+      "prosperity": 10
+    },
+    {
+      "level": 2,
+      "descKey": "building.watchtower.level-2",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 36
+          },
+          {
+            "item": "iron",
+            "qty": 4
+          }
+        ],
+        "labourDays": 9
+      },
+      "effects": [
+        {
+          "rule": "safe-zone",
+          "params": {
+            "radius": 6
+          }
+        }
+      ],
+      "prosperity": 20
+    },
+    {
+      "level": 3,
+      "descKey": "building.watchtower.level-3",
+      "cost": {
+        "materials": [
+          {
+            "item": "firewood",
+            "qty": 65
+          },
+          {
+            "item": "iron",
+            "qty": 8
+          }
+        ],
+        "labourDays": 16
+      },
+      "effects": [
+        {
+          "modifier": {
+            "statBonus": "watch-defence",
+            "value": 30
+          }
+        }
+      ],
+      "prosperity": 30
+    }
+  ],
+  "icon": "building.watchtower",
+  "poi": "bonfire"
+}

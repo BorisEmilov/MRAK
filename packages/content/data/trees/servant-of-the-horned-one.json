@@ -1,0 +1,80 @@
+{
+  "id": "servant-of-the-horned-one",
+  "tier": "demo",
+  "nameKey": "tree.servant-of-the-horned-one.name",
+  "descKey": "tree.servant-of-the-horned-one.desc",
+  "kind": "dark",
+  "rowCosts": [5, 10, 15, 20],
+  "columns": 3,
+  "nodes": [
+    {
+      "cell": "A1",
+      "talent": "crossroads-tongue"
+    },
+    {
+      "cell": "B1",
+      "talent": "devils-luck"
+    },
+    {
+      "cell": "C1",
+      "talent": "black-candle"
+    },
+    {
+      "cell": "A2",
+      "talent": "silver-tongue",
+      "requires": ["A1"]
+    },
+    {
+      "cell": "B2",
+      "talent": "friend-of-the-collector",
+      "requires": ["B1"]
+    },
+    {
+      "cell": "C2",
+      "talent": "horned-shadow",
+      "requires": ["C1"]
+    },
+    {
+      "cell": "A3",
+      "talent": "borrowed-strength",
+      "requires": ["A2"],
+      "tier": "full"
+    },
+    {
+      "cell": "B3",
+      "talent": "whisper-to-the-possessed",
+      "requires": ["B2", "A2"],
+      "tier": "full"
+    },
+    {
+      "cell": "C3",
+      "talent": "contract-reader",
+      "requires": ["C2"],
+      "tier": "full"
+    },
+    {
+      "cell": "A4",
+      "talent": "midnight-anywhere",
+      "requires": ["A3"],
+      "tier": "full"
+    },
+    {
+      "cell": "B4",
+      "talent": "sovereign-of-debt",
+      "requires": ["B3"],
+      "tier": "full"
+    },
+    {
+      "cell": "C4",
+      "talent": "horned-crown",
+      "requires": ["C3"],
+      "tier": "full"
+    }
+  ],
+  "unlock": {
+    "pactSigned": "crossroads-bargain"
+  },
+  "rowCorruption": [4, 6, 9, 12],
+  "rowDebt": [1, 2, 3, 4],
+  "debtSource": "dark-talent"
+}

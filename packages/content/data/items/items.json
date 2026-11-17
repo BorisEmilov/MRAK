@@ -1,0 +1,500 @@
+[
+  {
+    "id": "holy-water",
+    "tier": "demo",
+    "nameKey": "item.holy-water.name",
+    "descKey": "item.holy-water.desc",
+    "category": "ritual",
+    "icon": "item.holy-water",
+    "stackSize": 10,
+    "tags": ["holy"],
+    "weight": 0.5
+  },
+  {
+    "id": "theophany-water",
+    "tier": "demo",
+    "nameKey": "item.theophany-water.name",
+    "descKey": "item.theophany-water.desc",
+    "category": "ritual",
+    "icon": "item.theophany-water",
+    "stackSize": 5,
+    "tags": ["holy"],
+    "weight": 0.5
+  },
+  {
+    "id": "incense",
+    "tier": "demo",
+    "nameKey": "item.incense.name",
+    "descKey": "item.incense.desc",
+    "category": "ritual",
+    "icon": "item.incense",
+    "stackSize": 10,
+    "tags": ["holy"],
+    "weight": 0.2
+  },
+  {
+    "id": "lamp-oil",
+    "tier": "demo",
+    "nameKey": "item.lamp-oil.name",
+    "descKey": "item.lamp-oil.desc",
+    "category": "consumable",
+    "icon": "item.lamp-oil",
+    "stackSize": 20,
+    "tags": ["light"],
+    "weight": 0.5
+  },
+  {
+    "id": "consecrated-oil",
+    "tier": "demo",
+    "nameKey": "item.consecrated-oil.name",
+    "descKey": "item.consecrated-oil.desc",
+    "category": "ritual",
+    "icon": "item.consecrated-oil",
+    "stackSize": 10,
+    "tags": ["light", "holy"],
+    "weight": 0.5
+  },
+  {
+    "id": "beeswax",
+    "tier": "demo",
+    "nameKey": "item.beeswax.name",
+    "descKey": "item.beeswax.desc",
+    "category": "material",
+    "icon": "item.beeswax",
+    "stackSize": 20,
+    "tags": [],
+    "weight": 0.3
+  },
+  {
+    "id": "red-thread",
+    "tier": "demo",
+    "nameKey": "item.red-thread.name",
+    "descKey": "item.red-thread.desc",
+    "category": "material",
+    "icon": "item.red-thread",
+    "stackSize": 20,
+    "tags": ["warding"],
+    "weight": 0.1
+  },
+  {
+    "id": "lead",
+    "tier": "demo",
+    "nameKey": "item.lead.name",
+    "descKey": "item.lead.desc",
+    "category": "material",
+    "icon": "item.lead",
+    "stackSize": 10,
+    "tags": [],
+    "weight": 1
+  },
+  {
+    "id": "garlic",
+    "tier": "demo",
+    "nameKey": "item.garlic.name",
+    "descKey": "item.garlic.desc",
+    "category": "herb",
+    "icon": "item.garlic",
+    "stackSize": 20,
+    "tags": ["herb", "warding"],
+    "weight": 0.2
+  },
+  {
+    "id": "st-johns-wort",
+    "tier": "demo",
+    "nameKey": "item.st-johns-wort.name",
+    "descKey": "item.st-johns-wort.desc",
+    "category": "herb",
+    "icon": "item.st-johns-wort",
+    "stackSize": 20,
+    "tags": ["herb", "calming"],
+    "weight": 0.1
+  },
+  {
+    "id": "yarrow",
+    "tier": "demo",
+    "nameKey": "item.yarrow.name",
+    "descKey": "item.yarrow.desc",
+    "category": "herb",
+    "icon": "item.yarrow",
+    "stackSize": 20,
+    "tags": ["herb", "fever"],
+    "weight": 0.1
+  },
+  {
+    "id": "salt",
+    "tier": "demo",
+    "nameKey": "item.salt.name",
+    "descKey": "item.salt.desc",
+    "category": "material",
+    "icon": "item.salt",
+    "stackSize": 20,
+    "tags": ["warding"],
+    "weight": 0.5
+  },
+  {
+    "id": "firewood",
+    "tier": "demo",
+    "nameKey": "item.firewood.name",
+    "descKey": "item.firewood.desc",
+    "category": "material",
+    "icon": "item.firewood",
+    "stackSize": 40,
+    "tags": [],
+    "weight": 2,
+    "slotSize": 2
+  },
+  {
+    "id": "iron",
+    "tier": "demo",
+    "nameKey": "item.iron.name",
+    "descKey": "item.iron.desc",
+    "category": "material",
+    "icon": "item.iron",
+    "stackSize": 20,
+    "tags": [],
+    "weight": 2
+  },
+  {
+    "id": "bread",
+    "tier": "demo",
+    "nameKey": "item.bread.name",
+    "descKey": "item.bread.desc",
+    "category": "consumable",
+    "icon": "item.bread",
+    "stackSize": 10,
+    "tags": ["food"],
+    "weight": 0.5,
+    "useEffects": [
+      {
+        "addStat": "sanity",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "id": "calming-tea",
+    "tier": "demo",
+    "nameKey": "item.calming-tea.name",
+    "descKey": "item.calming-tea.desc",
+    "category": "consumable",
+    "icon": "item.calming-tea",
+    "stackSize": 5,
+    "tags": ["calming"],
+    "useEffects": [
+      {
+        "addStat": "sanity",
+        "value": 15
+      }
+    ],
+    "weight": 0.5
+  },
+  {
+    "id": "fever-brew",
+    "tier": "demo",
+    "nameKey": "item.fever-brew.name",
+    "descKey": "item.fever-brew.desc",
+    "category": "consumable",
+    "icon": "item.fever-brew",
+    "stackSize": 5,
+    "tags": ["fever"],
+    "weight": 0.5
+  },
+  {
+    "id": "garlic-braid",
+    "tier": "demo",
+    "nameKey": "item.garlic-braid.name",
+    "descKey": "item.garlic-braid.desc",
+    "category": "consumable",
+    "icon": "item.garlic-braid",
+    "stackSize": 3,
+    "tags": ["warding"],
+    "weight": 0.5
+  },
+  {
+    "id": "red-thread-amulet",
+    "tier": "demo",
+    "nameKey": "item.red-thread-amulet.name",
+    "descKey": "item.red-thread-amulet.desc",
+    "category": "consumable",
+    "icon": "item.red-thread-amulet",
+    "stackSize": 3,
+    "tags": ["warding"],
+    "weight": 0.1
+  },
+  {
+    "id": "hawthorn-stake",
+    "tier": "full",
+    "nameKey": "item.hawthorn-stake.name",
+    "descKey": "item.hawthorn-stake.desc",
+    "category": "tool",
+    "icon": "item.hawthorn-stake",
+    "stackSize": 5,
+    "tags": ["warding"],
+    "weight": 1
+  },
+  {
+    "id": "juniper",
+    "tier": "demo",
+    "nameKey": "item.juniper.name",
+    "descKey": "item.juniper.desc",
+    "category": "herb",
+    "icon": "item.juniper",
+    "stackSize": 20,
+    "weight": 0.1,
+    "tags": ["herb", "holy"]
+  },
+  {
+    "id": "mistletoe",
+    "tier": "demo",
+    "nameKey": "item.mistletoe.name",
+    "descKey": "item.mistletoe.desc",
+    "category": "herb",
+    "icon": "item.mistletoe",
+    "stackSize": 20,
+    "weight": 0.1,
+    "tags": ["herb", "warding"]
+  },
+  {
+    "id": "grave-moss",
+    "tier": "demo",
+    "nameKey": "item.grave-moss.name",
+    "descKey": "item.grave-moss.desc",
+    "category": "herb",
+    "icon": "item.grave-moss",
+    "stackSize": 20,
+    "weight": 0.1,
+    "tags": ["herb", "dark"]
+  },
+  {
+    "id": "elder",
+    "tier": "demo",
+    "nameKey": "item.elder.name",
+    "descKey": "item.elder.desc",
+    "category": "herb",
+    "icon": "item.elder",
+    "stackSize": 20,
+    "weight": 0.1,
+    "tags": ["herb", "fever"]
+  },
+  {
+    "id": "wormwood",
+    "tier": "demo",
+    "nameKey": "item.wormwood.name",
+    "descKey": "item.wormwood.desc",
+    "category": "herb",
+    "icon": "item.wormwood",
+    "stackSize": 20,
+    "weight": 0.1,
+    "tags": ["herb", "warding"]
+  },
+  {
+    "id": "basil",
+    "tier": "demo",
+    "nameKey": "item.basil.name",
+    "descKey": "item.basil.desc",
+    "category": "herb",
+    "icon": "item.basil",
+    "stackSize": 20,
+    "weight": 0.1,
+    "tags": ["herb", "holy"]
+  },
+  {
+    "id": "zdravets",
+    "tier": "demo",
+    "nameKey": "item.zdravets.name",
+    "descKey": "item.zdravets.desc",
+    "category": "herb",
+    "icon": "item.zdravets",
+    "stackSize": 20,
+    "weight": 0.1,
+    "tags": ["herb", "calming"]
+  },
+  {
+    "id": "fern-blossom",
+    "tier": "demo",
+    "nameKey": "item.fern-blossom.name",
+    "descKey": "item.fern-blossom.desc",
+    "category": "herb",
+    "icon": "item.fern-blossom",
+    "stackSize": 5,
+    "weight": 0.1,
+    "potency": 2,
+    "tags": ["herb", "dark"]
+  },
+  {
+    "id": "mistletoe-charm",
+    "tier": "demo",
+    "nameKey": "item.mistletoe-charm.name",
+    "descKey": "item.mistletoe-charm.desc",
+    "category": "consumable",
+    "icon": "item.mistletoe-charm",
+    "stackSize": 3,
+    "weight": 0.1,
+    "tags": ["warding"],
+    "useEffects": [
+      {
+        "addStat": "sanity",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "id": "grave-salve",
+    "tier": "demo",
+    "nameKey": "item.grave-salve.name",
+    "descKey": "item.grave-salve.desc",
+    "category": "consumable",
+    "icon": "item.grave-salve",
+    "stackSize": 3,
+    "weight": 0.3,
+    "tags": ["dark"],
+    "useEffects": [
+      {
+        "addStat": "sanity",
+        "value": -4
+      },
+      {
+        "addStat": "corruption",
+        "value": 2
+      }
+    ]
+  },
+  {
+    "id": "seeing-tincture",
+    "tier": "demo",
+    "nameKey": "item.seeing-tincture.name",
+    "descKey": "item.seeing-tincture.desc",
+    "category": "consumable",
+    "icon": "item.seeing-tincture",
+    "stackSize": 3,
+    "weight": 0.3,
+    "tags": ["dark", "holy"],
+    "useEffects": [
+      {
+        "addStat": "sanity",
+        "value": -6
+      }
+    ]
+  },
+  {
+    "id": "zdravets-wreath",
+    "tier": "demo",
+    "nameKey": "item.zdravets-wreath.name",
+    "descKey": "item.zdravets-wreath.desc",
+    "category": "consumable",
+    "icon": "item.zdravets-wreath",
+    "stackSize": 3,
+    "weight": 0.3,
+    "tags": ["calming"],
+    "useEffects": [
+      {
+        "addStat": "sanity",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "id": "elder-syrup",
+    "tier": "demo",
+    "nameKey": "item.elder-syrup.name",
+    "descKey": "item.elder-syrup.desc",
+    "category": "consumable",
+    "icon": "item.elder-syrup",
+    "stackSize": 5,
+    "weight": 0.5,
+    "tags": ["fever", "food"],
+    "useEffects": [
+      {
+        "addStat": "sanity",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "daguerreotype-camera",
+    "tier": "demo",
+    "nameKey": "item.daguerreotype-camera.name",
+    "descKey": "item.daguerreotype-camera.desc",
+    "category": "tool",
+    "icon": "item.daguerreotype-camera",
+    "stackSize": 1,
+    "weight": 6,
+    "unique": true,
+    "slotSize": 2,
+    "tags": []
+  },
+  {
+    "id": "photographic-plate",
+    "tier": "demo",
+    "nameKey": "item.photographic-plate.name",
+    "descKey": "item.photographic-plate.desc",
+    "category": "consumable",
+    "icon": "item.photographic-plate",
+    "stackSize": 10,
+    "weight": 0.3,
+    "tags": []
+  },
+  {
+    "id": "zlatno-gold-coin",
+    "tier": "demo",
+    "nameKey": "item.zlatno-gold-coin.name",
+    "descKey": "item.zlatno-gold-coin.desc",
+    "category": "relic",
+    "icon": "item.zlatno-gold-coin",
+    "stackSize": 1,
+    "weight": 0.1,
+    "unique": true,
+    "cursed": "zlatno-gold-coin",
+    "tags": ["dark"]
+  },
+  {
+    "id": "brides-mirror",
+    "tier": "demo",
+    "nameKey": "item.brides-mirror.name",
+    "descKey": "item.brides-mirror.desc",
+    "category": "relic",
+    "icon": "item.brides-mirror",
+    "stackSize": 1,
+    "weight": 0.5,
+    "unique": true,
+    "cursed": "brides-mirror",
+    "tags": ["dark"]
+  },
+  {
+    "id": "rag-doll",
+    "tier": "demo",
+    "nameKey": "item.rag-doll.name",
+    "descKey": "item.rag-doll.desc",
+    "category": "relic",
+    "icon": "item.rag-doll",
+    "stackSize": 1,
+    "weight": 0.2,
+    "unique": true,
+    "cursed": "rag-doll",
+    "tags": ["dark"]
+  },
+  {
+    "id": "samodiva-pendant",
+    "tier": "demo",
+    "nameKey": "item.samodiva-pendant.name",
+    "descKey": "item.samodiva-pendant.desc",
+    "category": "relic",
+    "icon": "item.samodiva-pendant",
+    "stackSize": 1,
+    "weight": 0.1,
+    "unique": true,
+    "cursed": "samodiva-pendant",
+    "tags": ["dark"]
+  },
+  {
+    "id": "silver-coin",
+    "tier": "demo",
+    "nameKey": "item.silver-coin.name",
+    "descKey": "item.silver-coin.desc",
+    "category": "material",
+    "icon": "resource.coin",
+    "stackSize": 99,
+    "tags": [],
+    "weight": 0
+  }
+]

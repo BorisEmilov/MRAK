@@ -1,0 +1,13 @@
+title = "MRAK gitleaks config"
+
+[extend]
+useDefault = true
+
+[allowlist]
+description = "Example env files contain placeholders only"
+paths = ['''\.env\.example$''', '''docs/phaser-skills/''']
+# Localization keys ("descKey": "quest.prologue.sleep-1", Ink `#key:dlg.neda.charm.01`) trip the
+# generic-api-key rule. Only all-lowercase dotted identifiers are allowed — real secrets
+# (base64/hex with mixed case or no dots) still fail.
+regexTarget = "secret"
+regexes = ['''^[a-z][a-z0-9-]*(\.[a-z0-9-]+){1,6}$''']

@@ -1,0 +1,11 @@
+// studio database schema. Models will be added with their system specs (docs/systems/).
+generator client {
+  provider         = "prisma-client"
+  output           = "../src/generated/prisma"
+  moduleFormat     = "esm"
+  importFileExtension = "js"
+}
+
+datasource db {
+  provider = "postgresql"
+}

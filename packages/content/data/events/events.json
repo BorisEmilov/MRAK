@@ -1,0 +1,734 @@
+[
+  {
+    "id": "bell-at-333",
+    "tier": "demo",
+    "nameKey": "event.bell-at-333.name",
+    "textKey": "event.bell-at-333.text",
+    "category": "seed",
+    "weight": 100,
+    "cooldownMinutes": 100000,
+    "tensionCost": 30,
+    "tags": ["mystery-seed"],
+    "conditions": {
+      "all": [
+        {
+          "chapter": "unclean-days"
+        },
+        {
+          "stat": "night-index",
+          ">=": 2
+        }
+      ]
+    },
+    "zone": "village",
+    "effects": [
+      {
+        "setFlag": "bell-rang-333"
+      },
+      {
+        "startMystery": "wasting-bride"
+      }
+    ],
+    "target": "village",
+    "window": {
+      "from": "03:33",
+      "to": "03:33"
+    }
+  },
+  {
+    "id": "velika-sleepwalks",
+    "tier": "demo",
+    "nameKey": "event.velika-sleepwalks.name",
+    "textKey": "event.velika-sleepwalks.text",
+    "category": "seed",
+    "weight": 60,
+    "cooldownMinutes": 1440,
+    "tensionCost": 20,
+    "tags": ["mystery-seed"],
+    "conditions": {
+      "all": [
+        {
+          "flag": "bell-rang-333"
+        },
+        {
+          "villagerAlive": "velika"
+        }
+      ]
+    },
+    "zone": "village",
+    "effects": [
+      {
+        "setFlag": "velika-sleepwalked"
+      },
+      {
+        "addStat": "fear",
+        "villager": "velika",
+        "value": 10
+      }
+    ],
+    "target": "village",
+    "bias": {
+      "hours": [
+        {
+          "from": "02:00",
+          "to": "03:00",
+          "factor": 3
+        }
+      ]
+    }
+  },
+  {
+    "id": "stranger-knows-your-name",
+    "tier": "demo",
+    "nameKey": "event.stranger-knows-your-name.name",
+    "textKey": "event.stranger-knows-your-name.text",
+    "category": "hallucination",
+    "weight": 20,
+    "cooldownMinutes": 2880,
+    "tensionCost": 25,
+    "conditions": {
+      "phase": "night"
+    },
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -5
+      }
+    ],
+    "target": "guardian",
+    "bias": {
+      "lowSanity": 1
+    }
+  },
+  {
+    "id": "knocking",
+    "tier": "demo",
+    "nameKey": "event.knocking.name",
+    "textKey": "event.knocking.text",
+    "category": "noise",
+    "weight": 40,
+    "cooldownMinutes": 60,
+    "tensionCost": 5,
+    "target": "guardian"
+  },
+  {
+    "id": "koledari-procession",
+    "tier": "demo",
+    "nameKey": "event.koledari-procession.name",
+    "textKey": "event.koledari-procession.text",
+    "category": "set-piece",
+    "weight": 100,
+    "cooldownMinutes": 100000,
+    "tensionCost": 0,
+    "conditions": {
+      "chapter": "unclean-days"
+    },
+    "zone": "village",
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": -5
+      },
+      {
+        "addStat": "faith",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "aga-loan",
+    "tier": "demo",
+    "nameKey": "event.aga-loan.name",
+    "textKey": "event.aga-loan.text",
+    "category": "set-piece",
+    "weight": 1,
+    "cooldownMinutes": 100000,
+    "tensionCost": 5,
+    "tags": [],
+    "zone": "village",
+    "effects": [
+      {
+        "addDebt": "aga-loan"
+      },
+      {
+        "giveItem": "silver-coin",
+        "qty": 8,
+        "to": "storage"
+      }
+    ]
+  },
+  {
+    "id": "dog-howls",
+    "tier": "demo",
+    "nameKey": "event.dog-howls.name",
+    "textKey": "event.dog-howls.text",
+    "category": "noise",
+    "weight": 40,
+    "cooldownMinutes": 120,
+    "tensionCost": 5,
+    "target": "guardian",
+    "bias": {
+      "seasons": {
+        "winter": 1.5
+      },
+      "hours": [
+        {
+          "from": "00:00",
+          "to": "03:00",
+          "factor": 1.5
+        }
+      ]
+    }
+  },
+  {
+    "id": "footsteps-on-roof",
+    "tier": "demo",
+    "nameKey": "event.footsteps-on-roof.name",
+    "textKey": "event.footsteps-on-roof.text",
+    "category": "noise",
+    "weight": 40,
+    "cooldownMinutes": 180,
+    "tensionCost": 10,
+    "target": "guardian",
+    "bias": {
+      "lowSanity": 0.5
+    }
+  },
+  {
+    "id": "shutters-bang",
+    "tier": "demo",
+    "nameKey": "event.shutters-bang.name",
+    "textKey": "event.shutters-bang.text",
+    "category": "noise",
+    "weight": 40,
+    "cooldownMinutes": 90,
+    "tensionCost": 5,
+    "target": "guardian",
+    "bias": {
+      "seasons": {
+        "winter": 2,
+        "autumn": 1.5
+      }
+    }
+  },
+  {
+    "id": "owl-on-chimney",
+    "tier": "demo",
+    "nameKey": "event.owl-on-chimney.name",
+    "textKey": "event.owl-on-chimney.text",
+    "category": "noise",
+    "weight": 40,
+    "cooldownMinutes": 240,
+    "tensionCost": 5,
+    "target": "village",
+    "zone": "village",
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "cradle-rocks-empty",
+    "tier": "demo",
+    "nameKey": "event.cradle-rocks-empty.name",
+    "textKey": "event.cradle-rocks-empty.text",
+    "category": "noise",
+    "weight": 25,
+    "cooldownMinutes": 720,
+    "tensionCost": 15,
+    "target": "guardian",
+    "bias": {
+      "hysteria": 0.5
+    }
+  },
+  {
+    "id": "well-bucket-rattles",
+    "tier": "demo",
+    "nameKey": "event.well-bucket-rattles.name",
+    "textKey": "event.well-bucket-rattles.text",
+    "category": "noise",
+    "weight": 40,
+    "cooldownMinutes": 240,
+    "tensionCost": 10,
+    "target": "guardian",
+    "zone": "village"
+  },
+  {
+    "id": "candle-gutters",
+    "tier": "demo",
+    "nameKey": "event.candle-gutters.name",
+    "textKey": "event.candle-gutters.text",
+    "category": "noise",
+    "weight": 30,
+    "cooldownMinutes": 60,
+    "tensionCost": 5,
+    "target": "guardian"
+  },
+  {
+    "id": "chains-on-the-road",
+    "tier": "demo",
+    "nameKey": "event.chains-on-the-road.name",
+    "textKey": "event.chains-on-the-road.text",
+    "category": "noise",
+    "weight": 25,
+    "cooldownMinutes": 720,
+    "tensionCost": 15,
+    "target": "village",
+    "zone": "village",
+    "bias": {
+      "seasons": {
+        "winter": 3,
+        "summer": 0.2
+      }
+    },
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "shared-dream",
+    "tier": "demo",
+    "nameKey": "event.shared-dream.name",
+    "textKey": "event.shared-dream.text",
+    "category": "seed",
+    "weight": 30,
+    "cooldownMinutes": 100000,
+    "tensionCost": 20,
+    "target": "village",
+    "tags": ["mystery-seed"],
+    "conditions": {
+      "all": [
+        {
+          "not": {
+            "flag": "shared-dream"
+          }
+        },
+        {
+          "stat": "night-index",
+          ">=": 1
+        }
+      ]
+    },
+    "bias": {
+      "hours": [
+        {
+          "from": "04:00",
+          "to": "05:30",
+          "factor": 3
+        }
+      ]
+    },
+    "effects": [
+      {
+        "setFlag": "shared-dream"
+      },
+      {
+        "addStat": "hysteria",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "sleepwalkers-to-lake",
+    "tier": "demo",
+    "nameKey": "event.sleepwalkers-to-lake.name",
+    "textKey": "event.sleepwalkers-to-lake.text",
+    "category": "seed",
+    "weight": 25,
+    "cooldownMinutes": 4320,
+    "tensionCost": 25,
+    "target": "village",
+    "tags": ["mystery-seed"],
+    "zone": "village",
+    "bias": {
+      "hours": [
+        {
+          "from": "02:00",
+          "to": "04:00",
+          "factor": 3
+        }
+      ],
+      "corruption": 1
+    },
+    "effects": [
+      {
+        "setFlag": "sleepwalkers-at-lake"
+      },
+      {
+        "addStat": "hysteria",
+        "value": 6
+      }
+    ]
+  },
+  {
+    "id": "calf-with-human-eyes",
+    "tier": "demo",
+    "nameKey": "event.calf-with-human-eyes.name",
+    "textKey": "event.calf-with-human-eyes.text",
+    "category": "seed",
+    "weight": 20,
+    "cooldownMinutes": 100000,
+    "tensionCost": 25,
+    "target": "village",
+    "conditions": {
+      "not": {
+        "flag": "calf-with-human-eyes"
+      }
+    },
+    "zone": "village",
+    "bias": {
+      "corruption": 2
+    },
+    "effects": [
+      {
+        "setFlag": "calf-with-human-eyes"
+      },
+      {
+        "addStat": "hysteria",
+        "value": 8
+      }
+    ]
+  },
+  {
+    "id": "grave-disturbed",
+    "tier": "demo",
+    "nameKey": "event.grave-disturbed.name",
+    "textKey": "event.grave-disturbed.text",
+    "category": "seed",
+    "weight": 20,
+    "cooldownMinutes": 100000,
+    "tensionCost": 20,
+    "target": "village",
+    "conditions": {
+      "not": {
+        "flag": "grave-disturbed"
+      }
+    },
+    "zone": "village",
+    "bias": {
+      "corruption": 1
+    },
+    "effects": [
+      {
+        "setFlag": "grave-disturbed"
+      },
+      {
+        "addStat": "hysteria",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "icon-weeps",
+    "tier": "demo",
+    "nameKey": "event.icon-weeps.name",
+    "textKey": "event.icon-weeps.text",
+    "category": "seed",
+    "weight": 15,
+    "cooldownMinutes": 100000,
+    "tensionCost": 15,
+    "target": "village",
+    "conditions": {
+      "not": {
+        "flag": "icon-wept"
+      }
+    },
+    "zone": "village",
+    "bias": {
+      "corruption": 1.5
+    },
+    "effects": [
+      {
+        "setFlag": "icon-wept"
+      },
+      {
+        "addStat": "faith",
+        "value": 3
+      },
+      {
+        "addStat": "hysteria",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "id": "milk-turns-to-blood",
+    "tier": "demo",
+    "nameKey": "event.milk-turns-to-blood.name",
+    "textKey": "event.milk-turns-to-blood.text",
+    "category": "seed",
+    "weight": 25,
+    "cooldownMinutes": 2880,
+    "tensionCost": 15,
+    "target": "village",
+    "zone": "village",
+    "bias": {
+      "corruption": 1,
+      "seasons": {
+        "spring": 2,
+        "summer": 1.5
+      }
+    },
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 4
+      }
+    ]
+  },
+  {
+    "id": "black-hen-at-crossroads",
+    "tier": "demo",
+    "nameKey": "event.black-hen-at-crossroads.name",
+    "textKey": "event.black-hen-at-crossroads.text",
+    "category": "seed",
+    "weight": 25,
+    "cooldownMinutes": 2880,
+    "tensionCost": 10,
+    "target": "village",
+    "bias": {
+      "hysteria": 0.5
+    },
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "id": "children-singing",
+    "tier": "demo",
+    "nameKey": "event.children-singing.name",
+    "textKey": "event.children-singing.text",
+    "category": "hallucination",
+    "weight": 25,
+    "cooldownMinutes": 2880,
+    "tensionCost": 15,
+    "target": "guardian",
+    "bias": {
+      "lowSanity": 1,
+      "hours": [
+        {
+          "from": "23:00",
+          "to": "02:00",
+          "factor": 1.5
+        }
+      ]
+    },
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -4
+      }
+    ]
+  },
+  {
+    "id": "reflection-lags",
+    "tier": "demo",
+    "nameKey": "event.reflection-lags.name",
+    "textKey": "event.reflection-lags.text",
+    "category": "hallucination",
+    "weight": 20,
+    "cooldownMinutes": 1440,
+    "tensionCost": 20,
+    "target": "guardian",
+    "bias": {
+      "lowSanity": 2
+    },
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -6
+      }
+    ]
+  },
+  {
+    "id": "mother-at-the-window",
+    "tier": "demo",
+    "nameKey": "event.mother-at-the-window.name",
+    "textKey": "event.mother-at-the-window.text",
+    "category": "hallucination",
+    "weight": 15,
+    "cooldownMinutes": 4320,
+    "tensionCost": 25,
+    "target": "guardian",
+    "bias": {
+      "lowSanity": 2,
+      "hours": [
+        {
+          "from": "03:00",
+          "to": "04:00",
+          "factor": 2
+        }
+      ]
+    },
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -8
+      }
+    ]
+  },
+  {
+    "id": "whispers-from-hearth",
+    "tier": "demo",
+    "nameKey": "event.whispers-from-hearth.name",
+    "textKey": "event.whispers-from-hearth.text",
+    "category": "hallucination",
+    "weight": 30,
+    "cooldownMinutes": 720,
+    "tensionCost": 10,
+    "target": "guardian",
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -3
+      }
+    ]
+  },
+  {
+    "id": "second-bell",
+    "tier": "demo",
+    "nameKey": "event.second-bell.name",
+    "textKey": "event.second-bell.text",
+    "category": "hallucination",
+    "weight": 20,
+    "cooldownMinutes": 2880,
+    "tensionCost": 20,
+    "target": "guardian",
+    "conditions": {
+      "flag": "bell-rang-333"
+    },
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -5
+      }
+    ]
+  },
+  {
+    "id": "villagers-staring",
+    "tier": "demo",
+    "nameKey": "event.villagers-staring.name",
+    "textKey": "event.villagers-staring.text",
+    "category": "hallucination",
+    "weight": 20,
+    "cooldownMinutes": 1440,
+    "tensionCost": 15,
+    "target": "guardian",
+    "bias": {
+      "hysteria": 1.5
+    },
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -4
+      }
+    ]
+  },
+  {
+    "id": "door-left-open",
+    "tier": "demo",
+    "nameKey": "event.door-left-open.name",
+    "textKey": "event.door-left-open.text",
+    "category": "hallucination",
+    "weight": 30,
+    "cooldownMinutes": 720,
+    "tensionCost": 10,
+    "target": "guardian",
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -3
+      }
+    ]
+  },
+  {
+    "id": "girl-without-a-shadow",
+    "tier": "demo",
+    "nameKey": "event.girl-without-a-shadow.name",
+    "textKey": "event.girl-without-a-shadow.text",
+    "category": "seed",
+    "weight": 60,
+    "cooldownMinutes": 100000,
+    "tensionCost": 20,
+    "target": "village",
+    "zone": "village",
+    "tags": ["mystery-seed"],
+    "conditions": {
+      "all": [
+        {
+          "chapter": "unclean-days"
+        },
+        {
+          "stat": "night-index",
+          ">=": 3
+        },
+        {
+          "not": {
+            "flag": "mara-shadow-gone"
+          }
+        }
+      ]
+    },
+    "effects": [
+      {
+        "setFlag": "mara-shadow-gone"
+      },
+      {
+        "startMystery": "girl-without-a-shadow"
+      }
+    ]
+  },
+  {
+    "id": "empty-mask",
+    "tier": "full",
+    "nameKey": "event.empty-mask.name",
+    "textKey": "event.empty-mask.text",
+    "category": "set-piece",
+    "weight": 100,
+    "cooldownMinutes": 100000,
+    "tensionCost": 0,
+    "conditions": {
+      "chapter": "kukeri"
+    },
+    "zone": "village",
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "peddler-at-the-gate",
+    "tier": "demo",
+    "nameKey": "event.peddler-at-the-gate.name",
+    "textKey": "event.peddler-at-the-gate.text",
+    "category": "noise",
+    "weight": 10,
+    "cooldownMinutes": 20160,
+    "tensionCost": 0,
+    "conditions": {
+      "flag": "trader-visits"
+    },
+    "zone": "village",
+    "target": "village",
+    "effects": [
+      {
+        "giveItem": "lamp-oil",
+        "qty": 2
+      },
+      {
+        "giveItem": "salt",
+        "qty": 2
+      }
+    ]
+  }
+]

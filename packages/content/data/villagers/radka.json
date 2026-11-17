@@ -1,0 +1,52 @@
+{
+  "id": "radka",
+  "tier": "demo",
+  "nameKey": "villager.radka.name",
+  "tradeKey": "villager.radka.trade",
+  "bioKey": "villager.radka.bio",
+  "age": 41,
+  "sex": "female",
+  "traits": ["widow", "innkeeper"],
+  "fears": ["aga"],
+  "startingFear": 10,
+  "relationships": [
+    {
+      "villager": "baba-neda",
+      "affinity": 30
+    },
+    {
+      "villager": "chorbadzhi-dimo",
+      "affinity": -10
+    },
+    {
+      "villager": "velika",
+      "affinity": 20
+    },
+    {
+      "villager": "petko",
+      "affinity": 40
+    }
+  ],
+  "secrets": [
+    {
+      "id": "yatak",
+      "descKey": "villager.radka.secret.yatak",
+      "revealWhen": {
+        "flag": "haidut-seen-at-tavern"
+      }
+    }
+  ],
+  "home": "house-radka",
+  "work": "tavern",
+  "routine": "tavern-keeper",
+  "look": {
+    "skin": "#d6a580",
+    "hair": "#2a1a14",
+    "clothes": "#5a1f24",
+    "accent": "#d8c08a",
+    "headwear": "kerchief",
+    "beard": false,
+    "build": "slim"
+  },
+  "dialogue": "radka"
+}

@@ -1,0 +1,152 @@
+[
+  {
+    "id": "firewood",
+    "tier": "demo",
+    "nameKey": "task.firewood.name",
+    "descKey": "task.firewood.desc",
+    "icon": "task.firewood",
+    "slot": "day",
+    "hours": 4,
+    "place": "woodpile",
+    "output": [
+      {
+        "giveItem": "firewood",
+        "qty": 4
+      }
+    ]
+  },
+  {
+    "id": "garlic",
+    "tier": "demo",
+    "nameKey": "task.garlic.name",
+    "descKey": "task.garlic.desc",
+    "icon": "task.garlic",
+    "slot": "day",
+    "hours": 3,
+    "place": "garden",
+    "output": [
+      {
+        "giveItem": "garlic",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "amulets",
+    "tier": "demo",
+    "nameKey": "task.amulets.name",
+    "descKey": "task.amulets.desc",
+    "icon": "task.amulets",
+    "slot": "day",
+    "hours": 4,
+    "place": "home",
+    "consumes": [
+      {
+        "item": "red-thread",
+        "qty": 1
+      }
+    ],
+    "output": [
+      {
+        "giveItem": "red-thread-amulet",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "watch",
+    "tier": "demo",
+    "nameKey": "task.watch.name",
+    "descKey": "task.watch.desc",
+    "icon": "task.watch",
+    "slot": "night",
+    "hours": 10,
+    "place": "bonfire",
+    "consumes": [
+      {
+        "item": "lamp-oil",
+        "qty": 1
+      }
+    ],
+    "defence": 10
+  },
+  {
+    "id": "food",
+    "tier": "demo",
+    "nameKey": "task.food.name",
+    "descKey": "task.food.desc",
+    "icon": "task.food",
+    "slot": "day",
+    "hours": 3,
+    "place": "tavern",
+    "output": [
+      {
+        "giveItem": "bread",
+        "qty": 3
+      }
+    ]
+  },
+  {
+    "id": "repairs",
+    "tier": "demo",
+    "nameKey": "task.repairs.name",
+    "descKey": "task.repairs.desc",
+    "icon": "task.repairs",
+    "slot": "day",
+    "hours": 6,
+    "place": "woodpile",
+    "consumes": [
+      {
+        "item": "firewood",
+        "qty": 2
+      }
+    ],
+    "output": [
+      {
+        "addStat": "village-repair",
+        "value": 25
+      }
+    ]
+  },
+  {
+    "id": "ritual-prep",
+    "tier": "demo",
+    "nameKey": "task.ritual-prep.name",
+    "descKey": "task.ritual-prep.desc",
+    "icon": "task.ritual-prep",
+    "slot": "day",
+    "hours": 4,
+    "place": "church",
+    "consumes": [
+      {
+        "item": "beeswax",
+        "qty": 1
+      }
+    ],
+    "output": [
+      {
+        "giveItem": "incense",
+        "qty": 1
+      }
+    ],
+    "faith": 2
+  },
+  {
+    "id": "construction",
+    "tier": "demo",
+    "nameKey": "task.construction.name",
+    "descKey": "task.construction.desc",
+    "icon": "task.repairs",
+    "slot": "day",
+    "hours": 8,
+    "place": "woodpile",
+    "output": [
+      {
+        "rule": "construction-labour",
+        "params": {
+          "days": 1
+        }
+      }
+    ]
+  }
+]

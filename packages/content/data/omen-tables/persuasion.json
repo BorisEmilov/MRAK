@@ -1,0 +1,39 @@
+{
+  "id": "persuasion",
+  "tier": "demo",
+  "context": "persuasion",
+  "successGood": {
+    "descKey": "omen.persuasion.success-good",
+    "effects": []
+  },
+  "successNone": {
+    "descKey": "omen.persuasion.success-none",
+    "effects": []
+  },
+  "successBad": {
+    "descKey": "omen.persuasion.success-bad",
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": 2
+      }
+    ]
+  },
+  "failureGood": {
+    "descKey": "omen.persuasion.failure-good",
+    "effects": []
+  },
+  "failureNone": {
+    "descKey": "omen.persuasion.failure-none",
+    "effects": []
+  },
+  "failureBad": {
+    "descKey": "omen.persuasion.failure-bad",
+    "effects": [
+      {
+        "addStat": "notice",
+        "value": 1
+      }
+    ]
+  }
+}

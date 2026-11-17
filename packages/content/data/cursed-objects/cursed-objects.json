@@ -1,0 +1,111 @@
+[
+  {
+    "id": "zlatno-gold-coin",
+    "tier": "demo",
+    "nameKey": "cursed-object.zlatno-gold-coin.name",
+    "descKey": "cursed-object.zlatno-gold-coin.desc",
+    "memoryKey": "cursed-object.zlatno-gold-coin.memory",
+    "whisper": 1,
+    "effects": [
+      {
+        "addStat": "notice",
+        "value": 5
+      }
+    ],
+    "memoryScene": "memory-zlatno-coin",
+    "memoryEffects": [
+      {
+        "narrate": "cursed-object.zlatno-gold-coin.memory-echo"
+      }
+    ],
+    "carried": [
+      {
+        "statBonus": "notice",
+        "value": 5
+      }
+    ],
+    "displayed": [
+      {
+        "multiply": "debt-collection-rate",
+        "factor": 0.9
+      }
+    ]
+  },
+  {
+    "id": "brides-mirror",
+    "tier": "demo",
+    "nameKey": "cursed-object.brides-mirror.name",
+    "descKey": "cursed-object.brides-mirror.desc",
+    "memoryKey": "cursed-object.brides-mirror.memory",
+    "memoryScene": "memory-brides-mirror",
+    "memoryEffects": [
+      {
+        "narrate": "cursed-object.brides-mirror.memory-echo"
+      }
+    ],
+    "whisper": 1,
+    "effects": [],
+    "carried": [
+      {
+        "statBonus": "sanity-max",
+        "value": -5
+      }
+    ],
+    "displayed": [
+      {
+        "statBonus": "watch-defence",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "id": "rag-doll",
+    "tier": "demo",
+    "nameKey": "cursed-object.rag-doll.name",
+    "descKey": "cursed-object.rag-doll.desc",
+    "memoryKey": "cursed-object.rag-doll.memory",
+    "memoryScene": "memory-rag-doll",
+    "memoryEffects": [],
+    "whisper": 2,
+    "effects": [],
+    "carried": [
+      {
+        "multiply": "injury-duration-rate",
+        "factor": 0.8
+      }
+    ],
+    "displayed": [
+      {
+        "statBonus": "healing-potency",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "id": "samodiva-pendant",
+    "tier": "demo",
+    "nameKey": "cursed-object.samodiva-pendant.name",
+    "descKey": "cursed-object.samodiva-pendant.desc",
+    "memoryKey": "cursed-object.samodiva-pendant.memory",
+    "memoryScene": "memory-samodiva-pendant",
+    "memoryEffects": [
+      {
+        "narrate": "cursed-object.samodiva-pendant.memory-echo"
+      }
+    ],
+    "whisper": 1,
+    "effects": [],
+    "carried": [
+      {
+        "statBonus": "herbs-per-day",
+        "value": 1
+      }
+    ],
+    "displayed": [
+      {
+        "statBonus": "sanity-max",
+        "value": 5
+      }
+    ]
+  }
+]

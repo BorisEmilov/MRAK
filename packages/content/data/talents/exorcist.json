@@ -1,0 +1,201 @@
+[
+  {
+    "id": "sign-of-the-cross",
+    "tier": "demo",
+    "nameKey": "talent.sign-of-the-cross.name",
+    "descKey": "talent.sign-of-the-cross.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "night",
+          "effects": [
+            {
+              "modifier": {
+                "shadowDice": -1,
+                "context": "vs-demon"
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "grit",
+    "tier": "demo",
+    "nameKey": "talent.grit.name",
+    "descKey": "talent.grit.desc",
+    "effects": [
+      {
+        "modifier": {
+          "statBonus": "sanity-max",
+          "value": 5
+        }
+      }
+    ],
+    "ranked": true
+  },
+  {
+    "id": "incense-bearer",
+    "tier": "demo",
+    "nameKey": "talent.incense-bearer.name",
+    "descKey": "talent.incense-bearer.desc",
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "incense-duration-rate",
+          "factor": 1.5
+        }
+      },
+      {
+        "rule": "censer-light-source",
+        "params": {
+          "radius": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "know-the-enemy",
+    "tier": "demo",
+    "nameKey": "talent.know-the-enemy.name",
+    "descKey": "talent.know-the-enemy.desc",
+    "effects": [
+      {
+        "rule": "true-name-reveals-weakness"
+      }
+    ]
+  },
+  {
+    "id": "litany",
+    "tier": "demo",
+    "nameKey": "talent.litany.name",
+    "descKey": "talent.litany.desc",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "context": "exorcism-confront"
+        }
+      }
+    ]
+  },
+  {
+    "id": "holy-water-discipline",
+    "tier": "demo",
+    "nameKey": "talent.holy-water-discipline.name",
+    "descKey": "talent.holy-water-discipline.desc",
+    "effects": [
+      {
+        "rule": "holy-water-double-use"
+      }
+    ]
+  },
+  {
+    "id": "binding-word",
+    "tier": "full",
+    "nameKey": "talent.binding-word.name",
+    "descKey": "talent.binding-word.desc",
+    "effects": [
+      {
+        "rule": "bind-without-seal",
+        "params": {
+          "extraShadowDice": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "unbroken",
+    "tier": "full",
+    "nameKey": "talent.unbroken.name",
+    "descKey": "talent.unbroken.desc",
+    "effects": [
+      {
+        "rule": "exorcism-jump-immunity"
+      }
+    ]
+  },
+  {
+    "id": "consecrator",
+    "tier": "full",
+    "nameKey": "talent.consecrator.name",
+    "descKey": "talent.consecrator.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "day",
+          "effects": [
+            {
+              "rule": "bless-slot-free"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "rite-of-casting-out",
+    "tier": "full",
+    "nameKey": "talent.rite-of-casting-out.name",
+    "descKey": "talent.rite-of-casting-out.desc",
+    "effects": [
+      {
+        "modifier": {
+          "convertOmen": "bad-to-none",
+          "context": "exorcism-cast-out"
+        }
+      }
+    ]
+  },
+  {
+    "id": "shepherd-of-souls",
+    "tier": "full",
+    "nameKey": "talent.shepherd-of-souls.name",
+    "descKey": "talent.shepherd-of-souls.desc",
+    "effects": [
+      {
+        "rule": "after-exorcism-calm",
+        "params": {
+          "hostFear": -50,
+          "hysteria": -10
+        }
+      }
+    ]
+  },
+  {
+    "id": "bell-of-theophany",
+    "tier": "full",
+    "nameKey": "talent.bell-of-theophany.name",
+    "descKey": "talent.bell-of-theophany.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "chapter",
+          "effects": [
+            {
+              "rule": "banish-lesser-besove"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "relic-grave-candle",
+    "tier": "demo",
+    "nameKey": "talent.relic-grave-candle.name",
+    "descKey": "talent.relic-grave-candle.desc",
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "oil-consumption-rate",
+          "factor": 0.8
+        }
+      }
+    ]
+  }
+]

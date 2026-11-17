@@ -1,0 +1,44 @@
+{
+  "id": "herbalism",
+  "tier": "demo",
+  "context": "herbalism",
+  "successGood": {
+    "descKey": "omen.herbalism.success-good",
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": 2
+      }
+    ]
+  },
+  "successNone": {
+    "descKey": "omen.herbalism.success-none",
+    "effects": []
+  },
+  "successBad": {
+    "descKey": "omen.herbalism.success-bad",
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -2
+      }
+    ]
+  },
+  "failureGood": {
+    "descKey": "omen.herbalism.failure-good",
+    "effects": []
+  },
+  "failureNone": {
+    "descKey": "omen.herbalism.failure-none",
+    "effects": []
+  },
+  "failureBad": {
+    "descKey": "omen.herbalism.failure-bad",
+    "effects": [
+      {
+        "addStat": "notice",
+        "value": 1
+      }
+    ]
+  }
+}

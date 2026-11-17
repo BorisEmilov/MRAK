@@ -1,0 +1,32 @@
+[
+  {
+    "id": "dowry-of-the-drowned",
+    "tier": "demo",
+    "nameKey": "cabinet-set.dowry-of-the-drowned.name",
+    "descKey": "cabinet-set.dowry-of-the-drowned.desc",
+    "objects": ["brides-mirror", "samodiva-pendant"],
+    "modifiers": [
+      {
+        "statBonus": "sanity-max",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "id": "price-of-mrak",
+    "tier": "demo",
+    "nameKey": "cabinet-set.price-of-mrak.name",
+    "descKey": "cabinet-set.price-of-mrak.desc",
+    "objects": ["zlatno-gold-coin", "rag-doll"],
+    "modifiers": [
+      {
+        "multiply": "debt-collection-rate",
+        "factor": 0.8
+      },
+      {
+        "statBonus": "notice",
+        "value": -5
+      }
+    ]
+  }
+]

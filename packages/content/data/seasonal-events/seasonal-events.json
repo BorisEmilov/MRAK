@@ -1,0 +1,89 @@
+[
+  {
+    "id": "kukeri-season",
+    "tier": "full",
+    "nameKey": "seasonal-event.kukeri-season.name",
+    "descKey": "seasonal-event.kukeri-season.desc",
+    "window": {
+      "start": "02-01",
+      "end": "02-28"
+    },
+    "recurring": true,
+    "entitlement": "free",
+    "festival": "kukeri",
+    "effects": [
+      {
+        "addStat": "hysteria",
+        "value": -5
+      }
+    ],
+    "legacy": 5,
+    "cosmeticKey": "seasonal-event.kukeri-season.title"
+  },
+  {
+    "id": "enyovden-herbs",
+    "tier": "full",
+    "nameKey": "seasonal-event.enyovden-herbs.name",
+    "descKey": "seasonal-event.enyovden-herbs.desc",
+    "window": {
+      "start": "06-23",
+      "end": "06-25"
+    },
+    "recurring": true,
+    "entitlement": "free",
+    "festival": "enyovden",
+    "effects": [
+      {
+        "rule": "herb-potency-event",
+        "params": {
+          "multiplier": 2
+        }
+      }
+    ],
+    "legacy": 5,
+    "cosmeticKey": "seasonal-event.enyovden-herbs.title"
+  },
+  {
+    "id": "zadushnitsa-candles",
+    "tier": "full",
+    "nameKey": "seasonal-event.zadushnitsa-candles.name",
+    "descKey": "seasonal-event.zadushnitsa-candles.desc",
+    "window": {
+      "start": "10-28",
+      "end": "11-08"
+    },
+    "recurring": true,
+    "entitlement": "free",
+    "festival": "zadushnitsa",
+    "effects": [
+      {
+        "addStat": "faith",
+        "value": 5
+      }
+    ],
+    "legacy": 5,
+    "cosmeticKey": "seasonal-event.zadushnitsa-candles.title"
+  },
+  {
+    "id": "unclean-days-watch",
+    "tier": "full",
+    "nameKey": "seasonal-event.unclean-days-watch.name",
+    "descKey": "seasonal-event.unclean-days-watch.desc",
+    "window": {
+      "start": "12-25",
+      "end": "01-06"
+    },
+    "recurring": true,
+    "entitlement": "free",
+    "festival": "unclean-days",
+    "effects": [
+      {
+        "giveItem": "holy-water",
+        "qty": 2,
+        "to": "storage"
+      }
+    ],
+    "legacy": 5,
+    "cosmeticKey": "seasonal-event.unclean-days-watch.title"
+  }
+]

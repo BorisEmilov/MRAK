@@ -1,0 +1,207 @@
+{
+  "id": "monastery",
+  "tier": "demo",
+  "nameKey": "zone.monastery.name",
+  "descKey": "zone.monastery.desc",
+  "map": "maps/monastery.tmj",
+  "defaultVariant": "ruined",
+  "variants": [
+    {
+      "id": "consecrated",
+      "nameKey": "zone.monastery.variant.consecrated",
+      "when": {
+        "flag": "monastery-consecrated"
+      }
+    },
+    {
+      "id": "ruined",
+      "nameKey": "zone.monastery.variant.ruined"
+    }
+  ],
+  "fog": 0.5,
+  "pois": [
+    {
+      "id": "altar",
+      "kind": "shrine",
+      "nameKey": "zone.monastery.poi.altar.name",
+      "action": "pray",
+      "descKey": "zone.monastery.poi.altar.desc",
+      "effects": [
+        {
+          "addStat": "sanity",
+          "value": 5
+        },
+        {
+          "narrate": "zone.monastery.poi.altar.narration"
+        }
+      ]
+    },
+    {
+      "id": "crypt",
+      "kind": "ruin",
+      "nameKey": "zone.monastery.poi.crypt.name",
+      "action": "investigate",
+      "descKey": "zone.monastery.poi.crypt.desc",
+      "effects": [
+        {
+          "addStat": "sanity",
+          "value": -3
+        },
+        {
+          "narrate": "zone.monastery.poi.crypt.narration"
+        },
+        {
+          "grantCollectible": "relic-st-ivan-finger"
+        }
+      ]
+    },
+    {
+      "id": "monks-graves",
+      "kind": "cemetery",
+      "nameKey": "zone.monastery.poi.monks-graves.name",
+      "action": "pray",
+      "descKey": "zone.monastery.poi.monks-graves.desc",
+      "effects": [
+        {
+          "narrate": "zone.monastery.poi.monks-graves.narration"
+        }
+      ]
+    },
+    {
+      "id": "bell",
+      "kind": "church",
+      "nameKey": "zone.monastery.poi.bell.name",
+      "action": "use",
+      "descKey": "zone.monastery.poi.bell.desc",
+      "effects": [
+        {
+          "narrate": "zone.monastery.poi.bell.narration"
+        },
+        {
+          "grantCollectible": "relic-koledar-staff"
+        }
+      ]
+    },
+    {
+      "id": "oil-cellar",
+      "kind": "oil-store",
+      "nameKey": "zone.monastery.poi.oil-cellar.name",
+      "action": "gather",
+      "descKey": "zone.monastery.poi.oil-cellar.desc",
+      "effects": [
+        {
+          "giveItem": "lamp-oil",
+          "qty": 4
+        }
+      ]
+    },
+    {
+      "id": "well",
+      "kind": "well",
+      "nameKey": "zone.monastery.poi.well.name",
+      "action": "use",
+      "descKey": "zone.monastery.poi.well.desc",
+      "effects": [
+        {
+          "narrate": "zone.monastery.poi.well.narration"
+        }
+      ]
+    },
+    {
+      "id": "zdravets",
+      "kind": "herbs",
+      "nameKey": "zone.monastery.poi.zdravets.name",
+      "action": "gather",
+      "descKey": "zone.monastery.poi.zdravets.desc",
+      "effects": [],
+      "gather": {
+        "item": "zdravets",
+        "qty": 2,
+        "potency": 1,
+        "when": {
+          "date": {
+            "from": "04-15",
+            "to": "09-30"
+          }
+        },
+        "regrowDays": 3,
+        "tint": "#d05a8a"
+      },
+      "once": false
+    }
+  ],
+  "paths": {
+    "nodes": [
+      {
+        "id": "gate",
+        "exit": true
+      },
+      {
+        "id": "court"
+      },
+      {
+        "id": "nave"
+      },
+      {
+        "id": "cloister"
+      },
+      {
+        "id": "crypt"
+      },
+      {
+        "id": "cemetery"
+      }
+    ],
+    "edges": [
+      {
+        "id": "e-gate-court",
+        "from": "gate",
+        "to": "court"
+      },
+      {
+        "id": "e-court-nave",
+        "from": "court",
+        "to": "nave"
+      },
+      {
+        "id": "e-court-cloister",
+        "from": "court",
+        "to": "cloister",
+        "shift": "collapse"
+      },
+      {
+        "id": "e-nave-cloister",
+        "from": "nave",
+        "to": "cloister",
+        "shift": "collapse"
+      },
+      {
+        "id": "e-nave-crypt",
+        "from": "nave",
+        "to": "crypt"
+      },
+      {
+        "id": "e-court-cemetery",
+        "from": "court",
+        "to": "cemetery"
+      },
+      {
+        "id": "e-crypt-cemetery",
+        "from": "crypt",
+        "to": "cemetery",
+        "when": {
+          "phase": "night"
+        }
+      },
+      {
+        "id": "e-breach",
+        "from": "cemetery",
+        "to": "gate",
+        "when": {
+          "stat": "corruption",
+          ">=": 50
+        }
+      }
+    ]
+  }
+}

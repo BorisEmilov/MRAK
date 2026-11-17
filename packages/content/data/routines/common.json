@@ -1,0 +1,57 @@
+{
+  "id": "common",
+  "tier": "demo",
+  "nameKey": "routine.common.name",
+  "blocks": [
+    {
+      "at": "00:00",
+      "activity": "sleep",
+      "place": "home"
+    },
+    {
+      "at": "06:00",
+      "activity": "chores",
+      "place": "home"
+    },
+    {
+      "at": "07:00",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "07:30",
+      "activity": "work",
+      "place": "work"
+    },
+    {
+      "at": "12:00",
+      "activity": "eat",
+      "place": "work"
+    },
+    {
+      "at": "12:30",
+      "activity": "work",
+      "place": "work"
+    },
+    {
+      "at": "17:30",
+      "activity": "socialize",
+      "place": "tavern"
+    },
+    {
+      "at": "19:00",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "20:00",
+      "activity": "rest",
+      "place": "home"
+    },
+    {
+      "at": "21:30",
+      "activity": "sleep",
+      "place": "home"
+    }
+  ]
+}

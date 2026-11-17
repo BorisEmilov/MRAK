@@ -1,0 +1,241 @@
+[
+  {
+    "id": "prologue-move",
+    "tier": "demo",
+    "titleKey": "hint.prologue-move.title",
+    "textKey": "hint.prologue-move.text",
+    "icon": "ui.hint",
+    "phase": "prologue",
+    "on": "game-started",
+    "priority": 90,
+    "when": {
+      "not": {
+        "flag": "prologue-complete"
+      }
+    }
+  },
+  {
+    "id": "prologue-interact",
+    "tier": "demo",
+    "titleKey": "hint.prologue-interact.title",
+    "textKey": "hint.prologue-interact.text",
+    "icon": "action.talk",
+    "phase": "prologue",
+    "on": "interaction-available",
+    "priority": 80,
+    "when": {
+      "not": {
+        "flag": "prologue-complete"
+      }
+    }
+  },
+  {
+    "id": "prologue-glossary",
+    "tier": "demo",
+    "titleKey": "hint.prologue-glossary.title",
+    "textKey": "hint.prologue-glossary.text",
+    "icon": "ui.glossary",
+    "phase": "prologue",
+    "on": "zone-entered",
+    "priority": 40,
+    "when": {
+      "not": {
+        "flag": "prologue-complete"
+      }
+    },
+    "glossary": ["samodiva", "magyosnitsa"]
+  },
+  {
+    "id": "first-night-light",
+    "tier": "demo",
+    "titleKey": "hint.first-night-light.title",
+    "textKey": "hint.first-night-light.text",
+    "icon": "resource.light",
+    "phase": "first-night",
+    "on": "night-started",
+    "priority": 95,
+    "glossary": ["light"],
+    "when": {
+      "not": {
+        "flag": "prologue-active"
+      }
+    }
+  },
+  {
+    "id": "first-night-sanity",
+    "tier": "demo",
+    "titleKey": "hint.first-night-sanity.title",
+    "textKey": "hint.first-night-sanity.text",
+    "icon": "resource.sanity",
+    "phase": "first-night",
+    "on": "night-started",
+    "priority": 85,
+    "glossary": ["sanity"],
+    "when": {
+      "not": {
+        "flag": "prologue-active"
+      }
+    }
+  },
+  {
+    "id": "first-night-save",
+    "tier": "demo",
+    "titleKey": "hint.first-night-save.title",
+    "textKey": "hint.first-night-save.text",
+    "icon": "ui.save",
+    "phase": "first-night",
+    "on": "night-started",
+    "priority": 60,
+    "when": {
+      "not": {
+        "flag": "prologue-active"
+      }
+    }
+  },
+  {
+    "id": "first-dawn",
+    "tier": "demo",
+    "titleKey": "hint.first-dawn.title",
+    "textKey": "hint.first-dawn.text",
+    "icon": "phase.dawn",
+    "phase": "first-night",
+    "on": "dawn",
+    "priority": 70,
+    "glossary": ["hysteria"],
+    "when": {
+      "not": {
+        "flag": "prologue-active"
+      }
+    }
+  },
+  {
+    "id": "first-decision",
+    "tier": "demo",
+    "titleKey": "hint.first-decision.title",
+    "textKey": "hint.first-decision.text",
+    "icon": "ui.irreversible",
+    "phase": "contextual",
+    "on": "decision-recorded",
+    "priority": 60,
+    "when": {
+      "not": {
+        "flag": "prologue-active"
+      }
+    }
+  },
+  {
+    "id": "low-sanity",
+    "tier": "demo",
+    "titleKey": "hint.low-sanity.title",
+    "textKey": "hint.low-sanity.text",
+    "icon": "resource.sanity",
+    "phase": "contextual",
+    "on": "low-sanity",
+    "priority": 90,
+    "glossary": ["sanity"]
+  },
+  {
+    "id": "prologue-journal",
+    "tier": "demo",
+    "titleKey": "hint.prologue-journal.title",
+    "textKey": "hint.prologue-journal.text",
+    "icon": "ui.journal",
+    "phase": "prologue",
+    "on": "game-started",
+    "when": {
+      "flag": "prologue-active"
+    },
+    "priority": 85
+  },
+  {
+    "id": "prologue-inventory",
+    "tier": "demo",
+    "titleKey": "hint.prologue-inventory.title",
+    "textKey": "hint.prologue-inventory.text",
+    "icon": "ui.inventory",
+    "phase": "prologue",
+    "on": "item-added",
+    "when": {
+      "flag": "prologue-active"
+    },
+    "priority": 75
+  },
+  {
+    "id": "prologue-map",
+    "tier": "demo",
+    "titleKey": "hint.prologue-map.title",
+    "textKey": "hint.prologue-map.text",
+    "icon": "ui.map",
+    "phase": "prologue",
+    "on": "zone-entered",
+    "when": {
+      "flag": "prologue-active"
+    },
+    "priority": 70
+  },
+  {
+    "id": "prologue-talk",
+    "tier": "demo",
+    "titleKey": "hint.prologue-talk.title",
+    "textKey": "hint.prologue-talk.text",
+    "icon": "ui.note",
+    "phase": "prologue",
+    "on": "decision-recorded",
+    "when": {
+      "flag": "prologue-active"
+    },
+    "priority": 65
+  },
+  {
+    "id": "prologue-lamp",
+    "tier": "demo",
+    "titleKey": "hint.prologue-lamp.title",
+    "textKey": "hint.prologue-lamp.text",
+    "icon": "resource.light",
+    "phase": "prologue",
+    "on": "night-started",
+    "when": {
+      "flag": "prologue-active"
+    },
+    "priority": 99
+  },
+  {
+    "id": "prologue-sleep",
+    "tier": "demo",
+    "titleKey": "hint.prologue-sleep.title",
+    "textKey": "hint.prologue-sleep.text",
+    "icon": "ui.candle",
+    "phase": "prologue",
+    "on": "night-started",
+    "when": {
+      "flag": "prologue-active"
+    },
+    "priority": 90
+  },
+  {
+    "id": "prologue-save",
+    "tier": "demo",
+    "titleKey": "hint.prologue-save.title",
+    "textKey": "hint.prologue-save.text",
+    "icon": "ui.save",
+    "phase": "prologue",
+    "on": "dawn",
+    "when": {
+      "flag": "prologue-active"
+    },
+    "priority": 80
+  },
+  {
+    "id": "prologue-hud",
+    "tier": "demo",
+    "titleKey": "hint.prologue-hud.title",
+    "textKey": "hint.prologue-hud.text",
+    "icon": "ui.info",
+    "phase": "prologue",
+    "on": "dawn",
+    "when": {
+      "flag": "prologue-active"
+    },
+    "priority": 60
+  }
+]

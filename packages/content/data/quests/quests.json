@@ -1,0 +1,328 @@
+[
+  {
+    "id": "unclean-days-chapter",
+    "tier": "demo",
+    "nameKey": "quest.unclean-days-chapter.name",
+    "kind": "chapter",
+    "stages": [
+      {
+        "id": "keep-watch",
+        "descKey": "quest.unclean-days-chapter.keep-watch",
+        "objectives": [
+          {
+            "id": "survive-nights",
+            "descKey": "quest.unclean-days-chapter.survive-nights",
+            "condition": {
+              "stat": "night-index",
+              ">=": 12
+            }
+          }
+        ]
+      },
+      {
+        "id": "theophany",
+        "descKey": "quest.unclean-days-chapter.theophany",
+        "objectives": [
+          {
+            "id": "reach-dawn",
+            "descKey": "quest.unclean-days-chapter.reach-dawn",
+            "condition": {
+              "flag": "theophany-dawn"
+            }
+          }
+        ],
+        "onComplete": [
+          {
+            "setFlag": "chapter-unclean-days-complete"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "enyovden-chapter",
+    "tier": "full",
+    "nameKey": "quest.enyovden-chapter.name",
+    "kind": "chapter",
+    "stages": [
+      {
+        "id": "rite",
+        "descKey": "quest.enyovden-chapter.rite",
+        "objectives": [
+          {
+            "id": "rite-done",
+            "descKey": "quest.enyovden-chapter.rite-done",
+            "condition": {
+              "flag": "enyovden-rite-done"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "kukeri-chapter",
+    "tier": "full",
+    "nameKey": "quest.kukeri-chapter.name",
+    "kind": "chapter",
+    "stages": [
+      {
+        "id": "rite",
+        "descKey": "quest.kukeri-chapter.rite",
+        "objectives": [
+          {
+            "id": "rite-done",
+            "descKey": "quest.kukeri-chapter.rite-done",
+            "condition": {
+              "flag": "kukeri-rite-done"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "nestinari-chapter",
+    "tier": "full",
+    "nameKey": "quest.nestinari-chapter.name",
+    "kind": "chapter",
+    "stages": [
+      {
+        "id": "rite",
+        "descKey": "quest.nestinari-chapter.rite",
+        "objectives": [
+          {
+            "id": "rite-done",
+            "descKey": "quest.nestinari-chapter.rite-done",
+            "condition": {
+              "flag": "nestinari-rite-done"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "rusalia-week-chapter",
+    "tier": "full",
+    "nameKey": "quest.rusalia-week-chapter.name",
+    "kind": "chapter",
+    "stages": [
+      {
+        "id": "rite",
+        "descKey": "quest.rusalia-week-chapter.rite",
+        "objectives": [
+          {
+            "id": "rite-done",
+            "descKey": "quest.rusalia-week-chapter.rite-done",
+            "condition": {
+              "flag": "rusalia-week-rite-done"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "zadushnitsa-chapter",
+    "tier": "full",
+    "nameKey": "quest.zadushnitsa-chapter.name",
+    "kind": "chapter",
+    "stages": [
+      {
+        "id": "rite",
+        "descKey": "quest.zadushnitsa-chapter.rite",
+        "objectives": [
+          {
+            "id": "rite-done",
+            "descKey": "quest.zadushnitsa-chapter.rite-done",
+            "condition": {
+              "flag": "zadushnitsa-rite-done"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "prologue",
+    "tier": "demo",
+    "nameKey": "quest.prologue.name",
+    "kind": "chapter",
+    "stages": [
+      {
+        "id": "first-day",
+        "descKey": "quest.prologue.first-day",
+        "objectives": [
+          {
+            "id": "sew-doll",
+            "descKey": "quest.prologue.sew-doll",
+            "condition": {
+              "flag": "prologue-doll-sewn"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "stana-house"
+            }
+          },
+          {
+            "id": "gather-basil",
+            "descKey": "quest.prologue.gather-basil",
+            "condition": {
+              "hasItem": "basil"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "basil-pots"
+            }
+          },
+          {
+            "id": "visit-marija",
+            "descKey": "quest.prologue.visit-marija",
+            "condition": {
+              "flag": "prologue-neighbour-visited"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "marija-gate"
+            }
+          }
+        ]
+      },
+      {
+        "id": "first-night",
+        "descKey": "quest.prologue.first-night",
+        "objectives": [
+          {
+            "id": "sleep-1",
+            "descKey": "quest.prologue.sleep-1",
+            "condition": {
+              "stat": "nights-survived",
+              ">=": 1
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "stana-house"
+            }
+          }
+        ]
+      },
+      {
+        "id": "second-day",
+        "descKey": "quest.prologue.second-day",
+        "objectives": [
+          {
+            "id": "see-byre",
+            "descKey": "quest.prologue.see-byre",
+            "condition": {
+              "flag": "prologue-byre-visited"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "byre"
+            }
+          },
+          {
+            "id": "crossroads",
+            "descKey": "quest.prologue.crossroads",
+            "condition": {
+              "flag": "prologue-saw-dragan"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "crossroads-stone"
+            }
+          }
+        ]
+      },
+      {
+        "id": "second-night",
+        "descKey": "quest.prologue.second-night",
+        "objectives": [
+          {
+            "id": "sleep-2",
+            "descKey": "quest.prologue.sleep-2",
+            "condition": {
+              "stat": "nights-survived",
+              ">=": 2
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "stana-house"
+            }
+          }
+        ]
+      },
+      {
+        "id": "third-day",
+        "descKey": "quest.prologue.third-day",
+        "noReturn": true,
+        "objectives": [
+          {
+            "id": "accused",
+            "descKey": "quest.prologue.accused",
+            "condition": {
+              "flag": "prologue-accused"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "church-porch"
+            }
+          },
+          {
+            "id": "judged",
+            "descKey": "quest.prologue.judged",
+            "condition": {
+              "flag": "prologue-judged"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "elders-oak"
+            }
+          },
+          {
+            "id": "the-end",
+            "descKey": "quest.prologue.the-end",
+            "condition": {
+              "flag": "prologue-complete"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "forest-edge"
+            }
+          }
+        ],
+        "onComplete": [
+          {
+            "milestone": "truth-discovered"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "id": "nameless-grave",
+    "tier": "demo",
+    "nameKey": "quest.nameless-grave.name",
+    "kind": "villager",
+    "stages": [
+      {
+        "id": "flowers",
+        "descKey": "quest.nameless-grave.flowers",
+        "objectives": [
+          {
+            "id": "visit",
+            "descKey": "quest.nameless-grave.visit",
+            "condition": {
+              "hasItem": "rag-doll"
+            },
+            "marker": {
+              "zone": "village",
+              "poi": "old-grave"
+            }
+          }
+        ]
+      }
+    ]
+  }
+]

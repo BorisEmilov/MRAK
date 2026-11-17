@@ -1,0 +1,353 @@
+{
+  "id": "wasting-bride",
+  "tier": "demo",
+  "nameKey": "mystery.wasting-bride.name",
+  "questionKey": "mystery.wasting-bride.question",
+  "chapter": "unclean-days",
+  "deadlineNight": 12,
+  "suspects": [
+    {
+      "villager": "baba-neda",
+      "whyGuiltyKey": "mystery.wasting-bride.neda.guilty",
+      "whyInnocentKey": "mystery.wasting-bride.neda.innocent"
+    },
+    {
+      "villager": "krastyo",
+      "whyGuiltyKey": "mystery.wasting-bride.krastyo.guilty",
+      "whyInnocentKey": "mystery.wasting-bride.krastyo.innocent"
+    },
+    {
+      "villager": "radka",
+      "whyGuiltyKey": "mystery.wasting-bride.radka.guilty",
+      "whyInnocentKey": "mystery.wasting-bride.radka.innocent"
+    },
+    {
+      "villager": "chorbadzhi-dimo",
+      "whyGuiltyKey": "mystery.wasting-bride.dimo.guilty"
+    }
+  ],
+  "causes": [
+    {
+      "id": "magiya-and-mamnik",
+      "nameKey": "mystery.wasting-bride.cause.magiya-and-mamnik"
+    },
+    {
+      "id": "witchs-charm",
+      "nameKey": "mystery.wasting-bride.cause.witchs-charm"
+    },
+    {
+      "id": "mill-spirit",
+      "nameKey": "mystery.wasting-bride.cause.mill-spirit"
+    }
+  ],
+  "remedies": [
+    {
+      "id": "burn-magiya-and-exorcise",
+      "nameKey": "mystery.wasting-bride.remedy.burn-magiya-and-exorcise"
+    },
+    {
+      "id": "punish-the-witch",
+      "nameKey": "mystery.wasting-bride.remedy.punish-the-witch"
+    }
+  ],
+  "clues": [
+    {
+      "id": "m1-bell",
+      "nameKey": "clue.m1-bell.name",
+      "descKey": "clue.m1-bell.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "village",
+          "check": {
+            "skill": "investigation",
+            "difficulty": "average"
+          }
+        }
+      ],
+      "supports": ["cause:magiya-and-mamnik"],
+      "refutes": []
+    },
+    {
+      "id": "m1-prints",
+      "nameKey": "clue.m1-prints.name",
+      "descKey": "clue.m1-prints.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "village",
+          "check": {
+            "skill": "investigation",
+            "difficulty": "average"
+          }
+        }
+      ],
+      "supports": ["cause:magiya-and-mamnik"],
+      "refutes": []
+    },
+    {
+      "id": "m1-dream",
+      "nameKey": "clue.m1-dream.name",
+      "descKey": "clue.m1-dream.desc",
+      "reliability": "doubtful",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "velika",
+          "check": {
+            "skill": "faith",
+            "difficulty": "hard"
+          }
+        }
+      ],
+      "supports": ["cause:magiya-and-mamnik"],
+      "refutes": []
+    },
+    {
+      "id": "m1-charm",
+      "nameKey": "clue.m1-charm.name",
+      "descKey": "clue.m1-charm.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "velika",
+          "check": {
+            "skill": "herbalism",
+            "difficulty": "average"
+          }
+        }
+      ],
+      "supports": [],
+      "refutes": ["culprit:baba-neda", "cause:witchs-charm"]
+    },
+    {
+      "id": "m1-flour",
+      "nameKey": "clue.m1-flour.name",
+      "descKey": "clue.m1-flour.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "village"
+        }
+      ],
+      "supports": ["culprit:krastyo", "opportunity:krastyo"],
+      "refutes": []
+    },
+    {
+      "id": "m1-carvings",
+      "nameKey": "clue.m1-carvings.name",
+      "descKey": "clue.m1-carvings.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "krastyo",
+          "check": {
+            "skill": "lore",
+            "difficulty": "average"
+          }
+        }
+      ],
+      "supports": [],
+      "refutes": ["culprit:krastyo", "cause:mill-spirit"]
+    },
+    {
+      "id": "m1-quarrel",
+      "nameKey": "clue.m1-quarrel.name",
+      "descKey": "clue.m1-quarrel.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "radka"
+        }
+      ],
+      "supports": ["motive:radka"],
+      "refutes": []
+    },
+    {
+      "id": "m1-rope",
+      "nameKey": "clue.m1-rope.name",
+      "descKey": "clue.m1-rope.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "samodivi-forest",
+          "check": {
+            "skill": "investigation",
+            "difficulty": "average"
+          }
+        }
+      ],
+      "supports": [],
+      "refutes": ["culprit:radka"]
+    },
+    {
+      "id": "m1-ledger",
+      "nameKey": "clue.m1-ledger.name",
+      "descKey": "clue.m1-ledger.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "village",
+          "check": {
+            "skill": "stealth",
+            "difficulty": "hard"
+          }
+        }
+      ],
+      "supports": ["culprit:chorbadzhi-dimo", "motive:chorbadzhi-dimo"],
+      "refutes": []
+    },
+    {
+      "id": "m1-crossroads",
+      "nameKey": "clue.m1-crossroads.name",
+      "descKey": "clue.m1-crossroads.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "villager",
+          "ref": "petko",
+          "check": {
+            "skill": "persuasion",
+            "difficulty": "average"
+          }
+        }
+      ],
+      "supports": ["culprit:chorbadzhi-dimo", "opportunity:chorbadzhi-dimo"],
+      "refutes": []
+    },
+    {
+      "id": "m1-magiya",
+      "nameKey": "clue.m1-magiya.name",
+      "descKey": "clue.m1-magiya.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "zone",
+          "ref": "village",
+          "check": {
+            "skill": "occultism",
+            "difficulty": "hard"
+          }
+        }
+      ],
+      "supports": ["cause:magiya-and-mamnik", "culprit:chorbadzhi-dimo"],
+      "refutes": []
+    },
+    {
+      "id": "m1-name",
+      "nameKey": "clue.m1-name.name",
+      "descKey": "clue.m1-name.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "collectible",
+          "ref": "grimoire-page-mamnik"
+        }
+      ],
+      "supports": ["remedy:burn-magiya-and-exorcise"],
+      "refutes": [],
+      "forbidden": true
+    },
+    {
+      "id": "m1-seal",
+      "nameKey": "clue.m1-seal.name",
+      "descKey": "clue.m1-seal.desc",
+      "reliability": "solid",
+      "sources": [
+        {
+          "kind": "collectible",
+          "ref": "seal-of-three-rings"
+        }
+      ],
+      "supports": ["remedy:burn-magiya-and-exorcise"],
+      "refutes": []
+    }
+  ],
+  "solution": {
+    "culprit": "chorbadzhi-dimo",
+    "cause": "magiya-and-mamnik",
+    "remedy": "burn-magiya-and-exorcise"
+  },
+  "outcomes": [
+    {
+      "culprit": "chorbadzhi-dimo",
+      "descKey": "mystery.wasting-bride.outcome.dimo",
+      "effects": [
+        {
+          "setFlag": "m1-solved-dimo"
+        },
+        {
+          "setFlag": "dimo-fled"
+        },
+        {
+          "addStat": "hysteria",
+          "value": -20
+        }
+      ]
+    },
+    {
+      "culprit": "baba-neda",
+      "descKey": "mystery.wasting-bride.outcome.neda",
+      "effects": [
+        {
+          "setFlag": "neda-condemned"
+        },
+        {
+          "setFlag": "innocent-lynched"
+        },
+        {
+          "setFlag": "forest-hostile"
+        },
+        {
+          "addStat": "village-corruption",
+          "value": 20
+        },
+        {
+          "setZoneVariant": "samodivi-forest",
+          "variant": "hostile"
+        }
+      ]
+    },
+    {
+      "culprit": "krastyo",
+      "descKey": "mystery.wasting-bride.outcome.krastyo",
+      "effects": [
+        {
+          "setFlag": "krastyo-handed-to-aga"
+        },
+        {
+          "setFlag": "mill-stopped"
+        }
+      ]
+    },
+    {
+      "culprit": "radka",
+      "descKey": "mystery.wasting-bride.outcome.radka",
+      "effects": [
+        {
+          "setFlag": "tavern-closed"
+        }
+      ]
+    }
+  ],
+  "unsolved": {
+    "descKey": "mystery.wasting-bride.unsolved",
+    "effects": [
+      {
+        "setFlag": "velika-drowned"
+      },
+      {
+        "addStat": "hysteria",
+        "value": 20
+      }
+    ]
+  }
+}

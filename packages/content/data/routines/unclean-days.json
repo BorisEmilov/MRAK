@@ -1,0 +1,30 @@
+{
+  "id": "unclean-days",
+  "tier": "demo",
+  "nameKey": "routine.unclean-days.name",
+  "priority": 20,
+  "when": {
+    "chapter": "unclean-days"
+  },
+  "window": {
+    "from": "16:30",
+    "to": "05:00"
+  },
+  "blocks": [
+    {
+      "at": "16:30",
+      "activity": "eat",
+      "place": "home"
+    },
+    {
+      "at": "17:00",
+      "activity": "rest",
+      "place": "home"
+    },
+    {
+      "at": "20:00",
+      "activity": "sleep",
+      "place": "home"
+    }
+  ]
+}

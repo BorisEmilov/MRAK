@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/DebtSource"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/DebtSource"
+      }
+    }
+  ],
+  "$defs": {
+    "DebtSource": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "full"
+          ]
+        },
+        "nameKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        },
+        "creditor": {
+          "type": "string",
+          "enum": [
+            "horned-one",
+            "forest-spirit",
+            "aga",
+            "village",
+            "named-demon"
+          ]
+        },
+        "kind": {
+          "type": "string",
+          "enum": [
+            "pact",
+            "favour",
+            "loan",
+            "promise",
+            "talent"
+          ]
+        },
+        "amount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "nameKey",
+        "creditor",
+        "kind",
+        "amount"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

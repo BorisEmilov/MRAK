@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/Trait"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Trait"
+      }
+    }
+  ],
+  "$defs": {
+    "Trait": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "full"
+          ]
+        },
+        "nameKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        },
+        "descKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        },
+        "taskEfficiency": {
+          "default": {},
+          "type": "object",
+          "propertyNames": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0.25,
+            "maximum": 3
+          }
+        },
+        "fearGain": {
+          "default": 1,
+          "type": "number",
+          "minimum": 0.25,
+          "maximum": 3
+        },
+        "spread": {
+          "default": 1,
+          "type": "number",
+          "minimum": 0.25,
+          "maximum": 3
+        },
+        "hungerRate": {
+          "default": 1,
+          "type": "number",
+          "minimum": 0.25,
+          "maximum": 3
+        },
+        "coldRate": {
+          "default": 1,
+          "type": "number",
+          "minimum": 0.25,
+          "maximum": 3
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "nameKey",
+        "descKey"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,352 @@
+[
+  {
+    "id": "calming-tea",
+    "tier": "demo",
+    "nameKey": "recipe.calming-tea.name",
+    "descKey": "recipe.calming-tea.desc",
+    "inputs": [
+      {
+        "item": "st-johns-wort",
+        "qty": 2
+      }
+    ],
+    "check": {
+      "skill": "herbalism",
+      "difficulty": "easy"
+    },
+    "minutes": 30,
+    "outputs": [
+      {
+        "item": "calming-tea",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "fever-brew",
+    "tier": "demo",
+    "nameKey": "recipe.fever-brew.name",
+    "descKey": "recipe.fever-brew.desc",
+    "inputs": [
+      {
+        "item": "yarrow",
+        "qty": 2
+      }
+    ],
+    "station": "herbalists-hut",
+    "check": {
+      "skill": "herbalism",
+      "difficulty": "average"
+    },
+    "minutes": 60,
+    "outputs": [
+      {
+        "item": "fever-brew",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "garlic-braid",
+    "tier": "demo",
+    "nameKey": "recipe.garlic-braid.name",
+    "descKey": "recipe.garlic-braid.desc",
+    "inputs": [
+      {
+        "item": "garlic",
+        "qty": 3
+      },
+      {
+        "item": "red-thread",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "survival",
+      "difficulty": "easy"
+    },
+    "minutes": 30,
+    "outputs": [
+      {
+        "item": "garlic-braid",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "consecrated-oil",
+    "tier": "demo",
+    "nameKey": "recipe.consecrated-oil.name",
+    "descKey": "recipe.consecrated-oil.desc",
+    "inputs": [
+      {
+        "item": "lamp-oil",
+        "qty": 2
+      },
+      {
+        "item": "holy-water",
+        "qty": 1
+      }
+    ],
+    "station": "chapel",
+    "check": {
+      "skill": "faith",
+      "difficulty": "average"
+    },
+    "minutes": 120,
+    "outputs": [
+      {
+        "item": "consecrated-oil",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "red-thread-amulet",
+    "tier": "demo",
+    "nameKey": "recipe.red-thread-amulet.name",
+    "descKey": "recipe.red-thread-amulet.desc",
+    "inputs": [
+      {
+        "item": "red-thread",
+        "qty": 2
+      }
+    ],
+    "check": {
+      "skill": "survival",
+      "difficulty": "easy"
+    },
+    "minutes": 30,
+    "outputs": [
+      {
+        "item": "red-thread-amulet",
+        "qty": 1
+      }
+    ],
+    "visibleWhen": {
+      "talent": "red-thread"
+    }
+  },
+  {
+    "id": "juniper-incense",
+    "tier": "demo",
+    "nameKey": "recipe.juniper-incense.name",
+    "descKey": "recipe.juniper-incense.desc",
+    "inputs": [
+      {
+        "item": "juniper",
+        "qty": 2
+      },
+      {
+        "item": "beeswax",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "herbalism",
+      "difficulty": "easy"
+    },
+    "minutes": 30,
+    "outputs": [
+      {
+        "item": "incense",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "mistletoe-charm",
+    "tier": "demo",
+    "nameKey": "recipe.mistletoe-charm.name",
+    "descKey": "recipe.mistletoe-charm.desc",
+    "inputs": [
+      {
+        "item": "mistletoe",
+        "qty": 1
+      },
+      {
+        "item": "red-thread",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "survival",
+      "difficulty": "easy"
+    },
+    "minutes": 20,
+    "outputs": [
+      {
+        "item": "mistletoe-charm",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "grave-salve",
+    "tier": "demo",
+    "nameKey": "recipe.grave-salve.name",
+    "descKey": "recipe.grave-salve.desc",
+    "inputs": [
+      {
+        "item": "grave-moss",
+        "qty": 2
+      },
+      {
+        "item": "salt",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "occultism",
+      "difficulty": "average"
+    },
+    "minutes": 30,
+    "outputs": [
+      {
+        "item": "grave-salve",
+        "qty": 1
+      }
+    ],
+    "onBrew": [
+      {
+        "addStat": "corruption",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "id": "seeing-tincture",
+    "tier": "demo",
+    "nameKey": "recipe.seeing-tincture.name",
+    "descKey": "recipe.seeing-tincture.desc",
+    "inputs": [
+      {
+        "item": "fern-blossom",
+        "qty": 1
+      },
+      {
+        "item": "theophany-water",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "occultism",
+      "difficulty": "hard"
+    },
+    "minutes": 60,
+    "outputs": [
+      {
+        "item": "seeing-tincture",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "basil-water",
+    "tier": "demo",
+    "nameKey": "recipe.basil-water.name",
+    "descKey": "recipe.basil-water.desc",
+    "inputs": [
+      {
+        "item": "basil",
+        "qty": 1
+      },
+      {
+        "item": "holy-water",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "faith",
+      "difficulty": "easy"
+    },
+    "minutes": 30,
+    "outputs": [
+      {
+        "item": "holy-water",
+        "qty": 3
+      }
+    ]
+  },
+  {
+    "id": "zdravets-wreath",
+    "tier": "demo",
+    "nameKey": "recipe.zdravets-wreath.name",
+    "descKey": "recipe.zdravets-wreath.desc",
+    "inputs": [
+      {
+        "item": "zdravets",
+        "qty": 2
+      },
+      {
+        "item": "red-thread",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "survival",
+      "difficulty": "easy"
+    },
+    "minutes": 30,
+    "outputs": [
+      {
+        "item": "zdravets-wreath",
+        "qty": 1
+      }
+    ]
+  },
+  {
+    "id": "elder-syrup",
+    "tier": "demo",
+    "nameKey": "recipe.elder-syrup.name",
+    "descKey": "recipe.elder-syrup.desc",
+    "inputs": [
+      {
+        "item": "elder",
+        "qty": 2
+      },
+      {
+        "item": "bread",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "herbalism",
+      "difficulty": "easy"
+    },
+    "minutes": 45,
+    "outputs": [
+      {
+        "item": "elder-syrup",
+        "qty": 2
+      }
+    ]
+  },
+  {
+    "id": "wormwood-smoke",
+    "tier": "demo",
+    "nameKey": "recipe.wormwood-smoke.name",
+    "descKey": "recipe.wormwood-smoke.desc",
+    "inputs": [
+      {
+        "item": "wormwood",
+        "qty": 2
+      },
+      {
+        "item": "incense",
+        "qty": 1
+      }
+    ],
+    "check": {
+      "skill": "herbalism",
+      "difficulty": "average"
+    },
+    "minutes": 30,
+    "outputs": [
+      {
+        "item": "incense",
+        "qty": 3
+      }
+    ]
+  }
+]

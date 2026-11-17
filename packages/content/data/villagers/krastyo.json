@@ -1,0 +1,52 @@
+{
+  "id": "krastyo",
+  "tier": "demo",
+  "nameKey": "villager.krastyo.name",
+  "tradeKey": "villager.krastyo.trade",
+  "bioKey": "villager.krastyo.bio",
+  "age": 33,
+  "sex": "male",
+  "traits": ["miller", "strong"],
+  "fears": ["mill", "aga"],
+  "startingFear": 15,
+  "relationships": [
+    {
+      "villager": "chorbadzhi-dimo",
+      "affinity": -40
+    },
+    {
+      "villager": "velika",
+      "affinity": 30
+    },
+    {
+      "villager": "petko",
+      "affinity": 20
+    },
+    {
+      "villager": "todor",
+      "affinity": -10
+    }
+  ],
+  "secrets": [
+    {
+      "id": "voice-in-the-wheel",
+      "descKey": "villager.krastyo.secret.voice-in-the-wheel",
+      "revealWhen": {
+        "flag": "mill-wheel-heard"
+      }
+    }
+  ],
+  "home": "house-krastyo",
+  "work": "mill",
+  "routine": "early-riser",
+  "look": {
+    "skin": "#cf9c76",
+    "hair": "#6b4a2a",
+    "clothes": "#d8d0bc",
+    "accent": "#6a5a3a",
+    "headwear": "cap",
+    "beard": true,
+    "build": "broad"
+  },
+  "dialogue": "krastyo"
+}

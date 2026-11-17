@@ -1,0 +1,93 @@
+[
+  {
+    "id": "blood-offering",
+    "tier": "demo",
+    "nameKey": "debt-remedy.blood-offering.name",
+    "descKey": "debt-remedy.blood-offering.desc",
+    "creditor": "horned-one",
+    "reduce": 5,
+    "cost": [
+      {
+        "addStat": "sanity",
+        "value": -15
+      },
+      {
+        "addStat": "corruption",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "id": "honey-and-milk",
+    "tier": "demo",
+    "nameKey": "debt-remedy.honey-and-milk.name",
+    "descKey": "debt-remedy.honey-and-milk.desc",
+    "creditor": "forest-spirit",
+    "reduce": 4,
+    "cost": [
+      {
+        "takeItem": "bread",
+        "qty": 2
+      },
+      {
+        "takeItem": "beeswax",
+        "qty": 1
+      },
+      {
+        "addStat": "sanity",
+        "value": -3
+      }
+    ],
+    "when": {
+      "all": [
+        {
+          "hasItem": "bread",
+          "qty": 2
+        },
+        {
+          "hasItem": "beeswax",
+          "qty": 1
+        }
+      ]
+    }
+  },
+  {
+    "id": "repay-the-aga",
+    "tier": "demo",
+    "nameKey": "debt-remedy.repay-the-aga.name",
+    "descKey": "debt-remedy.repay-the-aga.desc",
+    "creditor": "aga",
+    "reduce": 6,
+    "cost": [
+      {
+        "takeItem": "silver-coin",
+        "qty": 5
+      }
+    ],
+    "when": {
+      "hasItem": "silver-coin",
+      "qty": 5
+    }
+  },
+  {
+    "id": "keep-your-word",
+    "tier": "demo",
+    "nameKey": "debt-remedy.keep-your-word.name",
+    "descKey": "debt-remedy.keep-your-word.desc",
+    "creditor": "village",
+    "reduce": 4,
+    "cost": [
+      {
+        "addStat": "sanity",
+        "value": -5
+      },
+      {
+        "addStat": "faith",
+        "value": 2
+      }
+    ],
+    "when": {
+      "phase": "day"
+    }
+  }
+]

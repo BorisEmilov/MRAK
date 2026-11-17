@@ -1,0 +1,30 @@
+{
+  "name": "@mrak/content-schema",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zod data model of all MRAK content, cross-reference validator and JSON Schema export.",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "default": "./src/index.ts"
+    },
+    "./json-schema/*": "./json-schema/*"
+  },
+  "scripts": {
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "validate": "tsx src/node/cli.ts validate",
+    "manifest": "tsx src/node/cli.ts manifest",
+    "json-schema": "tsx src/node/cli.ts json-schema"
+  },
+  "dependencies": {
+    "inkjs": "2.4.0",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "tsx": "4.23.15",
+    "vitest": "5.1.0"
+  }
+}

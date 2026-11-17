@@ -1,0 +1,88 @@
+/* Design tokens — docs/ui/design-system.md. Mirrored in src/tokens.ts (checked by tokens.test.ts). */
+:root {
+  --mrak-earth-950: #0e0a08;
+  --mrak-earth-900: #17110d;
+  --mrak-earth-800: #221a14;
+  --mrak-earth-700: #33271e;
+  --mrak-earth-500: #6b5642;
+  --mrak-blood-800: #4a0d0d;
+  --mrak-blood-600: #8a1c1c;
+  --mrak-blood-400: #d4574d;
+  --mrak-gold-600: #9c6b1c;
+  --mrak-gold-400: #e0a94a;
+  --mrak-gold-200: #f3d9a0;
+  --mrak-parchment-100: #f2e8d2;
+  --mrak-parchment-300: #cdb98f;
+  --mrak-ink-900: #1c1410;
+  --mrak-good: #8fbf72;
+  --mrak-bad: #e07a5f;
+  --mrak-info: #86b3d1;
+
+  --mrak-color-bg: var(--mrak-earth-950);
+  --mrak-color-surface: var(--mrak-earth-900);
+  --mrak-color-raised: var(--mrak-earth-800);
+  --mrak-color-hover: var(--mrak-earth-700);
+  --mrak-color-rule: var(--mrak-earth-500);
+  --mrak-color-text: var(--mrak-parchment-100);
+  --mrak-color-text-muted: var(--mrak-parchment-300);
+  --mrak-color-accent: var(--mrak-gold-400);
+  --mrak-color-highlight: var(--mrak-gold-200);
+  --mrak-color-danger: var(--mrak-blood-400);
+  --mrak-color-focus: var(--mrak-gold-400);
+
+  --mrak-font-display: 'IM Fell English SC', 'Iowan Old Style', Georgia, serif;
+  --mrak-font-text: 'Atkinson Hyperlegible Next', 'Atkinson Hyperlegible', system-ui, sans-serif;
+  --mrak-text-xs: 0.875rem;
+  --mrak-text-sm: 1rem;
+  --mrak-text-md: 1.125rem;
+  --mrak-text-lg: 1.375rem;
+  --mrak-text-xl: 1.75rem;
+  --mrak-text-display: 3rem;
+
+  --mrak-space-1: 0.25rem;
+  --mrak-space-2: 0.5rem;
+  --mrak-space-3: 0.75rem;
+  --mrak-space-4: 1rem;
+  --mrak-space-5: 1.5rem;
+  --mrak-space-6: 2rem;
+  --mrak-space-7: 3rem;
+
+  --mrak-hit: 2.75rem; /* 44 px minimum target */
+  --mrak-radius: 3px;
+  --mrak-duration: 160ms;
+  --mrak-hatch: repeating-linear-gradient(
+    135deg,
+    rgba(242, 232, 210, 0.025) 0 1px,
+    transparent 1px 5px
+  );
+  --mrak-engraved:
+    inset 0 0 0 3px var(--mrak-color-surface), inset 0 0 0 4px rgba(107, 86, 66, 0.7);
+}
+
+/* Colour-blind modes swap the semantic colours only (shapes and words carry meaning too). */
+:root[data-mrak-colorblind='protanopia'],
+:root[data-mrak-colorblind='deuteranopia'] {
+  --mrak-good: #56b4e9;
+  --mrak-bad: #e69f00;
+  --mrak-info: #cc79a7;
+}
+:root[data-mrak-colorblind='tritanopia'] {
+  --mrak-good: #009e73;
+  --mrak-bad: #d55e00;
+  --mrak-info: #cc79a7;
+}
+:root[data-mrak-colorblind='monochrome'] {
+  --mrak-good: #f2e8d2;
+  --mrak-bad: #f2e8d2;
+  --mrak-info: #f2e8d2;
+  --mrak-color-danger: #f2e8d2;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --mrak-duration: 0ms;
+  }
+}
+:root[data-mrak-reduce-motion='true'] {
+  --mrak-duration: 0ms;
+}

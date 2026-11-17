@@ -1,0 +1,476 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/VillageRules"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/VillageRules"
+      }
+    }
+  ],
+  "$defs": {
+    "VillageRules": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "full"
+          ]
+        },
+        "zone": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Reference to a zone"
+        },
+        "fear": {
+          "type": "object",
+          "properties": {
+            "contagionRate": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "contagionCap": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "proximityWeight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "faithDamping": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "tagMultiplier": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 5
+            },
+            "needFearPerHour": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "darkFearPerHour": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "solitudeFearPerHour": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "deathOfCloseRelation": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "deathInVillage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "closeAffinity": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "returnedSighting": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "decayPerDawn": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "decayWhenHysterical": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "hysteriaThreshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "terrifiedAt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "calmBelow": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "panicAt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "nightTaskMaxFear": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "maskedFactor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "contagionRate",
+            "contagionCap",
+            "proximityWeight",
+            "faithDamping",
+            "tagMultiplier",
+            "needFearPerHour",
+            "darkFearPerHour",
+            "solitudeFearPerHour",
+            "deathOfCloseRelation",
+            "deathInVillage",
+            "closeAffinity",
+            "returnedSighting",
+            "decayPerDawn",
+            "decayWhenHysterical",
+            "hysteriaThreshold",
+            "terrifiedAt",
+            "calmBelow",
+            "panicAt",
+            "nightTaskMaxFear",
+            "maskedFactor"
+          ],
+          "additionalProperties": false
+        },
+        "needs": {
+          "type": "object",
+          "properties": {
+            "hungerPerHour": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "mealRelief": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "mealItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "portionsPerItem": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 20
+            },
+            "coldReliefByDay": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "coldPerNightHour": {
+              "type": "object",
+              "properties": {
+                "winter": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "spring": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "summer": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "autumn": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "winter",
+                "spring",
+                "summer",
+                "autumn"
+              ],
+              "additionalProperties": false
+            },
+            "warmthAtHome": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "unheatedFactor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 2
+            },
+            "firewoodItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "firewoodPerHome": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "faithDecayPerDay": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "prayFaithPerHour": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "threshold": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "hungerPerHour",
+            "mealRelief",
+            "mealItem",
+            "portionsPerItem",
+            "coldReliefByDay",
+            "coldPerNightHour",
+            "warmthAtHome",
+            "unheatedFactor",
+            "firewoodItem",
+            "firewoodPerHome",
+            "faithDecayPerDay",
+            "prayFaithPerHour",
+            "threshold"
+          ],
+          "additionalProperties": false
+        },
+        "health": {
+          "type": "object",
+          "properties": {
+            "lossPerHour": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "critical": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "regenPerHour": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "sickBelow": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "recoveredAt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "lossPerHour",
+            "critical",
+            "regenPerHour",
+            "sickBelow",
+            "recoveredAt"
+          ],
+          "additionalProperties": false
+        },
+        "tasks": {
+          "type": "object",
+          "properties": {
+            "carryOver": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "repairStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "repairDecayPerDawn": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "watchStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            }
+          },
+          "required": [
+            "carryOver",
+            "repairStat",
+            "repairDecayPerDawn",
+            "watchStat"
+          ],
+          "additionalProperties": false
+        },
+        "death": {
+          "type": "object",
+          "properties": {
+            "unquietCauses": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              }
+            },
+            "returnAfterNights": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 40
+            },
+            "sextonTrait": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a trait"
+            },
+            "priestTrait": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a trait"
+            },
+            "riteItems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "item": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "Reference to a item"
+                  },
+                  "qty": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 999
+                  }
+                },
+                "required": [
+                  "item",
+                  "qty"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "layToRestItems": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "item": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "Reference to a item"
+                  },
+                  "qty": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 999
+                  }
+                },
+                "required": [
+                  "item",
+                  "qty"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "returnedSanityHit": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "grave": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "unquietCauses",
+            "returnAfterNights",
+            "sextonTrait",
+            "priestTrait",
+            "riteItems",
+            "layToRestItems",
+            "returnedSanityHit",
+            "grave"
+          ],
+          "additionalProperties": false
+        },
+        "possession": {
+          "type": "object",
+          "properties": {
+            "sleepwalkPlace": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            },
+            "sleepwalkFrom": {
+              "type": "string",
+              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+            },
+            "sleepwalkTo": {
+              "type": "string",
+              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+            }
+          },
+          "required": [
+            "sleepwalkPlace",
+            "sleepwalkFrom",
+            "sleepwalkTo"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "zone",
+        "fear",
+        "needs",
+        "health",
+        "tasks",
+        "death",
+        "possession"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

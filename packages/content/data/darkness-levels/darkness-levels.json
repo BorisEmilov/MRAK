@@ -1,0 +1,360 @@
+[
+  {
+    "id": "darkness-1",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-1.name",
+    "descKey": "darkness-level.darkness-1.desc",
+    "level": 1,
+    "legacyMultiplier": 1.1,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.1
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.05
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.05
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.08
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-2",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-2.name",
+    "descKey": "darkness-level.darkness-2.desc",
+    "level": 2,
+    "legacyMultiplier": 1.2,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.2
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.1
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.1
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.16
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-3",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-3.name",
+    "descKey": "darkness-level.darkness-3.desc",
+    "level": 3,
+    "legacyMultiplier": 1.3,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.3
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.15
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.15
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.24
+        }
+      },
+      {
+        "modifier": {
+          "shadowDice": 1,
+          "skill": "exorcism"
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-4",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-4.name",
+    "descKey": "darkness-level.darkness-4.desc",
+    "level": 4,
+    "legacyMultiplier": 1.4,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.4
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.2
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.2
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.32
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-5",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-5.name",
+    "descKey": "darkness-level.darkness-5.desc",
+    "level": 5,
+    "legacyMultiplier": 1.5,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.5
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.25
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.25
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.4
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-6",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-6.name",
+    "descKey": "darkness-level.darkness-6.desc",
+    "level": 6,
+    "legacyMultiplier": 1.6,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.6
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.3
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.3
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.48
+        }
+      },
+      {
+        "modifier": {
+          "shadowDice": 2,
+          "skill": "exorcism"
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-7",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-7.name",
+    "descKey": "darkness-level.darkness-7.desc",
+    "level": 7,
+    "legacyMultiplier": 1.7,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.7
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.35
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.35
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.56
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-8",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-8.name",
+    "descKey": "darkness-level.darkness-8.desc",
+    "level": 8,
+    "legacyMultiplier": 1.8,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.8
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.4
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.4
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.64
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-9",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-9.name",
+    "descKey": "darkness-level.darkness-9.desc",
+    "level": 9,
+    "legacyMultiplier": 1.9,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 1.9
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.45
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.45
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.72
+        }
+      },
+      {
+        "modifier": {
+          "shadowDice": 3,
+          "skill": "exorcism"
+        }
+      }
+    ]
+  },
+  {
+    "id": "darkness-10",
+    "tier": "full",
+    "nameKey": "darkness-level.darkness-10.name",
+    "descKey": "darkness-level.darkness-10.desc",
+    "level": 10,
+    "legacyMultiplier": 2.0,
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "creature-strength-rate",
+          "factor": 2.0
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "debt-collection-rate",
+          "factor": 1.5
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "hysteria-gain-rate",
+          "factor": 1.5
+        }
+      },
+      {
+        "modifier": {
+          "multiply": "creature-cunning-rate",
+          "factor": 1.8
+        }
+      }
+    ]
+  }
+]

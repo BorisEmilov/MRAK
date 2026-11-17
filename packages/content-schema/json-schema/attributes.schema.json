@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/Attribute"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Attribute"
+      }
+    }
+  ],
+  "$defs": {
+    "Attribute": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "full"
+          ]
+        },
+        "nameKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        },
+        "descKey": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+          "description": "Reference to a loc"
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "nameKey",
+        "descKey"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,154 @@
+[
+  {
+    "id": "calling",
+    "tier": "demo",
+    "termKey": "glossary.calling.term",
+    "descKey": "glossary.calling.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "debt",
+    "tier": "demo",
+    "termKey": "glossary.debt.term",
+    "descKey": "glossary.debt.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "darkness-level",
+    "tier": "demo",
+    "termKey": "glossary.darkness-level.term",
+    "descKey": "glossary.darkness-level.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "fate",
+    "tier": "demo",
+    "termKey": "glossary.fate.term",
+    "descKey": "glossary.fate.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "guardian",
+    "tier": "demo",
+    "termKey": "glossary.guardian.term",
+    "descKey": "glossary.guardian.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "legacy",
+    "tier": "demo",
+    "termKey": "glossary.legacy.term",
+    "descKey": "glossary.legacy.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "notice",
+    "tier": "demo",
+    "termKey": "glossary.notice.term",
+    "descKey": "glossary.notice.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "omen",
+    "tier": "demo",
+    "termKey": "glossary.omen.term",
+    "descKey": "glossary.omen.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "revelation",
+    "tier": "demo",
+    "termKey": "glossary.revelation.term",
+    "descKey": "glossary.revelation.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "the-cycle",
+    "tier": "demo",
+    "termKey": "glossary.the-cycle.term",
+    "descKey": "glossary.the-cycle.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "the-horned-one",
+    "tier": "demo",
+    "termKey": "glossary.the-horned-one.term",
+    "descKey": "glossary.the-horned-one.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "the-forest-spirit",
+    "tier": "demo",
+    "termKey": "glossary.the-forest-spirit.term",
+    "descKey": "glossary.the-forest-spirit.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "the-thracian-horseman",
+    "tier": "demo",
+    "termKey": "glossary.the-thracian-horseman.term",
+    "descKey": "glossary.the-thracian-horseman.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "sanity",
+    "tier": "demo",
+    "termKey": "glossary.sanity.term",
+    "descKey": "glossary.sanity.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "faith",
+    "tier": "demo",
+    "termKey": "glossary.faith.term",
+    "descKey": "glossary.faith.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "corruption",
+    "tier": "demo",
+    "termKey": "glossary.corruption.term",
+    "descKey": "glossary.corruption.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "hysteria",
+    "tier": "demo",
+    "termKey": "glossary.hysteria.term",
+    "descKey": "glossary.hysteria.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "light",
+    "tier": "demo",
+    "termKey": "glossary.light.term",
+    "descKey": "glossary.light.desc",
+    "category": "game",
+    "origin": "invented"
+  },
+  {
+    "id": "generation",
+    "tier": "demo",
+    "termKey": "glossary.generation.term",
+    "descKey": "glossary.generation.desc",
+    "category": "game",
+    "origin": "invented"
+  }
+]

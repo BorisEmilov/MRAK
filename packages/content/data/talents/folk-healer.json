@@ -1,0 +1,181 @@
+[
+  {
+    "id": "midwifes-hands",
+    "tier": "demo",
+    "nameKey": "talent.midwifes-hands.name",
+    "descKey": "talent.midwifes-hands.desc",
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "healing-potency",
+          "factor": 1.25
+        }
+      }
+    ]
+  },
+  {
+    "id": "herb-lore",
+    "tier": "demo",
+    "nameKey": "talent.herb-lore.name",
+    "descKey": "talent.herb-lore.desc",
+    "effects": [
+      {
+        "rule": "auto-identify-herbs"
+      }
+    ]
+  },
+  {
+    "id": "steady-lead",
+    "tier": "demo",
+    "nameKey": "talent.steady-lead.name",
+    "descKey": "talent.steady-lead.desc",
+    "effects": [
+      {
+        "rule": "lead-pouring-calms",
+        "params": {
+          "fear": -40
+        }
+      }
+    ]
+  },
+  {
+    "id": "dawn-gathering",
+    "tier": "demo",
+    "nameKey": "talent.dawn-gathering.name",
+    "descKey": "talent.dawn-gathering.desc",
+    "effects": [
+      {
+        "rule": "dawn-herb-potency",
+        "params": {
+          "bonus": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "fever-breaker",
+    "tier": "demo",
+    "nameKey": "talent.fever-breaker.name",
+    "descKey": "talent.fever-breaker.desc",
+    "effects": [
+      {
+        "rule": "fever-cured-in-one-day"
+      }
+    ]
+  },
+  {
+    "id": "bonesetter",
+    "tier": "full",
+    "nameKey": "talent.bonesetter.name",
+    "descKey": "talent.bonesetter.desc",
+    "effects": [
+      {
+        "modifier": {
+          "multiply": "injury-duration-rate",
+          "factor": 0.5
+        }
+      }
+    ]
+  },
+  {
+    "id": "tincture-master",
+    "tier": "full",
+    "nameKey": "talent.tincture-master.name",
+    "descKey": "talent.tincture-master.desc",
+    "effects": [
+      {
+        "rule": "alchemy-extra-dose",
+        "params": {
+          "doses": 1
+        }
+      }
+    ]
+  },
+  {
+    "id": "kitchen-garden",
+    "tier": "full",
+    "nameKey": "talent.kitchen-garden.name",
+    "descKey": "talent.kitchen-garden.desc",
+    "effects": [
+      {
+        "modifier": {
+          "statBonus": "herbs-per-day",
+          "value": 2
+        }
+      }
+    ]
+  },
+  {
+    "id": "breath-of-life",
+    "tier": "full",
+    "nameKey": "talent.breath-of-life.name",
+    "descKey": "talent.breath-of-life.desc",
+    "effects": [
+      {
+        "ability": {
+          "uses": 1,
+          "per": "chapter",
+          "effects": [
+            {
+              "rule": "last-breath-auto-success"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "enyos-blessing",
+    "tier": "full",
+    "nameKey": "talent.enyos-blessing.name",
+    "descKey": "talent.enyos-blessing.desc",
+    "effects": [
+      {
+        "rule": "enyovden-potency",
+        "params": {
+          "multiplier": 3
+        }
+      },
+      {
+        "ability": {
+          "uses": 1,
+          "per": "chapter",
+          "effects": [
+            {
+              "rule": "treat-gathering-as-enyovden"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "id": "the-village-remembers",
+    "tier": "full",
+    "nameKey": "talent.the-village-remembers.name",
+    "descKey": "talent.the-village-remembers.desc",
+    "effects": [
+      {
+        "rule": "healed-villagers-protect",
+        "params": {
+          "minHealed": 3,
+          "affinity": 5
+        }
+      }
+    ]
+  },
+  {
+    "id": "relic-water-whisper",
+    "tier": "demo",
+    "nameKey": "talent.relic-water-whisper.name",
+    "descKey": "talent.relic-water-whisper.desc",
+    "effects": [
+      {
+        "modifier": {
+          "fateDice": 1,
+          "skill": "lore"
+        }
+      }
+    ]
+  }
+]

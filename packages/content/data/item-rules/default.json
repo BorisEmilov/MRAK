@@ -1,0 +1,50 @@
+[
+  {
+    "id": "default",
+    "tier": "demo",
+    "inventory": {
+      "homeZone": "village",
+      "packSlots": 10,
+      "carryWeight": 24,
+      "encumberedSpeed": 0.6,
+      "groundStacks": 32,
+      "potencyScale": [1, 1.5, 2],
+      "slotsStat": "pack-slots",
+      "weightStat": "carry-weight",
+      "whisperStat": "sanity"
+    },
+    "gathering": {
+      "boosts": [
+        {
+          "when": {
+            "date": {
+              "from": "06-24",
+              "to": "06-24"
+            }
+          },
+          "factor": 2,
+          "labelKey": "gather.boost.enyovden"
+        }
+      ]
+    },
+    "alchemy": {
+      "failMinutes": 15,
+      "maxIngredients": 4,
+      "maxQty": 5,
+      "journalSize": 100
+    },
+    "talk": {
+      "affinityPerDay": 2
+    },
+    "cabinet": {
+      "slots": 6
+    },
+    "photography": {
+      "camera": "daguerreotype-camera",
+      "plate": "photographic-plate",
+      "minutes": 10,
+      "albumSize": 48,
+      "rangeTiles": 4
+    }
+  }
+]

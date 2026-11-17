@@ -1,0 +1,34 @@
+{
+  "id": "blessing",
+  "tier": "demo",
+  "context": "blessing",
+  "successGood": {
+    "descKey": "omen.blessing.success-good",
+    "effects": []
+  },
+  "successNone": {
+    "descKey": "omen.blessing.success-none",
+    "effects": []
+  },
+  "successBad": {
+    "descKey": "omen.blessing.success-bad",
+    "effects": []
+  },
+  "failureGood": {
+    "descKey": "omen.blessing.failure-good",
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": 3
+      }
+    ]
+  },
+  "failureNone": {
+    "descKey": "omen.blessing.failure-none",
+    "effects": []
+  },
+  "failureBad": {
+    "descKey": "omen.blessing.failure-bad",
+    "effects": []
+  }
+}

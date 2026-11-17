@@ -1,0 +1,673 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/ItemRules"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/ItemRules"
+      }
+    }
+  ],
+  "$defs": {
+    "ItemRules": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "full"
+          ]
+        },
+        "inventory": {
+          "type": "object",
+          "properties": {
+            "homeZone": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a zone"
+            },
+            "packSlots": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 40
+            },
+            "carryWeight": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 200
+            },
+            "encumberedSpeed": {
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 1
+            },
+            "groundStacks": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 64
+            },
+            "potencyScale": {
+              "type": "array",
+              "prefixItems": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "number"
+                }
+              ],
+              "items": false,
+              "minItems": 3,
+              "maxItems": 3
+            },
+            "slotsStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "weightStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "whisperStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            }
+          },
+          "required": [
+            "homeZone",
+            "packSlots",
+            "carryWeight",
+            "encumberedSpeed",
+            "groundStacks",
+            "potencyScale",
+            "whisperStat"
+          ],
+          "additionalProperties": false
+        },
+        "gathering": {
+          "type": "object",
+          "properties": {
+            "boosts": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "when": {
+                    "$ref": "#/$defs/Condition"
+                  },
+                  "add": {
+                    "default": 0,
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 2
+                  },
+                  "factor": {
+                    "default": 1,
+                    "type": "number",
+                    "minimum": 1,
+                    "maximum": 3
+                  },
+                  "labelKey": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                    "description": "Reference to a loc"
+                  }
+                },
+                "required": [
+                  "when",
+                  "labelKey"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "alchemy": {
+          "type": "object",
+          "properties": {
+            "failMinutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 240
+            },
+            "maxIngredients": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 6
+            },
+            "maxQty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "journalSize": {
+              "type": "integer",
+              "minimum": 10,
+              "maximum": 500
+            }
+          },
+          "required": [
+            "failMinutes",
+            "maxIngredients",
+            "maxQty",
+            "journalSize"
+          ],
+          "additionalProperties": false
+        },
+        "talk": {
+          "type": "object",
+          "properties": {
+            "affinityPerDay": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 20
+            }
+          },
+          "required": [
+            "affinityPerDay"
+          ],
+          "additionalProperties": false
+        },
+        "cabinet": {
+          "type": "object",
+          "properties": {
+            "slots": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 24
+            }
+          },
+          "required": [
+            "slots"
+          ],
+          "additionalProperties": false
+        },
+        "photography": {
+          "type": "object",
+          "properties": {
+            "camera": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "plate": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "minutes": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 240
+            },
+            "albumSize": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 200
+            },
+            "rangeTiles": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 12
+            }
+          },
+          "required": [
+            "camera",
+            "plate",
+            "minutes",
+            "albumSize",
+            "rangeTiles"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "inventory",
+        "gathering",
+        "alchemy",
+        "talk",
+        "cabinet",
+        "photography"
+      ],
+      "additionalProperties": false
+    },
+    "Condition": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "all": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              }
+            }
+          },
+          "required": [
+            "all"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "any": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              }
+            }
+          },
+          "required": [
+            "any"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "not": {
+              "$ref": "#/$defs/Condition"
+            }
+          },
+          "required": [
+            "not"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "flag": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a flag"
+            }
+          },
+          "required": [
+            "flag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "stat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "villager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            ">=": {
+              "type": "number"
+            },
+            ">": {
+              "type": "number"
+            },
+            "<=": {
+              "type": "number"
+            },
+            "<": {
+              "type": "number"
+            },
+            "==": {
+              "type": "number"
+            },
+            "!=": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "stat"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "hasItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "qty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "in": {
+              "type": "string",
+              "enum": [
+                "pack",
+                "storage"
+              ]
+            }
+          },
+          "required": [
+            "hasItem"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "clue": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a clue"
+            }
+          },
+          "required": [
+            "clue"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "talent": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a talent"
+            }
+          },
+          "required": [
+            "talent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "calling": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a calling"
+            }
+          },
+          "required": [
+            "calling"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "pactSigned": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a pact"
+            }
+          },
+          "required": [
+            "pactSigned"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "chapter": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a festival"
+            }
+          },
+          "required": [
+            "chapter"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "phase": {
+              "type": "string",
+              "enum": [
+                "dawn",
+                "day",
+                "dusk",
+                "night"
+              ]
+            }
+          },
+          "required": [
+            "phase"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "villagerAlive": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "villagerAlive"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "possessionRevealed": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "possessionRevealed"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quest": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a quest"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "done",
+                "failed"
+              ]
+            },
+            "stage": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "quest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mysteryConcluded": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a mystery"
+            },
+            "correct": {
+              "type": "boolean"
+            },
+            "culprit": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "mysteryConcluded"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "chance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "chance"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                },
+                "to": {
+                  "type": "string",
+                  "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                }
+              },
+              "required": [
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "date"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "moon": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "new",
+                  "waxing-crescent",
+                  "first-quarter",
+                  "waxing-gibbous",
+                  "full",
+                  "waning-gibbous",
+                  "last-quarter",
+                  "waning-crescent"
+                ]
+              }
+            }
+          },
+          "required": [
+            "moon"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "festivalDay": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a festival"
+            }
+          },
+          "required": [
+            "festivalDay"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "collection": {
+              "type": "string",
+              "enum": [
+                "herbs",
+                "recipes",
+                "grimoire",
+                "relics",
+                "tales",
+                "songs",
+                "cursed",
+                "photos",
+                "memories"
+              ]
+            },
+            ">=": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string",
+                  "const": "all"
+                }
+              ]
+            },
+            ">": {
+              "type": "number"
+            },
+            "<=": {
+              "type": "number"
+            },
+            "<": {
+              "type": "number"
+            },
+            "==": {
+              "type": "number"
+            },
+            "!=": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "collection"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Condition mini-language (docs/systems/conditions-effects.md)"
+    }
+  }
+}

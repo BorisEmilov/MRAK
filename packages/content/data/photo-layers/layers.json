@@ -1,0 +1,108 @@
+[
+  {
+    "id": "possessed-second-face",
+    "tier": "demo",
+    "kind": "possessed",
+    "nameKey": "photo-layer.possessed-second-face.name",
+    "descKey": "photo-layer.possessed-second-face.desc",
+    "target": {
+      "villager": "*",
+      "possessed": true
+    },
+    "effects": []
+  },
+  {
+    "id": "mamnik-veil",
+    "tier": "demo",
+    "kind": "possessed",
+    "nameKey": "photo-layer.mamnik-veil.name",
+    "descKey": "photo-layer.mamnik-veil.desc",
+    "target": {
+      "villager": "*",
+      "possessed": "mamnik"
+    },
+    "effects": [
+      {
+        "addClue": "m1-name"
+      },
+      {
+        "nameFragment": "mamnik",
+        "fragment": "photograph"
+      }
+    ]
+  },
+  {
+    "id": "cemetery-mourners",
+    "tier": "demo",
+    "kind": "presence",
+    "nameKey": "photo-layer.cemetery-mourners.name",
+    "descKey": "photo-layer.cemetery-mourners.desc",
+    "target": {
+      "zone": "village",
+      "poi": "cemetery"
+    },
+    "when": {
+      "phase": "night"
+    },
+    "effects": [
+      {
+        "addStat": "sanity",
+        "value": -3
+      }
+    ]
+  },
+  {
+    "id": "mill-wheel-hands",
+    "tier": "demo",
+    "kind": "presence",
+    "nameKey": "photo-layer.mill-wheel-hands.name",
+    "descKey": "photo-layer.mill-wheel-hands.desc",
+    "target": {
+      "zone": "village",
+      "poi": "mill"
+    },
+    "effects": [
+      {
+        "setFlag": "mill-wheel-heard"
+      }
+    ]
+  },
+  {
+    "id": "well-symbol",
+    "tier": "demo",
+    "kind": "symbol",
+    "nameKey": "photo-layer.well-symbol.name",
+    "descKey": "photo-layer.well-symbol.desc",
+    "target": {
+      "zone": "village",
+      "poi": "well"
+    },
+    "effects": []
+  },
+  {
+    "id": "samodiva-ring",
+    "tier": "demo",
+    "kind": "presence",
+    "nameKey": "photo-layer.samodiva-ring.name",
+    "descKey": "photo-layer.samodiva-ring.desc",
+    "target": {
+      "zone": "samodivi-forest",
+      "poi": "samodiva-circle"
+    },
+    "when": {
+      "moon": ["full", "waxing-gibbous", "waning-gibbous"]
+    },
+    "effects": []
+  },
+  {
+    "id": "monastery-sigils",
+    "tier": "demo",
+    "kind": "symbol",
+    "nameKey": "photo-layer.monastery-sigils.name",
+    "descKey": "photo-layer.monastery-sigils.desc",
+    "target": {
+      "zone": "monastery"
+    },
+    "effects": []
+  }
+]

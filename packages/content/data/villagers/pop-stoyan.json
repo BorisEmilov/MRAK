@@ -1,0 +1,52 @@
+{
+  "id": "pop-stoyan",
+  "tier": "demo",
+  "nameKey": "villager.pop-stoyan.name",
+  "tradeKey": "villager.pop-stoyan.trade",
+  "bioKey": "villager.pop-stoyan.bio",
+  "age": 54,
+  "sex": "male",
+  "traits": ["priest"],
+  "fears": ["god-abandonment"],
+  "startingFear": 20,
+  "relationships": [
+    {
+      "villager": "baba-neda",
+      "affinity": -20
+    },
+    {
+      "villager": "chorbadzhi-dimo",
+      "affinity": 30
+    },
+    {
+      "villager": "todor",
+      "affinity": 40
+    },
+    {
+      "villager": "petko",
+      "affinity": 50
+    }
+  ],
+  "secrets": [
+    {
+      "id": "zlatno-silver",
+      "descKey": "villager.pop-stoyan.secret.zlatno-silver",
+      "revealWhen": {
+        "flag": "stoyan-confessed"
+      }
+    }
+  ],
+  "home": "house-stoyan",
+  "work": "church",
+  "routine": "priest",
+  "look": {
+    "skin": "#d9a982",
+    "hair": "#3a3430",
+    "clothes": "#1c1a1f",
+    "accent": "#c9a24a",
+    "headwear": "kalimavkion",
+    "beard": true,
+    "build": "broad"
+  },
+  "dialogue": "pop-stoyan"
+}
