@@ -41,10 +41,11 @@ if (
     !env.AUTH_SECRET ||
     !env.TURNSTILE_SECRET ||
     !env.REDIS_URL ||
-    !env.DATABASE_URL)
+    !env.DATABASE_URL ||
+    !env.EDGE_SECRET)
 )
   throw new Error(
-    'production needs AUTH_JWT_KEYS, AUTH_SECRET, TURNSTILE_SECRET, REDIS_URL and DATABASE_URL',
+    'production needs AUTH_JWT_KEYS, AUTH_SECRET, TURNSTILE_SECRET, REDIS_URL, DATABASE_URL and EDGE_SECRET',
   );
 
 // Bounded pool and per-statement timeout: abuse cannot pile up queries (threat model C-24).
@@ -66,6 +67,7 @@ const redis = env.REDIS_URL
       connectTimeout: 2000,
       maxRetriesPerRequest: 1,
       enableOfflineQueue: false,
+      ...(env.REDIS_CA_CERT ? { tls: { ca: env.REDIS_CA_CERT } } : {}),
     })
   : null;
 redis?.on('error', (err: Error) => {
@@ -93,8 +95,16 @@ const counters = redis ? new RedisCounters(redis) : new MemoryCounters();
 if (production && (env.MAIL_OUTBOX_DIR || env.TURNSTILE_TEST_BYPASS === 'true'))
   throw new Error('MAIL_OUTBOX_DIR and TURNSTILE_TEST_BYPASS are for development only');
 // TODO(email provider): replace the inner mailer; budget and switch already apply.
+const deliveryMailer = env.MAIL_OUTBOX_DIR
+  ? new FileMailer(env.MAIL_OUTBOX_DIR)
+  : new MemoryMailer();
 const mailer = new BudgetedMailer(
-  env.MAIL_OUTBOX_DIR ? new FileMailer(env.MAIL_OUTBOX_DIR) : new MemoryMailer(),
+  {
+    async send(mail) {
+      await deliveryMailer.send(mail);
+      logger.info({ evt: 'email', kind: mail.kind });
+    },
+  },
   counters,
   env.EMAIL_DAILY_CAP,
   () => switches.enabled('emails'),
@@ -117,6 +127,13 @@ const newsletter = new Newsletter({
 });
 
 const authRepo = prisma ? new PrismaAuthRepository(prisma) : new MemoryAuthRepository();
+// Every audit row is also a metric event (login failures, refresh reuse, purchases, webhooks…):
+// action and result only — no account id, no IP hash (docs/runbooks/deploy.md → Observability).
+const repoAudit = authRepo.audit.bind(authRepo);
+authRepo.audit = async (row) => {
+  await repoAudit(row);
+  logger.info({ evt: 'audit', action: row.action, result: row.result });
+};
 const secret = env.AUTH_SECRET ?? 'development-only-secret-not-for-production!!';
 if (production && env.FULL_PACK_LOCAL_DIR)
   throw new Error('FULL_PACK_LOCAL_DIR is for development only');
@@ -239,6 +256,8 @@ const app = createApp({
   policies,
   switches,
   keySecret: env.AUTH_SECRET ?? 'development-only-secret-not-for-production!!',
+  ...(env.GOOGLE_CLOUD_PROJECT ? { traceProject: env.GOOGLE_CLOUD_PROJECT } : {}),
+  ...(env.EDGE_SECRET ? { edgeSecret: env.EDGE_SECRET } : {}),
 });
 
 // Unverified accounts older than 7 days are deleted hourly (idempotent on every instance).
@@ -250,6 +269,12 @@ const purge = setInterval(() => {
     })
     .catch((err: unknown) => {
       logger.error({ err }, 'unverified purge failed');
+    });
+  // Retention (docs/security/data-inventory.md): security audit log 1 year.
+  void prisma?.auditLog
+    .deleteMany({ where: { timestamp: { lt: new Date(Date.now() - 365 * 86_400_000) } } })
+    .catch((err: unknown) => {
+      logger.error({ err }, 'audit retention purge failed');
     });
 }, 60 * 60_000);
 purge.unref();

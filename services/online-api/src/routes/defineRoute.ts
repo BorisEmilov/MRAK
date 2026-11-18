@@ -116,6 +116,11 @@ function guard(route: RouteDefinition): RequestHandler {
           return;
         }
         if (!d.allowed) {
+          // Metric event (quotas / 429 by policy); no identifiers.
+          (req as unknown as { log?: { info: (o: object) => void } }).log?.info({
+            evt: 'rate-limited',
+            policy: name,
+          });
           res.set('Retry-After', String(Math.ceil(d.retryAfterMs / 1000)));
           res.set(
             'RateLimit',

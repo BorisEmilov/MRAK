@@ -33,17 +33,28 @@ consent (optional telemetry).
 Never collected: real name, birth date, phone, precise location, contacts, card numbers,
 government ids, free-text chat.
 
-Processors (DPA required before launch): Cloudflare (edge, R2, Turnstile), hosting provider,
-email provider, payment provider (Merchant of Record — partly an independent controller),
-Pwned Passwords (receives only a 5-char SHA-1 prefix, no personal data).
+Processors (DPA signed before launch; status in [backlog](../BACKLOG.md)):
+
+| Processor                   | What                                                                                                                     | Region / transfer basis                                             | DPA                                                |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------- | -------------------------------------------------- |
+| Google Cloud                | API hosting, Cloud SQL, Memorystore, Secret Manager, logs (30 days), monitoring ([ADR 0011](../adr/0011-hosting-gcp.md)) | `europe-west1`, EU-only secret replication; SCCs for support access | Cloud Data Processing Addendum (accept in console) |
+| Cloudflare                  | Edge, WAF, Pages, R2 (WEUR), Turnstile, Access                                                                           | Global edge; SCCs + EU Data Localization optional                   | Cloudflare DPA (self-serve)                        |
+| Email provider (to choose)  | Transactional email                                                                                                      | EU region required                                                  | Before enabling `emails`                           |
+| Paddle (merchant of record) | Checkout, payments, tax, invoices; partly an independent controller                                                      | UK/EU; UK adequacy + SCCs                                           | Paddle DPA                                         |
+| Have I Been Pwned           | Only a 5-character SHA-1 prefix (k-anonymity), no personal data                                                          | —                                                                   | Not needed                                         |
 
 International transfers: providers outside the EEA only under SCCs/adequacy; recorded per
 processor.
 
 Data subject rights: export (`GET /v1/account/export`, JSON, rate-limited 1/day), rectification
 (email/display name with re-auth, C-36), erasure (C-37), objection to telemetry (toggle, C-26).
-Breach notification: 72 h to the supervisory authority; runbook in `docs/security/` (to write with
-the incident process).
+Breach notification: 72 h to the supervisory authority — [security incident runbook](../runbooks/security-incident.md).
+
+Retention enforcement: unverified accounts deleted after 7 days and unconfirmed newsletter
+addresses after 7 days (hourly jobs); audit log purged after 1 year (hourly job); application
+logs 30 days (Cloud Logging bucket, `infra/gcp`); database backups 30 days. A deleted account
+can reappear in a backup until it expires, and is deleted again after any restore
+([restore runbook](../runbooks/restore.md)).
 
 Verification: SEC-DEL-37 (deletion cascade), SEC-LOG-34 (no full emails in logs), SEC-TEL-26 (no
 personal fields in telemetry schema), export test planned with the account routes.

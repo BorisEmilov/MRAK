@@ -1,6 +1,6 @@
 # ADR 0008 — Cloudflare as the edge
 
-- Status: proposed
+- Status: accepted — the Cloudflare Tunnel origin is superseded by the edge secret of [ADR 0011](0011-hosting-gcp.md)
 - Date: 2026-11-17
 - Back to [threat model](../security/threat-model.md) · controls C-01, C-02, C-03, C-04, C-18, C-31, C-39
 

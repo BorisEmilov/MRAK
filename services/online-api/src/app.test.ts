@@ -42,4 +42,16 @@ describe('online-api app', () => {
       .send('{}');
     expect(huge.status).toBe(413);
   });
+
+  it('ADR 0011: behind the edge only requests with the edge secret are served', async () => {
+    const edge = createApp({ edgeSecret: 'e'.repeat(32) });
+    expect((await request(edge).get('/v1/seasonal')).status).toBe(403);
+    expect((await request(edge).get('/v1/seasonal').set('x-mrak-edge', 'wrong')).status).toBe(403);
+    expect((await request(edge).get('/health')).status).toBe(200); // platform probes
+    const ok = await request(edge)
+      .get('/v1/seasonal')
+      .set('x-mrak-edge', 'e'.repeat(32))
+      .set('cf-connecting-ip', '203.0.113.7');
+    expect(ok.status).not.toBe(403);
+  });
 });

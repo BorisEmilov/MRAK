@@ -22,16 +22,20 @@ variable "alert_email" {
   type        = string
 }
 
-variable "tunnel_secret" {
-  description = "Base64 32-byte secret of the API tunnel (secret store)"
-  type        = string
+variable "api_origin_hosts" {
+  description = "Cloud Run hostname of online-api per environment (output `api_host` of infra/gcp)"
+  type        = object({ production = string, staging = string })
+}
+
+variable "edge_secrets" {
+  description = "EDGE_SECRET of each environment (≥ 32 chars, from the secret store)"
+  type        = object({ production = string, staging = string })
   sensitive   = true
 }
 
-variable "api_origin" {
-  description = "Service the tunnel forwards to, inside the private network"
+variable "team_email_domain" {
+  description = "Email domain allowed through Cloudflare Access to staging"
   type        = string
-  default     = "http://online-api:3000"
 }
 
 # Edge rate limits (requests per period per IP and colo). Must match docs/runbooks/abuse.md.

@@ -50,9 +50,42 @@ Work deferred from finished phases. Tick the box and add the commit when done.
       minimatch).
 - [ ] Remaining ASVS 🟡/⏳ rows (TLS/infra, admin MFA, logging integrity).
 
+## Deployment and operations ([deploy runbook](runbooks/deploy.md), [ADR 0011](adr/0011-hosting-gcp.md))
+
+- [ ] Create the GCP projects `mrak-staging` and `mrak-production`, the billing account, and the
+      EU state bucket. Set `billing_account` in the tfvars.
+- [ ] First `terraform apply` for `infra/gcp` (both environments) and `infra/cloudflare`. Fix
+      whatever `terraform validate` or `plan` reports: the code has never been run against real
+      providers.
+- [ ] Confirm that Cloudflare origin rules also send the rewritten host as SNI to `*.run.app`;
+      if not, use a Cloud Run domain mapping or a load balancer.
+- [ ] GitHub environments `staging` and `production`: variables and secrets from the runbook,
+      required reviewers on `production`, `main`-only deployments.
+- [ ] Add the manual secrets (JWT keys, Turnstile, Paddle, R2, email) and set
+      `manual_secrets_ready`.
+- [ ] Acceptance: deploy with one merge; run the rollback workflow in staging and record it.
+- [ ] Acceptance: first restore drill run (Actions → Restore drill) and record the restore time.
+      Add the `STAGING_DB_PASSWORD` secret first.
+- [ ] Acceptance: check the dashboard and alerts with real traffic (send a test notification),
+      and tune the thresholds after 2 weeks.
+- [ ] Real daily cost anomaly alert: billing export to BigQuery plus a scheduled query. Today
+      only the instance-hours proxy and the budgets alert.
+- [ ] Full OpenTelemetry tracing (DB and Redis spans). Today only Cloud Run's sampled request
+      traces with log correlation.
+- [ ] Choose an email provider in the EU, sign its DPA, and add `EMAIL_API_KEY` to the API.
+- [ ] Sign the DPAs: Google Cloud, Cloudflare, Paddle. Keep the processor table in
+      `docs/security/data-inventory.md` up to date.
+- [ ] Studio deployment: internal only (VPN or Cloudflare Access + `SALES_DATABASE_URL` with a
+      restricted role). Not deployed yet.
+- [ ] Deletion ledger (keyed hash of deleted account ids + time, kept for the backup lifetime) so
+      erasures can be re-applied after a restore.
+- [ ] Production restore drill (quarterly, inside the production project) and its RTO
+      measurement.
+
 ## Repository and infrastructure
 
 - [ ] Commit the pending work (Conventional Commits) and push. Before pushing:
       `gh auth refresh -h github.com -s workflow`, which is needed for `.github/workflows`.
 - [ ] Email provider for production (replace the inner mailer of `BudgetedMailer`).
-- [ ] `terraform plan` for `infra/cloudflare` with a validated Terraform install.
+- [ ] `terraform plan` for `infra/cloudflare` and `infra/gcp` with a validated Terraform install
+      (CI job `Terraform (fmt + validate)` covers syntax once pushed).

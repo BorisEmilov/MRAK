@@ -11,6 +11,12 @@ RUN pnpm install --frozen-lockfile --filter @mrak/online-api...
 RUN pnpm --filter @mrak/online-api build
 RUN pnpm --filter @mrak/online-api deploy --prod /out
 
+# Migration job image (docs/runbooks/deploy.md): `prisma migrate deploy` before each release.
+FROM build AS migrate
+WORKDIR /repo/services/online-api
+USER node
+CMD ["node_modules/.bin/prisma", "migrate", "deploy"]
+
 FROM node:24-alpine AS runtime
 # Minimal runtime: patched OS packages, no package managers (smaller attack surface; Trivy gate).
 RUN apk upgrade --no-cache \

@@ -1,0 +1,181 @@
+# Deploy (docs/runbooks/deploy.md). A merge to main deploys staging automatically, then production
+# after a reviewer approves the `production` environment. The approval page shows the migration SQL
+# of the release. Rollback: run this workflow manually with action=rollback.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      action:
+        type: choice
+        options: [deploy, rollback]
+        default: deploy
+      environment:
+        type: choice
+        options: [staging, production]
+        default: staging
+      revision:
+        description: 'rollback: Cloud Run revision to restore (empty = the previous one)'
+        required: false
+
+permissions:
+  contents: read
+  id-token: write # Workload Identity Federation (no long-lived cloud keys)
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build images
+    if: github.event_name == 'push' || inputs.action == 'deploy'
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - name: API and migration images (built once, promoted to both environments)
+        run: |
+          docker build -f services/online-api/Dockerfile --target runtime -t online-api:${{ github.sha }} .
+          docker build -f services/online-api/Dockerfile --target migrate -t online-api-migrate:${{ github.sha }} .
+          docker save online-api:${{ github.sha }} online-api-migrate:${{ github.sha }} | gzip > images.tar.gz
+      - name: Migration SQL of this release (shown before the production approval)
+        run: |
+          git fetch --depth=1 origin "${{ github.event.before || 'HEAD~1' }}" 2>/dev/null || true
+          {
+            echo '## Migrations in this release'
+            git diff --name-only "${{ github.event.before || 'HEAD~1' }}" HEAD -- services/online-api/prisma/migrations \
+              | grep 'migration.sql$' | while read -r f; do echo "### $f"; echo '```sql'; cat "$f"; echo '```'; done
+          } >> "$GITHUB_STEP_SUMMARY" || echo 'No migrations.' >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: images
+          path: images.tar.gz
+          retention-days: 3
+
+  deploy:
+    name: Deploy ${{ matrix.env }}
+    needs: build
+    if: github.event_name == 'push' || inputs.action == 'deploy'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    strategy:
+      max-parallel: 1 # staging first; production waits for it and for its reviewers
+      matrix:
+        env: ${{ github.event_name == 'push' && fromJSON('["staging","production"]') || fromJSON(format('["{0}"]', inputs.environment)) }}
+    environment: ${{ matrix.env }}
+    env:
+      IMAGE: ${{ vars.GCP_REGISTRY }}/online-api:${{ github.sha }}
+      MIGRATE_IMAGE: ${{ vars.GCP_REGISTRY }}/online-api-migrate:${{ github.sha }}
+      REGION: ${{ vars.GCP_REGION }}
+      BRANCH: ${{ matrix.env == 'production' && 'main' || 'staging' }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/download-artifact@v7
+        with:
+          name: images
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SA }}
+      - uses: google-github-actions/setup-gcloud@v3
+      - name: Push images
+        run: |
+          gunzip -c images.tar.gz | docker load
+          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
+          docker tag online-api:${{ github.sha }} "$IMAGE" && docker push "$IMAGE"
+          docker tag online-api-migrate:${{ github.sha }} "$MIGRATE_IMAGE" && docker push "$MIGRATE_IMAGE"
+      - name: Migrate (expand-only migrations; see the runbook)
+        run: |
+          gcloud run jobs update online-api-migrate --region "$REGION" --image "$MIGRATE_IMAGE" --quiet
+          gcloud run jobs execute online-api-migrate --region "$REGION" --wait
+      - name: Deploy the API (previous revision kept for rollback)
+        run: |
+          echo "PREVIOUS=$(gcloud run services describe online-api --region "$REGION" --format='value(status.latestReadyRevisionName)')" >> "$GITHUB_ENV"
+          gcloud run deploy online-api --region "$REGION" --image "$IMAGE" --quiet
+      - name: Smoke test through the edge; automatic rollback when it fails
+        env:
+          API: ${{ vars.API_URL }}
+          CF_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: |
+          ok=0
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -s -o /dev/null -w '%{http_code}' ${CF_ID:+-H "CF-Access-Client-Id: $CF_ID" -H "CF-Access-Client-Secret: $CF_SECRET"} "$API/health")
+            [ "$code" = 200 ] && ok=1 && break
+            sleep 10
+          done
+          if [ "$ok" != 1 ]; then
+            echo "::error::health check failed after deploy — rolling back to $PREVIOUS"
+            gcloud run services update-traffic online-api --region "$REGION" --to-revisions "$PREVIOUS=100"
+            exit 1
+          fi
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build the static sites for ${{ matrix.env }}
+        env:
+          PUBLIC_API_URL: ${{ vars.API_URL }}
+          PUBLIC_PLAY_URL: ${{ vars.PLAY_URL }}
+          PUBLIC_TURNSTILE_SITEKEY: ${{ vars.TURNSTILE_SITEKEY }}
+          PUBLIC_PADDLE_CLIENT_TOKEN: ${{ vars.PADDLE_CLIENT_TOKEN }}
+          PUBLIC_PADDLE_ENV: ${{ vars.PADDLE_ENV }}
+          VITE_API_URL: ${{ vars.API_URL }}
+          VITE_SITE_URL: ${{ vars.SITE_URL }}
+          VITE_TURNSTILE_SITEKEY: ${{ vars.TURNSTILE_SITEKEY }}
+        run: |
+          sudo apt-get update -qq && sudo apt-get install -y -qq --no-install-recommends ffmpeg
+          pnpm --filter @mrak/game run assets --require-audio
+          pnpm turbo run build --filter=@mrak/game --filter=@mrak/landing
+          node tests/security/client-build.mjs
+      - name: Publish to Cloudflare Pages (hashed assets immutable, HTML revalidated)
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          command: |
+            pages deploy apps/landing/dist --project-name=mrak-landing --branch=${{ env.BRANCH }} --commit-hash=${{ github.sha }}
+            pages deploy apps/game/dist --project-name=mrak-game --branch=${{ env.BRANCH }} --commit-hash=${{ github.sha }}
+
+  rollback:
+    name: Roll back ${{ inputs.environment }}
+    if: github.event_name == 'workflow_dispatch' && inputs.action == 'rollback'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    environment: ${{ inputs.environment }}
+    env:
+      REGION: ${{ vars.GCP_REGION }}
+    steps:
+      - uses: google-github-actions/auth@v3
+        with:
+          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
+          service_account: ${{ vars.GCP_DEPLOY_SA }}
+      - uses: google-github-actions/setup-gcloud@v3
+      - name: API → previous (or chosen) revision, instantly
+        env:
+          WANTED: ${{ inputs.revision }}
+        run: |
+          current=$(gcloud run services describe online-api --region "$REGION" --format='value(status.traffic[0].revisionName)')
+          target="${WANTED:-$(gcloud run revisions list --service online-api --region "$REGION" \
+            --sort-by='~metadata.creationTimestamp' --format='value(metadata.name)' \
+            | grep -v -x "$current" | head -n1)}"
+          echo "rolling back $current → $target"
+          gcloud run services update-traffic online-api --region "$REGION" --to-revisions "$target=100"
+          echo "API: $current → $target" >> "$GITHUB_STEP_SUMMARY"
+      - name: Static sites → previous production deployment (production only)
+        if: inputs.environment == 'production'
+        env:
+          TOKEN: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+          ACCOUNT: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+        run: |
+          for p in mrak-landing mrak-game; do
+            base="https://api.cloudflare.com/client/v4/accounts/$ACCOUNT/pages/projects/$p/deployments"
+            prev=$(curl -fsS -H "Authorization: Bearer $TOKEN" "$base?env=production" | jq -r '.result[1].id')
+            curl -fsS -X POST -H "Authorization: Bearer $TOKEN" "$base/$prev/rollback" > /dev/null
+            echo "$p → $prev" >> "$GITHUB_STEP_SUMMARY"
+          done

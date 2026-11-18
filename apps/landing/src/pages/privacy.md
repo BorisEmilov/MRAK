@@ -31,9 +31,11 @@ contacts, and we do not sell or share data for advertising.
 
 ## Processors
 
-Cloudflare (network, storage, bot protection), our hosting provider, our email provider and our
-payment provider process data on our behalf under data-processing agreements. Transfers outside
-the EEA rely on adequacy decisions or standard contractual clauses.
+Google Cloud (our servers and database, in Belgium), Cloudflare (network, website hosting,
+storage, bot protection), our email provider and Paddle (payments; Paddle is also responsible
+for its own tax and fraud records) process data on our behalf under data-processing agreements.
+Transfers outside the EEA rely on adequacy decisions or standard contractual clauses. Server logs
+are kept for 30 days and backups for 30 days.
 
 ## Your rights
 

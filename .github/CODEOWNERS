@@ -1,0 +1,5 @@
+# Reviews required on main (ruleset: "require review from code owners").
+/services/online-api/prisma/   @BorisEmilov
+/infra/                        @BorisEmilov
+/.github/workflows/            @BorisEmilov
+/docs/security/                @BorisEmilov

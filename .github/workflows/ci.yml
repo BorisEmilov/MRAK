@@ -77,3 +77,67 @@ jobs:
             | tar -xz -C /usr/local/bin gitleaks
       - name: Scan full history
         run: gitleaks git --redact --no-banner --config .gitleaks.toml --exit-code 1 .
+
+  migrations:
+    name: Migration review
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_PASSWORD: ci
+        ports: ['5432:5432']
+        options: --health-cmd pg_isready --health-interval 5s --health-retries 10
+    env:
+      DATABASE_URL: postgresql://postgres:ci@localhost:5432/postgres
+      SHADOW_DATABASE_URL: postgresql://postgres:ci@localhost:5432/shadow
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --filter @mrak/online-api...
+      - run: psql postgresql://postgres:ci@localhost:5432/postgres -c 'CREATE DATABASE shadow'
+      - name: Migrations apply cleanly and match schema.prisma (no drift)
+        working-directory: services/online-api
+        run: |
+          pnpm exec prisma migrate deploy
+          pnpm exec prisma migrate diff --from-migrations prisma/migrations --to-schema prisma/schema.prisma --exit-code
+      - name: Applied migrations are immutable; destructive SQL needs the `migration-reviewed` label
+        if: github.event_name == 'pull_request'
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          LABELS: ${{ join(github.event.pull_request.labels.*.name, ',') }}
+        run: |
+          changed=$(git diff --name-status "$BASE" HEAD -- services/online-api/prisma/migrations)
+          if echo "$changed" | grep -E '^[MDR]' ; then
+            echo "::error::existing migrations must never be edited, renamed or deleted"; exit 1
+          fi
+          new=$(echo "$changed" | awk '$1=="A" && /migration.sql$/ {print $2}')
+          [ -z "$new" ] && exit 0
+          for f in $new; do echo "### $f"; cat "$f"; done >> "$GITHUB_STEP_SUMMARY"
+          if grep -niE 'drop (table|column|index|constraint)|alter column .* (type|set not null)|rename (to|column)|truncate' $new; then
+            case ",$LABELS," in
+              *,migration-reviewed,*) echo "destructive SQL approved by label" ;;
+              *) echo "::error::destructive migration (expand/contract, docs/runbooks/deploy.md): add the migration-reviewed label after review"; exit 1 ;;
+            esac
+          fi
+
+  terraform:
+    name: Terraform (fmt + validate)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+      - uses: hashicorp/setup-terraform@v3
+      - run: terraform fmt -check -recursive infra
+      - run: |
+          for d in infra/cloudflare infra/gcp; do
+            terraform -chdir="$d" init -backend=false -input=false
+            terraform -chdir="$d" validate
+          done

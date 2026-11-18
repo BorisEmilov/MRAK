@@ -1,3 +1,5 @@
+import { createHash, timingSafeEqual } from 'node:crypto';
+import { isIP } from 'node:net';
 import cors from 'cors';
 import express, { Router, type ErrorRequestHandler } from 'express';
 import helmet from 'helmet';
@@ -46,6 +48,8 @@ export interface AppOptions {
   auth?: Auth;
   /** Exact browser origins allowed by CORS (credentials only on /v1/auth). */
   corsOrigins?: readonly string[];
+  /** Cloud project id: request logs carry the Cloud Trace id for log/trace correlation. */
+  traceProject?: string;
   /** Rate limiter (Redis with memory fallback in production; memory by default — never none). */
   limiter?: Limiter;
   policies?: Policies;
@@ -53,12 +57,37 @@ export interface AppOptions {
   switches?: Switches;
   /** Secret for hashing IPs/emails into limiter keys. */
   keySecret?: string;
+  /**
+   * Edge secret (ADR 0011): only requests carrying it in `x-mrak-edge` (set by Cloudflare) are
+   * served, and only then is `CF-Connecting-IP` trusted as the client IP. `/health` stays open for
+   * the platform's probes. Unset in development.
+   */
+  edgeSecret?: string;
 }
 
 export function createApp(options: AppOptions = {}): express.Express {
   const app = express();
   app.disable('x-powered-by');
   app.set('trust proxy', 1);
+  if (options.edgeSecret) {
+    const want = createHash('sha256').update(options.edgeSecret).digest();
+    app.use((req, res, next) => {
+      const got = createHash('sha256')
+        .update(req.get('x-mrak-edge') ?? '')
+        .digest();
+      if (!timingSafeEqual(got, want)) {
+        if (req.method === 'GET' && req.path === '/health') {
+          next();
+          return;
+        }
+        problem(res, 403, 'forbidden');
+        return;
+      }
+      const ip = req.get('cf-connecting-ip');
+      if (ip && isIP(ip)) Object.defineProperty(req, 'ip', { value: ip });
+      next();
+    });
+  }
   app.locals['now'] = options.now ?? (() => new Date());
   app.locals['authenticate'] = options.authenticate ?? options.auth?.authenticate;
   app.locals['auth'] = options.auth?.deps;
@@ -91,6 +120,14 @@ export function createApp(options: AppOptions = {}): express.Express {
             path: req.url.split('?')[0],
           }),
           res: (res: { statusCode: number }) => ({ statusCode: res.statusCode }),
+        },
+        customProps: (req) => {
+          const trace = /^([0-9a-f]{32})/.exec(String(req.headers['x-cloud-trace-context'] ?? ''));
+          return options.traceProject && trace?.[1]
+            ? {
+                'logging.googleapis.com/trace': `projects/${options.traceProject}/traces/${trace[1]}`,
+              }
+            : {};
         },
       }),
     );

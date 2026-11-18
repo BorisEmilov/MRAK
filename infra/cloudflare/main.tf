@@ -1,10 +1,18 @@
 # MRAK edge (threat model C-01, C-02, C-03, C-18, C-31, C-39; ADR 0008).
-# Everything public is proxied; the API origin has no public ingress (Cloudflare Tunnel only).
+# Everything public is proxied. The API origin (Cloud Run, ADR 0011) only serves requests that
+# carry the edge secret this zone injects. One state for the zone (entrypoint rulesets are one per
+# phase): production hostnames plus staging ones, which sit behind Cloudflare Access.
 
 locals {
   game    = "play.${var.domain}"
   api     = "api.${var.domain}"
   landing = var.domain
+  staging = {
+    landing = "staging.${var.domain}"
+    game    = "play-staging.${var.domain}"
+    api     = "api-staging.${var.domain}"
+  }
+  api_hosts = { production = local.api, staging = local.staging.api }
 }
 
 # ---------------------------------------------------------------- zone hardening
@@ -40,38 +48,99 @@ resource "cloudflare_bot_management" "bots" {
   fight_mode = true
 }
 
-# ---------------------------------------------------------------- API through a tunnel
-
-resource "cloudflare_zero_trust_tunnel_cloudflared" "api" {
-  account_id    = var.account_id
-  name          = "mrak-online-api"
-  config_src    = "cloudflare"
-  tunnel_secret = var.tunnel_secret
-}
-
-resource "cloudflare_zero_trust_tunnel_cloudflared_config" "api" {
-  account_id = var.account_id
-  tunnel_id  = cloudflare_zero_trust_tunnel_cloudflared.api.id
-  config = {
-    ingress = [
-      { hostname = local.api, service = var.api_origin },
-      # Anything else (including the studio) is refused at the tunnel.
-      { service = "http_status:404" },
-    ]
-  }
-}
+# ---------------------------------------------------------------- API origin (Cloud Run, ADR 0011)
 
 resource "cloudflare_dns_record" "api" {
-  zone_id = var.zone_id
-  name    = local.api
-  type    = "CNAME"
-  content = "${cloudflare_zero_trust_tunnel_cloudflared.api.id}.cfargotunnel.com"
-  proxied = true
-  ttl     = 1
+  for_each = local.api_hosts
+  zone_id  = var.zone_id
+  name     = each.value
+  type     = "CNAME"
+  content  = var.api_origin_hosts[each.key]
+  proxied  = true
+  ttl      = 1
 }
 
-# play.* and the apex are Cloudflare Pages projects (static); their DNS records are created by
-# the Pages custom-domain binding, always proxied. No record ever points at an origin IP.
+
+# Cloud Run routes by Host: rewrite it to the service hostname.
+resource "cloudflare_ruleset" "api_origin" {
+  zone_id = var.zone_id
+  name    = "mrak api origin"
+  kind    = "zone"
+  phase   = "http_request_origin"
+  rules = [for env, host in local.api_hosts : {
+    description       = "API (${env}) → Cloud Run host"
+    expression        = "http.host eq \"${host}\""
+    action            = "route"
+    action_parameters = { host_header = var.api_origin_hosts[env] }
+    enabled           = true
+  }]
+}
+
+# The edge secret proves a request came through this zone (and its WAF/limits); the API refuses
+# anything else and only then trusts CF-Connecting-IP. "set" overwrites any client-sent value.
+resource "cloudflare_ruleset" "api_edge_secret" {
+  zone_id = var.zone_id
+  name    = "mrak api edge secret"
+  kind    = "zone"
+  phase   = "http_request_late_transform"
+  rules = [for env, host in local.api_hosts : {
+    description = "Add x-mrak-edge to API requests (${env})"
+    expression  = "http.host eq \"${host}\""
+    action      = "rewrite"
+    action_parameters = {
+      headers = { "x-mrak-edge" = { operation = "set", value = var.edge_secrets[env] } }
+    }
+    enabled = true
+  }]
+}
+
+# ---------------------------------------------------------------- static sites (Cloudflare Pages)
+
+# Deployed by .github/workflows/deploy.yml (wrangler direct upload). Production = branch `main`;
+# staging = branch `staging` (preview alias). Hashed assets are immutable; HTML revalidates.
+resource "cloudflare_pages_project" "site" {
+  for_each          = toset(["mrak-landing", "mrak-game"])
+  account_id        = var.account_id
+  name              = each.key
+  production_branch = "main"
+}
+
+resource "cloudflare_pages_domain" "site" {
+  for_each     = { "mrak-landing" = local.landing, "mrak-game" = local.game }
+  account_id   = var.account_id
+  project_name = cloudflare_pages_project.site[each.key].name
+  name         = each.value
+}
+
+# Staging hostnames point at the `staging` branch alias (protect them with Cloudflare Access).
+resource "cloudflare_dns_record" "staging_site" {
+  for_each = { (local.staging.landing) = "mrak-landing", (local.staging.game) = "mrak-game" }
+  zone_id  = var.zone_id
+  name     = each.key
+  type     = "CNAME"
+  content  = "staging.${each.value}.pages.dev"
+  proxied  = true
+  ttl      = 1
+}
+
+# Staging is not public: only the team (and CI with a service token) passes Cloudflare Access.
+resource "cloudflare_zero_trust_access_application" "staging" {
+  account_id       = var.account_id
+  name             = "MRAK staging"
+  type             = "self_hosted"
+  domain           = local.staging.landing
+  self_hosted_domains = values(local.staging)
+  session_duration = "12h"
+  policies = [{
+    name     = "team and CI"
+    decision = "allow"
+    include  = [{ email_domain = { domain = var.team_email_domain } }]
+  }, {
+    name     = "CI service token"
+    decision = "non_identity"
+    include  = [{ any_valid_service_token = {} }]
+  }]
+}
 
 # ---------------------------------------------------------------- WAF
 
@@ -199,8 +268,8 @@ resource "cloudflare_ruleset" "cache" {
   phase   = "http_request_cache_settings"
   rules = [
     {
-      description = "Hashed build assets: one year at the edge and in browsers"
-      expression  = "http.host in {\"${local.game}\" \"${local.landing}\"} and starts_with(http.request.uri.path, \"/assets/\")"
+      description = "Content-hashed build assets: one year at the edge and in browsers"
+      expression  = "http.host in {\"${local.game}\" \"${local.landing}\"} and (starts_with(http.request.uri.path, \"/app/\") or starts_with(http.request.uri.path, \"/_astro/\") or starts_with(http.request.uri.path, \"/assets/atlases/\") or starts_with(http.request.uri.path, \"/assets/audio/\"))"
       action      = "set_cache_settings"
       action_parameters = {
         cache       = true
@@ -210,12 +279,11 @@ resource "cloudflare_ruleset" "cache" {
       enabled = true
     },
     {
-      description = "HTML and the rest of the static sites: short edge cache"
-      expression  = "http.host in {\"${local.game}\" \"${local.landing}\"} and not starts_with(http.request.uri.path, \"/assets/\")"
+      description = "HTML, manifests and the rest: no zone cache, Pages serves the current deploy"
+      expression  = "http.host in {\"${local.game}\" \"${local.landing}\"} and not (starts_with(http.request.uri.path, \"/app/\") or starts_with(http.request.uri.path, \"/_astro/\") or starts_with(http.request.uri.path, \"/assets/atlases/\") or starts_with(http.request.uri.path, \"/assets/audio/\"))"
       action      = "set_cache_settings"
       action_parameters = {
-        cache    = true
-        edge_ttl = { mode = "override_origin", default = 300 }
+        cache = false
       }
       enabled = true
     },
@@ -234,8 +302,9 @@ resource "cloudflare_ruleset" "cache" {
 # ---------------------------------------------------------------- paid content (R2, presigned only)
 
 resource "cloudflare_r2_bucket" "paid_content" {
+  for_each   = toset(["production", "staging"])
   account_id = var.account_id
-  name       = "mrak-paid-content"
+  name       = each.key == "production" ? "mrak-paid-content" : "mrak-paid-content-staging"
   location   = "WEUR"
   # No custom domain and no r2.dev public URL: objects are reachable only through short-lived
   # presigned URLs issued by the API after an entitlement check (services/online-api/src/content).
@@ -249,12 +318,4 @@ resource "cloudflare_notification_policy" "ddos_l7" {
   alert_type  = "dos_attack_l7"
   enabled     = true
   mechanisms  = { email = [{ id = var.alert_email }] }
-}
-
-resource "cloudflare_notification_policy" "tunnel_health" {
-  account_id = var.account_id
-  name       = "MRAK: API tunnel unhealthy"
-  alert_type = "tunnel_health_event"
-  enabled    = true
-  mechanisms = { email = [{ id = var.alert_email }] }
 }

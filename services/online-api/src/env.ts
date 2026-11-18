@@ -44,6 +44,12 @@ const EnvSchema = z.object({
   FULL_PACK_LOCAL_DIR: z.string().optional(),
   /** Public base URL of this API (local signed URLs). */
   API_URL: z.url().default('https://api.mrak.game'),
+  /** Shared secret Cloudflare adds as `x-mrak-edge` (ADR 0011); required in production. */
+  EDGE_SECRET: z.string().min(32).optional(),
+  /** PEM CA of the managed Redis (TLS, `rediss://`). */
+  REDIS_CA_CERT: z.string().optional(),
+  /** Google Cloud project (set by the platform): Cloud Trace correlation in logs. */
+  GOOGLE_CLOUD_PROJECT: z.string().optional(),
   /** Comma-separated exact origins (game, landing, native shells). */
   CORS_ORIGINS: z.string().default('https://play.mrak.game,https://mrak.game'),
   COOKIE_DOMAIN: z.string().default('mrak.game'),
