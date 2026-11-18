@@ -8,7 +8,7 @@
     "dev": "tsx watch --env-file-if-exists=../../.env src/server.ts",
     "build": "prisma generate && tsc -p tsconfig.build.json",
     "start": "node dist/server.js",
-    "lint": "eslint . --max-warnings=0",
+    "lint": "prisma generate && eslint . --max-warnings=0",
     "typecheck": "prisma generate && tsc --noEmit",
     "test": "prisma generate && vitest run",
     "test:security": "prisma generate && vitest run src/auth src/limits src/saves src/store src/routes src/content src/middleware src/openapi.test.ts src/app.test.ts",
