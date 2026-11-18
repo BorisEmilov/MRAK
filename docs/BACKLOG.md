@@ -36,18 +36,22 @@ Work deferred from finished phases. Tick the box and add the commit when done.
 
 ## Security (pipeline in [test report](security/test-report.md))
 
-- [ ] Push the workflows and enable the `main` ruleset: required checks `CI / *` and
-      `Security / *`, plus code scanning results (High or higher).
+- [x] Push the workflows (2026-11-18; CI green).
+- [ ] Enable the `main` ruleset: required checks `CI / *` and `Security / *`, plus code scanning
+      results (High or higher). Blocked: rulesets and code scanning on a private repository need
+      GitHub Pro (rulesets) and GitHub Code Security (CodeQL upload), or a public repository.
 - [ ] Install Renovate on the repository.
-- [ ] First green run of CodeQL, Semgrep, OSV-Scanner and Trivy. Triage any findings and update
-      the report.
+- [x] First green run of Semgrep (0 findings), OSV-Scanner/pnpm audit and Trivy (both images)
+      on 2026-11-18.
+- [ ] CodeQL: the analysis runs but the SARIF upload fails until code scanning is enabled (see
+      the ruleset item); then triage its findings and update the report.
 - [ ] Staging: set `STAGING_*_URL` variables and the `STAGING_K6_*` secrets, then run
       `Security (staging)` (ZAP, Schemathesis, k6).
 - [ ] JWT key rotation drill in staging (`tests/security/rotation-drill.mjs`); record the
       result.
 - [ ] External pentest before opening registration to the public; fix and retest highs.
-- [ ] Re-review the audit exceptions by 2026-12-18 (picomatch, zod via jimp, glob,
-      minimatch).
+- [ ] Re-review the audit exceptions by 2027-01-18 (picomatch, zod via jimp). 2026-11-18: glob
+      and minimatch fixed (override, typescript-eslint 8.73); the other two still have no fix.
 - [ ] Remaining ASVS 🟡/⏳ rows (TLS/infra, admin MFA, logging integrity).
 
 ## Deployment and operations ([deploy runbook](runbooks/deploy.md), [ADR 0011](adr/0011-hosting-gcp.md))
@@ -154,8 +158,7 @@ Work deferred from finished phases. Tick the box and add the commit when done.
 
 ## Repository and infrastructure
 
-- [ ] Commit the pending work (Conventional Commits) and push. Before pushing:
-      `gh auth refresh -h github.com -s workflow`, which is needed for `.github/workflows`.
+- [x] Commit the pending work and push (2026-11-18).
 - [ ] Email provider for production (replace the inner mailer of `BudgetedMailer`).
-- [ ] `terraform plan` for `infra/cloudflare` and `infra/gcp` with a validated Terraform install
-      (CI job `Terraform (fmt + validate)` covers syntax once pushed).
+- [ ] `terraform plan` for `infra/cloudflare` and `infra/gcp` (needs GCP/Cloudflare credentials).
+      `fmt` and `validate` pass for both (Terraform 1.14, 2026-11-18; CI job green).
