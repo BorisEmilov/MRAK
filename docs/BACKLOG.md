@@ -37,14 +37,12 @@ Work deferred from finished phases. Tick the box and add the commit when done.
 ## Security (pipeline in [test report](security/test-report.md))
 
 - [x] Push the workflows (2026-11-18; CI green).
-- [ ] Enable the `main` ruleset: required checks `CI / *` and `Security / *`, plus code scanning
-      results (High or higher). Blocked: rulesets and code scanning on a private repository need
-      GitHub Pro (rulesets) and GitHub Code Security (CodeQL upload), or a public repository.
-- [ ] Install Renovate on the repository.
+- [x] `main` ruleset (2026-11-18, repository public): required checks of CI and Security, CodeQL
+      High+ blocks, no deletion or force push; repository admins may bypass.
 - [x] First green run of Semgrep (0 findings), OSV-Scanner/pnpm audit and Trivy (both images)
       on 2026-11-18.
-- [ ] CodeQL: the analysis runs but the SARIF upload fails until code scanning is enabled (see
-      the ruleset item); then triage its findings and update the report.
+- [x] CodeQL first run (2026-11-18): 13 alerts; 7 fixed (open redirect C-45, ReDoS, dev
+      scripts), 6 dismissed with reasons (HIBP SHA-1 range, bearer check, Studio).
 - [ ] Staging: set `STAGING_*_URL` variables and the `STAGING_K6_*` secrets, then run
       `Security (staging)` (ZAP, Schemathesis, k6).
 - [ ] JWT key rotation drill in staging (`tests/security/rotation-drill.mjs`); record the
