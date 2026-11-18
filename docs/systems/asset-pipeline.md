@@ -13,7 +13,9 @@ download small (target: first load < 15 MB, time to menu < 5 s at 20 Mbps).
 ```
 apps/game/assets/
   assets.config.json          groups (sprites?, audio[], demo?), zone → groups, budgets
-  src/sprites/<group>/*.png   one PNG per frame (Git LFS)
+  art-slots.json              every sprite: category (final size + pivot), frames
+  src/sprites/<group>/<name>.aseprite|.ase|.psd|.png   source per slot (Git LFS)
+  src/sprites/<group>/<name>_n.*                       optional painted normal map
   src/audio/*.wav             sound sources (Git LFS)
 apps/game/public/assets/      generated, gitignored
   atlases/<group>.<hash>.png|json
@@ -23,6 +25,13 @@ apps/game/public/assets/      generated, gitignored
 
 ## Rules
 
+0. **Slots** ([art direction](../art-direction.md)): each source must match its slot's final size
+   (else the build fails); a source without a slot, or a slot without a source, fails too.
+   Aseprite files export every frame (`aseprite -b`, frames → `<name>-0…`), PSDs are flattened
+   (`magick`); without the tool the build fails with a clear message. `pnpm art:placeholders`
+   creates missing sources at the final size. The slot pivot is written into the atlas JSON
+   (`pivot`), which Phaser uses as the default origin. The normal-map atlas (`<group>_n`) has the
+   same layout: painted `<name>_n` frames or a normal map generated per sprite.
 1. **Atlases:** one atlas per group, packed with `free-tex-packer-core` (MaxRects, padding 2,
    extrude 1, no rotation/trim — crisp pixel art), JSON-hash format loaded with `load.atlas`.
 2. **Audio:** each sound is encoded twice with ffmpeg — Ogg Vorbis (q3) and AAC 96 kbps in m4a —
@@ -33,10 +42,14 @@ apps/game/public/assets/      generated, gitignored
    Vite's own hashed code is emitted to `/app/`.
 4. **Lazy loading:** `common` loads before the menu; each zone's groups load when the zone is first
    entered (`AssetService.loadZone`), with the simulation paused meanwhile.
-5. **Budgets (fail the build):** no file > 2 MB (CLAUDE.md); demo groups ≤ 12 MiB.
+5. **Budgets (fail the build):** no file > 2 MB (CLAUDE.md); demo groups ≤ 12 MiB. **Per zone
+   (warning):** `common` + the zone's groups + its maps ≤ `maxZoneBytes` (4 MiB) or
+   `zoneBytes[zone]`; over it the script warns and, in GitHub Actions, emits a `::warning`
+   annotation.
 6. **Without ffmpeg** the script warns and skips audio; CI installs ffmpeg and runs it with
    `--require-audio`, so releases always include sound.
-7. Current art is **placeholder** pixel art generated for the pipeline; replace the PNGs, keep the names.
+7. Current art is **placeholder** pixel art at the final sizes; replace a source file (same name and
+   size, any supported format) and run `pnpm --filter @mrak/game assets` — no code changes.
 
 ## Initial formulas
 

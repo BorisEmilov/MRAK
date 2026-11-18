@@ -1,4 +1,4 @@
-// studio database schema. Models will be added with their system specs (docs/systems/).
+// studio database schema (docs/systems/studio.md).
 generator client {
   provider         = "prisma-client"
   output           = "../src/generated/prisma"
@@ -8,4 +8,41 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+/// One editable entity (docs/systems/studio.md). collection: a content collection, "registry"
+/// (entityId "flags") or "locales" (one row per key).
+model ContentEntry {
+  collection    String   @db.VarChar(40)
+  entityId      String   @map("entity_id") @db.VarChar(160)
+  /// Export location: data file and index in it (-1 = single-entity file).
+  file          String   @db.VarChar(200)
+  position      Int
+  body          Json
+  publishedBody Json?    @map("published_body")
+  status        String   @db.VarChar(10)
+  version       Int
+  deleted       Boolean  @default(false)
+  updatedBy     String   @map("updated_by") @db.VarChar(120)
+  updatedAt     DateTime @map("updated_at")
+
+  @@id([collection, entityId])
+  @@map("content_entries")
+}
+
+/// Every saved version of an entry (history and diffs).
+model ContentRevision {
+  id         String   @id @db.Uuid
+  collection String   @db.VarChar(40)
+  entityId   String   @map("entity_id") @db.VarChar(160)
+  version    Int
+  body       Json
+  status     String   @db.VarChar(10)
+  deleted    Boolean  @default(false)
+  author     String   @db.VarChar(120)
+  note       String?  @db.VarChar(500)
+  createdAt  DateTime @map("created_at")
+
+  @@unique([collection, entityId, version])
+  @@map("content_revisions")
 }

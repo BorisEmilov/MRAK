@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { t } from '../i18n/t';
 import { useApp, useUi } from '../state/hooks';
 import { MANUAL_SLOTS } from '../storage/save-store';
+import { BugReport } from './menu/BugReport';
 import { OptionsPanel } from './menu/OptionsPanel';
 import { saveWithNotice } from './menu/SaveLabels';
 
@@ -11,7 +12,7 @@ export function PauseOverlay() {
   // Re-evaluated with every snapshot, so the lock lifts at dawn.
   const canSave = useUi((s) => s.snapshot !== null) && host.canManualSave();
   const menuOpen = useUi((s) => s.pauseMenuOpen);
-  const [view, setView] = useState<'main' | 'save' | 'options'>('main');
+  const [view, setView] = useState<'main' | 'save' | 'options' | 'bug'>('main');
   const [notice, setNotice] = useState<string | null>(null);
 
   if (!paused) return null;
@@ -85,12 +86,28 @@ export function PauseOverlay() {
               type="button"
               className="mrak-button"
               onClick={() => {
+                setView('bug');
+              }}
+            >
+              {t('bug.report')}
+            </button>
+            <button
+              type="button"
+              className="mrak-button"
+              onClick={() => {
                 host.quitToMenu();
               }}
             >
               {t('pause.quit-to-menu')}
             </button>
           </div>
+        )}
+        {view === 'bug' && (
+          <BugReport
+            onBack={() => {
+              setView('main');
+            }}
+          />
         )}
         {view === 'save' && (
           <div className="menu-buttons">

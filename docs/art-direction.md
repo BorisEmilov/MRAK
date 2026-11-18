@@ -1,0 +1,123 @@
+# Art direction
+
+How MRAK looks, and how art gets into the game. Pipeline details:
+[asset pipeline](systems/asset-pipeline.md); lighting: [light](systems/light.md); UI:
+[docs/ui](ui/). Pillars: dread, not jump scares (1); a clear, friendly UI (6).
+
+## Look: folk engraving in pixels
+
+- **Reference:** 19th-century Bulgarian woodcuts and church-book engravings, embroidery
+  patterns (shevitsi), Rhodope stone houses, icon painting. Shapes are carved, not painted:
+  flat fills, hard edges, hatching instead of gradients.
+- **Hatching, not dithering noise:** shade with parallel 1-px lines (45° or horizontal), 2–3
+  densities at most. No soft brushes, no anti-aliasing, no blur.
+- **Outlines:** 1 px, darkest palette colour (`ink`) on characters, creatures and objects;
+  tiles have no outline (they would grid the floor). Selective outline (lighter on the lit side)
+  is allowed for characters only.
+- **Light does the mood:** art is drawn in neutral daylight; night, fog and lanterns come from the
+  Phaser 4 lighting (normal maps) and grading ([light](systems/light.md)). Never paint darkness
+  into the sprites.
+- **Dread:** wrongness in detail (a door that is one pixel too tall, a shadow pointing the wrong
+  way), not gore. The monsters are mostly silhouette: eyes and one accent colour.
+
+## Resolution and scale
+
+- Internal resolution **640 × 360**, integer zoom only (`pixelArt: true`, `Scale.NONE` +
+  `MAX_ZOOM`). One art pixel = one game pixel; never scale a sprite in code.
+- Grid **16 px**. Everything aligns to 1 px; positions are whole pixels.
+
+## Palette (limited)
+
+24 colours. Every sprite uses only these (the pipeline does not enforce it yet — see backlog).
+The UI tokens (`packages/ui-kit/src/tokens.ts`) come from the same families.
+
+| Family    | Colours                                           | Use                               |
+| --------- | ------------------------------------------------- | --------------------------------- |
+| ink       | `#0e0a08` `#1c1410`                               | outlines, deepest shadow          |
+| earth     | `#221a14` `#33271e` `#4b3a2b` `#6b5642` `#8c7358` | wood, soil, walls, clothes        |
+| stone     | `#3a3b3f` `#5c5d5f` `#86857f` `#b3afa3`           | rock, monastery, graves           |
+| moss      | `#1f2a1c` `#34452c` `#56683f` `#8a9a5b`           | forest, grass                     |
+| parchment | `#cdb98f` `#f2e8d2`                               | highlights, skin light, paper     |
+| skin      | `#9c6b4e` `#c79a76`                               | faces, hands                      |
+| gold      | `#9c6b1c` `#e0a94a`                               | lanterns, icons, candles (warmth) |
+| blood     | `#4a0d0d` `#8a1c1c`                               | embroidery red, danger            |
+| cold      | `#3e5566`                                         | moonlit accents (rare)            |
+
+Creature eyes are the only pixels allowed outside the palette (pure `#ff3b2f` or `#e0b030`), so
+they read in total darkness.
+
+## Readable silhouettes in the dark
+
+- Test every character and creature as a **solid black shape** on the dark forest floor: it must
+  be recognisable at 1× zoom. Distinct heads (kalpak, kerchief, horns) do most of the work.
+- Keep a **1-px light rim** (parchment/stone) on the top or lit side of characters; the lantern
+  catches it via the normal map.
+- Creatures are taller or wider than people and break the grid (32 px); villagers never exceed
+  16 × 24.
+- Interactive objects get one warm pixel cluster (gold) so they read under the lantern.
+- Never rely on colour alone (colour-blind modes, pillar 6): shape + light.
+
+## Sizes and pivots (final)
+
+These are the **final** sizes. Placeholders are generated at the same size and pivot, so the game
+never changes when art arrives. Declared in `apps/game/assets/art-slots.json`; the pipeline fails
+on a source of the wrong size.
+
+| Category    | Frame size               | Pivot (origin)  | Notes                                            |
+| ----------- | ------------------------ | --------------- | ------------------------------------------------ |
+| `tile`      | 16 × 16                  | 0, 0 (top-left) | Atlas tiles; Tiled tilesets are 16-px grids      |
+| `character` | 16 × 24                  | 0.5, 1 (feet)   | Guardian, villagers; frames `name-0`, `name-1`…  |
+| `creature`  | 32 × 32                  | 0.5, 1 (feet)   | Night creatures; eyes in palette exception       |
+| `object`    | multiple of 8 (declared) | 0.5, 1 (base)   | Props, buildings (house 32 × 32), candles, items |
+| `portrait`  | 64 × 64                  | 0.5, 0.5        | Dialogue and villager panels (UI, shown 2×–3×)   |
+| `effect`    | free (declared)          | 0.5, 0.5        | Fog, glow, particles; no outline                 |
+
+## Normal maps (Phaser 4 lighting)
+
+The world uses Phaser 4 lights (`setLighting(true)`): each texture has a normal map (`<key>_n`)
+in the same layout.
+
+- **Generated by default:** the pipeline derives a normal map from each sprite (height =
+  luminance, transparent pixels are the floor, so silhouettes get a bevel). Good enough for tiles
+  and props.
+- **Painted (better):** put `<name>_n.png` (or a `_n` layer/file from Aseprite/PSD) next to the
+  source. It must have the same size as the sprite. Encoding: tangent space, **R = X right,
+  G = Y up, B = Z towards the viewer**, flat = `#8080ff`.
+- How to paint one by hand: start from the flat colour `#8080ff`; paint surfaces facing
+  right with more red (`#c080ff`) and facing left with less (`#4080ff`); facing up with more green
+  (`#80c0ff`) and facing down with less (`#8040ff`). Use 4–6 tones only, no gradients, so the
+  light breaks into bands like engraving. Tools: Aseprite's normal-map colour wheel, Laigter or
+  SpriteIlluminator (export tangent space, Y up).
+- Characters: paint a rounded head and torso; flat face. Creatures: strong rim facing up so the
+  lantern draws their outline.
+
+## Files for the artist
+
+```
+apps/game/assets/
+  art-slots.json                     size + pivot per category, every sprite slot
+  assets.config.json                 groups, zones, budgets
+  src/sprites/<group>/<name>.aseprite | .ase | .psd | .png
+  src/sprites/<group>/<name>_n.png   optional painted normal map (same size)
+  src/audio/<name>.wav
+packages/content/maps/<tileset>.png  Tiled tilesets (16-px grid), optional <tileset>_n.png
+```
+
+- **Names:** kebab-case, the slot name from `art-slots.json` (`guardian`, `creature-karakondzhul`,
+  `well`). Animated sprites: one Aseprite file whose frames become `<name>-0`, `<name>-1`…; or
+  numbered PNGs `<name>-0.png`… PSD: flattened, one sprite per file.
+- **Groups:** `common` (always loaded: guardian, creatures, lantern), one group per zone
+  (`village`, `forest`, `monastery`). A sprite belongs to exactly one group.
+- **Replace a placeholder:** overwrite the source file (same name, same size; any of the
+  supported formats), run `pnpm --filter @mrak/game assets`. Nothing else changes.
+- **New sprite:** add the slot to `art-slots.json`, run `pnpm --filter @mrak/game art:placeholders`
+  to get a placeholder of the right size, then draw over it. Using it in the game needs a content
+  or code reference (a programmer task).
+- Git LFS stores the sources; `public/assets` is generated (never edit it).
+
+## Budgets
+
+Per zone (groups of the zone + its map + tilesets, one audio format), set in
+`assets.config.json` → `budgets.maxZoneBytes` / `zoneBytes`: the pipeline prints a warning and CI
+shows an annotation when a zone goes over. Hard limits (fail the build): no file > 2 MB, demo
+total ≤ 12 MiB.

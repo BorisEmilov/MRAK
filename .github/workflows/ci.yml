@@ -30,6 +30,11 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm content:validate
+      # Balance gate (docs/systems/progression-economy.md): the phase-11 simulator fails when a
+      # curve leaves its band. ~2 s, so it runs on every change (talents, Revelation and beyond).
+      - run: pnpm --filter @mrak/core simulate
+      # Headless bot: 12 nights × 50 seeds, no exceptions, soft-locks or impossible states.
+      - run: pnpm --filter @mrak/core bot 12 50
 
   build:
     name: Build game and landing
@@ -61,7 +66,29 @@ jobs:
             apps/landing/dist
           retention-days: 7
 
-  secrets:
+  e2e:
+    name: Game E2E (Chromium)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @mrak/game run assets
+      - run: pnpm --filter @mrak/game exec playwright install --with-deps chromium
+      - run: pnpm --filter @mrak/game e2e --project=chromium
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: e2e-traces
+          path: apps/game/test-results
+
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
     timeout-minutes: 10

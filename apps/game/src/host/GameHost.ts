@@ -15,6 +15,7 @@ import {
   SaveError,
   SaveTooNewError,
   sealSave,
+  serializeSave,
   unpackExport,
   type Ambient,
   type Perception,
@@ -302,6 +303,16 @@ export class GameHost {
 
   get content(): ContentDatabase {
     return this.deps.content;
+  }
+
+  /**
+   * "Report a bug" (docs/systems/testing.md → Bug reports): the game version always; the seed and
+   * the current save only when the player ticked the consent box.
+   */
+  bugReport(withSave: boolean): { version: string; seed?: number; save?: string } {
+    const version = this.deps.content.info.version;
+    const file = withSave ? this.game?.save() : undefined;
+    return file ? { version, seed: file.rng.seed, save: serializeSave(file) } : { version };
   }
 
   get running(): boolean {

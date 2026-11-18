@@ -284,6 +284,7 @@ export function DemoEnd() {
             className="mrak-button"
             data-variant="primary"
             href={`${SITE_URL}/buy/`}
+            data-telemetry="buy-click"
             target="_blank"
             rel="noopener noreferrer"
           >

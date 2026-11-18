@@ -9,7 +9,11 @@
       "types": "./src/index.ts",
       "default": "./src/index.ts"
     },
-    "./json-schema/*": "./json-schema/*"
+    "./json-schema/*": "./json-schema/*",
+    "./node": {
+      "types": "./src/node/fs.ts",
+      "default": "./src/node/fs.ts"
+    }
   },
   "scripts": {
     "lint": "eslint . --max-warnings=0",

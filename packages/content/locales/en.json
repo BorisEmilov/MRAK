@@ -1775,6 +1775,8 @@
   "options.music-volume": "Music",
   "options.pause-on-blur": "Pause when the window loses focus",
   "options.pause-on-blur-desc": "Pause when you switch to another window or tab.",
+  "options.telemetry": "Share anonymous play statistics",
+  "options.telemetry-desc": "Off unless you turn it on. Sends where and how you die, how long nights take, choices and errors, under a random id not linked to you or your account. Nothing is sent while this is off; turning it off deletes the id.",
   "options.press-key": "Press a key…",
   "options.rebind": "Change the key for {action}",
   "options.reduce-distortion": "Reduce screen distortion",
@@ -2872,5 +2874,14 @@
   "site.store.sku.full-game": "Full game",
   "site.store.sku.collector": "Collector's edition",
   "site.store.status.active": "active",
-  "site.store.status.revoked": "refunded"
+  "site.store.status.revoked": "refunded",
+  "bug.report": "Report a bug",
+  "bug.describe": "What happened? What did you expect?",
+  "bug.attach": "Attach my current save, its seed and the game version (helps us reproduce it)",
+  "bug.privacy": "Only what you write and the game version are sent, plus the save if you tick the box. No account, address or contact details. Reports are kept for 90 days.",
+  "bug.send": "Send report",
+  "bug.download": "Download report",
+  "bug.sent": "Thank you. The report reached us.",
+  "bug.failed": "The report could not be sent. Try again later.",
+  "bug.back": "Back"
 }

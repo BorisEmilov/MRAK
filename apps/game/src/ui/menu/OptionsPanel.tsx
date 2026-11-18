@@ -25,7 +25,8 @@ type ToggleKey =
   | 'fewerScares'
   | 'hints'
   | 'hudAutoFade'
-  | 'pauseOnBlur';
+  | 'pauseOnBlur'
+  | 'telemetry';
 
 const VOLUMES: [VolumeKey, LocaleKey][] = [
   ['masterVolume', 'options.master-volume'],
@@ -42,6 +43,7 @@ const TOGGLES: Record<ToggleKey, [LocaleKey, LocaleKey]> = {
   hints: ['options.hints', 'options.hints-desc'],
   hudAutoFade: ['options.hud-auto-fade', 'options.hud-auto-fade-desc'],
   pauseOnBlur: ['options.pause-on-blur', 'options.pause-on-blur-desc'],
+  telemetry: ['options.telemetry', 'options.telemetry-desc'],
 };
 const COLORBLIND: ColorblindMode[] = [
   'none',
@@ -300,6 +302,7 @@ export function OptionsPanel({ onBack }: { onBack: () => void }) {
                 <Button onClick={presentation.resetHints}>{t('options.reset-hints')}</Button>
                 <Toggle k="hudAutoFade" options={options} onChange={update} />
                 <Toggle k="pauseOnBlur" options={options} onChange={update} />
+                <Toggle k="telemetry" options={options} onChange={update} />
               </>,
             ),
           },

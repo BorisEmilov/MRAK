@@ -1,0 +1,67 @@
+# Nightly quality (docs/systems/testing.md, performance.md): the desktop browser matrix and the
+# 2-hour memory soak. Real Safari on macOS stays a manual pre-release check (WebKit = engine).
+name: Nightly
+
+on:
+  schedule:
+    - cron: '23 2 * * *'
+  workflow_dispatch:
+    inputs:
+      soak_minutes:
+        description: Soak duration (minutes)
+        default: '120'
+
+permissions:
+  contents: read
+
+jobs:
+  browsers:
+    name: E2E ${{ matrix.project }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { project: chromium, os: ubuntu-latest, install: chromium }
+          - { project: firefox, os: ubuntu-latest, install: firefox }
+          - { project: webkit, os: ubuntu-latest, install: webkit }
+          - { project: edge, os: windows-latest, install: msedge }
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @mrak/game run assets
+      - run: pnpm --filter @mrak/game exec playwright install --with-deps ${{ matrix.install }}
+      - run: pnpm --filter @mrak/game e2e --project=${{ matrix.project }}
+      - uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: e2e-${{ matrix.project }}
+          path: apps/game/test-results
+
+  soak:
+    name: Memory soak
+    runs-on: ubuntu-latest
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          lfs: true
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter @mrak/game run assets
+      - run: pnpm --filter @mrak/game exec playwright install --with-deps chromium
+      - run: pnpm --filter @mrak/game e2e soak --project=chromium
+        env:
+          SOAK_MINUTES: ${{ github.event.inputs.soak_minutes || '120' }}

@@ -85,7 +85,7 @@ Hereditary / The Exorcist (demonic dread). Real Bulgarian folklore is the base.
 
 ## Key docs
 
-docs/GDD.md, docs/BACKLOG.md (deferred tasks), docs/lore/, docs/systems/, docs/ui/, docs/security/,
+docs/GDD.md, docs/art-direction.md, docs/BACKLOG.md (deferred tasks), docs/lore/, docs/systems/, docs/ui/, docs/security/,
 docs/business/, docs/adr/
 
 ## Phaser 4 skills
@@ -112,6 +112,8 @@ these skills over memory. Do not edit the vendored files.
 ## Commands
 
 - pnpm dev — game at http://localhost:5173 (pnpm dev:all for everything)
+- pnpm dev:studio — content Studio at http://127.0.0.1:5174 (studio-api :3100, loopback only;
+  Import from repo, edit, review, publish, Export to game). Spec: docs/systems/studio.md
 - pnpm test | pnpm lint | pnpm typecheck | pnpm format
 - pnpm --filter @mrak/ui-kit storybook — component/icon review (http://localhost:6006);
   pnpm --filter @mrak/ui-kit icons after editing packages/ui-kit/icons/manifest.json

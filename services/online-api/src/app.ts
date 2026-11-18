@@ -19,6 +19,8 @@ import type { ProgressStore } from './progress/store.js';
 import type { SavesStore } from './saves/store.js';
 import type { Newsletter } from './newsletter/newsletter.js';
 import type { Authenticate } from './routes/progress.js';
+import type { TelemetryDeps } from './routes/telemetry.js';
+import type { BugStore } from './bugs/bugs.js';
 
 import type { LocalSigner, Store } from './store/store.js';
 export const REQUEST_TIMEOUT_MS = 10_000;
@@ -38,6 +40,10 @@ export interface AppOptions {
   localContent?: { signer: LocalSigner; read: (name: string) => Buffer | null; now: () => Date };
   /** Newsletter (double opt-in). */
   newsletter?: Newsletter;
+  /** Opt-in telemetry ingestion (docs/systems/telemetry.md). */
+  telemetry?: TelemetryDeps;
+  /** In-game bug reports. */
+  bugs?: BugStore;
   /** Cloud saves storage. */
   saves?: SavesStore;
   /** Account progress storage (achievements, Bloodline, stats). */
@@ -104,6 +110,8 @@ export function createApp(options: AppOptions = {}): express.Express {
   app.locals['progress'] = options.progress;
   app.locals['saves'] = options.saves;
   app.locals['newsletter'] = options.newsletter;
+  app.locals['telemetry'] = options.telemetry;
+  app.locals['bugs'] = options.bugs;
   app.locals['store'] = options.store;
   app.locals['localContent'] = options.localContent;
   app.locals['catalog'] = options.catalog;

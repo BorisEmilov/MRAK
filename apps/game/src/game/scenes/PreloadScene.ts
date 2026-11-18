@@ -84,6 +84,7 @@ export class PreloadScene extends Phaser.Scene {
       .image(x, y - 14, 'common', 'light-glow')
       .setScale(4)
       .setBlendMode(Phaser.BlendModes.ADD);
-    this.add.image(x, y - 8, 'common', 'candle').setScale(2);
+    // Pivot (0.5, 1) from art-slots.json: positioned by its base.
+    this.add.image(x, y + 8, 'common', 'candle').setScale(2);
   }
 }

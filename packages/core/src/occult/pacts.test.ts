@@ -132,3 +132,33 @@ describe('sacrifices', () => {
     expect(witnessed).toBeGreaterThan(0);
   });
 });
+
+describe('sacrifice and pact guards', () => {
+  const reason = (g: Game, cmd: Record<string, unknown>) => {
+    const r = g.dispatch(cmd);
+    return r.ok ? 'ok' : r.reason;
+  };
+
+  it('refuses unknown rites, the wrong place, unknown victims and missing offerings', () => {
+    const g = newGame(9);
+    expect(reason(g, { type: 'makeSacrifice', sacrifice: 'nope' })).toMatch(/no such sacrifice/);
+    expect(
+      reason(g, { type: 'makeSacrifice', sacrifice: 'immured-shadow', target: 'ghost' }),
+    ).toMatch(/no such villager/);
+    expect(
+      reason(g, { type: 'makeSacrifice', sacrifice: 'immured-shadow', target: 'todor' }),
+    ).toMatch(/missing offerings/);
+    g.dispatch({ type: 'enterZone', zone: 'forest' });
+    if (g.snapshot().currentZone !== 'village')
+      expect(
+        reason(g, { type: 'makeSacrifice', sacrifice: 'immured-shadow', target: 'todor' }),
+      ).toMatch(/not here/);
+  });
+
+  it('an unknown pact is refused and leaves the guardian unmarked', () => {
+    const g = newGame(10);
+    expect(g.dispatch({ type: 'signPact', pact: 'no-such-pact' }).ok).toBe(false);
+    expect(corruptionAspect(g.snapshot(), db)).toBe(0);
+    expect(trustFactor(g.snapshot(), db)).toBe(1);
+  });
+});

@@ -1,9 +1,11 @@
 /**
  * Asset pipeline (docs/systems/asset-pipeline.md):
- *   1. pack assets/src/sprites/<group>/*.png into one atlas per group (free-tex-packer-core);
+ *   1. read each art slot (assets/art-slots.json) from its source (Aseprite, PSD or PNG), check its
+ *      final size, pack one atlas per group (free-tex-packer-core) with pivots, and compose its
+ *      normal map from painted `_n` sources or generated per sprite (docs/art-direction.md);
  *   2. encode assets/src/audio/*.wav to Ogg Vorbis + AAC/m4a (ffmpeg);
  *   3. name every output by content hash (long-term CDN caching);
- *   4. write public/assets/manifest.json and enforce size budgets.
+ *   4. write public/assets/manifest.json, enforce file/demo budgets and warn on zone budgets.
  * Usage: tsx scripts/build-assets.ts [--require-audio]
  */
 import { execFileSync } from 'node:child_process';
@@ -20,7 +22,8 @@ import {
   type AssetManifest,
 } from '../src/assets/manifest';
 import { normalMapOf } from './art/normal-map';
-import { decodePng, encodePng } from './art/png';
+import { createImage, decodePng, encodePng, type Rgba } from './art/png';
+import { loadSlots, readFrames, sourceBases, type Slot } from './art/slots';
 
 const APP = join(dirname(fileURLToPath(import.meta.url)), '..');
 const SRC = join(APP, 'assets/src');
@@ -31,9 +34,80 @@ const requireAudio = process.argv.includes('--require-audio');
 interface Config {
   groups: Record<string, { sprites: boolean; audio: string[]; demo: boolean }>;
   zones: Record<string, string[]>;
-  budgets: { maxFileBytes: number; maxDemoBytes: number };
+  budgets: {
+    maxFileBytes: number;
+    maxDemoBytes: number;
+    /** Per zone (common + zone groups + its maps); over it = warning, not failure. */
+    maxZoneBytes: number;
+    zoneBytes?: Record<string, number>;
+  };
 }
 const config = JSON.parse(readFileSync(join(APP, 'assets/assets.config.json'), 'utf8')) as Config;
+const slots = loadSlots(join(APP, 'assets/art-slots.json'));
+
+interface FrameArt {
+  slot: Slot;
+  image: Rgba;
+  normal: Rgba | null;
+}
+
+/** Every frame of a group's slots, checked against its final size; unknown sources fail. */
+function groupFrames(group: string, problems: string[]): Map<string, FrameArt> {
+  const dir = join(SRC, 'sprites', group);
+  const mine = slots.filter((s) => s.group === group);
+  for (const base of sourceBases(dir))
+    if (!mine.some((s) => s.name === base))
+      problems.push(`sprites/${group}/${base}: no slot in assets/art-slots.json`);
+  const out = new Map<string, FrameArt>();
+  for (const slot of mine) {
+    const images = readFrames(dir, slot.name);
+    if (!images) {
+      problems.push(`sprites/${group}/${slot.name}: missing source (run pnpm art:placeholders)`);
+      continue;
+    }
+    const normals = readFrames(dir, `${slot.name}_n`);
+    if (images.length !== slot.frames.length)
+      problems.push(
+        `sprites/${group}/${slot.name}: ${String(images.length)} frames, slot has ${String(slot.frames.length)}`,
+      );
+    slot.frames.forEach((frame, i) => {
+      const image = images[i];
+      if (!image) return;
+      const normal = normals?.[i] ?? null;
+      for (const [what, img] of [
+        ['', image],
+        ['_n', normal],
+      ] as const)
+        if (img && (img.width !== slot.width || img.height !== slot.height))
+          problems.push(
+            `sprites/${group}/${frame}${what}: ${String(img.width)}×${String(img.height)}, slot ${slot.category} is ${String(slot.width)}×${String(slot.height)}`,
+          );
+      out.set(frame, { slot, image, normal });
+    });
+  }
+  return out;
+}
+
+/** Normal-map atlas in the atlas layout: painted `_n` frames or generated per sprite. */
+function composeNormals(
+  size: { w: number; h: number },
+  frames: Record<string, { frame: { x: number; y: number; w: number; h: number } }>,
+  art: Map<string, FrameArt>,
+): Buffer {
+  const out = createImage(size.w, size.h);
+  for (let i = 0; i < out.data.length; i += 4) out.data.set([128, 128, 255, 255], i);
+  for (const [name, { frame }] of Object.entries(frames)) {
+    const a = art.get(name);
+    if (!a) continue;
+    const n = a.normal ?? normalMapOf(a.image, { cell: 0 });
+    for (let y = 0; y < frame.h; y++)
+      out.data.set(
+        n.data.subarray(y * n.width * 4, (y * n.width + frame.w) * 4),
+        ((frame.y + y) * size.w + frame.x) * 4,
+      );
+  }
+  return encodePng(out);
+}
 
 function hashed(
   dir: string,
@@ -81,11 +155,10 @@ async function main(): Promise<void> {
   for (const [group, spec] of Object.entries(config.groups)) {
     const entry: AssetManifest['groups'][string] = { demo: spec.demo, atlases: [], audio: [] };
     if (spec.sprites) {
-      const dir = join(SRC, 'sprites', group);
-      const images = readdirSync(dir)
-        .filter((f) => f.endsWith('.png'))
-        .sort()
-        .map((f) => ({ path: f, contents: readFileSync(join(dir, f)) }));
+      const art = groupFrames(group, problems);
+      const images = [...art.entries()]
+        .sort(([a], [b]) => a.localeCompare(b))
+        .map(([name, a]) => ({ path: `${name}.png`, contents: encodePng(a.image) }));
       const files = await packAsync(images, {
         textureName: group,
         width: 2048,
@@ -94,7 +167,7 @@ async function main(): Promise<void> {
         extrude: 1,
         allowRotation: false,
         allowTrim: false,
-        detectIdentical: true,
+        detectIdentical: false,
         removeFileExtension: true,
         prependFolderName: false,
         exporter: 'JsonHash',
@@ -104,11 +177,31 @@ async function main(): Promise<void> {
       const json = files.find((f) => f.name.endsWith('.json'));
       if (!png || !json || files.length !== 2)
         throw new Error(`group "${group}" did not fit in one 2048² atlas`);
+      // Pivots from the slots: Phaser uses a frame's `pivot` as the default origin.
+      const data = JSON.parse(json.buffer.toString('utf8')) as {
+        frames: Record<
+          string,
+          {
+            frame: { x: number; y: number; w: number; h: number };
+            pivot?: { x: number; y: number };
+          }
+        >;
+        meta: { size: { w: number; h: number } };
+      };
+      for (const [name, f] of Object.entries(data.frames)) {
+        const a = art.get(name);
+        if (a) f.pivot = a.slot.pivot;
+      }
       entry.atlases.push({
         key: group,
         image: hashed('atlases', group, 'png', png.buffer),
-        data: hashed('atlases', group, 'json', json.buffer),
-        normal: hashed('atlases', `${group}_n`, 'png', normalOf(png.buffer, 0)),
+        data: hashed('atlases', group, 'json', Buffer.from(JSON.stringify(data))),
+        normal: hashed(
+          'atlases',
+          `${group}_n`,
+          'png',
+          composeNormals(data.meta.size, data.frames, art),
+        ),
       });
     }
     for (const sound of ffmpeg ? spec.audio : []) {
@@ -174,7 +267,23 @@ async function main(): Promise<void> {
     Object.keys(manifest.maps).reduce((s, path) => s + bytesOfMap(manifest, path), 0);
   if (demoBytes > config.budgets.maxDemoBytes)
     problems.push(`demo assets ${String(demoBytes)} bytes exceed budget`);
-  if (problems.length > 0) throw new Error(`asset budget exceeded:\n  ${problems.join('\n  ')}`);
+  if (problems.length > 0) throw new Error(`assets:\n  ${problems.join('\n  ')}`);
+
+  // Zone budgets (docs/art-direction.md → Budgets): a warning, and a CI annotation.
+  for (const zone of Object.keys(config.zones)) {
+    const maps = Object.keys(manifest.maps).filter((p) =>
+      new RegExp(`^maps/${zone}(-[\\w-]+)?\\.tmj$`).test(p),
+    );
+    const bytes =
+      bytesOfGroups(manifest, ['common', ...(config.zones[zone] ?? [])]) +
+      maps.reduce((sum, p) => sum + bytesOfMap(manifest, p), 0);
+    const budget = config.budgets.zoneBytes?.[zone] ?? config.budgets.maxZoneBytes;
+    if (bytes > budget) {
+      const msg = `zone "${zone}" assets ${(bytes / 1024).toFixed(1)} KiB exceed its budget ${(budget / 1024).toFixed(1)} KiB`;
+      console.warn(`⚠ ${msg}`);
+      if (process.env['GITHUB_ACTIONS']) console.log(`::warning title=Zone asset budget::${msg}`);
+    }
+  }
 
   AssetManifestSchema.parse(manifest);
   writeFileSync(join(OUT, 'manifest.json'), `${JSON.stringify(manifest, null, 2)}\n`);

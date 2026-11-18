@@ -2,6 +2,7 @@
 import type { Request } from 'express';
 import { z } from 'zod';
 import type { SalesSource } from '../sales.js';
+import { aggregate, type TelemetrySource } from '../telemetry.js';
 import { defineRoute } from './defineRoute.js';
 
 const source = (req: Request) =>
@@ -11,6 +12,22 @@ const Days = z.coerce.number().int().min(1).max(365).default(30);
 const Moderation = z.strictObject({ status: z.enum(['approved', 'rejected']) });
 
 export const salesRoutes = [
+  // Telemetry panel (docs/systems/telemetry.md): the same restricted online-database connection.
+  defineRoute({
+    method: 'get',
+    path: '/v1/telemetry',
+    rateLimit: { windowMs: 60_000, limit: 20 },
+    handler: async (req, res) => {
+      const t = (req.app.locals as Record<string, unknown>)['telemetry'] as
+        TelemetrySource | undefined;
+      if (!t) {
+        res.status(503).json({ error: 'telemetry_unavailable' });
+        return;
+      }
+      const days = Math.min(90, Days.parse(req.query['days'] ?? undefined));
+      res.json({ days, ...aggregate(await t.rows(days)) });
+    },
+  }),
   defineRoute({
     method: 'get',
     path: '/v1/sales/summary',

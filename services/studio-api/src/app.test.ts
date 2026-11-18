@@ -31,7 +31,7 @@ describe('studio-api app', () => {
     const res = await request(app)
       .post('/health')
       .set('content-type', 'application/json')
-      .send(JSON.stringify({ x: 'a'.repeat(20_000) }));
+      .send(JSON.stringify({ x: 'a'.repeat(1_100_000) }));
     expect(res.status).toBe(413);
   });
 });

@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run --coverage",
     "simulate": "tsx scripts/simulate.ts",
-    "simulate:fear": "tsx scripts/simulate-fear.ts"
+    "simulate:fear": "tsx scripts/simulate-fear.ts",
+    "bot": "tsx scripts/bot.ts"
   },
   "devDependencies": {
     "@vitest/coverage-v8": "5.1.0",

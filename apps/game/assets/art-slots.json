@@ -1,0 +1,35 @@
+{
+  "$comment": "Final size and pivot of every sprite (docs/art-direction.md → Sizes and pivots). Sources: assets/src/sprites/<group>/<name>.(aseprite|ase|psd|png). `frames` > 1 = animation <name>-0…; `size` overrides the category size. pnpm art:placeholders creates missing sources.",
+  "categories": {
+    "tile": { "size": [16, 16], "pivot": [0, 0] },
+    "character": { "size": [16, 24], "pivot": [0.5, 1] },
+    "creature": { "size": [32, 32], "pivot": [0.5, 1] },
+    "object": { "pivot": [0.5, 1] },
+    "portrait": { "size": [64, 64], "pivot": [0.5, 0.5] },
+    "effect": { "pivot": [0.5, 0.5] }
+  },
+  "sprites": {
+    "common/guardian": { "category": "character", "frames": 3 },
+    "common/creature-karakondzhul": { "category": "creature" },
+    "common/creature-lesser-bes": { "category": "creature" },
+    "common/creature-returned": { "category": "creature" },
+    "common/candle": { "category": "object", "size": [8, 16] },
+    "common/lantern": { "category": "object", "size": [8, 8] },
+    "common/fog": { "category": "effect", "size": [32, 16] },
+    "common/light-glow": { "category": "effect", "size": [32, 32] },
+    "village/church": { "category": "object", "size": [32, 32] },
+    "village/house": { "category": "object", "size": [32, 32] },
+    "village/fence": { "category": "object", "size": [16, 16] },
+    "village/well": { "category": "object", "size": [16, 16] },
+    "village/grass": { "category": "tile" },
+    "village/ground": { "category": "tile" },
+    "village/path": { "category": "tile" },
+    "forest/beech": { "category": "object", "size": [32, 32] },
+    "forest/floor": { "category": "tile" },
+    "forest/moss": { "category": "tile" },
+    "forest/stone": { "category": "tile" },
+    "monastery/cross": { "category": "object", "size": [16, 16] },
+    "monastery/ruin-wall": { "category": "object", "size": [32, 32] },
+    "monastery/flagstone": { "category": "tile" }
+  }
+}

@@ -10,6 +10,7 @@
   "scripts": {
     "dev": "turbo run dev --filter=@mrak/game",
     "dev:all": "turbo run dev",
+    "dev:studio": "turbo run dev --filter=@mrak/studio-api --filter=@mrak/studio-web",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

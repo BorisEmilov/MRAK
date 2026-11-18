@@ -17,6 +17,12 @@ import type { Zone } from '../entities/world';
 import type { ContentPack, RawMaps, SourceMap } from '../pack';
 import type { IssueList } from './issues';
 
+/**
+ * Fixed lights per map: Phaser renders ≤ 32 per camera (apps/game config); the lantern, its spill
+ * and night effects need the rest (docs/systems/performance.md → Light budget).
+ */
+export const MAP_LIGHT_BUDGET = 24;
+
 const KNOWN_TYPES = new Set<string>(MAP_OBJECT_TYPES);
 const KNOWN_LIGHTS = new Set<string>(LIGHT_KINDS);
 const KNOWN_TERRAINS = new Set<string>(MAP_TERRAINS);
@@ -128,6 +134,7 @@ export function validateMaps(
       const placedPois = new Map<string, number>();
       const placedEdges = new Set<string>();
       const spawns = new Set<string>();
+      let lights = 0;
       for (const o of objectsOf(map)) {
         const type = objectType(o);
         const label = `object ${String(o.id)} "${o.name}"`;
@@ -155,6 +162,11 @@ export function validateMaps(
           case 'light': {
             const kind = String(prop(o.properties, 'kind') ?? '');
             if (!KNOWN_LIGHTS.has(kind)) err('map-light', `${label}: unknown light kind "${kind}"`);
+            if (++lights === MAP_LIGHT_BUDGET + 1)
+              err(
+                'map-light-budget',
+                `more than ${String(MAP_LIGHT_BUDGET)} fixed lights (60 fps budget, docs/systems/performance.md)`,
+              );
             break;
           }
           case 'exit': {

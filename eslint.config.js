@@ -81,7 +81,11 @@ export default tseslint.config(
     ...tseslint.configs.disableTypeChecked,
   },
   {
-    files: ['apps/game/**/*.{ts,tsx}', 'packages/ui-kit/**/*.{ts,tsx}'],
+    files: [
+      'apps/game/**/*.{ts,tsx}',
+      'apps/studio-web/**/*.{ts,tsx}',
+      'packages/ui-kit/**/*.{ts,tsx}',
+    ],
     languageOptions: { globals: globals.browser },
     plugins: { 'react-hooks': reactHooks, 'react-refresh': reactRefresh },
     rules: {

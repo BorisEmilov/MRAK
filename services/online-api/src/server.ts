@@ -13,6 +13,9 @@ import { generateSigningJwk } from './auth/keys.js';
 import { BudgetedMailer, FileMailer, MemoryMailer } from './auth/mailer.js';
 import { MemoryNewsletterStore, Newsletter } from './newsletter/newsletter.js';
 import { PrismaNewsletterStore } from './newsletter/prisma-store.js';
+import { PrismaTelemetryStore } from './telemetry/prisma-store.js';
+import { BUG_RETENTION_DAYS, MemoryBugStore, PrismaBugStore } from './bugs/bugs.js';
+import { MemoryTelemetryStore } from './telemetry/telemetry.js';
 import { hibpCheck } from './auth/passwords.js';
 import { PrismaAuthRepository } from './auth/prisma-repository.js';
 import { MemoryAuthRepository } from './auth/repository.js';
@@ -227,12 +230,16 @@ const auth = await buildAuth({
   limits: { limiter, policies },
 });
 
+const telemetryStore = prisma ? new PrismaTelemetryStore(prisma) : null;
+const bugs = prisma ? new PrismaBugStore(prisma) : new MemoryBugStore();
 const app = createApp({
   logger,
   catalog: loadCatalog(env.CONTENT_DATA_DIR),
   progress,
   saves,
   newsletter,
+  bugs,
+  telemetry: { store: telemetryStore ?? new MemoryTelemetryStore(), sample: env.TELEMETRY_SAMPLE },
   store,
   ...(localSigner && env.FULL_PACK_LOCAL_DIR
     ? {
@@ -260,6 +267,14 @@ const app = createApp({
   ...(env.EDGE_SECRET ? { edgeSecret: env.EDGE_SECRET } : {}),
 });
 
+// Telemetry partitions: today + 7 days created, older than 90 days dropped (hourly, idempotent).
+const maintainTelemetry = (): void => {
+  telemetryStore?.maintain().catch((err: unknown) => {
+    logger.error({ err }, 'telemetry partition maintenance failed');
+  });
+};
+maintainTelemetry();
+
 // Unverified accounts older than 7 days are deleted hourly (idempotent on every instance).
 const purge = setInterval(() => {
   auth.deps.service
@@ -276,6 +291,11 @@ const purge = setInterval(() => {
     .catch((err: unknown) => {
       logger.error({ err }, 'audit retention purge failed');
     });
+  maintainTelemetry();
+  // Bug reports: 90 days.
+  void bugs.purge(new Date(Date.now() - BUG_RETENTION_DAYS * 86_400_000)).catch((err: unknown) => {
+    logger.error({ err }, 'bug report retention purge failed');
+  });
 }, 60 * 60_000);
 purge.unref();
 

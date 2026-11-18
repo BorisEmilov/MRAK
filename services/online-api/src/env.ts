@@ -60,6 +60,8 @@ const EnvSchema = z.object({
   RATE_LIMITS: z.string().optional(),
   /** Switches that start OFF (registration,cloud-saves,telemetry,emails,purchases); runtime: Redis. */
   KILL_SWITCHES: z.string().default(''),
+  /** Server-side telemetry sampling per install, 0–1 (docs/systems/telemetry.md). */
+  TELEMETRY_SAMPLE: z.coerce.number().min(0).max(1).default(1),
   /** Global emails per UTC day; alerts at 50 % and 80 %. */
   EMAIL_DAILY_CAP: z.coerce.number().int().min(1).default(2000),
   DB_POOL_MAX: z.coerce.number().int().min(1).max(100).default(10),

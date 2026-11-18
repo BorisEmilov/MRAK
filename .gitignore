@@ -30,3 +30,7 @@ pnpm-debug.log*
 apps/game/public/assets/
 storybook-static/
 packages/core/sim-out/
+
+# Playwright output
+test-results/
+playwright-report/

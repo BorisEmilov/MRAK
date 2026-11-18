@@ -13,3 +13,7 @@ packages/content-schema/json-schema
 packages/ui-kit/src/icons/
 docs/ui/icons.md
 storybook-static
+
+# Playwright output
+test-results
+playwright-report

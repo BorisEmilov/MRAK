@@ -9,6 +9,15 @@ const EnvSchema = z.object({
   REDIS_URL: z.url().optional(),
   /** Online database, restricted studio role (sales panel, collector-name moderation). */
   SALES_DATABASE_URL: z.url().optional(),
+  /** Cloudflare Access (required in production): team domain and application audience tag. */
+  ACCESS_TEAM_DOMAIN: z.string().optional(),
+  ACCESS_AUD: z.string().optional(),
+  /** packages/content (import source, "Export to game" target). */
+  CONTENT_ROOT: z.string().default('../../packages/content'),
+  /** Where exported demo/full packs are written. */
+  EXPORT_DIR: z.string().default('../../dist-content'),
+  /** Built apps/studio-web to serve at / . */
+  STUDIO_WEB_DIR: z.string().optional(),
 });
 
 export type Env = z.infer<typeof EnvSchema>;

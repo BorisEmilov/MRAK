@@ -52,10 +52,12 @@ export const DEFAULT_POLICIES = {
   'content-url-user': p(30, DAY, 'user', true),
   'collector-name-user': p(5, DAY, 'user'),
   'telemetry-install': p(60, HOUR, 'install'),
+  'telemetry-ip': p(600, HOUR, 'ip'),
   // --- public
   'public-ip': p(120, MIN, 'ip'),
   'seasonal-ip': p(30, MIN, 'ip'),
   'newsletter-ip': p(5, HOUR, 'ip'),
+  'bug-report-ip': p(10, HOUR, 'ip'),
   /** Payment provider webhooks (retries included); signatures do the real gatekeeping. */
   'webhook-ip': p(300, MIN, 'ip'),
 } satisfies Record<string, Policy>;

@@ -1,8 +1,9 @@
 {
   "extends": "../../tsconfig.base.json",
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
+    // Runs with tsx (dev and production): imports @mrak/content-schema TypeScript sources.
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "types": ["node"]
   },
   "include": ["src", "prisma.config.ts", "vitest.config.ts"]

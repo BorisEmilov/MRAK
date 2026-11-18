@@ -11,6 +11,8 @@ import { newsletterRoutes } from './newsletter.js';
 import { savesRoutes } from './saves.js';
 import { seasonalRoute } from './seasonal.js';
 import { storeRoutes } from './store.js';
+import { telemetryRoute } from './telemetry.js';
+import { bugReportRoute } from './bugs.js';
 
 /** Every route of this service. Register new routes here, never directly on the app. */
 export const routes: readonly RouteDefinition[] = [
@@ -24,4 +26,6 @@ export const routes: readonly RouteDefinition[] = [
   ...savesRoutes,
   ...newsletterRoutes,
   ...storeRoutes,
+  telemetryRoute,
+  bugReportRoute,
 ];

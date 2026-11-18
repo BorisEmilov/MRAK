@@ -43,10 +43,15 @@ const RETURNED_WALK = 22;
 const RETURNED_CHASE = 44;
 const DEPTH = { npc: 9.9, bubble: 25, label: 26 } as const;
 const SENSE_MS = 250;
+/** Off-camera villagers: margin (px) and coarse step (ms) of the far simulation. */
+const FAR_MARGIN = 64;
+const FAR_STEP_MS = 250;
 const CHASE_MS = 500;
 const TOUCH_COOLDOWN_MS = 3000;
 
 interface Npc {
+  /** Time accumulated while off camera (far simulation). */
+  farDt?: number;
   def: Villager;
   variant: ArtVariant;
   sprite: Phaser.GameObjects.Sprite;
@@ -232,10 +237,26 @@ export class VillageNpcs {
 
   update(time: number, dt: number, guardian: GuardianFrame): void {
     if (time - this.lastSense >= SENSE_MS) this.sense(time, guardian, false);
+    // Far simulation (performance.md): off-camera villagers walk in coarse steps, unanimated.
+    const view = this.scene.cameras.main.worldView;
     for (const npc of this.npcs.values()) {
       if (npc.variant === 'returned' && npc.sprite.visible) this.haunt(npc, time, guardian);
-      this.walk(npc, dt);
-      this.animate(npc, time, guardian);
+      const near =
+        npc.sprite.x > view.x - FAR_MARGIN &&
+        npc.sprite.x < view.right + FAR_MARGIN &&
+        npc.sprite.y > view.y - FAR_MARGIN &&
+        npc.sprite.y < view.bottom + FAR_MARGIN;
+      if (near || npc.variant === 'returned') {
+        npc.farDt = 0;
+        this.walk(npc, dt);
+        this.animate(npc, time, guardian);
+        continue;
+      }
+      npc.farDt = (npc.farDt ?? 0) + dt;
+      if (npc.farDt >= FAR_STEP_MS) {
+        this.walk(npc, npc.farDt);
+        npc.farDt = 0;
+      }
     }
   }
 

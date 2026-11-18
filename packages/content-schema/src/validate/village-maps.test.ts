@@ -104,6 +104,16 @@ describe('zone maps', () => {
     expect(found).toContain('map-variant');
   });
 
+  it('rejects a map over the fixed-light budget (60 fps)', () => {
+    const raw = realPack();
+    const objects = mapObjects(raw, 'maps/village.tmj');
+    const light = objects.find((o) => o['type'] === 'light');
+    if (!light) throw new Error('village has no light');
+    expect(codes(raw)).not.toContain('map-light-budget');
+    for (let i = 0; i < 10; i++) objects.push({ ...light, id: 9000 + i });
+    expect(codes(raw)).toContain('map-light-budget');
+  });
+
   it('rejects a missing map file', () => {
     const raw = realPack();
     if (raw.maps) delete raw.maps.maps['maps/monastery.tmj'];

@@ -251,8 +251,10 @@ export class WorldScene extends Phaser.Scene {
     }
     const spawn = this.spawnAt ?? this.zoneMap.spawn(this.spawnName);
     this.guardian = this.physics.add.sprite(spawn.x, spawn.y, 'common', 'guardian-0');
-    this.guardian.setOrigin(0.5, 0.85).setDepth(DEPTH.guardian).setLighting(true);
-    this.guardian.body?.setSize(8, 6).setOffset(4, 9);
+    // Origin = the frame pivot (feet, art-slots.json); the feet hitbox follows the frame size.
+    this.guardian.setDepth(DEPTH.guardian).setLighting(true);
+    const { width: fw, height: fh } = this.guardian.frame;
+    this.guardian.body?.setSize(8, 6).setOffset((fw - 8) / 2, fh - 7);
     this.guardian.setCollideWorldBounds(true);
     this.physics.world.setBounds(0, 0, width, height);
     for (const layer of colliders) this.physics.add.collider(this.guardian, layer);

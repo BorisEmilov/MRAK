@@ -40,6 +40,8 @@ export const OptionsSchema = z.object({
   hudAutoFade: z.boolean().default(true),
   /** Pause when the tab loses focus. */
   pauseOnBlur: z.boolean().default(true),
+  /** Opt-in anonymous gameplay statistics (docs/systems/telemetry.md). Off by default. */
+  telemetry: z.boolean().default(false),
   keyBindings: z
     .partialRecord(z.enum(ACTION_IDS), z.array(z.string().max(32)).min(1).max(2))
     .default({}),

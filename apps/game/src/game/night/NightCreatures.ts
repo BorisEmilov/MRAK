@@ -14,6 +14,7 @@ import {
 import type * as Phaser from 'phaser';
 import { TILE_SIZE } from '@mrak/content-schema';
 import { patrolAround } from './alerts';
+import { Pool } from '../pool';
 
 const STRIKE_COOLDOWN_MS = 1500;
 const REACH_TILES = 0.6;
@@ -36,6 +37,14 @@ export interface NightHost {
 
 export class NightCreatures {
   private readonly live = new Map<number, Live>();
+  /** Creature sprites are reused across encounters and nights (performance.md → Pooling). */
+  private readonly sprites = new Pool<Phaser.GameObjects.Image>(
+    () => this.scene.add.image(0, 0, '__DEFAULT').setDepth(DEPTH),
+    (s) => s.setVisible(false).setActive(false),
+    (s) => {
+      s.destroy();
+    },
+  );
   private flash = false;
 
   constructor(
@@ -45,9 +54,11 @@ export class NightCreatures {
     private readonly pois: readonly { id: string; x: number; y: number }[],
   ) {}
 
-  private texture(creature: string): string {
+  /** Atlas art (`common/creature-<id>`, art-slots.json) when present; else a drawn stand-in. */
+  private texture(creature: string): [string, string?] {
     const key = `creature-${creature}`;
-    if (this.scene.textures.exists(key)) return key;
+    if (this.scene.textures.get('common').has(key)) return ['common', key];
+    if (this.scene.textures.exists(key)) return [key];
     const size = 24;
     const canvas = this.scene.textures.createCanvas(key, size, size);
     const ctx = canvas?.getContext();
@@ -61,7 +72,7 @@ export class NightCreatures {
       ctx.fillRect(14, 10, 2, 2);
       canvas.refresh();
     }
-    return key;
+    return [key];
   }
 
   /** Spawns sprites for new encounters of this zone and removes ended ones. */
@@ -71,7 +82,7 @@ export class NightCreatures {
     );
     for (const [id, l] of this.live)
       if (!active.some((e) => e.id === id)) {
-        l.sprite.destroy();
+        this.sprites.give(l.sprite);
         this.live.delete(id);
       }
     for (const e of active) {
@@ -79,7 +90,14 @@ export class NightCreatures {
       const poi = this.pois.find((p) => p.id === e.poi);
       if (!poi) continue;
       const start = { x: poi.x / TILE_SIZE, y: poi.y / TILE_SIZE };
-      const sprite = this.scene.add.image(poi.x, poi.y, this.texture(e.creature)).setDepth(DEPTH);
+      const [key, frame] = this.texture(e.creature);
+      const sprite = this.sprites
+        .take()
+        .setTexture(key, frame)
+        .setPosition(poi.x, poi.y)
+        .setAlpha(1)
+        .setVisible(true)
+        .setActive(true);
       this.live.set(e.id, {
         id: e.id,
         creature: e.creature,
@@ -134,5 +152,6 @@ export class NightCreatures {
   destroy(): void {
     for (const l of this.live.values()) l.sprite.destroy();
     this.live.clear();
+    this.sprites.destroy();
   }
 }

@@ -175,3 +175,18 @@ model CollectorName {
 
   @@map("collector_names")
 }
+
+/// In-game bug reports (docs/systems/testing.md → Bug reports). Sent only when the player presses
+/// Send; the save and seed only with their explicit consent. No account, IP or contact. 90 days.
+model BugReport {
+  id          String   @id @db.Uuid
+  createdAt   DateTime @default(now()) @map("created_at")
+  version     String   @db.VarChar(64)
+  platform    String   @db.VarChar(32)
+  description String   @db.VarChar(2000)
+  seed        Int?
+  save        String?
+
+  @@index([createdAt])
+  @@map("bug_reports")
+}

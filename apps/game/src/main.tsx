@@ -22,6 +22,7 @@ import type { OnlineServices } from './state/context';
 import { AccountSync, openOutbox } from './storage/account-sync';
 import { checkFullGameEntitlement, loadCachedFullPack, wireDemoEnd } from './online/full-game';
 import { createStoreClient } from '@mrak/api-client';
+import { httpSender, TelemetryService, wireTelemetry } from './telemetry/telemetry';
 
 function localStorageOrUndefined(): Storage | undefined {
   try {
@@ -133,7 +134,21 @@ async function bootstrap(): Promise<void> {
     : null;
 
   const presentation = host ? wirePresentation(host, bus, store) : null;
+  // E2E/debug hook (development builds only, like window.__mrakGame): commands go through core.
+  if (import.meta.env.DEV) Reflect.set(window, '__mrak', { host, store });
   if (host && online) wireOnline(online, host, store, local);
+  // Opt-in telemetry (docs/systems/telemetry.md): nothing leaves without the `telemetry` option.
+  if (host && content && apiUrl) {
+    const telemetry = new TelemetryService({
+      send: httpSender(apiUrl),
+      storage: local,
+      consent: () => store.getState().options.telemetry,
+      build: content.info.version.split('+')[0] ?? 'dev',
+      demo: () => !store.getState().fullGame,
+      sample: Math.min(1, Math.max(0, Number(env['VITE_TELEMETRY_SAMPLE'] ?? '1') || 0)),
+    });
+    wireTelemetry(telemetry, host, store);
+  }
   if (host && content) {
     const rules = content.find('progression-rules', 'default');
     wireDemoEnd(host, store, rules?.demo?.nights ?? null);
