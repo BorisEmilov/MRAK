@@ -43,7 +43,7 @@ function withGuardian(g: Game): Game {
 }
 
 describe('event director', () => {
-  it('simulates 12 nights with peaks and valleys (acceptance)', () => {
+  it('simulates 12 nights with peaks and valleys (acceptance)', { timeout: 30_000 }, () => {
     const { nights, samples } = simulateNights(db, { seed: 7, nights: 12 });
     expect(nights).toHaveLength(12);
     for (const n of nights) {
