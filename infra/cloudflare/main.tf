@@ -128,14 +128,13 @@ resource "cloudflare_zero_trust_access_application" "staging" {
   account_id       = var.account_id
   name             = "MRAK staging"
   type             = "self_hosted"
-  domain           = local.staging.landing
-  self_hosted_domains = values(local.staging)
+  destinations     = [for host in values(local.staging) : { type = "public", uri = host }]
   session_duration = "12h"
   policies = [{
     name     = "team and CI"
     decision = "allow"
     include  = [{ email_domain = { domain = var.team_email_domain } }]
-  }, {
+    }, {
     name     = "CI service token"
     decision = "non_identity"
     include  = [{ any_valid_service_token = {} }]
@@ -313,9 +312,9 @@ resource "cloudflare_r2_bucket" "paid_content" {
 # ---------------------------------------------------------------- alerts
 
 resource "cloudflare_notification_policy" "ddos_l7" {
-  account_id  = var.account_id
-  name        = "MRAK: HTTP DDoS attack"
-  alert_type  = "dos_attack_l7"
-  enabled     = true
-  mechanisms  = { email = [{ id = var.alert_email }] }
+  account_id = var.account_id
+  name       = "MRAK: HTTP DDoS attack"
+  alert_type = "dos_attack_l7"
+  enabled    = true
+  mechanisms = { email = [{ id = var.alert_email }] }
 }

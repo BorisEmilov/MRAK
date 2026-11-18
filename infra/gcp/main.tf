@@ -13,10 +13,10 @@ locals {
   ]
   # Documented rotation (docs/runbooks/deploy.md → Secrets): Secret Manager notifies when due.
   rotation_days = {
-    AUTH_JWT_KEYS = 90, AUTH_SECRET = 365, EDGE_SECRET = 180, DATABASE_URL = 180,
-    REDIS_URL = 180, REDIS_CA_CERT = 1825, TURNSTILE_SECRET = 365, PADDLE_API_KEY = 180,
+    AUTH_JWT_KEYS         = 90, AUTH_SECRET = 365, EDGE_SECRET = 180, DATABASE_URL = 180,
+    REDIS_URL             = 180, REDIS_CA_CERT = 1825, TURNSTILE_SECRET = 365, PADDLE_API_KEY = 180,
     PADDLE_WEBHOOK_SECRET = 180, R2_ACCESS_KEY_ID = 180, R2_SECRET_ACCESS_KEY = 180,
-    EMAIL_API_KEY = 180,
+    EMAIL_API_KEY         = 180,
   }
   # Mounted only once they have a version (manual ones are added with `gcloud secrets versions add`).
   mounted_secrets = concat(local.generated_secrets, var.manual_secrets_ready)
@@ -263,9 +263,9 @@ resource "google_iam_workload_identity_pool_provider" "github" {
     issuer_uri = "https://token.actions.githubusercontent.com"
   }
   attribute_mapping = {
-    "google.subject"         = "assertion.sub"
-    "attribute.repository"   = "assertion.repository"
-    "attribute.environment"  = "assertion.environment"
+    "google.subject"        = "assertion.sub"
+    "attribute.repository"  = "assertion.repository"
+    "attribute.environment" = "assertion.environment"
   }
   # Only this repository, and only jobs running in the matching GitHub environment (production
   # jobs need the environment's required reviewers).
@@ -461,11 +461,11 @@ output "edge_secret" {
 output "deploy" {
   description = "GitHub environment variables for .github/workflows/deploy.yml"
   value = {
-    GCP_PROJECT        = var.project_id
-    GCP_REGION         = var.region
-    GCP_WIF_PROVIDER   = google_iam_workload_identity_pool_provider.github.name
-    GCP_DEPLOY_SA      = google_service_account.deploy.email
-    GCP_REGISTRY       = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.images.repository_id}"
-    GCP_SQL_INSTANCE   = google_sql_database_instance.db.name
+    GCP_PROJECT      = var.project_id
+    GCP_REGION       = var.region
+    GCP_WIF_PROVIDER = google_iam_workload_identity_pool_provider.github.name
+    GCP_DEPLOY_SA    = google_service_account.deploy.email
+    GCP_REGISTRY     = "${var.region}-docker.pkg.dev/${var.project_id}/${google_artifact_registry_repository.images.repository_id}"
+    GCP_SQL_INSTANCE = google_sql_database_instance.db.name
   }
 }

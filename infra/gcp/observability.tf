@@ -64,17 +64,17 @@ resource "google_logging_metric" "m" {
 locals {
   run = "monitored_resource=\"cloud_run_revision\",service_name=\"online-api\""
   panels = {
-    "Requests by class (per s)"     = "sum by (response_code_class) (rate(run_googleapis_com:request_count{${local.run}}[5m]))"
-    "Latency p95 (ms)"              = "histogram_quantile(0.95, sum by (le) (rate(run_googleapis_com:request_latencies_bucket{${local.run}}[5m])))"
-    "401 and 429 (per 5 min)"       = "sum by (response_code) (increase(run_googleapis_com:request_count{${local.run},response_code=~\"401|429\"}[5m]))"
-    "Login failures (per 5 min)"    = "sum(increase(logging_googleapis_com:user_audit_events{action=\"login\",result=\"fail\"}[5m]))"
-    "Refresh token reuse"           = "sum(increase(logging_googleapis_com:user_audit_events{action=\"refresh-reuse\"}[1h]))"
-    "Purchases / webhook failures"  = "sum by (action, result) (increase(logging_googleapis_com:user_audit_events{action=~\"purchase|refund|chargeback|payment-webhook\"}[1h]))"
-    "Emails sent by kind (per h)"   = "sum by (kind) (increase(logging_googleapis_com:user_emails_sent[1h]))"
-    "429 by policy (quotas, per h)" = "sum by (policy) (increase(logging_googleapis_com:user_rate_limited[1h]))"
+    "Requests by class (per s)"                    = "sum by (response_code_class) (rate(run_googleapis_com:request_count{${local.run}}[5m]))"
+    "Latency p95 (ms)"                             = "histogram_quantile(0.95, sum by (le) (rate(run_googleapis_com:request_latencies_bucket{${local.run}}[5m])))"
+    "401 and 429 (per 5 min)"                      = "sum by (response_code) (increase(run_googleapis_com:request_count{${local.run},response_code=~\"401|429\"}[5m]))"
+    "Login failures (per 5 min)"                   = "sum(increase(logging_googleapis_com:user_audit_events{action=\"login\",result=\"fail\"}[5m]))"
+    "Refresh token reuse"                          = "sum(increase(logging_googleapis_com:user_audit_events{action=\"refresh-reuse\"}[1h]))"
+    "Purchases / webhook failures"                 = "sum by (action, result) (increase(logging_googleapis_com:user_audit_events{action=~\"purchase|refund|chargeback|payment-webhook\"}[1h]))"
+    "Emails sent by kind (per h)"                  = "sum by (kind) (increase(logging_googleapis_com:user_emails_sent[1h]))"
+    "429 by policy (quotas, per h)"                = "sum by (policy) (increase(logging_googleapis_com:user_rate_limited[1h]))"
     "Instances (ceiling ${var.api.max_instances})" = "sum(run_googleapis_com:container_instance_count{${local.run}})"
-    "Cloud SQL CPU"                 = "avg(cloudsql_googleapis_com:database_cpu_utilization)"
-    "Redis memory usage ratio"      = "avg(redis_googleapis_com:stats_memory_usage_ratio)"
+    "Cloud SQL CPU"                                = "avg(cloudsql_googleapis_com:database_cpu_utilization)"
+    "Redis memory usage ratio"                     = "avg(redis_googleapis_com:stats_memory_usage_ratio)"
   }
 }
 
