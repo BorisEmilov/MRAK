@@ -76,6 +76,97 @@
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
           "description": "Reference to a zone"
         },
+        "target": {
+          "default": "guardian",
+          "type": "string",
+          "enum": [
+            "guardian",
+            "village"
+          ]
+        },
+        "window": {
+          "type": "object",
+          "properties": {
+            "from": {
+              "type": "string",
+              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+            },
+            "to": {
+              "type": "string",
+              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+            }
+          },
+          "required": [
+            "from",
+            "to"
+          ],
+          "additionalProperties": false
+        },
+        "bias": {
+          "type": "object",
+          "properties": {
+            "seasons": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "enum": [
+                  "winter",
+                  "spring",
+                  "summer",
+                  "autumn"
+                ]
+              },
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 20
+              }
+            },
+            "hours": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "from": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  },
+                  "to": {
+                    "type": "string",
+                    "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+                  },
+                  "factor": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 100
+                  }
+                },
+                "required": [
+                  "from",
+                  "to",
+                  "factor"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "corruption": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5
+            },
+            "hysteria": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5
+            },
+            "lowSanity": {
+              "type": "number",
+              "minimum": -5,
+              "maximum": 5
+            }
+          },
+          "additionalProperties": false
+        },
         "effects": {
           "default": [],
           "type": "array",
@@ -770,8 +861,26 @@
             }
           },
           "required": [
-            "startPossession",
-            "host"
+            "startPossession"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nameFragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            },
+            "fragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "nameFragment",
+            "fragment"
           ],
           "additionalProperties": false
         },

@@ -189,3 +189,26 @@ export function profileFromProgress(
   p.achievements.sort((a, b) => a.at - b.at);
   return p;
 }
+
+/** Everything in a guest profile that the account should hold (idempotent on the server). */
+export function entriesOfProfile(profile: Profile, now: number): ProgressEntry[] {
+  return [
+    ...profile.achievements.map((a) => ({ kind: 'achievement' as const, key: a.id, at: a.at })),
+    ...profile.nodes.map((key) => ({ kind: 'node' as const, key, at: now })),
+    ...profile.stats.routes.map((key) => ({ kind: 'route' as const, key, at: now })),
+    ...profile.stats.endings.map((key) => ({ kind: 'ending' as const, key, at: now })),
+    ...(profile.stats.nights > 0
+      ? [{ kind: 'stat' as const, key: 'nights' as const, value: profile.stats.nights, at: now }]
+      : []),
+    ...(profile.stats.exorcisms > 0
+      ? [
+          {
+            kind: 'stat' as const,
+            key: 'exorcisms' as const,
+            value: profile.stats.exorcisms,
+            at: now,
+          },
+        ]
+      : []),
+  ];
+}

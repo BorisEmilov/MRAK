@@ -164,6 +164,8 @@ const Derived = z.strictObject({
 export const ProgressionRules = z
   .strictObject({
     ...entityBase,
+    /** End of the free demo (docs/systems/store.md): nights survived before the demo-end card. */
+    demo: z.strictObject({ nights: z.int().min(1).max(100) }).optional(),
     attributes: z.strictObject({
       base: z.int().min(1).max(6),
       playerPoints: z.int().min(0).max(3),

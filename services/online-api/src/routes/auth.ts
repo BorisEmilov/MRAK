@@ -1,10 +1,8 @@
 /** Account routes (/v1/auth, /v1/me, JWKS). Handlers: src/auth/controller.ts. */
 import { z } from 'zod';
 import { controller, schemas } from '../auth/controller.js';
+import type { PolicyName } from '../limits/policies.js';
 import { defineRoute, type RouteDoc } from './defineRoute.js';
-
-const MIN = 60_000;
-const HOUR = 60 * MIN;
 
 const Accepted = z.object({ status: z.literal('check-your-email') });
 const User = z.object({
@@ -50,20 +48,21 @@ const problems = (...codes: number[]): RouteDoc['responses'] =>
 
 const post = (
   path: string,
-  limit: [number, number],
+  limits: readonly PolicyName[],
   handler: (typeof controller)[keyof typeof controller],
   doc: Omit<RouteDoc, 'tag'>,
 ) =>
   defineRoute({
     method: 'post',
     path,
-    rateLimit: { windowMs: limit[0], limit: limit[1] },
+    rateLimit: limits,
+    ...(path === '/v1/auth/register' ? { feature: 'registration' as const } : {}),
     handler,
     doc: { tag: 'auth', csrf: true, ...doc },
   });
 
 export const authRoutes = [
-  post('/v1/auth/register', [HOUR, 10], controller.register, {
+  post('/v1/auth/register', ['register-ip', 'register-ip-day'], controller.register, {
     summary: 'Create an account (Turnstile required); same answer whether or not the email exists',
     body: schemas.register,
     responses: {
@@ -71,20 +70,25 @@ export const authRoutes = [
       ...problems(400, 403, 422, 429, 503),
     },
   }),
-  post('/v1/auth/verify-email', [15 * MIN, 20], controller.verifyEmail, {
+  post('/v1/auth/verify-email', ['auth-token-ip'], controller.verifyEmail, {
     summary: 'Confirm the email address with the emailed token',
     body: schemas.verifyEmail,
     responses: { 204: { description: 'Verified.' }, ...problems(400, 403, 429) },
   }),
-  post('/v1/auth/resend-verification', [HOUR, 5], controller.resendVerification, {
-    summary: 'Send the verification email again (Turnstile required)',
-    body: schemas.emailCaptcha,
-    responses: {
-      202: { description: 'Check your email.', schema: Accepted },
-      ...problems(400, 403, 429),
+  post(
+    '/v1/auth/resend-verification',
+    ['email-send-email', 'email-send-ip'],
+    controller.resendVerification,
+    {
+      summary: 'Send the verification email again (Turnstile required)',
+      body: schemas.emailCaptcha,
+      responses: {
+        202: { description: 'Check your email.', schema: Accepted },
+        ...problems(400, 403, 429),
+      },
     },
-  }),
-  post('/v1/auth/login', [MIN, 10], controller.login, {
+  ),
+  post('/v1/auth/login', ['login-ip-email', 'login-ip'], controller.login, {
     summary: 'Sign in; web gets the refresh cookie, native platforms the token in the body',
     body: schemas.login,
     responses: {
@@ -92,7 +96,7 @@ export const authRoutes = [
       ...problems(400, 401, 403, 429, 503),
     },
   }),
-  post('/v1/auth/refresh', [MIN, 30], controller.refresh, {
+  post('/v1/auth/refresh', ['refresh-ip'], controller.refresh, {
     summary: 'Rotate the refresh token (cookie, or body on native) and get a new access token',
     cookie: true,
     body: schemas.refresh,
@@ -101,7 +105,7 @@ export const authRoutes = [
       ...problems(400, 401, 403, 429),
     },
   }),
-  post('/v1/auth/logout', [MIN, 30], controller.logout, {
+  post('/v1/auth/logout', ['logout-ip'], controller.logout, {
     summary: 'Revoke the current session',
     cookie: true,
     body: schemas.refresh,
@@ -110,7 +114,7 @@ export const authRoutes = [
   defineRoute({
     method: 'post',
     path: '/v1/auth/logout-all',
-    rateLimit: { windowMs: MIN, limit: 10 },
+    rateLimit: ['authed-user'],
     handler: controller.logoutAll,
     doc: {
       tag: 'auth',
@@ -119,15 +123,20 @@ export const authRoutes = [
       responses: { 204: { description: 'Signed out everywhere.' }, ...problems(401, 429) },
     },
   }),
-  post('/v1/auth/forgot-password', [HOUR, 5], controller.forgotPassword, {
-    summary: 'Email a password reset link (Turnstile required); same answer for unknown emails',
-    body: schemas.emailCaptcha,
-    responses: {
-      202: { description: 'Check your email.', schema: Accepted },
-      ...problems(400, 403, 429),
+  post(
+    '/v1/auth/forgot-password',
+    ['email-send-email', 'email-send-ip'],
+    controller.forgotPassword,
+    {
+      summary: 'Email a password reset link (Turnstile required); same answer for unknown emails',
+      body: schemas.emailCaptcha,
+      responses: {
+        202: { description: 'Check your email.', schema: Accepted },
+        ...problems(400, 403, 429),
+      },
     },
-  }),
-  post('/v1/auth/reset-password', [15 * MIN, 10], controller.resetPassword, {
+  ),
+  post('/v1/auth/reset-password', ['auth-token-ip'], controller.resetPassword, {
     summary: 'Set a new password with the emailed token; revokes every session',
     body: schemas.resetPassword,
     responses: { 204: { description: 'Password changed.' }, ...problems(400, 403, 422, 429, 503) },
@@ -135,7 +144,7 @@ export const authRoutes = [
   defineRoute({
     method: 'get',
     path: '/v1/me',
-    rateLimit: { windowMs: MIN, limit: 60 },
+    rateLimit: ['authed-user'],
     handler: controller.getMe,
     doc: {
       tag: 'me',
@@ -147,7 +156,7 @@ export const authRoutes = [
   defineRoute({
     method: 'patch',
     path: '/v1/me',
-    rateLimit: { windowMs: MIN, limit: 20 },
+    rateLimit: ['authed-user'],
     handler: controller.patchMe,
     doc: {
       tag: 'me',
@@ -160,7 +169,7 @@ export const authRoutes = [
   defineRoute({
     method: 'get',
     path: '/v1/me/sessions',
-    rateLimit: { windowMs: MIN, limit: 30 },
+    rateLimit: ['authed-user'],
     handler: controller.sessions,
     doc: {
       tag: 'me',
@@ -178,7 +187,7 @@ export const authRoutes = [
   defineRoute({
     method: 'delete',
     path: '/v1/me/sessions/:id',
-    rateLimit: { windowMs: MIN, limit: 20 },
+    rateLimit: ['authed-user'],
     handler: controller.revokeSession,
     doc: {
       tag: 'me',
@@ -190,7 +199,7 @@ export const authRoutes = [
   defineRoute({
     method: 'post',
     path: '/v1/me/change-password',
-    rateLimit: { windowMs: 15 * MIN, limit: 5 },
+    rateLimit: ['sensitive-user', 'authed-user'],
     handler: controller.changePassword,
     doc: {
       tag: 'me',
@@ -203,7 +212,7 @@ export const authRoutes = [
   defineRoute({
     method: 'get',
     path: '/v1/me/export',
-    rateLimit: { windowMs: 24 * HOUR, limit: 3 },
+    rateLimit: ['export-user', 'authed-user'],
     handler: controller.exportMe,
     doc: {
       tag: 'me',
@@ -218,7 +227,7 @@ export const authRoutes = [
   defineRoute({
     method: 'delete',
     path: '/v1/me',
-    rateLimit: { windowMs: HOUR, limit: 5 },
+    rateLimit: ['sensitive-user', 'authed-user'],
     handler: controller.deleteMe,
     doc: {
       tag: 'me',
@@ -231,7 +240,7 @@ export const authRoutes = [
   defineRoute({
     method: 'get',
     path: '/.well-known/jwks.json',
-    rateLimit: { windowMs: MIN, limit: 120 },
+    rateLimit: ['public-ip'],
     handler: (req, res) => {
       const jwks = req.app.locals['jwks'] as { keys: unknown[] } | undefined;
       res.set('Cache-Control', 'public, max-age=300');

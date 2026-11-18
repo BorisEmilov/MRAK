@@ -2089,6 +2089,34 @@
       "meaning": "What was said so far."
     },
     {
+      "name": "ui.sync-pending",
+      "category": "ui",
+      "source": "cloud-upload",
+      "author": "delapouite",
+      "meaning": "Saves waiting to upload to the cloud."
+    },
+    {
+      "name": "ui.sync-offline",
+      "category": "ui",
+      "source": "unplugged",
+      "author": "delapouite",
+      "meaning": "No connection: saves stay on this device for now."
+    },
+    {
+      "name": "ui.sync-conflict",
+      "category": "ui",
+      "source": "split-arrows",
+      "author": "delapouite",
+      "meaning": "This device and the cloud have different saves."
+    },
+    {
+      "name": "ui.cloud",
+      "category": "ui",
+      "source": "cloud-download",
+      "author": "delapouite",
+      "meaning": "Saves stored in your account."
+    },
+    {
       "name": "building.workshop",
       "category": "building",
       "source": "anvil",

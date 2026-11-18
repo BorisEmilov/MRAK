@@ -7,6 +7,7 @@ import { z } from 'zod';
 
 const Key = z
   .string()
+  // eslint-disable-next-line security/detect-unsafe-regex -- separator-delimited id: linear (timed in docs/security/test-report.md)
   .regex(/^[a-z0-9]+(-[a-z0-9]+)*$/)
   .max(64);
 /** Epoch milliseconds; a time after the server clock is clamped to it by the route. */

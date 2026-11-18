@@ -1,0 +1,17 @@
+---
+import Island from '../components/Island.astro';
+import Base from '../layouts/Base.astro';
+import { t } from '../i18n';
+---
+
+<Base title="site.auth.signup.title" noindex>
+  <div class="narrow">
+    <h1>{t('site.auth.signup.title')}</h1>
+    <p>{t('site.auth.signup.intro')}</p>
+    <Island name="auth" props={{ mode: 'signup' }} />
+  </div>
+</Base>
+
+<script>
+  import '../islands/entry';
+</script>

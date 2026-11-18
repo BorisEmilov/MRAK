@@ -15,7 +15,10 @@ describe('OpenAPI', () => {
     };
     for (const r of routes) {
       const op = spec.paths[r.path.replace(/:(\w+)/g, '{$1}')]?.[r.method];
-      expect(op?.['x-rate-limit'], `${r.method} ${r.path}`).toEqual(r.rateLimit);
+      expect(
+        (op?.['x-rate-limit'] as { policy: string }[]).map((x) => x.policy),
+        `${r.method} ${r.path}`,
+      ).toEqual(r.rateLimit);
     }
   });
 

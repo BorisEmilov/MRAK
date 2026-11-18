@@ -15,8 +15,13 @@ import { openBackend, SaveStore } from './storage/save-store';
 import '@mrak/ui-kit/styles.css';
 import './styles.css';
 import { wirePresentation } from './onboarding/controller';
-import { createAccountClient, createOnlineClient } from '@mrak/api-client';
+import { createAccountClient, createOnlineClient, createSavesClient } from '@mrak/api-client';
+import { HttpCloudSync, openSyncState } from './storage/cloud-sync';
+import { wireOnline } from './online/wire';
+import type { OnlineServices } from './state/context';
 import { AccountSync, openOutbox } from './storage/account-sync';
+import { checkFullGameEntitlement, loadCachedFullPack, wireDemoEnd } from './online/full-game';
+import { createStoreClient } from '@mrak/api-client';
 
 function localStorageOrUndefined(): Storage | undefined {
   try {
@@ -47,9 +52,14 @@ async function bootstrap(): Promise<void> {
         })
       : [];
 
+  // The paid full pack, when this device downloaded it (docs/systems/store.md).
+  const full = await loadCachedFullPack();
   let content;
   try {
-    content = loadContentDatabase(packs);
+    content = loadContentDatabase(packs, full);
+    store.setState({
+      fullGame: full !== null && content.info.version.includes(`+${full.packId}@`),
+    });
   } catch (err) {
     store.setState({
       screen: 'error',
@@ -62,22 +72,34 @@ async function bootstrap(): Promise<void> {
 
   const local = localStorageOrUndefined();
   const storageApi = typeof navigator.storage === 'undefined' ? undefined : navigator.storage;
-  const saves = await SaveStore.open(await openBackend(typeof indexedDB !== 'undefined'));
-  // Account progress: queued on this device, sent when there is an account and a connection.
+  // Online (optional): account client, cloud saves and account progress (ADR 0007, phase 25).
   const apiUrl = env['VITE_API_URL'];
-  // Access token in memory only; the refresh token is an HttpOnly cookie (ADR 0007).
+  const hasIdb = typeof indexedDB !== 'undefined';
   const accountClient = apiUrl ? createAccountClient({ baseUrl: apiUrl }) : null;
+  const cloud = accountClient
+    ? new HttpCloudSync({
+        client: createSavesClient(accountClient),
+        state: await openSyncState(hasIdb),
+        userId: () => accountClient.user()?.id ?? null,
+        online: () => navigator.onLine,
+      })
+    : null;
+  const saves = await SaveStore.open(await openBackend(hasIdb), cloud ? { cloud } : {});
+  cloud?.attach(saves);
   const account = new AccountSync({
-    outbox: await openOutbox(typeof indexedDB !== 'undefined'),
-    client:
-      apiUrl && accountClient
-        ? createOnlineClient({ baseUrl: apiUrl, accessToken: accountClient.accessToken })
-        : null,
+    outbox: await openOutbox(hasIdb),
+    client: accountClient ? createOnlineClient(accountClient) : null,
   });
-  window.addEventListener('online', () => void account.flush());
-  void (accountClient?.resume() ?? Promise.resolve(false))
-    .catch(() => false)
-    .then(() => account.flush());
+  const online: OnlineServices | null =
+    accountClient && cloud
+      ? {
+          account: accountClient,
+          saves: cloud,
+          progress: account,
+          // Cloudflare's documented always-pass test key when none is configured (development).
+          turnstileSiteKey: env['VITE_TURNSTILE_SITEKEY'] ?? '1x00000000000000000000AA',
+        }
+      : null;
   // A backup written while the tab was closing becomes the newest autosave.
   try {
     if (await absorbEmergency(local, saves)) console.info('[save] recovered the last session');
@@ -111,6 +133,16 @@ async function bootstrap(): Promise<void> {
     : null;
 
   const presentation = host ? wirePresentation(host, bus, store) : null;
+  if (host && online) wireOnline(online, host, store, local);
+  if (host && content) {
+    const rules = content.find('progression-rules', 'default');
+    wireDemoEnd(host, store, rules?.demo?.nights ?? null);
+  }
+  // A refunded purchase: the cached pack is dropped (effective on the next start).
+  if (online && full)
+    online.account.onChange((user) => {
+      if (user) void checkFullGameEntitlement(createStoreClient(online.account)).catch(() => false);
+    });
 
   // Closing or hiding the tab: synchronous backup + autosave (see save-system.md).
   if (host) {
@@ -139,7 +171,7 @@ async function bootstrap(): Promise<void> {
   createRoot(rootEl).render(
     <StrictMode>
       {host && presentation ? (
-        <AppProvider value={{ host, bus, store, presentation }}>
+        <AppProvider value={{ host, bus, store, presentation, online }}>
           <App />
         </AppProvider>
       ) : (

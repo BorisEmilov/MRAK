@@ -102,3 +102,76 @@ model AuditLog {
   @@index([userId])
   @@map("audit_log")
 }
+
+/// Cloud saves: one row per (user, slot, version); slots keep 1 version, `auto` keeps 3.
+model CloudSave {
+  userId    String   @map("user_id") @db.Uuid
+  slot      String   @db.VarChar(8)
+  version   Int
+  checksum  String   @db.Char(64)
+  bytes     Int
+  meta      Json
+  data      String
+  updatedAt DateTime @map("updated_at")
+
+  @@id([userId, slot, version])
+  @@map("cloud_saves")
+}
+
+/// Newsletter (double opt-in). Only the address and the confirmation time are kept.
+model NewsletterSubscriber {
+  id             String    @id @db.Uuid
+  email          String    @unique @db.VarChar(254)
+  confirmedAt    DateTime? @map("confirmed_at")
+  tokenHash      String?   @unique @map("token_hash") @db.Char(64)
+  tokenExpiresAt DateTime? @map("token_expires_at")
+  createdAt      DateTime  @map("created_at")
+
+  @@map("newsletter_subscribers")
+}
+
+/// Who owns what (docs/systems/store.md). The ONLY source of truth for paid access. Granted and
+/// revoked by verified payment webhooks (web) or storefront receipts (steam/ios/android) only.
+model Entitlement {
+  id          String    @id @db.Uuid
+  userId      String    @map("user_id") @db.Uuid
+  sku         String    @db.VarChar(32)
+  source      String    @db.VarChar(8)
+  status      String    @db.VarChar(8)
+  /// Provider order/transaction id (one entitlement per order and sku).
+  orderId     String    @map("order_id") @db.VarChar(64)
+  purchasedAt DateTime  @map("purchased_at")
+  refundedAt  DateTime? @map("refunded_at")
+
+  @@unique([source, orderId, sku])
+  @@index([userId])
+  @@map("entitlements")
+}
+
+/// Processed provider webhook events: the primary key makes every event idempotent.
+model PaymentEvent {
+  id          String   @id @db.VarChar(64)
+  type        String   @db.VarChar(48)
+  processedAt DateTime @map("processed_at")
+
+  @@map("payment_events")
+}
+
+/// Accounts blocked from buying after a chargeback, until reviewed.
+model PurchaseBlock {
+  userId    String   @id @map("user_id") @db.Uuid
+  reason    String   @db.VarChar(32)
+  createdAt DateTime @map("created_at")
+
+  @@map("purchase_blocks")
+}
+
+/// Collector's edition: the villager name shown in the credits, after moderation.
+model CollectorName {
+  userId    String   @id @map("user_id") @db.Uuid
+  name      String   @db.VarChar(32)
+  status    String   @db.VarChar(10)
+  updatedAt DateTime @map("updated_at")
+
+  @@map("collector_names")
+}

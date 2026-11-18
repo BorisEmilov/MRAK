@@ -1,0 +1,3090 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "anyOf": [
+    {
+      "$ref": "#/$defs/FearRules"
+    },
+    {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/FearRules"
+      }
+    }
+  ],
+  "$defs": {
+    "FearRules": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "demo",
+            "full"
+          ]
+        },
+        "sanity": {
+          "type": "object",
+          "properties": {
+            "tiers": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "below": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 1
+                  },
+                  "effects": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "enum": [
+                        "filter",
+                        "whispers",
+                        "moving-objects",
+                        "staring"
+                      ]
+                    }
+                  },
+                  "whisperKeys": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                      "description": "Reference to a loc"
+                    }
+                  }
+                },
+                "required": [
+                  "below",
+                  "effects"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "shocks": {
+              "type": "object",
+              "properties": {
+                "demonLearned": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "forbiddenPerNotice": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 10
+                },
+                "causes": {
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "pattern": "^[a-z-]+$"
+                  },
+                  "additionalProperties": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 100
+                  }
+                }
+              },
+              "required": [
+                "demonLearned",
+                "forbiddenPerNotice",
+                "causes"
+              ],
+              "additionalProperties": false
+            },
+            "restore": {
+              "type": "object",
+              "properties": {
+                "homeZones": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "Reference to a zone"
+                  }
+                },
+                "dawnAtHome": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "faithDivisor": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                "lightPerHour": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 20
+                },
+                "restPerHour": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 50
+                }
+              },
+              "required": [
+                "homeZones",
+                "dawnAtHome",
+                "faithDivisor",
+                "lightPerHour",
+                "restPerHour"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "tiers",
+            "shocks",
+            "restore"
+          ],
+          "additionalProperties": false
+        },
+        "hysteria": {
+          "type": "object",
+          "properties": {
+            "stages": {
+              "type": "object",
+              "properties": {
+                "rumours": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100
+                },
+                "accusations": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100
+                },
+                "mob": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "rumours",
+                "accusations",
+                "mob"
+              ],
+              "additionalProperties": false
+            },
+            "decayPerDawn": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 50
+            },
+            "lowVillageSanity": {
+              "type": "object",
+              "properties": {
+                "below": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "factor": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "below",
+                "factor"
+              ],
+              "additionalProperties": false
+            },
+            "incidents": {
+              "type": "object",
+              "properties": {
+                "death": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "absentAtDawn": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "death",
+                "absentAtDawn"
+              ],
+              "additionalProperties": false
+            },
+            "suspicionStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "guardianStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "guardianSuspicion": {
+              "type": "object",
+              "properties": {
+                "absentAtDawn": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "broken": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "failedConfrontation": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "absentAtDawn",
+                "broken",
+                "failedConfrontation"
+              ],
+              "additionalProperties": false
+            },
+            "rumourStrength": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "traitMultipliers": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "description": "Reference to a trait"
+              },
+              "additionalProperties": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 10
+              }
+            },
+            "guardianRumourWeight": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 10
+            },
+            "accusationSuspicion": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "guardianAccusableAt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "mob": {
+              "type": "object",
+              "properties": {
+                "skill": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a skill"
+                },
+                "context": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a context"
+                },
+                "difficulty": {
+                  "type": "string",
+                  "enum": [
+                    "easy",
+                    "average",
+                    "hard",
+                    "daunting",
+                    "dire"
+                  ]
+                },
+                "joinFear": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "lynchAt": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "beatAt": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "calmRelief": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "sparedRelief": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "targetDiedRelief": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "beaten": {
+                  "type": "object",
+                  "properties": {
+                    "fear": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    },
+                    "health": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 100
+                    }
+                  },
+                  "required": [
+                    "fear",
+                    "health"
+                  ],
+                  "additionalProperties": false
+                },
+                "guardianBeatenEffects": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Effect"
+                  }
+                },
+                "exploitEffects": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Effect"
+                  }
+                }
+              },
+              "required": [
+                "skill",
+                "context",
+                "difficulty",
+                "joinFear",
+                "lynchAt",
+                "beatAt",
+                "calmRelief",
+                "sparedRelief",
+                "targetDiedRelief",
+                "beaten",
+                "guardianBeatenEffects",
+                "exploitEffects"
+              ],
+              "additionalProperties": false
+            },
+            "lynching": {
+              "type": "object",
+              "properties": {
+                "cause": {
+                  "type": "string",
+                  "pattern": "^[a-z-]+$"
+                },
+                "aftermathRelief": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "innocentEffects": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Effect"
+                  }
+                },
+                "complicitEffects": {
+                  "default": [],
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Effect"
+                  }
+                }
+              },
+              "required": [
+                "cause",
+                "aftermathRelief",
+                "innocentEffects"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "stages",
+            "decayPerDawn",
+            "lowVillageSanity",
+            "incidents",
+            "suspicionStat",
+            "guardianStat",
+            "guardianSuspicion",
+            "rumourStrength",
+            "traitMultipliers",
+            "guardianRumourWeight",
+            "accusationSuspicion",
+            "guardianAccusableAt",
+            "mob",
+            "lynching"
+          ],
+          "additionalProperties": false
+        },
+        "director": {
+          "type": "object",
+          "properties": {
+            "mix": {
+              "type": "object",
+              "properties": {
+                "noise": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "seed": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "noise",
+                "seed"
+              ],
+              "additionalProperties": false
+            },
+            "hallucination": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "pivot": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 200
+                },
+                "max": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "perCorruption": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "base",
+                "pivot",
+                "max",
+                "perCorruption"
+              ],
+              "additionalProperties": false
+            },
+            "fire": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "tensionDivisor": {
+                  "type": "number",
+                  "exclusiveMinimum": 0,
+                  "maximum": 1000
+                },
+                "recentPenalty": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "min": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "max": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "base",
+                "tensionDivisor",
+                "recentPenalty",
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "targets": {
+              "type": "object",
+              "properties": {
+                "settle": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "buildFrom": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "buildTo": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "peak": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "release": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "settle",
+                "buildFrom",
+                "buildTo",
+                "peak",
+                "release"
+              ],
+              "additionalProperties": false
+            },
+            "settleShare": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 0.9
+            },
+            "peakAround": {
+              "type": "string",
+              "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$"
+            },
+            "peakHalfWidth": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 240
+            },
+            "decayPerTick": {
+              "type": "object",
+              "properties": {
+                "settle": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "build": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "peak": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "release": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "settle",
+                "build",
+                "peak",
+                "release"
+              ],
+              "additionalProperties": false
+            },
+            "budget": {
+              "type": "object",
+              "properties": {
+                "perNight": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1000
+                },
+                "shares": {
+                  "type": "object",
+                  "properties": {
+                    "settle": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "build": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "peak": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    },
+                    "release": {
+                      "type": "number",
+                      "minimum": 0,
+                      "maximum": 1
+                    }
+                  },
+                  "required": [
+                    "settle",
+                    "build",
+                    "peak",
+                    "release"
+                  ],
+                  "additionalProperties": false
+                },
+                "chapterIntensity": {
+                  "default": {},
+                  "type": "object",
+                  "propertyNames": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "Reference to a festival"
+                  },
+                  "additionalProperties": {
+                    "type": "number",
+                    "minimum": 0,
+                    "maximum": 5
+                  }
+                }
+              },
+              "required": [
+                "perNight",
+                "shares"
+              ],
+              "additionalProperties": false
+            },
+            "peakCost": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            },
+            "quiet": {
+              "type": "object",
+              "properties": {
+                "min": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 240
+                },
+                "max": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 240
+                }
+              },
+              "required": [
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "zoneFactor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "offZoneFactor": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            },
+            "logSize": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1000
+            }
+          },
+          "required": [
+            "mix",
+            "hallucination",
+            "fire",
+            "targets",
+            "settleShare",
+            "peakAround",
+            "peakHalfWidth",
+            "decayPerTick",
+            "budget",
+            "peakCost",
+            "quiet",
+            "zoneFactor",
+            "offZoneFactor",
+            "logSize"
+          ],
+          "additionalProperties": false
+        },
+        "possession": {
+          "type": "object",
+          "properties": {
+            "advance": {
+              "type": "object",
+              "properties": {
+                "base": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "perRank": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "min": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "max": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "base",
+                "perRank",
+                "min",
+                "max"
+              ],
+              "additionalProperties": false
+            },
+            "vulnerability": {
+              "type": "object",
+              "properties": {
+                "fear": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "lowFaith": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "faithStat": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a stat"
+                }
+              },
+              "required": [
+                "fear",
+                "lowFaith",
+                "faithStat"
+              ],
+              "additionalProperties": false
+            },
+            "falseSymptomChance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "advance",
+            "vulnerability",
+            "falseSymptomChance"
+          ],
+          "additionalProperties": false
+        },
+        "exorcism": {
+          "type": "object",
+          "properties": {
+            "skill": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a skill"
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            },
+            "difficulty": {
+              "type": "string",
+              "enum": [
+                "easy",
+                "average",
+                "hard",
+                "daunting",
+                "dire"
+              ]
+            },
+            "preparation": {
+              "type": "object",
+              "properties": {
+                "maxItems": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 8
+                },
+                "holyTag": {
+                  "type": "string",
+                  "enum": [
+                    "light",
+                    "holy",
+                    "herb",
+                    "dark",
+                    "warding",
+                    "food",
+                    "calming",
+                    "fever"
+                  ]
+                },
+                "circleItem": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a item"
+                }
+              },
+              "required": [
+                "maxItems",
+                "holyTag",
+                "circleItem"
+              ],
+              "additionalProperties": false
+            },
+            "sanityPerTaunt": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 50
+            },
+            "maxTaunts": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 8
+            },
+            "expulsion": {
+              "type": "object",
+              "properties": {
+                "rounds": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 20
+                },
+                "goal": {
+                  "type": "number",
+                  "minimum": 1,
+                  "maximum": 1000
+                },
+                "press": {
+                  "type": "object",
+                  "properties": {
+                    "progress": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "sanity": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "progress",
+                    "sanity"
+                  ],
+                  "additionalProperties": false
+                },
+                "hold": {
+                  "type": "object",
+                  "properties": {
+                    "progress": {
+                      "type": "number",
+                      "minimum": 0
+                    },
+                    "sanity": {
+                      "type": "number",
+                      "minimum": 0
+                    }
+                  },
+                  "required": [
+                    "progress",
+                    "sanity"
+                  ],
+                  "additionalProperties": false
+                },
+                "pushPerRank": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                },
+                "breakBelow": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "rounds",
+                "goal",
+                "press",
+                "hold",
+                "pushPerRank",
+                "breakBelow"
+              ],
+              "additionalProperties": false
+            },
+            "success": {
+              "type": "object",
+              "properties": {
+                "hostFear": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "hostFear"
+              ],
+              "additionalProperties": false
+            },
+            "failure": {
+              "type": "object",
+              "properties": {
+                "guardianJumpChance": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "sanity": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "guardianJumpChance",
+                "sanity"
+              ],
+              "additionalProperties": false
+            },
+            "bindDebt": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a debt-source"
+            }
+          },
+          "required": [
+            "skill",
+            "context",
+            "difficulty",
+            "preparation",
+            "sanityPerTaunt",
+            "maxTaunts",
+            "expulsion",
+            "success",
+            "failure",
+            "bindDebt"
+          ],
+          "additionalProperties": false
+        },
+        "factions": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z-]+$"
+              },
+              "nameKey": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                "description": "Reference to a loc"
+              },
+              "stat": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "description": "Reference to a stat"
+              },
+              "hostileTo": {
+                "default": [],
+                "type": "array",
+                "items": {
+                  "type": "string",
+                  "pattern": "^[a-z-]+$"
+                }
+              },
+              "hostility": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 2
+              }
+            },
+            "required": [
+              "id",
+              "nameKey",
+              "stat",
+              "hostility"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "pacts": {
+          "type": "object",
+          "properties": {
+            "sinReinforce": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 50
+            }
+          },
+          "required": [
+            "sinReinforce"
+          ],
+          "additionalProperties": false
+        },
+        "sacrifices": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z-]+$"
+              },
+              "nameKey": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                "description": "Reference to a loc"
+              },
+              "zone": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                "description": "Reference to a zone"
+              },
+              "items": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "item": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                      "description": "Reference to a item"
+                    },
+                    "qty": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 99
+                    }
+                  },
+                  "required": [
+                    "item",
+                    "qty"
+                  ],
+                  "additionalProperties": false
+                }
+              },
+              "escalation": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 5
+              },
+              "targeted": {
+                "default": false,
+                "type": "boolean"
+              },
+              "doomDays": {
+                "type": "object",
+                "properties": {
+                  "min": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "max": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  }
+                },
+                "required": [
+                  "min",
+                  "max"
+                ],
+                "additionalProperties": false
+              },
+              "effects": {
+                "minItems": 1,
+                "type": "array",
+                "items": {
+                  "$ref": "#/$defs/Effect"
+                }
+              },
+              "witnessChance": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 1
+              },
+              "witnessedHysteria": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "witnessedSuspicion": {
+                "type": "number",
+                "minimum": 0,
+                "maximum": 100
+              }
+            },
+            "required": [
+              "id",
+              "nameKey",
+              "zone",
+              "items",
+              "escalation",
+              "effects",
+              "witnessChance",
+              "witnessedHysteria",
+              "witnessedSuspicion"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "night": {
+          "type": "object",
+          "properties": {
+            "homeZone": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a zone"
+            },
+            "healthStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "spawns": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "zone": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "Reference to a zone"
+                  },
+                  "poi": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  }
+                },
+                "required": [
+                  "zone",
+                  "poi"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "originCandidates": {
+              "minItems": 2,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "zone": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "Reference to a zone"
+                  },
+                  "poi": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  }
+                },
+                "required": [
+                  "zone",
+                  "poi"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "originEffects": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Effect"
+              }
+            },
+            "returnEffects": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Effect"
+              }
+            },
+            "spawnChance": {
+              "type": "object",
+              "properties": {
+                "settle": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "build": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "peak": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "release": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "settle",
+                "build",
+                "peak",
+                "release"
+              ],
+              "additionalProperties": false
+            },
+            "maxActive": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "flashFuel": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "strikeDamage": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 200
+            },
+            "skills": {
+              "type": "object",
+              "properties": {
+                "strike": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a skill"
+                },
+                "dodge": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a skill"
+                },
+                "flee": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a skill"
+                },
+                "sneak": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a skill"
+                },
+                "ritual": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a skill"
+                },
+                "lastBreath": {
+                  "type": "string",
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                  "description": "Reference to a skill"
+                }
+              },
+              "required": [
+                "strike",
+                "dodge",
+                "flee",
+                "sneak",
+                "ritual",
+                "lastBreath"
+              ],
+              "additionalProperties": false
+            },
+            "lastBreathHealth": {
+              "type": "number",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "homeZone",
+            "healthStat",
+            "spawns",
+            "originCandidates",
+            "spawnChance",
+            "maxActive",
+            "flashFuel",
+            "strikeDamage",
+            "skills",
+            "lastBreathHealth"
+          ],
+          "additionalProperties": false
+        },
+        "evidence": {
+          "type": "object",
+          "properties": {
+            "windowMinutes": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10080
+            },
+            "photograph": {
+              "type": "object",
+              "properties": {
+                "real": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "hallucination": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              },
+              "required": [
+                "real",
+                "hallucination"
+              ],
+              "additionalProperties": false
+            },
+            "witness": {
+              "type": "object",
+              "properties": {
+                "real": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "hallucination": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "minAffinity": {
+                  "type": "number",
+                  "minimum": -100,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "real",
+                "hallucination",
+                "minAffinity"
+              ],
+              "additionalProperties": false
+            },
+            "relic": {
+              "type": "object",
+              "properties": {
+                "real": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "hallucination": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "tag": {
+                  "type": "string",
+                  "enum": [
+                    "light",
+                    "holy",
+                    "herb",
+                    "dark",
+                    "warding",
+                    "food",
+                    "calming",
+                    "fever"
+                  ]
+                }
+              },
+              "required": [
+                "real",
+                "hallucination",
+                "tag"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "windowMinutes",
+            "photograph",
+            "witness",
+            "relic"
+          ],
+          "additionalProperties": false
+        },
+        "endless": {
+          "type": "object",
+          "properties": {
+            "maxDarkness": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 10
+            },
+            "mysteries": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  },
+                  "nameKey": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                    "description": "Reference to a loc"
+                  },
+                  "questionKey": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                    "description": "Reference to a loc"
+                  },
+                  "suspects": {
+                    "type": "integer",
+                    "minimum": 2,
+                    "maximum": 4
+                  },
+                  "culpritTraits": {
+                    "default": [],
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                      "description": "Reference to a trait"
+                    }
+                  },
+                  "whyGuiltyKey": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                    "description": "Reference to a loc"
+                  },
+                  "whyInnocentKey": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                    "description": "Reference to a loc"
+                  },
+                  "causes": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                        },
+                        "nameKey": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                          "description": "Reference to a loc"
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "nameKey"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "remedies": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                        },
+                        "nameKey": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                          "description": "Reference to a loc"
+                        },
+                        "action": {
+                          "default": "accuse",
+                          "type": "string",
+                          "enum": [
+                            "accuse",
+                            "exorcise",
+                            "burn",
+                            "exhume",
+                            "confront"
+                          ]
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "nameKey"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "solution": {
+                    "type": "object",
+                    "properties": {
+                      "cause": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                      },
+                      "remedy": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                      }
+                    },
+                    "required": [
+                      "cause",
+                      "remedy"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "clues": {
+                    "minItems": 3,
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                        },
+                        "nameKey": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                          "description": "Reference to a loc"
+                        },
+                        "descKey": {
+                          "type": "string",
+                          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                          "description": "Reference to a loc"
+                        },
+                        "reliability": {
+                          "type": "string",
+                          "enum": [
+                            "solid",
+                            "doubtful"
+                          ]
+                        },
+                        "about": {
+                          "type": "string",
+                          "enum": [
+                            "culprit",
+                            "innocent",
+                            "cause",
+                            "liar"
+                          ]
+                        },
+                        "place": {
+                          "type": "object",
+                          "properties": {
+                            "zone": {
+                              "type": "string",
+                              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                              "description": "Reference to a zone"
+                            },
+                            "poi": {
+                              "type": "string",
+                              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                            }
+                          },
+                          "required": [
+                            "zone",
+                            "poi"
+                          ],
+                          "additionalProperties": false
+                        },
+                        "check": {
+                          "type": "object",
+                          "properties": {
+                            "skill": {
+                              "type": "string",
+                              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                              "description": "Reference to a skill"
+                            },
+                            "difficulty": {
+                              "type": "string",
+                              "enum": [
+                                "easy",
+                                "average",
+                                "hard",
+                                "daunting",
+                                "dire"
+                              ]
+                            }
+                          },
+                          "required": [
+                            "skill",
+                            "difficulty"
+                          ],
+                          "additionalProperties": false
+                        }
+                      },
+                      "required": [
+                        "id",
+                        "nameKey",
+                        "descKey",
+                        "reliability",
+                        "about"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "deadlineNight": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 9007199254740991
+                  },
+                  "right": {
+                    "type": "object",
+                    "properties": {
+                      "descKey": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                        "description": "Reference to a loc"
+                      },
+                      "effects": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/Effect"
+                        }
+                      }
+                    },
+                    "required": [
+                      "descKey",
+                      "effects"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "wrong": {
+                    "type": "object",
+                    "properties": {
+                      "descKey": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                        "description": "Reference to a loc"
+                      },
+                      "effects": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/Effect"
+                        }
+                      }
+                    },
+                    "required": [
+                      "descKey",
+                      "effects"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "unsolved": {
+                    "type": "object",
+                    "properties": {
+                      "descKey": {
+                        "type": "string",
+                        "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                        "description": "Reference to a loc"
+                      },
+                      "effects": {
+                        "minItems": 1,
+                        "type": "array",
+                        "items": {
+                          "$ref": "#/$defs/Effect"
+                        }
+                      }
+                    },
+                    "required": [
+                      "descKey",
+                      "effects"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "id",
+                  "nameKey",
+                  "questionKey",
+                  "suspects",
+                  "whyGuiltyKey",
+                  "whyInnocentKey",
+                  "causes",
+                  "remedies",
+                  "solution",
+                  "clues",
+                  "deadlineNight",
+                  "right",
+                  "wrong",
+                  "unsolved"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "possessions": {
+              "type": "object",
+              "properties": {
+                "maxRank": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 4
+                },
+                "perYear": {
+                  "type": "object",
+                  "properties": {
+                    "min": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 5
+                    },
+                    "max": {
+                      "type": "integer",
+                      "minimum": 0,
+                      "maximum": 5
+                    }
+                  },
+                  "required": [
+                    "min",
+                    "max"
+                  ],
+                  "additionalProperties": false
+                },
+                "combineFrom": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10
+                }
+              },
+              "required": [
+                "maxRank",
+                "perYear",
+                "combineFrom"
+              ],
+              "additionalProperties": false
+            },
+            "harvests": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  },
+                  "nameKey": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                    "description": "Reference to a loc"
+                  },
+                  "weight": {
+                    "type": "number",
+                    "exclusiveMinimum": 0,
+                    "maximum": 100
+                  },
+                  "minDarkness": {
+                    "default": 0,
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 10
+                  },
+                  "effects": {
+                    "minItems": 1,
+                    "type": "array",
+                    "items": {
+                      "$ref": "#/$defs/Effect"
+                    }
+                  }
+                },
+                "required": [
+                  "id",
+                  "nameKey",
+                  "weight",
+                  "effects"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "goals": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  },
+                  "category": {
+                    "type": "string",
+                    "enum": [
+                      "village",
+                      "lineage",
+                      "collection"
+                    ]
+                  },
+                  "nameKey": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                    "description": "Reference to a loc"
+                  },
+                  "metric": {
+                    "type": "string",
+                    "enum": [
+                      "prosperity",
+                      "population",
+                      "building-levels",
+                      "generation",
+                      "mysteries-solved",
+                      "collection-found",
+                      "darkness-best",
+                      "endless-years"
+                    ]
+                  },
+                  "target": {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  "legacy": {
+                    "default": 0,
+                    "type": "integer",
+                    "minimum": 0,
+                    "maximum": 500
+                  }
+                },
+                "required": [
+                  "id",
+                  "category",
+                  "nameKey",
+                  "metric",
+                  "target"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "relics": {
+              "default": [],
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                  },
+                  "darkness": {
+                    "type": "integer",
+                    "minimum": 1,
+                    "maximum": 10
+                  },
+                  "tree": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "Reference to a tree"
+                  },
+                  "cell": {
+                    "type": "string",
+                    "pattern": "^[A-F][1-6]$"
+                  },
+                  "talent": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "description": "Reference to a talent"
+                  }
+                },
+                "required": [
+                  "id",
+                  "darkness",
+                  "tree",
+                  "cell",
+                  "talent"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "maxDarkness",
+            "mysteries",
+            "possessions",
+            "harvests",
+            "goals"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "id",
+        "tier",
+        "sanity",
+        "hysteria",
+        "director",
+        "possession",
+        "exorcism",
+        "factions",
+        "pacts",
+        "sacrifices",
+        "night",
+        "evidence"
+      ],
+      "additionalProperties": false
+    },
+    "Effect": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "setFlag": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a flag"
+            }
+          },
+          "required": [
+            "setFlag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "clearFlag": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a flag"
+            }
+          },
+          "required": [
+            "clearFlag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "addStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "value": {
+              "type": "number"
+            },
+            "villager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "addStat",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "setStat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "value": {
+              "type": "number"
+            },
+            "villager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "setStat",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "giveItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "qty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "to": {
+              "type": "string",
+              "enum": [
+                "pack",
+                "storage"
+              ]
+            }
+          },
+          "required": [
+            "giveItem",
+            "qty"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "takeItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "qty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "from": {
+              "type": "string",
+              "enum": [
+                "pack",
+                "storage"
+              ]
+            }
+          },
+          "required": [
+            "takeItem",
+            "qty"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "addClue": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a clue"
+            }
+          },
+          "required": [
+            "addClue"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "grantCollectible": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a collectible"
+            }
+          },
+          "required": [
+            "grantCollectible"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "startQuest": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a quest"
+            }
+          },
+          "required": [
+            "startQuest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "startMystery": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a mystery"
+            }
+          },
+          "required": [
+            "startMystery"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "failQuest": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a quest"
+            }
+          },
+          "required": [
+            "failQuest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "addDebt": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a debt-source"
+            }
+          },
+          "required": [
+            "addDebt"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "changeAffinity": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            "with": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            "value": {
+              "type": "number",
+              "minimum": -100,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "changeAffinity",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "startPossession": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            },
+            "host": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "startPossession"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nameFragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            },
+            "fragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "nameFragment",
+            "fragment"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "killVillager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            "cause": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "killVillager",
+            "cause"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "triggerEvent": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a event"
+            }
+          },
+          "required": [
+            "triggerEvent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "unlockTree": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a tree"
+            }
+          },
+          "required": [
+            "unlockTree"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "unlockRecipe": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a recipe"
+            }
+          },
+          "required": [
+            "unlockRecipe"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "setZoneVariant": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a zone"
+            },
+            "variant": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "setZoneVariant",
+            "variant"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "modifier": {
+              "$ref": "#/$defs/Modifier"
+            }
+          },
+          "required": [
+            "modifier"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "ability": {
+              "type": "object",
+              "properties": {
+                "uses": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 9
+                },
+                "per": {
+                  "type": "string",
+                  "enum": [
+                    "day",
+                    "night",
+                    "chapter",
+                    "year",
+                    "generation"
+                  ]
+                },
+                "check": {
+                  "type": "object",
+                  "properties": {
+                    "skill": {
+                      "type": "string",
+                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                      "description": "Reference to a skill"
+                    },
+                    "difficulty": {
+                      "type": "string",
+                      "enum": [
+                        "easy",
+                        "average",
+                        "hard",
+                        "daunting",
+                        "dire"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "skill",
+                    "difficulty"
+                  ],
+                  "additionalProperties": false
+                },
+                "cooldown": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 10080
+                },
+                "cost": {
+                  "type": "object",
+                  "properties": {
+                    "sanity": {
+                      "type": "integer",
+                      "minimum": 1,
+                      "maximum": 100
+                    },
+                    "light": {
+                      "type": "number",
+                      "minimum": 0.05,
+                      "maximum": 1
+                    }
+                  },
+                  "additionalProperties": false
+                },
+                "effects": {
+                  "minItems": 1,
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/$defs/Effect"
+                  }
+                }
+              },
+              "required": [
+                "uses",
+                "per",
+                "effects"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "ability"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "rule": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a rule"
+            },
+            "params": {
+              "type": "object",
+              "propertyNames": {
+                "type": "string"
+              },
+              "additionalProperties": {
+                "type": [
+                  "number",
+                  "string",
+                  "boolean"
+                ]
+              }
+            }
+          },
+          "required": [
+            "rule"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "milestone": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a milestone"
+            }
+          },
+          "required": [
+            "milestone"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "learnDemon": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            }
+          },
+          "required": [
+            "learnDemon"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "learnCreature": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a creature"
+            }
+          },
+          "required": [
+            "learnCreature"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "narrate": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+              "description": "Reference to a loc"
+            }
+          },
+          "required": [
+            "narrate"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "if": {
+              "$ref": "#/$defs/Condition"
+            },
+            "then": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Effect"
+              }
+            },
+            "else": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Effect"
+              }
+            }
+          },
+          "required": [
+            "if",
+            "then"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Effect mini-language (docs/systems/conditions-effects.md)"
+    },
+    "Modifier": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "fateDice": {
+              "type": "integer",
+              "minimum": -3,
+              "maximum": 3
+            },
+            "skill": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a skill"
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            },
+            "perDebt": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "fateDice"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "shadowDice": {
+              "type": "integer",
+              "minimum": -3,
+              "maximum": 3
+            },
+            "skill": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a skill"
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            }
+          },
+          "required": [
+            "shadowDice"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "statBonus": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "value": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "statBonus",
+            "value"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "multiply": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "factor": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 10
+            }
+          },
+          "required": [
+            "multiply",
+            "factor"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "convertOmen": {
+              "type": "string",
+              "enum": [
+                "bad-to-none",
+                "none-to-good",
+                "good-to-bad"
+              ]
+            },
+            "context": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a context"
+            }
+          },
+          "required": [
+            "convertOmen"
+          ],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "Condition": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "all": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              }
+            }
+          },
+          "required": [
+            "all"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "any": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/Condition"
+              }
+            }
+          },
+          "required": [
+            "any"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "not": {
+              "$ref": "#/$defs/Condition"
+            }
+          },
+          "required": [
+            "not"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "flag": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a flag"
+            }
+          },
+          "required": [
+            "flag"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "stat": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a stat"
+            },
+            "villager": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            },
+            ">=": {
+              "type": "number"
+            },
+            ">": {
+              "type": "number"
+            },
+            "<=": {
+              "type": "number"
+            },
+            "<": {
+              "type": "number"
+            },
+            "==": {
+              "type": "number"
+            },
+            "!=": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "stat"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "hasItem": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a item"
+            },
+            "qty": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 999
+            },
+            "in": {
+              "type": "string",
+              "enum": [
+                "pack",
+                "storage"
+              ]
+            }
+          },
+          "required": [
+            "hasItem"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "clue": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a clue"
+            }
+          },
+          "required": [
+            "clue"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "talent": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a talent"
+            }
+          },
+          "required": [
+            "talent"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "calling": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a calling"
+            }
+          },
+          "required": [
+            "calling"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "pactSigned": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a pact"
+            }
+          },
+          "required": [
+            "pactSigned"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "chapter": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a festival"
+            }
+          },
+          "required": [
+            "chapter"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "phase": {
+              "type": "string",
+              "enum": [
+                "dawn",
+                "day",
+                "dusk",
+                "night"
+              ]
+            }
+          },
+          "required": [
+            "phase"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "villagerAlive": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "villagerAlive"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "possessionRevealed": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "possessionRevealed"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "quest": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a quest"
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "done",
+                "failed"
+              ]
+            },
+            "stage": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "quest"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "mysteryConcluded": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a mystery"
+            },
+            "correct": {
+              "type": "boolean"
+            },
+            "culprit": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a villager"
+            }
+          },
+          "required": [
+            "mysteryConcluded"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "chance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          },
+          "required": [
+            "chance"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "date": {
+              "type": "object",
+              "properties": {
+                "from": {
+                  "type": "string",
+                  "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                },
+                "to": {
+                  "type": "string",
+                  "pattern": "^(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$"
+                }
+              },
+              "required": [
+                "from",
+                "to"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "date"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "moon": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "string",
+                "enum": [
+                  "new",
+                  "waxing-crescent",
+                  "first-quarter",
+                  "waxing-gibbous",
+                  "full",
+                  "waning-gibbous",
+                  "last-quarter",
+                  "waning-crescent"
+                ]
+              }
+            }
+          },
+          "required": [
+            "moon"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "festivalDay": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a festival"
+            }
+          },
+          "required": [
+            "festivalDay"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "collection": {
+              "type": "string",
+              "enum": [
+                "herbs",
+                "recipes",
+                "grimoire",
+                "relics",
+                "tales",
+                "songs",
+                "cursed",
+                "photos",
+                "memories"
+              ]
+            },
+            ">=": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string",
+                  "const": "all"
+                }
+              ]
+            },
+            ">": {
+              "type": "number"
+            },
+            "<=": {
+              "type": "number"
+            },
+            "<": {
+              "type": "number"
+            },
+            "==": {
+              "type": "number"
+            },
+            "!=": {
+              "type": "number"
+            }
+          },
+          "required": [
+            "collection"
+          ],
+          "additionalProperties": false
+        }
+      ],
+      "description": "Condition mini-language (docs/systems/conditions-effects.md)"
+    }
+  }
+}

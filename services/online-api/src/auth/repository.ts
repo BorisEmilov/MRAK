@@ -84,6 +84,9 @@ export interface AuthRepository {
   /** Marks it used; false if it was already used. */
   useEmailToken(id: string, at: Date): Promise<boolean>;
 
+  /** Hard-deletes accounts never verified and created before `cutoff`; returns how many. */
+  deleteUnverifiedBefore(cutoff: Date): Promise<number>;
+
   audit(row: AuditRow): Promise<void>;
   auditFor(userId: string, limit: number): Promise<AuditRow[]>;
 }
@@ -178,6 +181,13 @@ export class MemoryAuthRepository implements AuthRepository {
     if (!t || t.usedAt) return Promise.resolve(false);
     t.usedAt = at;
     return Promise.resolve(true);
+  }
+  async deleteUnverifiedBefore(cutoff: Date): Promise<number> {
+    const stale = [...this.users.values()].filter(
+      (u) => !u.emailVerifiedAt && u.createdAt < cutoff,
+    );
+    for (const u of stale) await this.deleteUser(u.id);
+    return stale.length;
   }
   audit(row: AuditRow): Promise<void> {
     this.auditRows.push({ ...row });

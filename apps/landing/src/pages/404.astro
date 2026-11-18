@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { t } from '../i18n';
+---
+
+<Base title="site.notfound.title" noindex>
+  <h1>{t('site.notfound.title')}</h1>
+  <p>{t('site.notfound.text')}</p>
+  <a class="mrak-button" href="/">
+    {t('site.nav.home')}
+  </a>
+</Base>

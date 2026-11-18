@@ -31,6 +31,7 @@ import { VillagePanel } from './ui/village/VillagePanel';
 import { HintCard } from './ui/onboarding/HintCard';
 import { PauseOverlay } from './ui/PauseOverlay';
 import { SaveIndicator } from './ui/SaveIndicator';
+import { ConflictDialog, DemoEnd, MigrationDialog, SyncStatus } from './ui/online/OnlineUi';
 import { Whispers } from './ui/Whispers';
 
 // Development-only tool: the import is dropped from production builds.
@@ -140,11 +141,17 @@ export function App() {
                   <GuardianCreation />
                   <PauseOverlay />
                   <SaveIndicator />
+                  <div className="hud-sync">
+                    <SyncStatus compact />
+                  </div>
                 </>
               )}
               {screen === 'error' && <ErrorScreen />}
               <AudioHint />
               <GlossaryModal />
+              <ConflictDialog />
+              <MigrationDialog />
+              <DemoEnd />
               {DebugConsole && debugOpen && (
                 <Suspense fallback={null}>
                   <DebugConsole />

@@ -85,7 +85,7 @@ Hereditary / The Exorcist (demonic dread). Real Bulgarian folklore is the base.
 
 ## Key docs
 
-docs/GDD.md, docs/lore/, docs/systems/, docs/ui/, docs/security/,
+docs/GDD.md, docs/BACKLOG.md (deferred tasks), docs/lore/, docs/systems/, docs/ui/, docs/security/,
 docs/business/, docs/adr/
 
 ## Phaser 4 skills

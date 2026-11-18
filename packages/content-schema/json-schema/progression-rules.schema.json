@@ -26,6 +26,20 @@
             "full"
           ]
         },
+        "demo": {
+          "type": "object",
+          "properties": {
+            "nights": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "nights"
+          ],
+          "additionalProperties": false
+        },
         "attributes": {
           "type": "object",
           "properties": {
@@ -557,6 +571,101 @@
             "workshopZone"
           ],
           "additionalProperties": false
+        },
+        "lineage": {
+          "type": "object",
+          "properties": {
+            "guardianStartAge": {
+              "type": "integer",
+              "minimum": 14,
+              "maximum": 60
+            },
+            "heirAge": {
+              "type": "integer",
+              "minimum": 12,
+              "maximum": 21
+            },
+            "retireAge": {
+              "type": "integer",
+              "minimum": 30,
+              "maximum": 90
+            },
+            "apprenticeMinAge": {
+              "type": "integer",
+              "minimum": 8,
+              "maximum": 20
+            },
+            "maxChildren": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 8
+            },
+            "childChance": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "inheritedPactDebt": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a debt-source"
+            },
+            "legacy": {
+              "type": "object",
+              "properties": {
+                "perRevelation": {
+                  "type": "integer",
+                  "minimum": 1,
+                  "maximum": 100
+                },
+                "chapter": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 50
+                },
+                "mystery": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 50
+                },
+                "building": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 50
+                },
+                "route": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 50
+                },
+                "year": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "maximum": 50
+                }
+              },
+              "required": [
+                "perRevelation",
+                "chapter",
+                "mystery",
+                "building",
+                "route",
+                "year"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "required": [
+            "guardianStartAge",
+            "heirAge",
+            "retireAge",
+            "apprenticeMinAge",
+            "maxChildren",
+            "childChance",
+            "inheritedPactDebt",
+            "legacy"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -829,8 +938,26 @@
             }
           },
           "required": [
-            "startPossession",
-            "host"
+            "startPossession"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nameFragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            },
+            "fragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "nameFragment",
+            "fragment"
           ],
           "additionalProperties": false
         },

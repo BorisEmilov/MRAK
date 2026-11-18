@@ -17,7 +17,8 @@
     "test": "vitest run",
     "validate": "tsx src/node/cli.ts validate",
     "manifest": "tsx src/node/cli.ts manifest",
-    "json-schema": "tsx src/node/cli.ts json-schema"
+    "json-schema": "tsx src/node/cli.ts json-schema",
+    "full-pack": "tsx src/node/cli.ts full-pack"
   },
   "dependencies": {
     "inkjs": "2.4.0",

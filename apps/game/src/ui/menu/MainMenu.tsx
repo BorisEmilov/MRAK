@@ -11,6 +11,7 @@ import { RecoveryNotice, type LoadFailure } from './RecoveryNotice';
 import { CreditsPanel } from './CreditsPanel';
 import { GuardianForm } from '../character/GuardianForm';
 import { IconButton } from '@mrak/ui-kit';
+import { AccountInvite, SyncStatus } from '../online/OnlineUi';
 
 export function MainMenu() {
   const { host, store } = useApp();
@@ -49,6 +50,10 @@ export function MainMenu() {
       <div className="panel menu">
         {panel === 'main' && (
           <>
+            <div className="menu-sync">
+              <SyncStatus />
+            </div>
+            <AccountInvite />
             <div className="menu-corner">
               <IconButton
                 icon="ui.glossary"

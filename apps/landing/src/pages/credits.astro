@@ -1,0 +1,53 @@
+---
+import { ICON_INFO, symbolHref, type IconName } from '@mrak/ui-kit';
+import Base from '../layouts/Base.astro';
+import { t } from '../i18n';
+
+// Generated from packages/ui-kit/icons/manifest.json: every icon, its author and source.
+const icons = (Object.entries(ICON_INFO) as [IconName, (typeof ICON_INFO)[IconName]][]).sort(
+  ([, a], [, b]) => a.author.localeCompare(b.author) || a.source.localeCompare(b.source),
+);
+const authors = [...new Set(icons.map(([, i]) => i.author))];
+---
+
+<Base title="site.credits.title">
+  <div class="prose">
+    <h1>{t('site.credits.title')}</h1>
+    <p>{t('site.credits.intro')}</p>
+    <h2>{t('site.credits.icons')}</h2>
+    <p>
+      {t('site.credits.icons-text')}
+      <a href="https://game-icons.net">game-icons.net</a> —
+      <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>.
+      {t('site.credits.icons-authors', { authors: authors.join(', ') })}
+    </p>
+    <table>
+      <thead>
+        <tr>
+          <th scope="col">{t('site.credits.icon')}</th>
+          <th scope="col">{t('site.credits.meaning')}</th>
+          <th scope="col">{t('site.credits.source')}</th>
+          <th scope="col">{t('site.credits.author')}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {icons.map(([name, i]) => (
+          <tr>
+            <td>
+              <svg class="icon" aria-hidden="true">
+                <use href={symbolHref(name)} />
+              </svg>
+            </td>
+            <td>{i.meaning}</td>
+            <td>{i.source}</td>
+            <td>{i.author}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    <h2>{t('site.credits.fonts')}</h2>
+    <p>{t('site.credits.fonts-text')}</p>
+    <h2>{t('site.credits.software')}</h2>
+    <p>{t('site.credits.software-text')}</p>
+  </div>
+</Base>

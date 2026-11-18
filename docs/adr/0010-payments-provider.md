@@ -1,6 +1,6 @@
 # ADR 0010 — Payments through a Merchant of Record
 
-- Status: proposed (provider to be chosen against the criteria below)
+- Status: accepted — **Paddle Billing** (comparison in [monetization](../business/monetization.md); implementation in [store](../systems/store.md))
 - Date: 2026-11-17
 - Back to [threat model](../security/threat-model.md) · controls C-27, C-28, C-29, C-30
 

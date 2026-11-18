@@ -1,0 +1,17 @@
+---
+import Base from './Base.astro';
+
+/** Markdown documents (legal, press): `title` and `updated` come from their frontmatter. */
+interface Props {
+  frontmatter: { title: string; updated: string };
+}
+const { frontmatter } = Astro.props;
+---
+
+<Base docTitle={frontmatter.title}>
+  <article class="prose">
+    <h1>{frontmatter.title}</h1>
+    <p class="muted">Last updated: {frontmatter.updated}</p>
+    <slot />
+  </article>
+</Base>

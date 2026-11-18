@@ -6,7 +6,8 @@
   "scripts": {
     "assets": "tsx scripts/build-assets.ts",
     "dev": "pnpm assets && vite --open",
-    "build": "pnpm assets && tsc --noEmit && vite build",
+    "build": "pnpm assets && tsc --noEmit && vite build && pnpm check:demo",
+    "check:demo": "tsx scripts/check-demo-build.ts",
     "preview": "vite preview",
     "lint": "eslint . --max-warnings=0",
     "typecheck": "tsc --noEmit && tsc --noEmit -p scripts",

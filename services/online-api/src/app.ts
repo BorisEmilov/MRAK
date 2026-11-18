@@ -1,19 +1,24 @@
 import cors from 'cors';
 import express, { Router, type ErrorRequestHandler } from 'express';
-import type { Store } from 'express-rate-limit';
 import helmet from 'helmet';
 import type { Logger } from 'pino';
 import { pinoHttp } from 'pino-http';
 import type { Auth } from './auth/setup.js';
 import { problem } from './middleware/problem.js';
 import { requestTimeout } from './middleware/timeout.js';
-import { mountRoutes } from './routes/defineRoute.js';
+import { createHmac } from 'node:crypto';
+import { MemoryLimiter, type Limiter } from './limits/limiter.js';
+import { loadPolicies, type Policies } from './limits/policies.js';
+import { StaticSwitches, type Switches } from './limits/switches.js';
+import { MAX_BODY_LIMIT, mountRoutes, type LimitDeps } from './routes/defineRoute.js';
 import { routes } from './routes/index.js';
 import type { Catalog } from './progress/catalog.js';
 import type { ProgressStore } from './progress/store.js';
+import type { SavesStore } from './saves/store.js';
+import type { Newsletter } from './newsletter/newsletter.js';
 import type { Authenticate } from './routes/progress.js';
 
-export const BODY_LIMIT = '16kb';
+import type { LocalSigner, Store } from './store/store.js';
 export const REQUEST_TIMEOUT_MS = 10_000;
 
 export interface AppOptions {
@@ -25,6 +30,14 @@ export interface AppOptions {
    * account endpoint answers 401. Never a header or query switch — only code can provide it.
    */
   authenticate?: Authenticate;
+  /** Store: checkout, payment webhooks, entitlements, signed full-pack URLs. */
+  store?: Store;
+  /** Development/E2E only: serves LocalSigner URLs (GET /v1/content/files/:name). */
+  localContent?: { signer: LocalSigner; read: (name: string) => Buffer | null; now: () => Date };
+  /** Newsletter (double opt-in). */
+  newsletter?: Newsletter;
+  /** Cloud saves storage. */
+  saves?: SavesStore;
   /** Account progress storage (achievements, Bloodline, stats). */
   progress?: ProgressStore;
   /** Content ids the server accepts (achievements, Bloodline nodes) and their tier. */
@@ -33,8 +46,13 @@ export interface AppOptions {
   auth?: Auth;
   /** Exact browser origins allowed by CORS (credentials only on /v1/auth). */
   corsOrigins?: readonly string[];
-  /** Shared rate-limit store (Redis) per route prefix. */
-  rateLimitStore?: (prefix: string) => Store;
+  /** Rate limiter (Redis with memory fallback in production; memory by default — never none). */
+  limiter?: Limiter;
+  policies?: Policies;
+  /** Emergency switches (Redis-backed in production). */
+  switches?: Switches;
+  /** Secret for hashing IPs/emails into limiter keys. */
+  keySecret?: string;
 }
 
 export function createApp(options: AppOptions = {}): express.Express {
@@ -45,7 +63,20 @@ export function createApp(options: AppOptions = {}): express.Express {
   app.locals['authenticate'] = options.authenticate ?? options.auth?.authenticate;
   app.locals['auth'] = options.auth?.deps;
   app.locals['jwks'] = options.auth?.jwks;
+  const keySecret = options.keySecret ?? 'limiter-keys';
+  const limits: LimitDeps = {
+    limiter: options.limiter ?? new MemoryLimiter(() => (options.now?.() ?? new Date()).getTime()),
+    policies: options.policies ?? loadPolicies(),
+    switches: options.switches ?? new StaticSwitches(),
+    hash: (v) => createHmac('sha256', keySecret).update(v).digest('hex').slice(0, 32),
+    userOf: options.auth?.userOf ?? (() => Promise.resolve(null)),
+  };
+  app.locals['limits'] = limits;
   app.locals['progress'] = options.progress;
+  app.locals['saves'] = options.saves;
+  app.locals['newsletter'] = options.newsletter;
+  app.locals['store'] = options.store;
+  app.locals['localContent'] = options.localContent;
   app.locals['catalog'] = options.catalog;
 
   if (options.logger) {
@@ -72,8 +103,16 @@ export function createApp(options: AppOptions = {}): express.Express {
         done(null, origin !== undefined && origins.has(origin));
       },
       credentials,
-      methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-      allowedHeaders: ['Content-Type', 'Authorization', 'X-MRAK-CSRF'],
+      methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+      allowedHeaders: [
+        'Content-Type',
+        'Authorization',
+        'X-MRAK-CSRF',
+        'X-MRAK-Install',
+        'If-Match',
+        'If-None-Match',
+      ],
+      exposedHeaders: ['ETag', 'Retry-After', 'RateLimit', 'RateLimit-Policy'],
       maxAge: 600,
     });
   app.use('/v1/auth', corsFor(true));
@@ -88,10 +127,18 @@ export function createApp(options: AppOptions = {}): express.Express {
     }
     next();
   });
-  app.use(express.json({ limit: BODY_LIMIT, inflate: false }));
+  // Bodies over the largest route limit are refused before any parsing (per-route limits follow).
+  app.use((req, res, next) => {
+    if (Number(req.get('content-length') ?? 0) > MAX_BODY_LIMIT) {
+      res.set('Connection', 'close');
+      problem(res, 413, 'payload_too_large');
+      return;
+    }
+    next();
+  });
 
   const router = Router();
-  mountRoutes(router, routes, options.rateLimitStore);
+  mountRoutes(router, routes);
   app.use(router);
 
   app.use((_req, res) => {

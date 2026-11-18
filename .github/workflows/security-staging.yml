@@ -1,0 +1,114 @@
+# Staging security checks (docs/security/test-report.md, items 6–8): after every staging
+# deployment and weekly. Never point these at production.
+name: Security (staging)
+
+on:
+  deployment_status:
+  schedule:
+    - cron: '41 3 * * 2'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-staging
+  cancel-in-progress: false
+
+env:
+  SITE_URL: ${{ vars.STAGING_SITE_URL }}
+  PLAY_URL: ${{ vars.STAGING_PLAY_URL }}
+  API_URL: ${{ vars.STAGING_API_URL }}
+
+jobs:
+  gate:
+    name: Staging deployment only
+    if: >
+      github.event_name != 'deployment_status' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'staging')
+    runs-on: ubuntu-latest
+    steps:
+      - run: test -n "$API_URL" && test -n "$SITE_URL" && test -n "$PLAY_URL"
+
+  zap-baseline:
+    name: DAST — ZAP baseline (${{ matrix.target }})
+    needs: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      issues: write
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [site, game]
+    steps:
+      - uses: actions/checkout@v7
+      - uses: zaproxy/action-baseline@v0.14.0
+        with:
+          target: ${{ matrix.target == 'site' && vars.STAGING_SITE_URL || vars.STAGING_PLAY_URL }}
+          fail_action: true
+          allow_issue_writing: false
+          artifact_name: zap-baseline-${{ matrix.target }}
+
+  zap-api:
+    name: DAST — ZAP API scan (OpenAPI)
+    needs: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - name: Point the spec at staging
+        run: |
+          jq --arg url "$API_URL" '.servers = [{url: $url}]' services/online-api/openapi.json > openapi.staging.json
+      - uses: zaproxy/action-api-scan@v0.9.0
+        with:
+          target: openapi.staging.json
+          format: openapi
+          fail_action: true
+          allow_issue_writing: false
+          artifact_name: zap-api
+
+  fuzz:
+    name: Fuzzing — Schemathesis (OpenAPI)
+    needs: gate
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+      - run: pip install 'schemathesis>=4,<5'
+      # Blocking: no 5xx and every response matches the documented schema. 429s are expected
+      # (rate limits stay on in staging) and are documented responses.
+      - run: >
+          schemathesis run services/online-api/openapi.json
+          --url "$API_URL"
+          --checks not_a_server_error,response_schema_conformance,status_code_conformance
+          --max-examples 50
+          --request-timeout 12
+          --report junit --report-junit-path schemathesis.xml
+      - if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: schemathesis
+          path: schemathesis.xml
+
+  load-abuse:
+    name: Load and abuse — k6
+    needs: [zap-baseline, zap-api, fuzz]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v7
+      - uses: grafana/setup-k6-action@v1
+      - uses: grafana/run-k6-action@v1
+        env:
+          BASE_URL: ${{ vars.STAGING_API_URL }}
+          ORIGIN: ${{ vars.STAGING_SITE_URL }}
+          TOKEN: ${{ secrets.STAGING_K6_TOKEN }}
+          REFRESH: ${{ secrets.STAGING_K6_REFRESH }}
+        with:
+          path: tests/load/abuse.js

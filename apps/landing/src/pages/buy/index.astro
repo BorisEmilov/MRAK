@@ -1,0 +1,56 @@
+---
+import Island from '../../components/Island.astro';
+import Base from '../../layouts/Base.astro';
+import { FULL_PRICE, PLAY_URL } from '../../data/site';
+import { t, type SiteKey } from '../../i18n';
+
+const demo: SiteKey[] = [
+  'site.buy.demo.1',
+  'site.buy.demo.2',
+  'site.buy.demo.3',
+  'site.buy.demo.4',
+];
+const full: SiteKey[] = [
+  'site.buy.full.1',
+  'site.buy.full.2',
+  'site.buy.full.3',
+  'site.buy.full.4',
+];
+---
+
+<Base title="site.buy.title" description="site.buy.description">
+  <h1>{t('site.buy.title')}</h1>
+  <p class="prose">{t('site.buy.intro')}</p>
+  <ul class="editions">
+    <li>
+      <h2>{t('site.editions.demo.name')}</h2>
+      <p class="price">{t('site.editions.demo.price')}</p>
+      <ul>
+        {demo.map((k) => (
+          <li>{t(k)}</li>
+        ))}
+      </ul>
+      <a class="mrak-button" data-variant="primary" href={PLAY_URL}>
+        {t('site.home.play')}
+      </a>
+    </li>
+    <li>
+      <h2>{t('site.editions.full.name')}</h2>
+      <p class="price">{FULL_PRICE ?? t('site.editions.full.tba')}</p>
+      <ul>
+        {full.map((k) => (
+          <li>{t(k)}</li>
+        ))}
+      </ul>
+      <Island name="store" props={{ mode: 'buy' }} />
+      <a href="/#newsletter">{t('site.buy.notify')}</a>
+    </li>
+  </ul>
+  <p class="muted">
+    {t('site.buy.refunds')} <a href="/refunds/">{t('site.footer.refunds')}</a>
+  </p>
+</Base>
+
+<script>
+  import '../../islands/entry';
+</script>

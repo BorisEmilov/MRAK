@@ -398,8 +398,26 @@
             }
           },
           "required": [
-            "startPossession",
-            "host"
+            "startPossession"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nameFragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            },
+            "fragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "nameFragment",
+            "fragment"
           ],
           "additionalProperties": false
         },

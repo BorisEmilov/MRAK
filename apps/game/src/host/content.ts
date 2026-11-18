@@ -5,6 +5,8 @@
 import {
   applyContentPacks,
   COLLECTION_NAMES,
+  mergeFullPack,
+  type FullContentPack,
   validatePack,
   type ContentPackFile,
   type CollectionName,
@@ -34,6 +36,7 @@ export function buildRawPack(files: Record<string, unknown>): RawPack {
       registry = { file: `data/${rel}`, data };
       continue;
     }
+    if (data === null) continue; // a full-tier file left out of the public build
     const collection = rel.split('/')[0] ?? '';
     if (!known.has(collection)) continue;
     (collections[collection as CollectionName] ??= []).push({ file: `data/${rel}`, data });
@@ -46,13 +49,30 @@ export function buildRawPack(files: Record<string, unknown>): RawPack {
  * The bundled content plus verified live packs. A pack set that does not validate with the
  * bundled content is dropped (the game never breaks on a bad pack).
  */
-export function loadContentDatabase(packs: readonly ContentPackFile[] = []): ContentDatabase {
+export function loadContentDatabase(
+  packs: readonly ContentPackFile[] = [],
+  full: FullContentPack | null = null,
+): ContentDatabase {
+  let base = buildRawPack(dataFiles);
+  let version = manifest.version;
+  if (full) {
+    // The paid pack must merge and validate with this build; otherwise the demo runs unchanged.
+    try {
+      const merged = mergeFullPack(base, full);
+      if (validatePack(merged).ok) {
+        base = merged;
+        version = `${manifest.version}+${full.packId}@${full.version}`;
+      } else console.warn('[full] pack does not match this build');
+    } catch (err) {
+      console.warn('[full] pack rejected:', err);
+    }
+  }
   if (packs.length > 0) {
     try {
-      const merged = validatePack(applyContentPacks(buildRawPack(dataFiles), packs));
+      const merged = validatePack(applyContentPacks(base, packs));
       if (merged.ok)
         return new ContentDatabase(merged.pack, {
-          version: `${manifest.version}+${packs.map((p) => `${p.packId}@${p.version}`).join(',')}`,
+          version: `${version}+${packs.map((p) => `${p.packId}@${p.version}`).join(',')}`,
           hash: manifest.hash,
         });
       console.warn(
@@ -63,10 +83,10 @@ export function loadContentDatabase(packs: readonly ContentPackFile[] = []): Con
       console.warn('[packs] rejected:', err);
     }
   }
-  const result = validatePack(buildRawPack(dataFiles));
+  const result = validatePack(base);
   if (!result.ok) {
     const first = result.issues.find((i) => i.severity === 'error');
     throw new ContentLoadError(first ? `${first.code}: ${first.message}` : 'invalid content pack');
   }
-  return new ContentDatabase(result.pack, { version: manifest.version, hash: manifest.hash });
+  return new ContentDatabase(result.pack, { version, hash: manifest.hash });
 }

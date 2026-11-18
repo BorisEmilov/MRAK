@@ -114,6 +114,21 @@ export class PrismaAuthRepository implements AuthRepository {
     });
     return count === 1;
   }
+  async deleteUnverifiedBefore(cutoff: Date): Promise<number> {
+    const stale = await this.db.user.findMany({
+      where: { emailVerifiedAt: null, createdAt: { lt: cutoff } },
+      select: { id: true },
+      take: 1000,
+    });
+    const ids = stale.map((u) => u.id);
+    if (ids.length === 0) return 0;
+    await this.db.$transaction([
+      this.db.auditLog.updateMany({ where: { userId: { in: ids } }, data: { userId: null } }),
+      this.db.user.deleteMany({ where: { id: { in: ids }, emailVerifiedAt: null } }),
+    ]);
+    return ids.length;
+  }
+
   async audit(row: AuditRow): Promise<void> {
     await this.db.auditLog.create({ data: row });
   }

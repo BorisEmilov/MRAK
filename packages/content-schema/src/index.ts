@@ -17,5 +17,6 @@ export * from './pack';
 export * from './primitives';
 export * from './registry';
 export * from './tiled';
+export * from './tiers';
 export * from './validate';
 export { collectRefs, type FoundRef } from './walk';

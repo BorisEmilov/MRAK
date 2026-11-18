@@ -7,6 +7,7 @@ import { downloadText } from '../../platform';
 import { useApp, useUi } from '../../state/hooks';
 import { MANUAL_SLOTS, type ManualSlot, type SaveEntry } from '../../storage/save-store';
 import { formatDate, formatPlaytime, formatTime } from '../format';
+import { CloudSaves } from '../online/OnlineUi';
 import { RecoveryNotice, type LoadFailure } from './RecoveryNotice';
 import { realTime, slotLabel } from './SaveLabels';
 
@@ -179,6 +180,7 @@ export function LoadPanel({ onBack }: { onBack: () => void }) {
           })}
         </ul>
       )}
+      <CloudSaves onLoad={load} />
       {pendingImport !== null ? (
         <div className="import-slots" role="group" aria-label={t('load.import-choose-slot')}>
           <p>{t('load.import-choose-slot')}</p>

@@ -1,20 +1,33 @@
+import { readFileSync } from 'node:fs';
+import { basename, join } from 'node:path';
+import { ipHasher } from './auth/guards.js';
+import { presignGet } from './content/presign.js';
+import { PaddleProvider } from './store/paddle.js';
+import { PrismaStoreRepo } from './store/prisma-store.js';
+import { LocalSigner, MemoryStoreRepo, Store } from './store/store.js';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Redis } from 'ioredis';
-import { RedisStore } from 'rate-limit-redis';
 import { createApp, REQUEST_TIMEOUT_MS } from './app.js';
-import { MemoryCounters, RedisCounters, turnstile } from './auth/guards.js';
+import { MemoryCounters, RedisCounters, turnstile, type HumanCheck } from './auth/guards.js';
 import { generateSigningJwk } from './auth/keys.js';
-import { MemoryMailer } from './auth/mailer.js';
+import { BudgetedMailer, FileMailer, MemoryMailer } from './auth/mailer.js';
+import { MemoryNewsletterStore, Newsletter } from './newsletter/newsletter.js';
+import { PrismaNewsletterStore } from './newsletter/prisma-store.js';
 import { hibpCheck } from './auth/passwords.js';
 import { PrismaAuthRepository } from './auth/prisma-repository.js';
 import { MemoryAuthRepository } from './auth/repository.js';
 import { buildAuth } from './auth/setup.js';
 import { loadEnv } from './env.js';
 import { PrismaClient } from './generated/prisma/client.js';
+import { MemoryLimiter, RedisLimiter, ResilientLimiter } from './limits/limiter.js';
+import { loadPolicies } from './limits/policies.js';
+import { parseDisabled, RedisSwitches, StaticSwitches } from './limits/switches.js';
 import { createLogger } from './logger.js';
 import { loadCatalog } from './progress/catalog.js';
 import { PrismaProgressStore } from './progress/prisma-store.js';
 import { MemoryProgressStore } from './progress/store.js';
+import { PrismaSavesStore } from './saves/prisma-store.js';
+import { MemorySavesStore } from './saves/store.js';
 
 /** Cloudflare's documented always-pass test secret: development only. */
 const TURNSTILE_TEST_SECRET = '1x0000000000000000000000000000000AA';
@@ -34,29 +47,140 @@ if (
     'production needs AUTH_JWT_KEYS, AUTH_SECRET, TURNSTILE_SECRET, REDIS_URL and DATABASE_URL',
   );
 
+// Bounded pool and per-statement timeout: abuse cannot pile up queries (threat model C-24).
 const prisma = env.DATABASE_URL
-  ? new PrismaClient({ adapter: new PrismaPg({ connectionString: env.DATABASE_URL }) })
+  ? new PrismaClient({
+      adapter: new PrismaPg({
+        connectionString: env.DATABASE_URL,
+        max: env.DB_POOL_MAX,
+        connectionTimeoutMillis: 3000,
+        idleTimeoutMillis: 30_000,
+        statement_timeout: env.DB_STATEMENT_TIMEOUT_MS,
+        query_timeout: env.DB_STATEMENT_TIMEOUT_MS + 1000,
+      }),
+    })
   : null;
-const redis = env.REDIS_URL ? new Redis(env.REDIS_URL, { commandTimeout: 1000 }) : null;
+const redis = env.REDIS_URL
+  ? new Redis(env.REDIS_URL, {
+      commandTimeout: 500,
+      connectTimeout: 2000,
+      maxRetriesPerRequest: 1,
+      enableOfflineQueue: false,
+    })
+  : null;
+redis?.on('error', (err: Error) => {
+  logger.warn({ alert: 'redis-error', err: err.message }, 'redis unavailable');
+});
+
 const progress = prisma ? new PrismaProgressStore(prisma) : new MemoryProgressStore();
+const saves = prisma ? new PrismaSavesStore(prisma) : new MemorySavesStore();
 const csv = (s: string) =>
   s
     .split(',')
     .map((x) => x.trim())
     .filter(Boolean);
+const policies = loadPolicies(env.RATE_LIMITS);
+const limiter = new ResilientLimiter(
+  redis ? new RedisLimiter(redis) : null,
+  new MemoryLimiter(),
+  () => {
+    logger.warn({ alert: 'rate-limit-degraded' }, 'redis down: auth fails closed, rest in memory');
+  },
+);
+const disabled = parseDisabled(env.KILL_SWITCHES);
+const switches = redis ? new RedisSwitches(redis, disabled) : new StaticSwitches(disabled);
+const counters = redis ? new RedisCounters(redis) : new MemoryCounters();
+if (production && (env.MAIL_OUTBOX_DIR || env.TURNSTILE_TEST_BYPASS === 'true'))
+  throw new Error('MAIL_OUTBOX_DIR and TURNSTILE_TEST_BYPASS are for development only');
+// TODO(email provider): replace the inner mailer; budget and switch already apply.
+const mailer = new BudgetedMailer(
+  env.MAIL_OUTBOX_DIR ? new FileMailer(env.MAIL_OUTBOX_DIR) : new MemoryMailer(),
+  counters,
+  env.EMAIL_DAILY_CAP,
+  () => switches.enabled('emails'),
+  (e) => {
+    logger.warn({ alert: 'email-budget', ...e }, `email budget at ${String(e.level)} %`);
+  },
+);
+const human: HumanCheck =
+  env.TURNSTILE_TEST_BYPASS === 'true'
+    ? () => Promise.resolve(true)
+    : turnstile(env.TURNSTILE_SECRET ?? TURNSTILE_TEST_SECRET, csv(env.TURNSTILE_HOSTNAMES));
+const newsletter = new Newsletter({
+  store: prisma ? new PrismaNewsletterStore(prisma) : new MemoryNewsletterStore(),
+  mailer,
+  human,
+  counters,
+  secret: env.AUTH_SECRET ?? 'development-only-secret-not-for-production!!',
+  siteUrl: env.SITE_URL,
+  now: () => new Date(),
+});
+
+const authRepo = prisma ? new PrismaAuthRepository(prisma) : new MemoryAuthRepository();
+const secret = env.AUTH_SECRET ?? 'development-only-secret-not-for-production!!';
+if (production && env.FULL_PACK_LOCAL_DIR)
+  throw new Error('FULL_PACK_LOCAL_DIR is for development only');
+const fullPack =
+  env.FULL_PACK_PATH && env.FULL_PACK_VERSION && env.FULL_PACK_SHA256 && env.FULL_PACK_BYTES
+    ? {
+        path: env.FULL_PACK_PATH,
+        version: env.FULL_PACK_VERSION,
+        sha256: env.FULL_PACK_SHA256,
+        bytes: env.FULL_PACK_BYTES,
+      }
+    : null;
+const localSigner = env.FULL_PACK_LOCAL_DIR ? new LocalSigner(secret, env.API_URL) : null;
+const r2 =
+  env.R2_HOST && env.R2_ACCESS_KEY_ID && env.R2_SECRET_ACCESS_KEY
+    ? {
+        host: env.R2_HOST,
+        accessKeyId: env.R2_ACCESS_KEY_ID,
+        secretAccessKey: env.R2_SECRET_ACCESS_KEY,
+      }
+    : null;
+const hashIpNow = ipHasher(secret);
+const store = new Store({
+  repo: prisma ? new PrismaStoreRepo(prisma) : new MemoryStoreRepo(),
+  provider:
+    env.PADDLE_API_KEY && env.PADDLE_WEBHOOK_SECRET
+      ? new PaddleProvider({
+          apiKey: env.PADDLE_API_KEY,
+          webhookSecret: env.PADDLE_WEBHOOK_SECRET,
+          apiUrl: env.PADDLE_API_URL,
+          checkoutUrl: `${env.SITE_URL}/buy/checkout/`,
+        })
+      : null,
+  prices: {
+    ...(env.PADDLE_PRICE_FULL_GAME ? { 'full-game': env.PADDLE_PRICE_FULL_GAME } : {}),
+    ...(env.PADDLE_PRICE_COLLECTOR ? { collector: env.PADDLE_PRICE_COLLECTOR } : {}),
+  },
+  signer:
+    localSigner ??
+    (r2
+      ? {
+          sign: (path, seconds, now) =>
+            presignGet({ ...r2, path, region: 'auto', now, expiresSeconds: seconds }),
+        }
+      : null),
+  fullPack,
+  audit: (row) => authRepo.audit(row),
+  hashIp: (ip) => hashIpNow(ip, new Date()),
+  userExists: async (id) => (await authRepo.userById(id)) !== null,
+  now: () => new Date(),
+});
 
 const auth = await buildAuth({
-  repo: prisma ? new PrismaAuthRepository(prisma) : new MemoryAuthRepository(),
-  counters: redis ? new RedisCounters(redis) : new MemoryCounters(),
-  // TODO(email provider): a real mailer; until then mails are kept in memory, never logged.
-  mailer: new MemoryMailer(),
+  repo: authRepo,
+  entitlements: (userId) => store.activeSkus(userId),
+  counters,
+  mailer,
   jwtKeys: env.AUTH_JWT_KEYS ?? JSON.stringify([await generateSigningJwk('dev')]),
   issuer: env.AUTH_ISSUER,
   audience: env.AUTH_AUDIENCE,
   appUrl: env.APP_URL,
   secret: env.AUTH_SECRET ?? 'development-only-secret-not-for-production!!',
   http: { allowedOrigins: csv(env.CORS_ORIGINS), cookieDomain: env.COOKIE_DOMAIN },
-  human: turnstile(env.TURNSTILE_SECRET ?? TURNSTILE_TEST_SECRET, csv(env.TURNSTILE_HOSTNAMES)),
+  human,
   ...(env.HIBP_ENABLED === 'true' ? { pwned: hibpCheck() } : {}),
   hooks: [
     {
@@ -64,26 +188,71 @@ const auth = await buildAuth({
       export: (userId) => progress.list(userId),
       erase: (userId) => progress.remove(userId),
     },
+    {
+      name: 'saves',
+      // GDPR export: every cloud save with its data.
+      export: async (userId) =>
+        Promise.all(
+          (await saves.list(userId)).map(async (s) => ({
+            ...s,
+            data: (await saves.get(userId, s.slot, s.version))?.data ?? null,
+          })),
+        ),
+      erase: (userId) => saves.removeAll(userId),
+    },
+    {
+      name: 'purchases',
+      // Entitlement rows stay (order reconciliation with the merchant of record); names go.
+      export: (userId) => store.entitlements(userId),
+      erase: (userId) => store.eraseUser(userId),
+    },
   ],
+  limits: { limiter, policies },
 });
 
 const app = createApp({
   logger,
   catalog: loadCatalog(env.CONTENT_DATA_DIR),
   progress,
-  auth,
-  corsOrigins: csv(env.CORS_ORIGINS),
-  ...(redis
+  saves,
+  newsletter,
+  store,
+  ...(localSigner && env.FULL_PACK_LOCAL_DIR
     ? {
-        rateLimitStore: (prefix: string) =>
-          new RedisStore({
-            prefix,
-            sendCommand: (command: string, ...args: string[]) =>
-              redis.call(command, ...args) as Promise<number>,
-          }),
+        localContent: {
+          signer: localSigner,
+          read: (name: string) => {
+            try {
+              // eslint-disable-next-line security/detect-non-literal-fs-filename -- dev-only dir; name regex-checked and basename()d
+              return readFileSync(join(env.FULL_PACK_LOCAL_DIR ?? '', basename(name)));
+            } catch {
+              return null;
+            }
+          },
+          now: () => new Date(),
+        },
       }
     : {}),
+  auth,
+  corsOrigins: csv(env.CORS_ORIGINS),
+  limiter,
+  policies,
+  switches,
+  keySecret: env.AUTH_SECRET ?? 'development-only-secret-not-for-production!!',
 });
+
+// Unverified accounts older than 7 days are deleted hourly (idempotent on every instance).
+const purge = setInterval(() => {
+  auth.deps.service
+    .purgeUnverified()
+    .then((n) => {
+      if (n > 0) logger.info({ purged: n }, 'unverified accounts deleted');
+    })
+    .catch((err: unknown) => {
+      logger.error({ err }, 'unverified purge failed');
+    });
+}, 60 * 60_000);
+purge.unref();
 
 const server = app.listen(env.PORT, env.HOST, () => {
   logger.info({ port: env.PORT }, 'online-api listening');

@@ -1,0 +1,19 @@
+---
+/**
+ * Inline SVG icon for static pages: only the symbols a page uses are shipped (the full sprite is
+ * ~500 KB). Markup only — allowed by the strict CSP. Islands use the sprite (`symbolHref`).
+ */
+import type { IconName } from '@mrak/ui-kit';
+import sprite from '../../../../packages/ui-kit/src/icons/sprite.svg?raw';
+
+interface Props {
+  name: IconName;
+  class?: string;
+}
+const { name, class: className = 'icon' } = Astro.props;
+const id = `mrak-${name.replace('.', '--')}`;
+const m = new RegExp(`<symbol id="${id}" viewBox="([^"]+)">([\\s\\S]*?)</symbol>`).exec(sprite);
+if (!m) throw new Error(`unknown icon ${name}`);
+---
+
+<svg class={className} viewBox={m[1]} aria-hidden="true" focusable="false" set:html={m[2]} />

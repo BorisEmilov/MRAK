@@ -36,6 +36,14 @@
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
           "description": "Reference to a loc"
         },
+        "icon": {
+          "type": "string",
+          "pattern": "^[a-z-]+\\.[a-z0-9-]+$"
+        },
+        "poi": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
         "levels": {
           "minItems": 1,
           "type": "array",
@@ -92,6 +100,22 @@
               },
               "requires": {
                 "$ref": "#/$defs/Condition"
+              },
+              "minProsperity": {
+                "default": 1,
+                "type": "integer",
+                "minimum": 1,
+                "maximum": 5
+              },
+              "prosperity": {
+                "default": 10,
+                "type": "integer",
+                "minimum": 0,
+                "maximum": 100
+              },
+              "blood": {
+                "type": "string",
+                "pattern": "^[a-z-]+$"
               },
               "effects": {
                 "minItems": 1,
@@ -794,8 +818,26 @@
             }
           },
           "required": [
-            "startPossession",
-            "host"
+            "startPossession"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nameFragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            },
+            "fragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "nameFragment",
+            "fragment"
           ],
           "additionalProperties": false
         },

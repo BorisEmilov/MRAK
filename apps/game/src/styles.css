@@ -2597,3 +2597,77 @@ select:focus-visible,
   align-items: center;
   gap: 0.35rem;
 }
+
+/* ---------------------------------------------------------------- online: sync, conflicts, invites */
+
+.sync-status {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mrak-space-1);
+  font-size: var(--mrak-text-sm);
+  color: var(--mrak-color-text-muted);
+  background: none;
+  border: 0;
+  padding: 0;
+}
+
+button.sync-status {
+  cursor: pointer;
+  color: var(--mrak-color-highlight);
+  text-decoration: underline;
+}
+
+.sync-status.conflict,
+.sync-status.error {
+  color: var(--mrak-color-highlight);
+}
+
+.menu-sync {
+  position: absolute;
+  top: var(--mrak-space-3);
+  left: var(--mrak-space-3);
+}
+
+.hud-sync {
+  position: absolute;
+  right: var(--mrak-space-3);
+  bottom: var(--mrak-space-3);
+  pointer-events: auto;
+}
+
+.account-invite {
+  max-width: 28rem;
+  margin: 0 auto var(--mrak-space-4);
+  padding: var(--mrak-space-3);
+}
+
+.conflict {
+  border-top: 1px solid var(--mrak-color-rule);
+  padding-top: var(--mrak-space-3);
+  margin-top: var(--mrak-space-3);
+}
+
+.conflict-sides {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: var(--mrak-space-3);
+}
+
+.conflict-side dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--mrak-space-1) var(--mrak-space-2);
+  margin: var(--mrak-space-2) 0 0;
+}
+
+.conflict-side dt {
+  color: var(--mrak-color-text-muted);
+}
+
+.conflict-side dd {
+  margin: 0;
+}
+
+.turnstile {
+  min-height: 65px;
+}

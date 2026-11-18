@@ -18,7 +18,13 @@ export const PROBLEMS = {
   invalid_token: 'The link or token is invalid or has expired.',
   internal_error: 'Something went wrong.',
   unavailable: 'The service is unavailable. Try again later.',
+  feature_disabled: 'This feature is temporarily turned off. Try again later.',
   timeout: 'The request took too long.',
+  already_owned: 'This account already owns it.',
+  purchases_blocked: 'Purchases are paused for this account; contact support.',
+  invalid_signature: 'The signature is not valid.',
+  entitlement_required: 'This needs a purchase.',
+  invalid_name: 'This name cannot be used.',
 } as const;
 export type ProblemCode = keyof typeof PROBLEMS;
 

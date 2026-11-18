@@ -1,0 +1,125 @@
+# Security pipeline for every pull request (docs/security/test-report.md, items 1–5).
+# Blocking: every job is a required status check in the `main` ruleset, plus "code scanning
+# results: high or higher" for CodeQL/Semgrep alerts. Secret scanning (gitleaks), ESLint security
+# rules and the client build review run in ci.yml.
+name: Security
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  schedule:
+    - cron: '17 4 * * 1' # weekly: new advisories against an unchanged tree
+
+permissions:
+  contents: read
+
+concurrency:
+  group: security-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  codeql:
+    name: SAST (CodeQL)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+      security-events: write
+      actions: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript
+          queries: security-extended
+          config: |
+            paths-ignore:
+              - docs/phaser-skills
+              - '**/generated/**'
+      - uses: github/codeql-action/analyze@v4
+        with:
+          category: codeql
+
+  semgrep:
+    name: SAST (Semgrep)
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    container:
+      image: semgrep/semgrep
+    steps:
+      - uses: actions/checkout@v7
+      - name: Node / Express / React / TypeScript rules (fail on ERROR)
+        run: >
+          semgrep scan --error --severity ERROR
+          --config p/javascript --config p/typescript --config p/nodejs
+          --config p/express --config p/react --config p/jwt --config p/secrets
+          --exclude docs/phaser-skills --exclude '**/generated/**'
+
+  dependencies:
+    name: Dependencies (pnpm audit + OSV-Scanner)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+      # High/critical in production dependencies fail the build (exceptions: pnpm-workspace.yaml).
+      - run: pnpm audit --prod --audit-level high
+      - name: OSV-Scanner (whole lockfile; exceptions with expiry in osv-scanner.toml)
+        uses: google/osv-scanner-action/osv-scanner-action@v2
+        with:
+          scan-args: |-
+            --config=osv-scanner.toml
+            --lockfile=pnpm-lock.yaml
+
+  containers:
+    name: Containers (Trivy + hardening)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        service: [online-api, studio-api]
+    steps:
+      - uses: actions/checkout@v7
+      - name: Build image
+        run: docker build -f services/${{ matrix.service }}/Dockerfile -t mrak/${{ matrix.service }}:ci .
+      - name: Trivy image scan (HIGH/CRITICAL with a fix → fail)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          image-ref: mrak/${{ matrix.service }}:ci
+          severity: HIGH,CRITICAL
+          ignore-unfixed: true
+          exit-code: '1'
+      - name: Trivy config scan (Dockerfile, compose)
+        uses: aquasecurity/trivy-action@0.33.1
+        with:
+          scan-type: config
+          scan-ref: .
+          severity: HIGH,CRITICAL
+          exit-code: '1'
+      - name: Runs as non-root on a read-only fs without package managers
+        run: |
+          docker run --rm --read-only --tmpfs /tmp --cap-drop ALL --security-opt no-new-privileges \
+            --entrypoint node mrak/${{ matrix.service }}:ci \
+            -e "if (process.getuid() === 0) process.exit(1); try { require('fs').writeFileSync('/app/x', ''); process.exit(2) } catch {}"
+          ! docker run --rm --entrypoint sh mrak/${{ matrix.service }}:ci -c 'command -v npm || command -v npx || command -v corepack'
+
+  security-tests:
+    name: Security tests (phases 21, 23–25, 27)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/action-setup@v6
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      # Auth, rate limits/switches, cloud saves, store/webhooks/signed URLs, route registry.
+      - run: pnpm --filter @mrak/online-api test:security
+      # Demo/full split of paid content.
+      - run: pnpm --filter @mrak/content-schema exec vitest run src/tiers.test.ts

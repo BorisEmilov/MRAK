@@ -10,10 +10,15 @@
       "get": {
         "tags": ["ops"],
         "summary": "Liveness check",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 120
-        },
+        "x-rate-limit": [
+          {
+            "policy": "public-ip",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "ip",
+            "failClosed": false
+          }
+        ],
         "parameters": [],
         "responses": {
           "200": {
@@ -44,10 +49,15 @@
       "get": {
         "tags": ["live"],
         "summary": "Seasonal events live today (server UTC date)",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 30
-        },
+        "x-rate-limit": [
+          {
+            "policy": "seasonal-ip",
+            "limit": 30,
+            "windowMs": 60000,
+            "key": "ip",
+            "failClosed": false
+          }
+        ],
         "parameters": [],
         "responses": {
           "200": {
@@ -77,6 +87,13 @@
           },
           "429": {
             "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -92,10 +109,23 @@
       "post": {
         "tags": ["progress"],
         "summary": "Record unlocked achievements (idempotent per account + achievement id)",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 20
-        },
+        "x-rate-limit": [
+          {
+            "policy": "achievements-unlock-user",
+            "limit": 120,
+            "windowMs": 3600000,
+            "key": "user",
+            "failClosed": false
+          },
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
+        "x-kill-switch": "cloud-saves",
         "security": [
           {
             "bearer": []
@@ -219,6 +249,13 @@
           },
           "429": {
             "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -234,10 +271,15 @@
       "get": {
         "tags": ["progress"],
         "summary": "The account's unlocked achievements",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 30
-        },
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -309,6 +351,13 @@
           },
           "429": {
             "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -324,10 +373,23 @@
       "post": {
         "tags": ["progress"],
         "summary": "Record account progress (Bloodline, Legacy, stats, routes, endings); idempotent",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 20
-        },
+        "x-rate-limit": [
+          {
+            "policy": "progress-write-user",
+            "limit": 120,
+            "windowMs": 3600000,
+            "key": "user",
+            "failClosed": false
+          },
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
+        "x-kill-switch": "cloud-saves",
         "security": [
           {
             "bearer": []
@@ -573,6 +635,13 @@
           },
           "429": {
             "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -586,10 +655,15 @@
       "get": {
         "tags": ["progress"],
         "summary": "All progress rows of the account (≤ 6000)",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 30
-        },
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -786,6 +860,13 @@
           },
           "429": {
             "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -801,10 +882,23 @@
       "post": {
         "tags": ["auth"],
         "summary": "Create an account (Turnstile required); same answer whether or not the email exists",
-        "x-rate-limit": {
-          "windowMs": 3600000,
-          "limit": 10
-        },
+        "x-rate-limit": [
+          {
+            "policy": "register-ip",
+            "limit": 3,
+            "windowMs": 3600000,
+            "key": "ip",
+            "failClosed": true
+          },
+          {
+            "policy": "register-ip-day",
+            "limit": 5,
+            "windowMs": 86400000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
+        "x-kill-switch": "registration",
         "parameters": [
           {
             "name": "x-mrak-csrf",
@@ -899,6 +993,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -909,6 +1010,13 @@
           },
           "503": {
             "description": "Busy; retry later.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -924,10 +1032,15 @@
       "post": {
         "tags": ["auth"],
         "summary": "Confirm the email address with the emailed token",
-        "x-rate-limit": {
-          "windowMs": 900000,
-          "limit": 20
-        },
+        "x-rate-limit": [
+          {
+            "policy": "auth-token-ip",
+            "limit": 20,
+            "windowMs": 900000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
         "parameters": [
           {
             "name": "x-mrak-csrf",
@@ -984,6 +1097,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -999,10 +1119,22 @@
       "post": {
         "tags": ["auth"],
         "summary": "Send the verification email again (Turnstile required)",
-        "x-rate-limit": {
-          "windowMs": 3600000,
-          "limit": 5
-        },
+        "x-rate-limit": [
+          {
+            "policy": "email-send-email",
+            "limit": 3,
+            "windowMs": 3600000,
+            "key": "email",
+            "failClosed": true
+          },
+          {
+            "policy": "email-send-ip",
+            "limit": 10,
+            "windowMs": 3600000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
         "parameters": [
           {
             "name": "x-mrak-csrf",
@@ -1078,6 +1210,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1093,10 +1232,22 @@
       "post": {
         "tags": ["auth"],
         "summary": "Sign in; web gets the refresh cookie, native platforms the token in the body",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 10
-        },
+        "x-rate-limit": [
+          {
+            "policy": "login-ip-email",
+            "limit": 5,
+            "windowMs": 60000,
+            "key": "ip+email",
+            "failClosed": true
+          },
+          {
+            "policy": "login-ip",
+            "limit": 20,
+            "windowMs": 60000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
         "parameters": [
           {
             "name": "x-mrak-csrf",
@@ -1224,6 +1375,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1234,6 +1392,13 @@
           },
           "503": {
             "description": "Busy; retry later.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1249,10 +1414,15 @@
       "post": {
         "tags": ["auth"],
         "summary": "Rotate the refresh token (cookie, or body on native) and get a new access token",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 30
-        },
+        "x-rate-limit": [
+          {
+            "policy": "refresh-ip",
+            "limit": 60,
+            "windowMs": 60000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
         "parameters": [
           {
             "name": "x-mrak-csrf",
@@ -1373,6 +1543,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1388,10 +1565,15 @@
       "post": {
         "tags": ["auth"],
         "summary": "Revoke the current session",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 30
-        },
+        "x-rate-limit": [
+          {
+            "policy": "logout-ip",
+            "limit": 30,
+            "windowMs": 60000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
         "parameters": [
           {
             "name": "x-mrak-csrf",
@@ -1455,6 +1637,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1470,10 +1659,15 @@
       "post": {
         "tags": ["auth"],
         "summary": "Revoke every session of the account",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 10
-        },
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -1496,6 +1690,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1511,10 +1712,22 @@
       "post": {
         "tags": ["auth"],
         "summary": "Email a password reset link (Turnstile required); same answer for unknown emails",
-        "x-rate-limit": {
-          "windowMs": 3600000,
-          "limit": 5
-        },
+        "x-rate-limit": [
+          {
+            "policy": "email-send-email",
+            "limit": 3,
+            "windowMs": 3600000,
+            "key": "email",
+            "failClosed": true
+          },
+          {
+            "policy": "email-send-ip",
+            "limit": 10,
+            "windowMs": 3600000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
         "parameters": [
           {
             "name": "x-mrak-csrf",
@@ -1590,6 +1803,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1605,10 +1825,15 @@
       "post": {
         "tags": ["auth"],
         "summary": "Set a new password with the emailed token; revokes every session",
-        "x-rate-limit": {
-          "windowMs": 900000,
-          "limit": 10
-        },
+        "x-rate-limit": [
+          {
+            "policy": "auth-token-ip",
+            "limit": 20,
+            "windowMs": 900000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
         "parameters": [
           {
             "name": "x-mrak-csrf",
@@ -1680,6 +1905,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1690,6 +1922,13 @@
           },
           "503": {
             "description": "Busy; retry later.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1705,10 +1944,15 @@
       "get": {
         "tags": ["me"],
         "summary": "The signed-in account",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 60
-        },
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -1759,6 +2003,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1772,10 +2023,15 @@
       "patch": {
         "tags": ["me"],
         "summary": "Change the display name",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 20
-        },
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -1861,6 +2117,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1874,10 +2137,22 @@
       "delete": {
         "tags": ["me"],
         "summary": "Delete the account and its data (password + \"DELETE\" required)",
-        "x-rate-limit": {
-          "windowMs": 3600000,
-          "limit": 5
-        },
+        "x-rate-limit": [
+          {
+            "policy": "sensitive-user",
+            "limit": 5,
+            "windowMs": 900000,
+            "key": "user",
+            "failClosed": true
+          },
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -1934,6 +2209,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -1949,10 +2231,15 @@
       "get": {
         "tags": ["me"],
         "summary": "Active sessions (max 100)",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 30
-        },
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -2014,6 +2301,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2029,10 +2323,15 @@
       "delete": {
         "tags": ["me"],
         "summary": "Revoke one of your sessions",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 20
-        },
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -2074,6 +2373,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2089,10 +2395,22 @@
       "post": {
         "tags": ["me"],
         "summary": "Change the password (current one required); revokes every session",
-        "x-rate-limit": {
-          "windowMs": 900000,
-          "limit": 5
-        },
+        "x-rate-limit": [
+          {
+            "policy": "sensitive-user",
+            "limit": 5,
+            "windowMs": 900000,
+            "key": "user",
+            "failClosed": true
+          },
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -2160,6 +2478,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2170,6 +2495,13 @@
           },
           "503": {
             "description": "Busy; retry later.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2185,10 +2517,22 @@
       "get": {
         "tags": ["me"],
         "summary": "GDPR export of everything stored about the account (JSON)",
-        "x-rate-limit": {
-          "windowMs": 86400000,
-          "limit": 3
-        },
+        "x-rate-limit": [
+          {
+            "policy": "export-user",
+            "limit": 3,
+            "windowMs": 86400000,
+            "key": "user",
+            "failClosed": false
+          },
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
         "security": [
           {
             "bearer": []
@@ -2223,6 +2567,13 @@
           },
           "429": {
             "description": "Rate limited or temporarily blocked (Retry-After).",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
             "content": {
               "application/problem+json": {
                 "schema": {
@@ -2238,10 +2589,15 @@
       "get": {
         "tags": ["auth"],
         "summary": "Public keys that verify access tokens (EdDSA)",
-        "x-rate-limit": {
-          "windowMs": 60000,
-          "limit": 120
-        },
+        "x-rate-limit": [
+          {
+            "policy": "public-ip",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "ip",
+            "failClosed": false
+          }
+        ],
         "parameters": [],
         "responses": {
           "200": {
@@ -2264,6 +2620,1748 @@
                     }
                   },
                   "required": ["keys"]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/saves": {
+      "get": {
+        "tags": ["saves"],
+        "summary": "Cloud saves of the account (metadata, ≤ 6 versions)",
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Saves.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "saves": {
+                      "maxItems": 6,
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "slot": {
+                            "type": "string",
+                            "enum": ["slot-1", "slot-2", "slot-3", "auto"]
+                          },
+                          "version": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "checksum": {
+                            "type": "string"
+                          },
+                          "bytes": {
+                            "type": "integer",
+                            "minimum": -9007199254740991,
+                            "maximum": 9007199254740991
+                          },
+                          "meta": {
+                            "type": "object",
+                            "properties": {
+                              "savedAt": {
+                                "type": "string",
+                                "maxLength": 64
+                              },
+                              "gameDate": {
+                                "type": "object",
+                                "properties": {
+                                  "year": {
+                                    "type": "integer",
+                                    "minimum": 1700,
+                                    "maximum": 2100
+                                  },
+                                  "month": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "maximum": 12
+                                  },
+                                  "day": {
+                                    "type": "integer",
+                                    "minimum": 1,
+                                    "maximum": 31
+                                  },
+                                  "minute": {
+                                    "type": "integer",
+                                    "minimum": 0,
+                                    "maximum": 1439
+                                  }
+                                },
+                                "required": ["year", "month", "day", "minute"],
+                                "additionalProperties": false
+                              },
+                              "zone": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "maxLength": 128
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "generation": {
+                                "type": "integer",
+                                "minimum": 1,
+                                "maximum": 100
+                              },
+                              "playtimeMs": {
+                                "type": "number",
+                                "minimum": 0,
+                                "maximum": 1000000000000
+                              },
+                              "contentVersion": {
+                                "type": "string",
+                                "maxLength": 64
+                              },
+                              "reason": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "maxLength": 32
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              },
+                              "thumbnail": {
+                                "anyOf": [
+                                  {
+                                    "type": "string",
+                                    "maxLength": 262144,
+                                    "pattern": "^data:image\\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$"
+                                  },
+                                  {
+                                    "type": "null"
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "savedAt",
+                              "gameDate",
+                              "zone",
+                              "generation",
+                              "playtimeMs",
+                              "contentVersion",
+                              "reason",
+                              "thumbnail"
+                            ],
+                            "additionalProperties": false
+                          },
+                          "updatedAt": {
+                            "type": "string"
+                          }
+                        },
+                        "required": ["slot", "version", "checksum", "bytes", "meta", "updatedAt"]
+                      }
+                    }
+                  },
+                  "required": ["saves"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No account.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Email not verified.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such slot or version.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/saves/{slot}": {
+      "get": {
+        "tags": ["saves"],
+        "summary": "Download a save (newest, or ?version= for older autosaves)",
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slot",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The save.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "slot": {
+                      "type": "string",
+                      "enum": ["slot-1", "slot-2", "slot-3", "auto"]
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "checksum": {
+                      "type": "string"
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "savedAt": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "gameDate": {
+                          "type": "object",
+                          "properties": {
+                            "year": {
+                              "type": "integer",
+                              "minimum": 1700,
+                              "maximum": 2100
+                            },
+                            "month": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 12
+                            },
+                            "day": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 31
+                            },
+                            "minute": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 1439
+                            }
+                          },
+                          "required": ["year", "month", "day", "minute"],
+                          "additionalProperties": false
+                        },
+                        "zone": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 128
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "generation": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "playtimeMs": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1000000000000
+                        },
+                        "contentVersion": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "reason": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 32
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "thumbnail": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 262144,
+                              "pattern": "^data:image\\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "savedAt",
+                        "gameDate",
+                        "zone",
+                        "generation",
+                        "playtimeMs",
+                        "contentVersion",
+                        "reason",
+                        "thumbnail"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["slot", "version", "checksum", "bytes", "meta", "updatedAt", "data"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No account.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Email not verified.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such slot or version.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["saves"],
+        "summary": "Upload a save (If-Match: \"v<n>\" to replace, If-None-Match: * to create)",
+        "x-rate-limit": [
+          {
+            "policy": "save-upload-user",
+            "limit": 30,
+            "windowMs": 3600000,
+            "key": "user",
+            "failClosed": false
+          },
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
+        "x-kill-switch": "cloud-saves",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slot",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "meta": {
+                    "type": "object",
+                    "properties": {
+                      "savedAt": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "gameDate": {
+                        "type": "object",
+                        "properties": {
+                          "year": {
+                            "type": "integer",
+                            "minimum": 1700,
+                            "maximum": 2100
+                          },
+                          "month": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 12
+                          },
+                          "day": {
+                            "type": "integer",
+                            "minimum": 1,
+                            "maximum": 31
+                          },
+                          "minute": {
+                            "type": "integer",
+                            "minimum": 0,
+                            "maximum": 1439
+                          }
+                        },
+                        "required": ["year", "month", "day", "minute"],
+                        "additionalProperties": false
+                      },
+                      "zone": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 128
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "generation": {
+                        "type": "integer",
+                        "minimum": 1,
+                        "maximum": 100
+                      },
+                      "playtimeMs": {
+                        "type": "number",
+                        "minimum": 0,
+                        "maximum": 1000000000000
+                      },
+                      "contentVersion": {
+                        "type": "string",
+                        "maxLength": 64
+                      },
+                      "reason": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 32
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      },
+                      "thumbnail": {
+                        "anyOf": [
+                          {
+                            "type": "string",
+                            "maxLength": 262144,
+                            "pattern": "^data:image\\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ]
+                      }
+                    },
+                    "required": [
+                      "savedAt",
+                      "gameDate",
+                      "zone",
+                      "generation",
+                      "playtimeMs",
+                      "contentVersion",
+                      "reason",
+                      "thumbnail"
+                    ],
+                    "additionalProperties": false
+                  },
+                  "data": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 1572864
+                  },
+                  "checksum": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                },
+                "required": ["meta", "data", "checksum"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Replaced.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "slot": {
+                      "type": "string",
+                      "enum": ["slot-1", "slot-2", "slot-3", "auto"]
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "checksum": {
+                      "type": "string"
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "savedAt": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "gameDate": {
+                          "type": "object",
+                          "properties": {
+                            "year": {
+                              "type": "integer",
+                              "minimum": 1700,
+                              "maximum": 2100
+                            },
+                            "month": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 12
+                            },
+                            "day": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 31
+                            },
+                            "minute": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 1439
+                            }
+                          },
+                          "required": ["year", "month", "day", "minute"],
+                          "additionalProperties": false
+                        },
+                        "zone": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 128
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "generation": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "playtimeMs": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1000000000000
+                        },
+                        "contentVersion": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "reason": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 32
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "thumbnail": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 262144,
+                              "pattern": "^data:image\\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "savedAt",
+                        "gameDate",
+                        "zone",
+                        "generation",
+                        "playtimeMs",
+                        "contentVersion",
+                        "reason",
+                        "thumbnail"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["slot", "version", "checksum", "bytes", "meta", "updatedAt"]
+                }
+              }
+            }
+          },
+          "201": {
+            "description": "Created.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "slot": {
+                      "type": "string",
+                      "enum": ["slot-1", "slot-2", "slot-3", "auto"]
+                    },
+                    "version": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "checksum": {
+                      "type": "string"
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "meta": {
+                      "type": "object",
+                      "properties": {
+                        "savedAt": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "gameDate": {
+                          "type": "object",
+                          "properties": {
+                            "year": {
+                              "type": "integer",
+                              "minimum": 1700,
+                              "maximum": 2100
+                            },
+                            "month": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 12
+                            },
+                            "day": {
+                              "type": "integer",
+                              "minimum": 1,
+                              "maximum": 31
+                            },
+                            "minute": {
+                              "type": "integer",
+                              "minimum": 0,
+                              "maximum": 1439
+                            }
+                          },
+                          "required": ["year", "month", "day", "minute"],
+                          "additionalProperties": false
+                        },
+                        "zone": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 128
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "generation": {
+                          "type": "integer",
+                          "minimum": 1,
+                          "maximum": 100
+                        },
+                        "playtimeMs": {
+                          "type": "number",
+                          "minimum": 0,
+                          "maximum": 1000000000000
+                        },
+                        "contentVersion": {
+                          "type": "string",
+                          "maxLength": 64
+                        },
+                        "reason": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 32
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        },
+                        "thumbnail": {
+                          "anyOf": [
+                            {
+                              "type": "string",
+                              "maxLength": 262144,
+                              "pattern": "^data:image\\/(jpeg|png|webp);base64,[A-Za-z0-9+/=]+$"
+                            },
+                            {
+                              "type": "null"
+                            }
+                          ]
+                        }
+                      },
+                      "required": [
+                        "savedAt",
+                        "gameDate",
+                        "zone",
+                        "generation",
+                        "playtimeMs",
+                        "contentVersion",
+                        "reason",
+                        "thumbnail"
+                      ],
+                      "additionalProperties": false
+                    },
+                    "updatedAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["slot", "version", "checksum", "bytes", "meta", "updatedAt"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Malformed body.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No account.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Email not verified.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such slot or version.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Conflict: the cloud has another version (in `current`).",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "413": {
+            "description": "Body over 2 MB.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Checksum mismatch or not a MRAK save.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "Missing If-Match / If-None-Match.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Cloud saves switched off.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["saves"],
+        "summary": "Delete a cloud slot (If-Match: \"v<n>\")",
+        "x-rate-limit": [
+          {
+            "policy": "save-upload-user",
+            "limit": 30,
+            "windowMs": 3600000,
+            "key": "user",
+            "failClosed": false
+          },
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
+        "x-kill-switch": "cloud-saves",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slot",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleted."
+          },
+          "401": {
+            "description": "No account.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Email not verified.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No such slot or version.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "412": {
+            "description": "Conflict: the cloud has another version.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "428": {
+            "description": "Missing If-Match.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limit exceeded.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/newsletter/subscribe": {
+      "post": {
+        "tags": ["newsletter"],
+        "summary": "Ask to join the newsletter (Turnstile); a confirmation link is emailed",
+        "x-rate-limit": [
+          {
+            "policy": "newsletter-ip",
+            "limit": 5,
+            "windowMs": 3600000,
+            "key": "ip",
+            "failClosed": false
+          },
+          {
+            "policy": "email-send-email",
+            "limit": 3,
+            "windowMs": 3600000,
+            "key": "email",
+            "failClosed": true
+          }
+        ],
+        "x-kill-switch": "emails",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "maxLength": 254
+                  },
+                  "captcha": {
+                    "type": "string",
+                    "maxLength": 2048
+                  }
+                },
+                "required": ["email"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Check your email.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body or human check.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/newsletter/confirm": {
+      "post": {
+        "tags": ["newsletter"],
+        "summary": "Confirm the subscription with the emailed token",
+        "x-rate-limit": [
+          {
+            "policy": "auth-token-ip",
+            "limit": 20,
+            "windowMs": 900000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "token": {
+                    "type": "string",
+                    "minLength": 20,
+                    "maxLength": 128
+                  }
+                },
+                "required": ["token"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Subscribed."
+          },
+          "400": {
+            "description": "Invalid or expired.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/newsletter/unsubscribe": {
+      "post": {
+        "tags": ["newsletter"],
+        "summary": "Leave the newsletter (signed link from any newsletter mail)",
+        "x-rate-limit": [
+          {
+            "policy": "auth-token-ip",
+            "limit": 20,
+            "windowMs": 900000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "id": {
+                    "type": "string",
+                    "format": "uuid",
+                    "pattern": "^([0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-8][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}|00000000-0000-0000-0000-000000000000|ffffffff-ffff-ffff-ffff-ffffffffffff)$"
+                  },
+                  "sig": {
+                    "type": "string",
+                    "maxLength": 64
+                  }
+                },
+                "required": ["id", "sig"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Done (also for unknown links)."
+          }
+        }
+      }
+    },
+    "/v1/store/entitlements": {
+      "get": {
+        "tags": ["store"],
+        "summary": "What the account owns (the return page polls this after checkout)",
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Entitlements.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "entitlements": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "sku": {
+                            "type": "string",
+                            "enum": ["full-game", "collector"]
+                          },
+                          "source": {
+                            "type": "string",
+                            "enum": ["web", "steam", "ios", "android"]
+                          },
+                          "status": {
+                            "type": "string",
+                            "enum": ["active", "revoked"]
+                          },
+                          "purchasedAt": {
+                            "type": "string"
+                          },
+                          "refundedAt": {
+                            "type": ["string", "null"]
+                          }
+                        },
+                        "required": ["sku", "source", "status", "purchasedAt", "refundedAt"]
+                      }
+                    }
+                  },
+                  "required": ["entitlements"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No account.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/store/checkout": {
+      "post": {
+        "tags": ["store"],
+        "summary": "Hosted checkout session for a verified account (price chosen by the server)",
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          },
+          {
+            "policy": "checkout-user",
+            "limit": 5,
+            "windowMs": 3600000,
+            "key": "user",
+            "failClosed": true
+          },
+          {
+            "policy": "checkout-ip",
+            "limit": 10,
+            "windowMs": 3600000,
+            "key": "ip",
+            "failClosed": true
+          }
+        ],
+        "x-kill-switch": "purchases",
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "sku": {
+                    "type": "string",
+                    "enum": ["full-game", "collector"]
+                  },
+                  "consent": {
+                    "type": "boolean",
+                    "const": true
+                  }
+                },
+                "required": ["sku", "consent"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Redirect the browser here.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["url"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid body or missing consent.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No account.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Email not verified or purchases blocked.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "409": {
+            "description": "Already owned.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Store not configured or switched off.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/store/webhook": {
+      "post": {
+        "tags": ["store"],
+        "summary": "Payment provider webhook (signature + timestamp verified, idempotent by event id)",
+        "x-rate-limit": [
+          {
+            "policy": "webhook-ip",
+            "limit": 300,
+            "windowMs": 60000,
+            "key": "ip",
+            "failClosed": false
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Processed, duplicate or ignored.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid signature, stale timestamp or body.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/content/full": {
+      "post": {
+        "tags": ["store"],
+        "summary": "Signed URL (5 min) of the paid full content pack; full-game entitlement required",
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          },
+          {
+            "policy": "content-url-user",
+            "limit": 30,
+            "windowMs": 86400000,
+            "key": "user",
+            "failClosed": true
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Download ticket.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string"
+                    },
+                    "version": {
+                      "type": "string"
+                    },
+                    "sha256": {
+                      "type": "string"
+                    },
+                    "bytes": {
+                      "type": "integer",
+                      "minimum": -9007199254740991,
+                      "maximum": 9007199254740991
+                    },
+                    "expiresAt": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["url", "version", "sha256", "bytes", "expiresAt"]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No account.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No full-game entitlement.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "429": {
+            "description": "Rate limited.",
+            "headers": {
+              "Retry-After": {
+                "schema": {
+                  "type": "integer"
+                }
+              }
+            },
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/content/files/{name}": {
+      "get": {
+        "tags": ["store"],
+        "summary": "Development only: signed content file (production uses R2 presigned URLs)",
+        "x-rate-limit": [
+          {
+            "policy": "public-ip",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "ip",
+            "failClosed": false
+          }
+        ],
+        "parameters": [
+          {
+            "name": "name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "The file."
+          },
+          "403": {
+            "description": "Bad or expired signature.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/store/collector-name": {
+      "post": {
+        "tags": ["store"],
+        "summary": "Collector's edition: villager name for the credits (moderated before use)",
+        "x-rate-limit": [
+          {
+            "policy": "authed-user",
+            "limit": 120,
+            "windowMs": 60000,
+            "key": "user",
+            "failClosed": false
+          },
+          {
+            "policy": "collector-name-user",
+            "limit": 5,
+            "windowMs": 86400000,
+            "key": "user",
+            "failClosed": false
+          }
+        ],
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$schema": "https://json-schema.org/draft/2020-12/schema",
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "minLength": 2,
+                    "maxLength": 64
+                  }
+                },
+                "required": ["name"],
+                "additionalProperties": false
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Awaiting moderation.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$schema": "https://json-schema.org/draft/2020-12/schema",
+                  "type": "object",
+                  "properties": {
+                    "status": {
+                      "type": "string"
+                    }
+                  },
+                  "required": ["status"]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Name not allowed.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "No collector's edition.",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Problem"
                 }
               }
             }

@@ -72,6 +72,7 @@ interface Npc {
 
 function iconSvg(name: IconName, color: string): string | null {
   const id = `mrak-${name.replace('.', '--')}`;
+  // eslint-disable-next-line security/detect-non-literal-regexp -- id built from a typed IconName constant
   const match = new RegExp(`<symbol id="${id}" viewBox="([^"]+)">([\\s\\S]*?)</symbol>`).exec(
     spriteSvg,
   );

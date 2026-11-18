@@ -110,7 +110,8 @@ const AchievementUnlock = z.strictObject({
 export const unlockAchievementsRoute = defineRoute({
   method: 'post',
   path: '/v1/achievements/unlock',
-  rateLimit: { windowMs: 60_000, limit: 20 },
+  rateLimit: ['achievements-unlock-user', 'authed-user'],
+  feature: 'cloud-saves',
   handler: async (req, res) => {
     const body = AchievementUnlock.safeParse(req.body);
     if (!body.success) {
@@ -138,7 +139,7 @@ export const unlockAchievementsRoute = defineRoute({
 export const listAchievementsRoute = defineRoute({
   method: 'get',
   path: '/v1/achievements',
-  rateLimit: { windowMs: 60_000, limit: 30 },
+  rateLimit: ['authed-user'],
   handler: async (req, res) => {
     const d = await deps(req, res);
     if (!d) return;
@@ -166,7 +167,8 @@ const ProgressBody = z.strictObject({ entries: z.array(z.unknown()).min(1).max(M
 export const recordProgressRoute = defineRoute({
   method: 'post',
   path: '/v1/progress',
-  rateLimit: { windowMs: 60_000, limit: 20 },
+  rateLimit: ['progress-write-user', 'authed-user'],
+  feature: 'cloud-saves',
   handler: async (req, res) => {
     const body = ProgressBody.safeParse(req.body);
     if (!body.success) {
@@ -190,7 +192,7 @@ export const recordProgressRoute = defineRoute({
 export const listProgressRoute = defineRoute({
   method: 'get',
   path: '/v1/progress',
-  rateLimit: { windowMs: 60_000, limit: 30 },
+  rateLimit: ['authed-user'],
   handler: async (req, res) => {
     const d = await deps(req, res);
     if (!d) return;

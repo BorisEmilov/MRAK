@@ -10,3 +10,9 @@ allowBuilds:
 minimumReleaseAgeExclude:
   - eslint-plugin-react-refresh@0.5.8
   - lint-staged@17.6.1
+# Documented audit exceptions (docs/security/test-report.md → Dependencies). Each one needs: no
+# patched release, not reachable at runtime, and a review date. Remove as soon as a fix ships.
+auditConfig:
+  ignoreGhsas:
+    # picomatch ReDoS, no fix released; only in apps/landing build tooling (static output). Review 2026-12-18.
+    - GHSA-fc5q-39xc-vjpf

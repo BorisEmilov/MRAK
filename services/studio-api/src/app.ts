@@ -5,18 +5,22 @@ import { pinoHttp } from 'pino-http';
 import { requestTimeout } from './middleware/timeout.js';
 import { mountRoutes } from './routes/defineRoute.js';
 import { routes } from './routes/index.js';
+import type { SalesSource } from './sales.js';
 
 export const BODY_LIMIT = '16kb';
 export const REQUEST_TIMEOUT_MS = 10_000;
 
 export interface AppOptions {
   logger?: Logger;
+  /** Sales panel data from the online database (restricted role). */
+  sales?: SalesSource;
 }
 
 export function createApp(options: AppOptions = {}): express.Express {
   const app = express();
   app.disable('x-powered-by');
   app.set('trust proxy', 1);
+  app.locals['sales'] = options.sales;
 
   if (options.logger) {
     app.use(pinoHttp({ logger: options.logger }));

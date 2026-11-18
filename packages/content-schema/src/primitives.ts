@@ -1,8 +1,10 @@
 import { z } from 'zod';
 
 /** Stable content id: kebab-case ASCII (e.g. `baba-neda`). */
+// eslint-disable-next-line security/detect-unsafe-regex -- separator-delimited id: linear (timed in docs/security/test-report.md)
 export const ID_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 /** Localization key: dot-separated kebab-case segments (e.g. `villager.baba-neda.name`). */
+// eslint-disable-next-line security/detect-unsafe-regex -- separator-delimited id: linear (timed in docs/security/test-report.md)
 export const LOC_KEY_PATTERN = /^[a-z0-9]+(?:-[a-z0-9]+)*(?:\.[a-z0-9]+(?:-[a-z0-9]+)*)+$/;
 
 /**

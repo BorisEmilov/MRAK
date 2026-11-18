@@ -11,6 +11,7 @@ import { MemoryMailer } from './mailer.js';
 import { MemoryAuthRepository } from './repository.js';
 import { buildAuth } from './setup.js';
 import { ACCESS_TTL_S } from './tokens.js';
+import { DEFAULT_POLICIES, loadPolicies } from '../limits/policies.js';
 import { fileURLToPath } from 'node:url';
 
 const ORIGIN = 'https://play.mrak.game';
@@ -66,7 +67,13 @@ async function harness(opts: { pwned?: boolean } = {}) {
     ],
     now,
   });
-  const app = createApp({ auth, catalog, progress, corsOrigins: [ORIGIN], now });
+  // These tests exercise the account rules; route rate limits are tested in limits.test.ts.
+  const policies = loadPolicies(
+    JSON.stringify(
+      Object.fromEntries(Object.keys(DEFAULT_POLICIES).map((k) => [k, { limit: 100_000 }])),
+    ),
+  );
+  const app = createApp({ auth, catalog, progress, corsOrigins: [ORIGIN], now, policies });
   const agent = request(app);
   const post = (path: string, body: object, ip = nextIp()) =>
     agent
@@ -501,14 +508,14 @@ describe('progressive lockout and captcha', () => {
     const h = await harness();
     const ip = '198.51.100.99';
     let last = 0;
-    for (let i = 0; i < 21; i++) {
+    for (let i = 0; i < 22; i++) {
       const r = await h.post(
         '/v1/auth/login',
         { email: `u${String(i)}@example.com`, password: 'wrong password!!', captcha: 'human-ok' },
         ip,
       );
       last = r.status;
-      h.advance(61_000); // stay under the per-route limiter window
+      h.advance(100); // 20 free IP failures, then the 21st blocks the IP for 2 s
     }
     expect(last).toBe(429);
   });

@@ -105,6 +105,47 @@
         },
         "activeWhen": {
           "$ref": "#/$defs/Condition"
+        },
+        "ai": {
+          "default": {},
+          "type": "object",
+          "properties": {
+            "speed": {
+              "default": 1.5,
+              "type": "number",
+              "minimum": 0.1,
+              "maximum": 10
+            },
+            "sight": {
+              "default": 4,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 30
+            },
+            "hearing": {
+              "default": 0.8,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 5
+            },
+            "fleeLight": {
+              "default": true,
+              "type": "boolean"
+            },
+            "memory": {
+              "default": 4,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 60
+            },
+            "damage": {
+              "default": 15,
+              "type": "number",
+              "minimum": 0,
+              "maximum": 100
+            }
+          },
+          "additionalProperties": false
         }
       },
       "required": [

@@ -12,6 +12,7 @@ export const MAX_PACK_BYTES = 2 * 1024 * 1024;
 const PackIndex = z
   .array(
     z.strictObject({
+      // eslint-disable-next-line security/detect-unsafe-regex -- separator-delimited id: linear (timed in docs/security/test-report.md)
       packId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
       version: z.string().regex(/^\d+\.\d+\.\d+$/),
       path: z.string().regex(/^[a-z0-9][a-z0-9./-]*\.json$/),

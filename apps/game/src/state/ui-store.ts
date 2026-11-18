@@ -17,6 +17,8 @@ import type { Notice } from '../ui/hud/notices';
 import { createStore, type StoreApi } from 'zustand/vanilla';
 import type { PersistenceState } from '../storage/persistence';
 import type { SaveEntry } from '../storage/save-store';
+import type { AccountUser } from '@mrak/api-client';
+import type { CloudSnapshot } from '../storage/cloud-sync';
 import { DEFAULT_OPTIONS, type Options } from '../storage/options';
 
 export type Screen = 'booting' | 'loading' | 'menu' | 'playing' | 'error';
@@ -97,6 +99,22 @@ export interface UiState {
   debugLights: number;
   /** Bloodline Tree progress (account level, outside the save). */
   profile: Profile;
+  /** Signed-in account (null: guest). */
+  account: AccountUser | null;
+  /** Cloud save sync (docs/systems/save-system.md → Cloud). */
+  cloud: CloudSnapshot;
+  /** Account invitation card (end of the prologue, first achievement). */
+  accountInvite: 'prologue' | 'achievement' | null;
+  /** The demo-end card (docs/systems/store.md). */
+  demoEnd: boolean;
+  /** The paid full pack is loaded (bundled demo + downloaded full content). */
+  fullGame: boolean;
+  /** After signing in with local progress: offer to upload it. */
+  migrationOffer: boolean;
+  /** The save conflict dialog. */
+  conflictOpen: boolean;
+  /** Email link opened in the game (verify / reset), handled by the account panel. */
+  accountLink: { kind: 'verify' | 'reset'; token: string } | null;
 }
 
 export type UiStore = StoreApi<UiState>;
@@ -141,6 +159,14 @@ export function createUiStore(options: Options = DEFAULT_OPTIONS): UiStore {
     mapGuardian: null,
     debugLights: 0,
     profile: emptyProfile(),
+    account: null,
+    cloud: { status: 'disabled', conflicts: [], remote: [] },
+    accountInvite: null,
+    demoEnd: false,
+    fullGame: false,
+    migrationOffer: false,
+    conflictOpen: false,
+    accountLink: null,
   }));
 }
 

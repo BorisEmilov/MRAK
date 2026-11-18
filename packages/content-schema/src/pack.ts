@@ -164,6 +164,7 @@ export const PACK_COLLECTIONS = [
 
 export const ContentPackFile = z
   .strictObject({
+    // eslint-disable-next-line security/detect-unsafe-regex -- separator-delimited id: linear (timed in docs/security/test-report.md)
     packId: z.string().regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/),
     version: z.string().regex(/^\d+\.\d+\.\d+$/),
     collections: z.partialRecord(z.enum(PACK_COLLECTIONS), z.array(z.unknown()).max(200)),

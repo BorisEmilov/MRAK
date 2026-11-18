@@ -92,6 +92,7 @@ export const Quest = z
 
 /** Proposition on the deduction board: "culprit:<villager>", "cause:<id>", "remedy:<id>". */
 export const PROPOSITION_PATTERN =
+  // eslint-disable-next-line security/detect-unsafe-regex -- separator-delimited id: linear (timed in docs/security/test-report.md)
   /^(culprit|cause|remedy|motive|opportunity):[a-z0-9]+(?:-[a-z0-9]+)*$/;
 export const Proposition = z
   .string()

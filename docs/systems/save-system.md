@@ -12,7 +12,8 @@ accounts, versioned and migratable.
 - **Save file:** `{ schemaVersion, contentVersion, createdAt, slotId, checksum, state: WorldState }` (JSON, compressed).
 - **Profile:** Bloodline Tree, achievements, settings, Cycle count.
 - Local storage: **IndexedDB** (not localStorage — size and structure). Never tokens in storage.
-- Cloud: `online-api` endpoints `GET/PUT /saves/:slot`, `GET/PUT /profile`.
+- Cloud: `online-api` `GET /v1/saves`, `GET|PUT|DELETE /v1/saves/:slot` (table `cloud_saves`);
+  account progress `/v1/progress`.
 
 ## Rules
 
@@ -22,12 +23,25 @@ accounts, versioned and migratable.
    slot, a rotation of the 3 latest autosaves.
 2. **Migrations:** `migrate(vN → vN+1)` pure functions, chained; a save is never loaded without
    passing schema validation (Zod) after migration.
-3. **Cloud:** last-write-wins per slot with conflict detection (`baseRevision`); on conflict the
-   player chooses (shows dates and playtime).
+3. **Cloud (local-first):** every save commits to IndexedDB first. Manual slots and autosaves
+   (never quick saves) are queued in a persistent outbox (`mrak-cloud` DB) and uploaded in the
+   background with exponential backoff + jitter (2 s … 5 min), honouring 429 `Retry-After`;
+   flushes on save, sign-in, reconnect and startup. Every upload names the cloud version it
+   replaces (`If-Match: "v<n>"`, or `If-None-Match: *` for a new slot); the server answers 412 with
+   its `current` version on divergence. A conflict shows both saves (thumbnail, in-game date,
+   zone, playtime, real save time) and the player keeps one. The cloud never replaces a local
+   save without that choice: downloading into a manual slot holding a different save is also a
+   conflict (autosaves rotate, so they download freely). Status icons: synced, pending, offline,
+   conflict (plus "this device only" when signed out). Quotas: `slot-1..3` keep 1 version, `auto`
+   keeps 3; payload ≤ 1.5 MB, body ≤ 2 MB; SHA-256 checked; `format` must be `mrak-save`.
 4. **Security** ([threat model](../security/threat-model.md)): server validates size (≤ 1 MB
    compressed) and schema; saves are untrusted user data — never executed, never used to grant
    entitlements. Endpoints are authenticated, rate-limited and body-size-limited.
-5. Guests: local only; demo saves can be **uploaded once** when creating an account.
+5. Guests: local only. After signing in on a device with guest progress the game offers once per
+   account to upload it (saves and account progress: achievements, Bloodline, stats); slots the
+   account already holds differently become conflicts — nothing is lost. "Upload this device's
+   progress" in the account panel repeats it. Invitations to create an account appear at the end
+   of the prologue and with the first achievement, on the menu only, with "Don't show again".
 6. GDPR: saves and profile included in account export and deleted with the account.
 
 ## Initial formulas
@@ -95,9 +109,11 @@ exportedAt, checksum, save }` where `save` is the serialized save text. Import v
   (≤ 4 MB), envelope, checksum, migration and schema before storing it in the chosen manual slot.
 - **Load screen:** thumbnail (JPEG ≈ 192×108 captured from the renderer), in-game date and time,
   zone, generation, playtime, real save time, slot/autosave reason.
-- **CloudSync** interface (`push`, `pull`, `list`, `remove`, `status`); `NullCloudSync` now, the
-  real implementation (online-api) arrives in phase 25. SaveStore calls `push` after each commit,
-  fire-and-forget; failures never affect local saves.
+- **CloudSync** (`push`, `status`): `NullCloudSync` offline builds, `HttpCloudSync`
+  (`storage/cloud-sync.ts`) online: queue, retries, conflicts (`resolve`), `download`,
+  `uploadLocal`. SaveStore calls `push` after each commit, fire-and-forget; failures never affect
+  local saves. HTTP: `packages/api-client` (one refresh in flight, one retry on 401, clean
+  sign-out when the refresh fails).
 - **Save format v3:** adds `meta.generation` (world stat `generation`, default 1). `MIGRATIONS[2]`
   derives it from the saved stats.
 

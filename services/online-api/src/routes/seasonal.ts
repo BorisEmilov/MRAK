@@ -26,7 +26,7 @@ export function activeSeasons(now: Date): { date: string; active: string[] } {
 export const seasonalRoute = defineRoute({
   method: 'get',
   path: '/v1/seasonal',
-  rateLimit: { windowMs: 60_000, limit: 30 },
+  rateLimit: ['seasonal-ip'],
   handler: (req, res) => {
     const now = (req.app.locals['now'] as (() => Date) | undefined) ?? (() => new Date());
     res.set('Cache-Control', 'public, max-age=300');

@@ -1,0 +1,335 @@
+/* Public site (docs/ui/design-system.md tokens). No inline styles anywhere: the CSP forbids them. */
+
+html,
+body {
+  margin: 0;
+  background: var(--mrak-color-bg);
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: min(72rem, 100% - 2rem);
+  margin: 0 auto;
+  padding: var(--mrak-space-5) 0 var(--mrak-space-7);
+}
+
+a {
+  color: var(--mrak-color-accent);
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--mrak-font-display);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+}
+
+h1 {
+  font-size: var(--mrak-text-display);
+}
+
+h2 {
+  font-size: var(--mrak-text-xl);
+}
+
+.muted {
+  color: var(--mrak-color-text-muted);
+}
+
+.icon {
+  width: 1.25em;
+  height: 1.25em;
+  flex: none;
+  vertical-align: -0.2em;
+  fill: currentColor;
+}
+
+.icon-lg {
+  width: 2.5rem;
+  height: 2.5rem;
+  color: var(--mrak-color-accent);
+}
+
+.skip-link {
+  position: absolute;
+  left: -100vw;
+}
+
+.skip-link:focus {
+  left: var(--mrak-space-3);
+  top: var(--mrak-space-3);
+  z-index: 10;
+  background: var(--mrak-color-surface);
+  padding: var(--mrak-space-2);
+}
+
+/* ---------------------------------------------------------------- header / footer */
+
+.site-header,
+.site-footer {
+  width: min(72rem, 100% - 2rem);
+  margin: 0 auto;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mrak-space-3);
+  padding: var(--mrak-space-3) 0;
+  border-bottom: 1px solid var(--mrak-color-rule);
+}
+
+.brand {
+  font-family: var(--mrak-font-display);
+  font-size: var(--mrak-text-xl);
+  letter-spacing: 0.3em;
+  color: var(--mrak-color-text);
+  text-decoration: none;
+}
+
+.site-header ul,
+.site-footer ul {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--mrak-space-3);
+  margin: 0;
+  padding: 0;
+}
+
+.site-header a[aria-current='page'] {
+  color: var(--mrak-color-highlight);
+}
+
+.site-footer {
+  border-top: 1px solid var(--mrak-color-rule);
+  padding: var(--mrak-space-4) 0 var(--mrak-space-5);
+  font-size: var(--mrak-text-sm);
+}
+
+a.mrak-button {
+  text-decoration: none;
+  gap: var(--mrak-space-2);
+}
+
+.cta-small {
+  min-height: 2.25rem;
+}
+
+/* ---------------------------------------------------------------- home */
+
+.hero {
+  display: grid;
+  gap: var(--mrak-space-4);
+  align-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+  padding-bottom: var(--mrak-space-6);
+}
+
+.hero h1 {
+  margin: 0 0 var(--mrak-space-3);
+}
+
+.hero .lead {
+  font-size: var(--mrak-text-lg);
+  max-width: 38ch;
+}
+
+.cta {
+  font-size: var(--mrak-text-lg);
+  padding: var(--mrak-space-3) var(--mrak-space-4);
+}
+
+.frame {
+  aspect-ratio: 16 / 9;
+  width: 100%;
+  border: 1px solid var(--mrak-color-rule);
+  outline: 1px solid var(--mrak-color-rule);
+  outline-offset: 4px;
+  background: var(--mrak-color-surface);
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: var(--mrak-space-2);
+  text-align: center;
+  color: var(--mrak-color-text-muted);
+  margin: 0;
+}
+
+.frame video,
+.frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+section {
+  padding: var(--mrak-space-5) 0;
+}
+
+.pillars,
+.editions,
+.gallery {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--mrak-space-4);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+}
+
+.pillars li,
+.editions li,
+.card {
+  background: var(--mrak-color-surface);
+  border: 1px solid var(--mrak-color-rule);
+  padding: var(--mrak-space-4);
+}
+
+.pillars h3,
+.editions h3 {
+  margin: var(--mrak-space-2) 0;
+}
+
+.editions ul {
+  padding-left: 1.2em;
+}
+
+.price {
+  font-family: var(--mrak-font-display);
+  font-size: var(--mrak-text-xl);
+  color: var(--mrak-color-highlight);
+}
+
+details {
+  border-bottom: 1px solid var(--mrak-color-rule);
+  padding: var(--mrak-space-3) 0;
+}
+
+summary {
+  cursor: pointer;
+  font-weight: 700;
+}
+
+/* ---------------------------------------------------------------- forms and account */
+
+.narrow {
+  max-width: 32rem;
+}
+
+.form {
+  display: grid;
+  gap: var(--mrak-space-3);
+}
+
+.field {
+  display: grid;
+  gap: var(--mrak-space-1);
+}
+
+.field input {
+  font: inherit;
+  color: var(--mrak-color-text);
+  background: var(--mrak-color-raised);
+  border: 1px solid var(--mrak-earth-500);
+  padding: var(--mrak-space-2);
+  min-height: var(--mrak-hit);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--mrak-space-2);
+  align-items: center;
+}
+
+.notice {
+  border-left: 3px solid var(--mrak-color-accent);
+  padding: var(--mrak-space-2) var(--mrak-space-3);
+  background: var(--mrak-color-surface);
+}
+
+.notice.bad {
+  border-color: var(--mrak-bad);
+}
+
+.strength {
+  display: grid;
+  gap: var(--mrak-space-1);
+  font-size: var(--mrak-text-sm);
+}
+
+.strength meter,
+.progress progress {
+  width: 100%;
+  height: 0.6rem;
+}
+
+.account-grid {
+  display: grid;
+  gap: var(--mrak-space-4);
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: var(--mrak-space-2);
+}
+
+.list li {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--mrak-space-2);
+  border-bottom: 1px solid var(--mrak-color-rule);
+  padding: var(--mrak-space-2) 0;
+}
+
+.achievement {
+  display: flex;
+  gap: var(--mrak-space-3);
+  align-items: flex-start;
+}
+
+.achievement.locked {
+  color: var(--mrak-color-text-muted);
+}
+
+.danger-zone {
+  border-color: var(--mrak-blood-600);
+}
+
+.turnstile {
+  min-height: 65px;
+}
+
+.prose {
+  max-width: 70ch;
+}
+
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.prose th,
+.prose td {
+  border-bottom: 1px solid var(--mrak-color-rule);
+  padding: var(--mrak-space-1) var(--mrak-space-2);
+  text-align: left;
+  vertical-align: top;
+}

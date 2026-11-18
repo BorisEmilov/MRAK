@@ -4,7 +4,7 @@ import { defineRoute } from './defineRoute.js';
 export const healthRoute = defineRoute({
   method: 'get',
   path: '/health',
-  rateLimit: { windowMs: 60_000, limit: 120 },
+  rateLimit: ['public-ip'],
   handler: (_req, res) => {
     res.status(200).json({ status: 'ok', service: 'online-api' });
   },

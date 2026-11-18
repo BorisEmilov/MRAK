@@ -1,9 +1,10 @@
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
+import { demoPlugin } from './build/demo-plugin';
 import { inkPlugin } from './build/ink-plugin';
 
 export default defineConfig({
-  plugins: [react(), inkPlugin()],
+  plugins: [demoPlugin(), react(), inkPlugin()],
   server: { port: 5173 },
   build: {
     target: 'es2023',

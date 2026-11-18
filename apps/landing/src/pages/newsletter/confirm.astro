@@ -1,0 +1,16 @@
+---
+import Island from '../../components/Island.astro';
+import Base from '../../layouts/Base.astro';
+import { t } from '../../i18n';
+---
+
+<Base title="site.newsletter.confirm-title" noindex>
+  <div class="narrow">
+    <h1>{t('site.newsletter.confirm-title')}</h1>
+    <Island name="newsletter-confirm" />
+  </div>
+</Base>
+
+<script>
+  import '../../islands/entry';
+</script>

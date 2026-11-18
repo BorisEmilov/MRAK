@@ -3,14 +3,17 @@
  *   validate [root]          validate the pack (schemas, cross refs, trees, mysteries, manifest)
  *   manifest [root]          (re)write manifest.json with file hashes
  *   json-schema [outDir]     export JSON Schemas for the editor and the API
+ *   full-pack [outDir]       write the paid full pack (upload to R2; never in the public build)
  * `root` defaults to packages/content.
  */
+import { createHash } from 'node:crypto';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildJsonSchemas } from '../json-schema';
 import { ContentManifest } from '../manifest';
 import { formatIssue, IssueList, validatePack } from '../validate';
+import { FullContentPack, splitByTier } from '../tiers';
 import { buildManifest, checkManifest, CONTENT_LAYOUT, loadRawPack } from './fs';
 import { compileAll } from './ink';
 
@@ -62,6 +65,22 @@ function jsonSchema(outDir: string): number {
   return 0;
 }
 
+function fullPack(outDir: string): number {
+  const root = DEFAULT_ROOT;
+  const issues = new IssueList();
+  const { full } = splitByTier(loadRawPack(root, issues));
+  const { version } = ContentManifest.parse(
+    JSON.parse(readFileSync(join(root, CONTENT_LAYOUT.manifest), 'utf8')),
+  );
+  const bytes = Buffer.from(JSON.stringify(FullContentPack.parse({ ...full, version })));
+  const file = join(outDir, `mrak-full-${version}.json`);
+  mkdirSync(outDir, { recursive: true });
+  writeFileSync(file, bytes);
+  const sha256 = createHash('sha256').update(bytes).digest('hex');
+  console.log(JSON.stringify({ file, version, bytes: bytes.length, sha256 }));
+  return 0;
+}
+
 const [command, arg] = process.argv.slice(2);
 const code =
   command === 'validate'
@@ -70,5 +89,7 @@ const code =
       ? manifest(resolve(arg ?? DEFAULT_ROOT))
       : command === 'json-schema'
         ? jsonSchema(resolve(arg ?? DEFAULT_SCHEMA_OUT))
-        : (console.error('usage: cli <validate|manifest|json-schema> [path]'), 2);
+        : command === 'full-pack'
+          ? fullPack(resolve(arg ?? 'dist-full'))
+          : (console.error('usage: cli <validate|manifest|json-schema|full-pack> [path]'), 2);
 process.exitCode = code;

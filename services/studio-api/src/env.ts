@@ -7,6 +7,8 @@ const EnvSchema = z.object({
   LOG_LEVEL: z.enum(['fatal', 'error', 'warn', 'info', 'debug', 'trace', 'silent']).default('info'),
   DATABASE_URL: z.url().optional(),
   REDIS_URL: z.url().optional(),
+  /** Online database, restricted studio role (sales panel, collector-name moderation). */
+  SALES_DATABASE_URL: z.url().optional(),
 });
 
 export type Env = z.infer<typeof EnvSchema>;

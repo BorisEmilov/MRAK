@@ -47,6 +47,13 @@ services:
       context: .
       dockerfile: services/online-api/Dockerfile
     restart: unless-stopped
+    # Hardening (docs/security/test-report.md, item 4): read-only root fs, no capabilities.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
     environment:
       NODE_ENV: production
       PORT: 3000
@@ -76,6 +83,13 @@ services:
       context: .
       dockerfile: services/studio-api/Dockerfile
     restart: unless-stopped
+    # Hardening (docs/security/test-report.md, item 4): read-only root fs, no capabilities.
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
     environment:
       NODE_ENV: production
       PORT: 3100

@@ -8,6 +8,7 @@ import { z } from 'zod';
 import { routes } from './routes/index.js';
 import { CSRF_HEADER, REFRESH_COOKIE } from './auth/controller.js';
 import type { RouteDefinition } from './routes/defineRoute.js';
+import { DEFAULT_POLICIES } from './limits/policies.js';
 
 const schema = (s: z.ZodType) =>
   z.toJSONSchema(s, { io: 'input', unrepresentable: 'any', target: 'draft-2020-12' });
@@ -27,7 +28,8 @@ export function buildOpenApi(defs: readonly RouteDefinition[] = routes): Record<
     paths[path][r.method] = {
       tags: [d.tag],
       summary: d.summary,
-      'x-rate-limit': r.rateLimit,
+      'x-rate-limit': r.rateLimit.map((name) => ({ policy: name, ...DEFAULT_POLICIES[name] })),
+      ...(r.feature ? { 'x-kill-switch': r.feature } : {}),
       ...(d.bearer ? { security: [{ bearer: [] }] } : {}),
       parameters: [
         ...params,
@@ -51,6 +53,9 @@ export function buildOpenApi(defs: readonly RouteDefinition[] = routes): Record<
           status,
           {
             description: res.description,
+            ...(Number(status) === 429 || Number(status) === 503
+              ? { headers: { 'Retry-After': { schema: { type: 'integer' } } } }
+              : {}),
             ...(res.schema
               ? { content: { 'application/json': { schema: schema(res.schema) } } }
               : Number(status) >= 400
@@ -100,6 +105,7 @@ export function buildOpenApi(defs: readonly RouteDefinition[] = routes): Record<
 export const OPENAPI_FILE = fileURLToPath(new URL('../openapi.json', import.meta.url));
 
 if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  // eslint-disable-next-line security/detect-non-literal-fs-filename -- fixed repo path (generator)
   writeFileSync(OPENAPI_FILE, `${JSON.stringify(buildOpenApi(), null, 2)}\n`);
   console.info(`wrote ${OPENAPI_FILE}`);
 }

@@ -2,6 +2,9 @@
   {
     "id": "default",
     "tier": "demo",
+    "demo": {
+      "nights": 4
+    },
     "attributes": {
       "base": 2,
       "playerPoints": 1,

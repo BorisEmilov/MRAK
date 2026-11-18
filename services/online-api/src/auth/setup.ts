@@ -7,6 +7,9 @@ import type { PwnedCheck } from './passwords.js';
 import type { AuthRepository } from './repository.js';
 import { AuthService, type AccountDataHook } from './service.js';
 import { TokenIssuer } from './tokens.js';
+import type { Request } from 'express';
+import type { Limiter } from '../limits/limiter.js';
+import type { Policies } from '../limits/policies.js';
 import type { Authenticate } from '../routes/progress.js';
 
 export interface AuthSetup {
@@ -24,7 +27,11 @@ export interface AuthSetup {
   human: HumanCheck;
   pwned?: PwnedCheck;
   hooks?: readonly AccountDataHook[];
+  /** Active skus of an account (store); none when the store is not wired. */
+  entitlements?: (userId: string) => Promise<readonly string[]>;
   now?: () => Date;
+  /** Shared limiter for the per-session refresh policy. */
+  limits?: { limiter: Limiter; policies: Policies };
 }
 
 export interface Auth {
@@ -32,14 +39,21 @@ export interface Auth {
   jwks: { keys: unknown[] };
   /** Bearer authenticator for other routes (account progress). */
   authenticate: Authenticate;
+  /** Verified `sub` of the bearer token (signature only, no DB): rate-limit key. */
+  userOf: (req: Request) => Promise<string | null>;
 }
+
+const bearer = (req: Request): string | null =>
+  /^Bearer ([\w-]+\.[\w-]+\.[\w-]+)$/.exec(req.get('authorization') ?? '')?.[1] ?? null;
 
 export async function buildAuth(s: AuthSetup): Promise<Auth> {
   const now = s.now ?? (() => new Date());
   const keys = await loadKeyStore(s.jwtKeys);
+  const tokens = new TokenIssuer(keys, s.issuer, s.audience);
+  const limits = s.limits;
   const service = new AuthService({
     repo: s.repo,
-    tokens: new TokenIssuer(keys, s.issuer, s.audience),
+    tokens,
     mailer: s.mailer,
     counters: s.counters,
     throttle: new LoginThrottle(s.counters, () => now().getTime()),
@@ -50,14 +64,33 @@ export async function buildAuth(s: AuthSetup): Promise<Auth> {
     appUrl: s.appUrl,
     now,
     ...(s.hooks ? { hooks: s.hooks } : {}),
+    ...(limits
+      ? {
+          limitRefresh: (sessionId: string) =>
+            limits.limiter.consume(
+              `refresh-session:s:${sessionId}`,
+              limits.policies['refresh-session'],
+            ),
+        }
+      : {}),
   });
   return {
     deps: { service, http: s.http },
     jwks: keys.jwks,
     authenticate: async (req) => {
-      const m = /^Bearer ([\w-]+\.[\w-]+\.[\w-]+)$/.exec(req.get('authorization') ?? '');
-      const p = m?.[1] ? await service.authenticate(m[1]) : null;
-      return p && { userId: p.userId, entitlements: [], verified: p.verified };
+      const token = bearer(req);
+      const p = token ? await service.authenticate(token) : null;
+      return (
+        p && {
+          userId: p.userId,
+          entitlements: s.entitlements ? await s.entitlements(p.userId) : [],
+          verified: p.verified,
+        }
+      );
+    },
+    userOf: async (req) => {
+      const token = bearer(req);
+      return token ? ((await tokens.verify(token, now()))?.sub ?? null) : null;
     },
   };
 }

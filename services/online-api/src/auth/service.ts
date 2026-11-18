@@ -33,6 +33,10 @@ import {
 } from './tokens.js';
 
 export const VERIFY_TTL_MS = 24 * 3600_000;
+/** Active sessions per account; the least recently used is revoked beyond it. */
+export const MAX_SESSIONS = 10;
+/** Unverified accounts are deleted after this long (anti-bot, data minimisation). */
+export const UNVERIFIED_TTL_MS = 7 * 24 * 3600_000;
 export const RESET_TTL_MS = 30 * 60_000;
 /** Mails per recipient (C-11): per hour and per day. */
 export const MAIL_CAP = { hour: 3, day: 10 } as const;
@@ -113,6 +117,10 @@ export interface AuthServiceDeps {
   appUrl: string;
   now: () => Date;
   hooks?: readonly AccountDataHook[];
+  /** Per-session refresh limit (policy refresh-session); absent: no per-session limit. */
+  limitRefresh?: (
+    sessionId: string,
+  ) => Promise<{ allowed: boolean; retryAfterMs: number; unavailable?: boolean }>;
 }
 
 export function normalizeEmail(email: string): string {
@@ -321,6 +329,12 @@ export class AuthService {
       revokedAt: null,
     });
     await this.audit(user.id, 'login', 'ok', ctx);
+    // Session quota: beyond MAX_SESSIONS the least recently used ones are revoked.
+    const active = (await this.d.repo.sessions(user.id))
+      .filter((s) => !s.revokedAt)
+      .sort((a, b) => b.lastUsedAt.getTime() - a.lastUsedAt.getTime());
+    for (const old of active.slice(MAX_SESSIONS))
+      if (old.id !== session.id) await this.d.repo.revokeSessions(user.id, now, old.id);
     return this.issue(user, session, refresh, expiresAt);
   }
 
@@ -334,6 +348,9 @@ export class AuthService {
     if (row.usedAt) return this.reuse(session, ctx);
     if (row.revokedAt || session.revokedAt || row.expiresAt <= now)
       throw new AuthError('unauthorized');
+    const limit = await this.d.limitRefresh?.(session.id);
+    if (limit?.unavailable) throw new AuthError('unavailable');
+    if (limit && !limit.allowed) throw new AuthError('too_many_requests', limit.retryAfterMs);
     const absolute = session.createdAt.getTime() + REFRESH_ABSOLUTE_MS;
     if (absolute <= now.getTime()) throw new AuthError('unauthorized');
     const user = await this.d.repo.userById(session.userId);
@@ -387,6 +404,11 @@ export class AuthService {
     const user = await this.d.repo.userById(claims.sub);
     if (!user) return null;
     return { userId: user.id, sessionId: session.id, verified: user.emailVerifiedAt !== null };
+  }
+
+  /** Deletes accounts left unverified for 7 days (scheduled; safe on every instance). */
+  async purgeUnverified(): Promise<number> {
+    return this.d.repo.deleteUnverifiedBefore(new Date(this.d.now().getTime() - UNVERIFIED_TTL_MS));
   }
 
   // ---------------------------------------------------------------- password recovery

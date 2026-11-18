@@ -1,0 +1,24 @@
+---
+import achievements from '../../../../../packages/content/data/achievements/achievements.json';
+import { locales, type LocaleKey } from '@mrak/content';
+import Island from '../../components/Island.astro';
+import Base from '../../layouts/Base.astro';
+import { t } from '../../i18n';
+
+// Names and descriptions from the game's content (hidden ones only as "???" until unlocked).
+const defs = achievements.map((a) => ({
+  id: a.id,
+  name: locales.en[a.nameKey as LocaleKey],
+  desc: locales.en[a.descKey as LocaleKey],
+  hidden: 'hidden' in a && a.hidden === true,
+}));
+---
+
+<Base title="site.account.title" noindex>
+  <h1>{t('site.account.title')}</h1>
+  <Island name="account" props={{ achievements: defs }} />
+</Base>
+
+<script>
+  import '../../islands/entry';
+</script>

@@ -1,0 +1,38 @@
+---
+/**
+ * Mount point of a React island. Strings and config travel as data attributes (no inline
+ * script); the page's own <script> imports the island module, which Astro bundles externally.
+ */
+import {
+  API_URL,
+  PADDLE_CLIENT_TOKEN,
+  PADDLE_ENV,
+  PLAY_URL,
+  TURNSTILE_SITEKEY,
+} from '../data/site';
+import { siteStrings } from '../i18n';
+
+interface Props {
+  name: string;
+  props?: Record<string, unknown>;
+}
+const { name, props = {} } = Astro.props;
+const config = {
+  apiUrl: API_URL,
+  playUrl: PLAY_URL,
+  turnstileSiteKey: TURNSTILE_SITEKEY,
+  paddleToken: PADDLE_CLIENT_TOKEN,
+  paddleEnv: PADDLE_ENV,
+};
+const strings = siteStrings();
+---
+
+<div
+  class="island"
+  data-island={name}
+  data-strings={JSON.stringify(strings)}
+  data-config={JSON.stringify(config)}
+  data-props={JSON.stringify(props)}
+>
+  <noscript>{strings['site.common.noscript']}</noscript>
+</div>

@@ -141,7 +141,7 @@
     {
       "path": "data/flags.json",
       "sha256": "660f2c9e3a5853f7c6db3b68ce689a850f1c349654c8da72f22c6453e789067c",
-      "bytes": 28013
+      "bytes": 27525
     },
     {
       "path": "data/gear/gear.json",
@@ -166,7 +166,7 @@
     {
       "path": "data/hints/tutorial.json",
       "sha256": "d396dc5ecd261f9c2b08778d23643a9349c1a4c63ae5f89a7cae164282a13f1d",
-      "bytes": 5412
+      "bytes": 5346
     },
     {
       "path": "data/item-rules/default.json",
@@ -235,8 +235,8 @@
     },
     {
       "path": "data/progression-rules/default.json",
-      "sha256": "55042e2cb26508caee7bf05e5774c570d01c4cf134df9b6871afc47ab62546ad",
-      "bytes": 2916
+      "sha256": "b6b8c2139da2563e9aec04f48942c444de9a259b00bee865587fe99f7d6c8b41",
+      "bytes": 2955
     },
     {
       "path": "data/quests/quests.json",
@@ -445,8 +445,8 @@
     },
     {
       "path": "locales/en.json",
-      "sha256": "d94f98f9483cceeaef23263550e8e140130725ee57c008e8b5cca135196e2e39",
-      "bytes": 165108
+      "sha256": "863f0683474400453f1391c5dc0a6a0fab2841476bcad5669c9f852991abdfbf",
+      "bytes": 183570
     },
     {
       "path": "maps/monastery.tmj",
@@ -564,5 +564,5 @@
       "bytes": 1344
     }
   ],
-  "hash": "dfa2c4e4dbf9cd92011e780a8b6ba00e91942a45c742ddf4b1325d0b1a62e4a0"
+  "hash": "b41dadb294e2b6168c68e297fabc85544733cf0d00e9b687d3e48f9d39455fc3"
 }

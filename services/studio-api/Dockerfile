@@ -12,6 +12,10 @@ RUN pnpm --filter @mrak/studio-api build
 RUN pnpm --filter @mrak/studio-api deploy --prod /out
 
 FROM node:24-alpine AS runtime
+# Minimal runtime: patched OS packages, no package managers (smaller attack surface; Trivy gate).
+RUN apk upgrade --no-cache \
+  && rm -rf /usr/local/lib/node_modules/npm /usr/local/lib/node_modules/corepack \
+    /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /opt/yarn* /usr/local/bin/yarn*
 ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=build --chown=node:node /out/package.json ./

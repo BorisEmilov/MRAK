@@ -1,0 +1,14 @@
+---
+import Island from '../../components/Island.astro';
+import Base from '../../layouts/Base.astro';
+import { t } from '../../i18n';
+---
+
+<Base title="site.store.checkout.title" noindex>
+  <h1>{t('site.store.checkout.title')}</h1>
+  <Island name="store" props={{ mode: 'checkout' }} />
+</Base>
+
+<script>
+  import '../../islands/entry';
+</script>

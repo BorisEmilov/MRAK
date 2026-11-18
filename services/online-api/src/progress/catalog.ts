@@ -21,9 +21,13 @@ const Entry = z.object({
 });
 
 function readAll(dir: string): z.infer<typeof Entry>[] {
-  return readdirSync(dir)
-    .filter((f) => f.endsWith('.json'))
-    .flatMap((f) => z.array(Entry).parse(JSON.parse(readFileSync(join(dir, f), 'utf8'))));
+  return (
+    // eslint-disable-next-line security/detect-non-literal-fs-filename -- CONTENT_DATA_DIR is deploy config, not request data
+    readdirSync(dir)
+      .filter((f) => f.endsWith('.json'))
+      // eslint-disable-next-line security/detect-non-literal-fs-filename -- files listed from that directory
+      .flatMap((f) => z.array(Entry).parse(JSON.parse(readFileSync(join(dir, f), 'utf8'))))
+  );
 }
 
 export function loadCatalog(dataDir: string): Catalog {

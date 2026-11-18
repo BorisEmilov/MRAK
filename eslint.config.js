@@ -3,6 +3,7 @@ import js from '@eslint/js';
 import prettier from 'eslint-config-prettier';
 import reactHooks from 'eslint-plugin-react-hooks';
 import reactRefresh from 'eslint-plugin-react-refresh';
+import security from 'eslint-plugin-security';
 import globals from 'globals';
 import tseslint from 'typescript-eslint';
 
@@ -39,6 +40,42 @@ export default tseslint.config(
       '@typescript-eslint/restrict-template-expressions': ['error', { allowNumber: true }],
     },
   },
+  // Security lint (SAST in every PR; docs/security/test-report.md).
+  security.configs.recommended,
+  {
+    rules: {
+      // Typed code indexes objects by design (Records keyed by validated ids): too noisy.
+      'security/detect-object-injection': 'off',
+      // XSS sinks: React escapes by default; raw HTML only through reviewed exceptions.
+      'no-restricted-syntax': [
+        'error',
+        {
+          selector: "JSXAttribute[name.name='dangerouslySetInnerHTML']",
+          message: 'No raw HTML in React (XSS). Render text, or add a reviewed eslint-disable.',
+        },
+        {
+          selector:
+            "MemberExpression[property.name='innerHTML'][parent.type='AssignmentExpression']",
+          message: 'No innerHTML assignments (XSS).',
+        },
+      ],
+    },
+  },
+  {
+    // Build tooling, CLIs and tests read local, repo-controlled paths.
+    files: [
+      '**/scripts/**',
+      '**/build/**',
+      '**/*.test.{ts,tsx}',
+      '**/tests/**',
+      '**/*.config.{js,ts,mjs}',
+      'packages/content-schema/src/node/**',
+    ],
+    rules: {
+      'security/detect-non-literal-fs-filename': 'off',
+      'security/detect-non-literal-regexp': 'off',
+    },
+  },
   {
     files: ['**/*.js', '**/*.mjs', '**/*.cjs'],
     ...tseslint.configs.disableTypeChecked,
@@ -53,7 +90,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['services/**/*.ts', '**/*.config.{js,ts}'],
+    files: ['services/**/*.ts', '**/*.config.{js,ts}', 'tests/security/**'],
     languageOptions: { globals: globals.node },
   },
   {

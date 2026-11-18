@@ -170,6 +170,33 @@
           "type": "string",
           "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
           "description": "Reference to a tree"
+        },
+        "sin": {
+          "type": "string",
+          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+          "description": "Reference to a sin"
+        },
+        "blood": {
+          "type": "object",
+          "properties": {
+            "stat": {
+              "type": "string",
+              "enum": [
+                "sanity",
+                "sanity-max"
+              ]
+            },
+            "amount": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "stat",
+            "amount"
+          ],
+          "additionalProperties": false
         }
       },
       "required": [
@@ -183,7 +210,8 @@
         "offerEffects",
         "visibleTerms",
         "hiddenClauses",
-        "debt"
+        "debt",
+        "blood"
       ],
       "additionalProperties": false
     },
@@ -441,8 +469,26 @@
             }
           },
           "required": [
-            "startPossession",
-            "host"
+            "startPossession"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "nameFragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+              "description": "Reference to a demon"
+            },
+            "fragment": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "required": [
+            "nameFragment",
+            "fragment"
           ],
           "additionalProperties": false
         },

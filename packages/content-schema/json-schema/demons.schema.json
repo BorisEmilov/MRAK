@@ -150,6 +150,86 @@
           "type": "integer",
           "minimum": 1,
           "maximum": 5
+        },
+        "phrases": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+            "description": "Reference to a loc"
+          }
+        },
+        "taunts": {
+          "type": "object",
+          "properties": {
+            "pact": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+              "description": "Reference to a loc"
+            },
+            "sacrifice": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+              "description": "Reference to a loc"
+            },
+            "death": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+              "description": "Reference to a loc"
+            },
+            "lynching": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+              "description": "Reference to a loc"
+            },
+            "debt": {
+              "type": "string",
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+              "description": "Reference to a loc"
+            }
+          },
+          "required": [
+            "pact",
+            "sacrifice",
+            "death",
+            "lynching",
+            "debt"
+          ],
+          "additionalProperties": false
+        },
+        "fragments": {
+          "minItems": 1,
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+              },
+              "source": {
+                "type": "string",
+                "enum": [
+                  "grimoire",
+                  "grave",
+                  "photograph",
+                  "confession"
+                ]
+              },
+              "textKey": {
+                "type": "string",
+                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*(?:\\.[a-z0-9]+(?:-[a-z0-9]+)*)+$",
+                "description": "Reference to a loc"
+              }
+            },
+            "required": [
+              "id",
+              "source",
+              "textKey"
+            ],
+            "additionalProperties": false
+          }
         }
       },
       "required": [
@@ -164,7 +244,10 @@
         "seal",
         "symptoms",
         "weaknesses",
-        "desires"
+        "desires",
+        "phrases",
+        "taunts",
+        "fragments"
       ],
       "additionalProperties": false
     },
