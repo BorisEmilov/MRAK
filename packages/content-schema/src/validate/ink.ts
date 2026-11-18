@@ -63,7 +63,13 @@ function stripBlockComments(source: string): string {
 
 /** What a story uses (by scanning its source; comments are ignored). */
 export function scanInk(source: string): InkUsage {
-  const text = stripBlockComments(source).replace(/\/\/.*$/gm, '');
+  const text = stripBlockComments(source)
+    .split('\n')
+    .map((line) => {
+      const at = line.indexOf('//');
+      return at < 0 ? line : line.slice(0, at);
+    })
+    .join('\n');
   const externals = [...text.matchAll(/^\s*EXTERNAL\s+([A-Za-z_]\w*)/gm)].map((m) => m[1] ?? '');
   const ids: InkUsage['ids'] = [];
   for (const m of text.matchAll(/\b([a-z_]+)\(\s*"([^"]*)"/g)) {
