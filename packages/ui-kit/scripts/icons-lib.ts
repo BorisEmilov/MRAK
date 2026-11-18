@@ -172,7 +172,7 @@ export function buildDocs(icons: readonly ManifestIcon[]): string {
     );
     for (const i of icons.filter((x) => x.category === category)) {
       out.push(
-        `| \`${i.name}\` | ${i.meaning.replace(/\|/g, '\\|')} | [${i.source}](https://game-icons.net/1x1/${i.author}/${i.source}.html) | ${AUTHOR_NAMES[i.author] ?? i.author} |`,
+        `| \`${i.name}\` | ${i.meaning.replace(/\\/g, '\\\\').replace(/\|/g, '\\|')} | [${i.source}](https://game-icons.net/1x1/${i.author}/${i.source}.html) | ${AUTHOR_NAMES[i.author] ?? i.author} |`,
       );
     }
   }

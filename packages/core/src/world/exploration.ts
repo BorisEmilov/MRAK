@@ -30,7 +30,9 @@ export function encodeBase64(bytes: Uint8Array): string {
 }
 
 export function decodeBase64(text: string): Uint8Array {
-  const clean = text.replace(/=+$/, '');
+  let end = text.length;
+  while (end > 0 && text[end - 1] === '=') end--;
+  const clean = text.slice(0, end);
   const out = new Uint8Array(Math.floor((clean.length * 3) / 4));
   let bits = 0;
   let value = 0;

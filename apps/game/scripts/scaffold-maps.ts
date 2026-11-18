@@ -5,7 +5,7 @@
  *
  * Usage: tsx scripts/scaffold-maps.ts [--force]
  */
-import { existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { encodePng } from './art/png';
@@ -793,12 +793,14 @@ function monastery(): MapBuilder {
 // ------------------------------------------------------------------ main
 
 function write(file: string, content: Buffer | string): void {
-  if (existsSync(file) && !force) {
+  mkdirSync(dirname(file), { recursive: true });
+  try {
+    writeFileSync(file, content, { flag: force ? 'w' : 'wx' });
+  } catch (e) {
+    if ((e as NodeJS.ErrnoException).code !== 'EEXIST') throw e;
     console.log(`• keep ${file.slice(ROOT.length + 1)} (exists; --force to overwrite)`);
     return;
   }
-  mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, content);
   console.log(`✔ ${file.slice(ROOT.length + 1)}`);
 }
 

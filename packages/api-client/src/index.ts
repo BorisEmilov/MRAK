@@ -403,3 +403,18 @@ export function createStoreClient(account: Pick<AccountClient, 'request'>) {
   };
 }
 export type StoreClient = ReturnType<typeof createStoreClient>;
+
+/**
+ * Where to go after signing in: a same-origin path from `?next=`, otherwise `fallback`.
+ * Resolving against the origin also rejects `//host` and `/\host` (browsers treat both as
+ * protocol-relative), absolute URLs and `javascript:` (threat model C-11).
+ */
+export function safeNext(next: string | null, origin: string, fallback = '/account/'): string {
+  if (!next?.startsWith('/')) return fallback;
+  try {
+    const url = new URL(next, origin);
+    return url.origin === origin ? url.pathname + url.search + url.hash : fallback;
+  } catch {
+    return fallback;
+  }
+}

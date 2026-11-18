@@ -1,4 +1,4 @@
-import { ApiError } from '@mrak/api-client';
+import { ApiError, safeNext } from '@mrak/api-client';
 import { useEffect, useState, type SyntheticEvent } from 'react';
 import {
   account,
@@ -101,9 +101,7 @@ function AuthForms({ config, props }: IslandProps) {
           ...(captcha ? { captcha } : {}),
         });
         const next = new URLSearchParams(window.location.search).get('next');
-        window.location.assign(
-          next?.startsWith('/') && !next.startsWith('//') ? next : '/account/',
-        );
+        window.location.assign(safeNext(next, window.location.origin));
         return null;
       });
     else if (mode === 'forgot')

@@ -23,7 +23,7 @@ function* files(dir) {
 for (const file of files(dist)) {
   if (!file.endsWith('.html')) continue;
   const html = readFileSync(file, 'utf8');
-  for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script>/gi))
+  for (const m of html.matchAll(/<script\b([^>]*)>([\s\S]*?)<\/script\b[^>]*>/gi))
     if (!/\bsrc=/.test(m[1] ?? '') || (m[2] ?? '').trim() !== '')
       problems.push(`${file}: inline <script>`);
   if (/<style\b/i.test(html)) problems.push(`${file}: inline <style>`);

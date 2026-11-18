@@ -47,9 +47,23 @@ export interface InkUsage {
   tags: string[];
 }
 
+/** Removes `/* … *\/` comments in linear time (an unterminated one runs to the end). */
+function stripBlockComments(source: string): string {
+  let out = '';
+  let at = 0;
+  for (;;) {
+    const open = source.indexOf('/*', at);
+    if (open < 0) return out + source.slice(at);
+    out += source.slice(at, open);
+    const close = source.indexOf('*/', open + 2);
+    if (close < 0) return out;
+    at = close + 2;
+  }
+}
+
 /** What a story uses (by scanning its source; comments are ignored). */
 export function scanInk(source: string): InkUsage {
-  const text = source.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\/\/.*$/gm, '');
+  const text = stripBlockComments(source).replace(/\/\/.*$/gm, '');
   const externals = [...text.matchAll(/^\s*EXTERNAL\s+([A-Za-z_]\w*)/gm)].map((m) => m[1] ?? '');
   const ids: InkUsage['ids'] = [];
   for (const m of text.matchAll(/\b([a-z_]+)\(\s*"([^"]*)"/g)) {
