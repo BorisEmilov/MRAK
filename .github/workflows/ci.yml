@@ -89,6 +89,7 @@ jobs:
           name: e2e-traces
           path: apps/game/test-results
 
+  secrets:
     name: Secret scan (gitleaks)
     runs-on: ubuntu-latest
     timeout-minutes: 10
