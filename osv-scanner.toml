@@ -3,20 +3,10 @@
 
 [[IgnoredVulns]]
 id = "GHSA-fc5q-39xc-vjpf"
-ignoreUntil = 2026-12-18
+ignoreUntil = 2027-01-18
 reason = "picomatch ReDoS, no patched release; apps/landing build tooling only (static output)."
 
 [[IgnoredVulns]]
 id = "GHSA-mrhx-c7xc-m3w5"
-ignoreUntil = 2026-12-18
+ignoreUntil = 2027-01-18
 reason = "zod 3 via jimp (texture packer, dev only, repo-owned assets); fix only in zod 4, which jimp does not support yet."
-
-[[IgnoredVulns]]
-id = "GHSA-3g3m-2fjr-6pw4"
-ignoreUntil = 2026-12-18
-reason = "glob (moderate) via Storybook docgen, dev only."
-
-[[IgnoredVulns]]
-id = "GHSA-g3hv-75wg-m249"
-ignoreUntil = 2026-12-18
-reason = "minimatch (moderate) via typescript-eslint, dev only, repo-owned patterns."

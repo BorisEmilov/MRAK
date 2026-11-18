@@ -14,11 +14,11 @@ import {
 import { sha256, TokenIssuer, uuidv7 } from './tokens.js';
 
 const json = (body: unknown, ok = true) =>
-  Promise.resolve({
-    ok,
-    json: () => Promise.resolve(body),
-    text: () => Promise.resolve(String(body)),
-  } as Response);
+  Promise.resolve(
+    new Response(typeof body === 'string' ? body : JSON.stringify(body), {
+      status: ok ? 200 : 500,
+    }),
+  );
 
 describe('Turnstile verification (server side)', () => {
   const verify = (reply: () => Promise<Response>) =>

@@ -14,5 +14,8 @@ minimumReleaseAgeExclude:
 # patched release, not reachable at runtime, and a review date. Remove as soon as a fix ships.
 auditConfig:
   ignoreGhsas:
-    # picomatch ReDoS, no fix released; only in apps/landing build tooling (static output). Review 2026-12-18.
+    # picomatch ReDoS, no fix released; only in apps/landing build tooling (static output). Re-reviewed 2026-11-18, next 2027-01-18.
     - GHSA-fc5q-39xc-vjpf
+overrides:
+  # GHSA-3g3m-2fjr-6pw4 / GHSA-g3hv-75wg-m249: Storybook docgen still pins glob 13 (minimatch 10).
+  '@joshwooding/vite-plugin-react-docgen-typescript>glob': ^14.0.2
