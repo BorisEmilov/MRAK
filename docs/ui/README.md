@@ -2,6 +2,7 @@
 
 Pillar 6: the UI is clear and friendly even when the world is not.
 
+- [Player hub](player-hub.md) — the signed-in website: header, hub, guardian, game deep link.
 - [Design system](design-system.md) — palette, type, spacing, states, engraving style, components,
   UX patterns.
 - [Icons](icons.md) — every icon, its meaning, source and licence (generated).

@@ -445,8 +445,8 @@
     },
     {
       "path": "locales/en.json",
-      "sha256": "84c973b28a040a2245965c4b4c2365e6259abf4b909044a349972b7b4c400a40",
-      "bytes": 184443
+      "sha256": "605a6599a5321d62852f70d6ddaaa0c385cf775617b2c43cb8291376d7bfd458",
+      "bytes": 186502
     },
     {
       "path": "maps/monastery.tmj",
@@ -564,5 +564,5 @@
       "bytes": 1344
     }
   ],
-  "hash": "52fccc9340e1f0430f31c577caa7e4b3a2b87f8da994ac96d1310689190d90f5"
+  "hash": "7a050aa8f545838090aec6f057d61370f9cf6aafe0be0326bfe135ea801b5f76"
 }

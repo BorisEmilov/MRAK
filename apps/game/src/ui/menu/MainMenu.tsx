@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { t } from '../../i18n/t';
 import { SITE_URL } from '../../platform';
 import { useApp, useUi } from '../../state/hooks';
@@ -12,11 +12,13 @@ import { CreditsPanel } from './CreditsPanel';
 import { GuardianForm } from '../character/GuardianForm';
 import { IconButton } from '@mrak/ui-kit';
 import { AccountInvite, SyncStatus } from '../online/OnlineUi';
+import { clearPlayIntent, pendingPlayIntent } from './play-intent';
 
 export function MainMenu() {
-  const { host, store } = useApp();
+  const { host, store, online } = useApp();
   const panel = useUi((s) => s.menuPanel);
   const saves = useUi((s) => s.saves);
+  const remote = useUi((s) => s.cloud.remote);
   const [busy, setBusy] = useState(false);
   const [problem, setProblem] = useState<string | null>(null);
   const [failure, setFailure] = useState<LoadFailure | null>(null);
@@ -44,6 +46,52 @@ export function MainMenu() {
         setBusy(false);
       });
   };
+
+  const startNew = (): void => {
+    // A new chronicle opens with Stana's last days (docs/lore/prologue.md); the guardian is
+    // chosen when the prologue ends.
+    if (host.content.find('starts', 'prologue'))
+      run(() => {
+        host.newGame({ startId: 'prologue' });
+      });
+    // Choose the guardian first when the content has callings (progression.md C1).
+    else if (host.content.all('callings').length > 0) open('new-game');
+    else
+      run(() => {
+        host.newGame();
+      });
+  };
+
+  // Deep link from the website's player hub (docs/ui/player-hub.md). `continue` resumes the
+  // newest local save; on a device without one it first downloads the newest cloud save (as the
+  // Load screen does). It waits for the lists and gives up quietly after a few seconds.
+  useEffect(() => {
+    const want = pendingPlayIntent();
+    if (!want || busy || panel !== 'main') return undefined;
+    const newestCloud = [...remote].sort((a, b) => b.meta.savedAt.localeCompare(a.meta.savedAt))[0];
+    if (want === 'continue' && saves.length === 0 && !(online && newestCloud)) return undefined;
+    const id = setTimeout(() => {
+      if (pendingPlayIntent() !== want) return;
+      clearPlayIntent();
+      if (want === 'new') startNew();
+      else if (saves.length > 0 || !online || !newestCloud) run(() => host.continueGame());
+      else
+        run(async () => {
+          await online.saves.download(newestCloud.slot, { version: newestCloud.version });
+          await host.refreshSaves();
+          return host.continueGame();
+        });
+    }, 0);
+    return () => {
+      clearTimeout(id);
+    };
+  });
+  useEffect(() => {
+    const id = setTimeout(clearPlayIntent, 8000);
+    return () => {
+      clearTimeout(id);
+    };
+  }, []);
 
   return (
     <main className="menu-screen">
@@ -86,20 +134,7 @@ export function MainMenu() {
                 data-variant="primary"
                 disabled={busy}
                 autoFocus={saves.length === 0}
-                onClick={() => {
-                  // A new chronicle opens with Stana's last days (docs/lore/prologue.md); the
-                  // guardian is chosen when the prologue ends.
-                  if (host.content.find('starts', 'prologue'))
-                    run(() => {
-                      host.newGame({ startId: 'prologue' });
-                    });
-                  // Choose the guardian first when the content has callings (progression.md C1).
-                  else if (host.content.all('callings').length > 0) open('new-game');
-                  else
-                    run(() => {
-                      host.newGame();
-                    });
-                }}
+                onClick={startNew}
               >
                 {t('menu.new-game')}
               </button>

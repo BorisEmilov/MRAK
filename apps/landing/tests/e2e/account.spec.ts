@@ -66,6 +66,11 @@ test('sign up → verify → log in → play → achievement → password → se
   await page.getByLabel('Password').fill(PASSWORD);
   await page.getByRole('button', { name: 'Log in' }).click();
   await page.waitForURL('**/account/');
+  // The player hub, not the marketing page (docs/ui/player-hub.md).
+  await expect(page.getByRole('heading', { name: /^Welcome back/ })).toBeVisible();
+  await expect(page.getByRole('heading', { name: 'Your chronicle' })).toBeVisible();
+  await expect(page.locator('.site-header').getByText('Play free')).toBeHidden();
+  await page.getByRole('tab', { name: 'Security' }).click();
   await expect(page.getByText(`Email: ${email}`)).toBeVisible();
   // The refresh token is an HttpOnly cookie; nothing in Web Storage.
   const cookies = await page.context().cookies(`${API}/v1/auth/refresh`);
@@ -73,11 +78,17 @@ test('sign up → verify → log in → play → achievement → password → se
     httpOnly: true,
     sameSite: 'Strict',
   });
-  expect(
-    await page.evaluate(
-      () => Object.keys(localStorage).length + Object.keys(sessionStorage).length,
-    ),
-  ).toBe(0);
+  // Web Storage holds only the header hint: a display name and the edition, never a token.
+  const storage = await page.evaluate(() => ({
+    local: Object.fromEntries(Object.entries(localStorage).map(([k, v]) => [k, String(v)])),
+    session: Object.keys(sessionStorage).length,
+  }));
+  expect(storage.session).toBe(0);
+  expect(Object.keys(storage.local)).toEqual(['mrak.player']);
+  expect(Object.keys(JSON.parse(storage.local['mrak.player'] ?? '{}') as object).sort()).toEqual([
+    'edition',
+    'name',
+  ]);
 
   // Play: the game (desktop session) finishes the prologue and syncs the achievement.
   const game = await request.post(`${API}/v1/auth/login`, {
@@ -93,11 +104,13 @@ test('sign up → verify → log in → play → achievement → password → se
   expect(unlock.ok()).toBe(true);
 
   await page.reload();
+  await page.getByRole('tab', { name: 'Achievements' }).click();
   const achievements = page.getByTestId('achievements');
   await expect(achievements.locator('.achievement:not(.locked)')).toContainText(
     'The Smoke at Enyovden',
   );
   await expect(page.getByText(/^1 of \d+ unlocked$/)).toBeVisible();
+  await page.getByRole('tab', { name: 'Security' }).click();
   await expect(page.getByTestId('sessions').locator('li')).toHaveCount(2);
 
   // Change password: every session ends, including this one.
@@ -122,6 +135,7 @@ test('sign up → verify → log in → play → achievement → password → se
   });
   const secondToken = ((await second.json()) as { accessToken: string }).accessToken;
   await page.reload();
+  await page.getByRole('tab', { name: 'Security' }).click();
   await expect(page.getByTestId('sessions').locator('li')).toHaveCount(2);
   await page.getByRole('button', { name: 'Sign out everywhere' }).click();
   await page.waitForURL('**/login/');
@@ -136,6 +150,7 @@ test('sign up → verify → log in → play → achievement → password → se
   await page.getByLabel('Password').fill(NEW_PASSWORD);
   await page.getByRole('button', { name: 'Log in' }).click();
   await page.waitForURL('**/account/');
+  await page.getByRole('tab', { name: 'Privacy' }).click();
   const danger = page.locator('section', {
     has: page.getByRole('heading', { name: 'Delete account' }),
   });

@@ -3,7 +3,6 @@ import achievements from '../../../../../packages/content/data/achievements/achi
 import { locales, type LocaleKey } from '@mrak/content';
 import Island from '../../components/Island.astro';
 import Base from '../../layouts/Base.astro';
-import { t } from '../../i18n';
 
 // Names and descriptions from the game's content (hidden ones only as "???" until unlocked).
 const defs = achievements.map((a) => ({
@@ -12,11 +11,16 @@ const defs = achievements.map((a) => ({
   desc: locales.en[a.descKey as LocaleKey],
   hidden: 'hidden' in a && a.hidden === true,
 }));
+
+// Game names the hub shows (docs/ui/player-hub.md): guardian names, callings, attributes, zones
+// and the three condition stats. Taken from the game's locale, never hardcoded.
+const GAME_NAME =
+  /^(name\.[\w-]+|calling\.[\w-]+\.name|attribute\.[\w-]+\.name|zone\.[\w-]+\.name|stat\.(sanity|faith|revelation)\.name)$/;
+const names = Object.fromEntries(Object.entries(locales.en).filter(([k]) => GAME_NAME.test(k)));
 ---
 
 <Base title="site.account.title" noindex>
-  <h1>{t('site.account.title')}</h1>
-  <Island name="account" props={{ achievements: defs }} />
+  <Island name="account" props={{ achievements: defs, names }} />
 </Base>
 
 <script>

@@ -52,37 +52,55 @@ Work deferred from finished phases. Tick the box and add the commit when done.
       and minimatch fixed (override, typescript-eslint 8.73); the other two still have no fix.
 - [ ] Remaining ASVS 🟡/⏳ rows (TLS/infra, admin MFA, logging integrity).
 
-## Deployment and operations ([deploy runbook](runbooks/deploy.md), [ADR 0011](adr/0011-hosting-gcp.md))
+## Deployment and operations ([deploy runbook](runbooks/deploy.md), [ADR 0012](adr/0012-hosting-free-tier.md))
 
-- [ ] Create the GCP projects `mrak-staging` and `mrak-production`, the billing account, and the
-      EU state bucket. Set `billing_account` in the tfvars.
-- [ ] First `terraform apply` for `infra/gcp` (both environments) and `infra/cloudflare`. Fix
-      whatever `terraform validate` or `plan` reports: the code has never been run against real
-      providers.
-- [ ] Confirm that Cloudflare origin rules also send the rewritten host as SNI to `*.run.app`;
-      if not, use a Cloud Run domain mapping or a load balancer.
+Free-tier stack since 2026-11-18 (Pages + Functions, Render, Neon, Upstash, Sentry). Code, workflows
+and Terraform are ready; everything below needs the owner's accounts.
+
+- [ ] Accounts (no card): Neon (2 projects, Frankfurt), Upstash (2 Redis DBs, eu-central-1),
+      Render (production workspace + a second workspace for staging), Sentry (EU), an uptime
+      monitor. Cloudflare: add a payment method to enable R2 (paid content, backups).
+- [ ] Secrets per environment (`keygen`, `AUTH_SECRET`, `EDGE_SECRET`) into Render; Render
+      Blueprint from `render.yaml`; staging service by hand from the same image.
+- [ ] First `terraform apply` of `infra/cloudflare` (validated, never run against the real API).
+      Fix whatever `plan` reports.
+- [ ] GHCR: make the `mrak-online-api` package public after the first build (or give Render a
+      registry credential).
 - [ ] GitHub environments `staging` and `production`: variables and secrets from the runbook,
       required reviewers on `production`, `main`-only deployments.
-- [ ] Add the manual secrets (JWT keys, Turnstile, Paddle, R2, email) and set
-      `manual_secrets_ready`.
+- [ ] age key pair for backups: public key as `BACKUP_AGE_RECIPIENT`, private key offline and as
+      `BACKUP_AGE_KEY`; read-only Neon role for `BACKUP_DATABASE_URL`; R2 token for `mrak-backups`.
 - [ ] Acceptance: deploy with one merge; run the rollback workflow in staging and record it.
-- [ ] Acceptance: first restore drill run (Actions → Restore drill) and record the restore time.
-      Add the `STAGING_DB_PASSWORD` secret first.
-- [ ] Acceptance: check the dashboard and alerts with real traffic (send a test notification),
-      and tune the thresholds after 2 weeks.
-- [ ] Real daily cost anomaly alert: billing export to BigQuery plus a scheduled query. Today
-      only the instance-hours proxy and the budgets alert.
-- [ ] Full OpenTelemetry tracing (DB and Redis spans). Today only Cloud Run's sampled request
-      traces with log correlation.
+- [ ] Acceptance: first backup and restore drill runs (Actions → Backup, Restore drill); record the
+      restore time.
+- [ ] Acceptance: Sentry receives a test 5xx from staging; the uptime monitor alerts when staging
+      is stopped.
+- [ ] Watch the free quotas weekly until launch (Render hours, Neon CU-hours, Upstash commands,
+      Workers requests); upgrade before any marketing push (ADR 0012 → Limits).
 - [ ] Choose an email provider in the EU, sign its DPA, and add `EMAIL_API_KEY` to the API.
-- [ ] Sign the DPAs: Google Cloud, Cloudflare, Paddle. Keep the processor table in
-      `docs/security/data-inventory.md` up to date.
+- [ ] Sign the DPAs: Render, Neon, Upstash, Sentry, Cloudflare, Paddle. Keep the processor table
+      in `docs/security/data-inventory.md` up to date.
 - [ ] Studio deployment: internal only (VPN or Cloudflare Access + `SALES_DATABASE_URL` with a
-      restricted role). Not deployed yet.
+      read-only Neon role). Not deployed yet.
 - [ ] Deletion ledger (keyed hash of deleted account ids + time, kept for the backup lifetime) so
       erasures can be re-applied after a restore.
-- [ ] Production restore drill (quarterly, inside the production project) and its RTO
-      measurement.
+- [ ] Game client errors to Sentry, only with the player's telemetry consent (today the opt-in
+      telemetry `js-error` event covers it).
+- [ ] Log-based alerts (5xx rate, 401/429 spikes, refresh reuse, webhook failures): the Cloud
+      Monitoring alerts of ADR 0011 have no free equivalent yet; Sentry + uptime cover outages.
+
+## Player hub ([spec](ui/player-hub.md))
+
+- [ ] Guardian portrait in the hub (the game draws portraits from `look`; export a small render
+      or reuse the save thumbnail once the game sends it).
+- [ ] Chronicle history: past guardians (`lineage.past`), causes of death and Legacy, as a
+      timeline.
+- [ ] Bloodline tree view on the website (from `/v1/progress`), read-only.
+- [ ] Every cloud slot in the hub (manual slots too), each with its own Resume.
+- [ ] E2E for `?play=continue` on a fresh browser (verified by hand on 2026-11-18: the newest cloud
+      save is downloaded and resumed).
+- [ ] Game menu for a signed-in player: show the account name and edition, hide "Account
+      invite" once signed in, link back to the hub instead of "Quit to site".
 
 ## Studio ([spec](systems/studio.md))
 
@@ -158,5 +176,5 @@ Work deferred from finished phases. Tick the box and add the commit when done.
 
 - [x] Commit the pending work and push (2026-11-18).
 - [ ] Email provider for production (replace the inner mailer of `BudgetedMailer`).
-- [ ] `terraform plan` for `infra/cloudflare` and `infra/gcp` (needs GCP/Cloudflare credentials).
-      `fmt` and `validate` pass for both (Terraform 1.14, 2026-11-18; CI job green).
+- [ ] `terraform plan` for `infra/cloudflare` (needs Cloudflare credentials). `fmt` and `validate`
+      pass (Terraform 1.14, 2026-11-18; CI job green).

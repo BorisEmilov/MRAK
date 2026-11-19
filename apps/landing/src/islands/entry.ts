@@ -4,10 +4,16 @@
  */
 const pending = [...document.querySelectorAll<HTMLElement>('[data-island]')];
 
+const ready: Promise<unknown> = import.meta.env.DEV
+  ? import('./dev-preamble').then((m) => m.installReactPreamble())
+  : Promise.resolve();
+
 function mount(el: HTMLElement): void {
-  void import('./mount').then(({ mountIsland }) => {
-    mountIsland(el);
-  });
+  void ready
+    .then(() => import('./mount'))
+    .then(({ mountIsland }) => {
+      mountIsland(el);
+    });
 }
 
 if ('IntersectionObserver' in window) {

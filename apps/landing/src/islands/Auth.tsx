@@ -1,5 +1,6 @@
-import { ApiError, safeNext } from '@mrak/api-client';
+import { ApiError, createStoreClient, safeNext } from '@mrak/api-client';
 import { useEffect, useState, type SyntheticEvent } from 'react';
+import { writePlayer } from './session';
 import {
   account,
   errorKey,
@@ -99,6 +100,21 @@ function AuthForms({ config, props }: IslandProps) {
           email: mail,
           password: value(form, 'password'),
           ...(captcha ? { captcha } : {}),
+        });
+        const [me, owned] = await Promise.all([
+          api.me(),
+          createStoreClient(api)
+            .entitlements()
+            .catch(() => []),
+        ]);
+        const active = new Set(owned.filter((e) => e.status === 'active').map((e) => e.sku));
+        writePlayer({
+          name: me.displayName,
+          edition: active.has('collector')
+            ? 'collector'
+            : active.has('full-game')
+              ? 'full-game'
+              : 'demo',
         });
         const next = new URLSearchParams(window.location.search).get('next');
         window.location.assign(safeNext(next, window.location.origin));

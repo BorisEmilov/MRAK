@@ -20,12 +20,9 @@ const pageTitle = docTitle
     ? `${t(title)} — MRAK`
     : t('site.meta.title');
 const canonical = new URL(Astro.url.pathname, SITE_URL).href;
+const here = (href: string): 'page' | undefined =>
+  Astro.url.pathname === href ? 'page' : undefined;
 const ogImage = new URL('/og.png', SITE_URL).href;
-const nav: [string, SiteKey][] = [
-  ['/', 'site.nav.home'],
-  ['/buy/', 'site.nav.buy'],
-  ['/account/', 'site.nav.account'],
-];
 const footer: [string, SiteKey][] = [
   ['/privacy/', 'site.footer.privacy'],
   ['/terms/', 'site.footer.terms'],
@@ -72,18 +69,41 @@ const footer: [string, SiteKey][] = [
         MRAK
       </a>
       <nav aria-label={t('site.nav.label')}>
+        {/* Visitor and player variants; src/scripts/header.ts shows one (docs/ui/player-hub.md). */}
         <ul>
-          {nav.map(([href, key]) => (
-            <li>
-              <a href={href} aria-current={Astro.url.pathname === href ? 'page' : undefined}>
-                {t(key)}
-              </a>
-            </li>
-          ))}
-          <li>
+          <li data-guest>
+            <a href="/" aria-current={here('/')}>
+              {t('site.nav.home')}
+            </a>
+          </li>
+          <li data-editions>
+            <a href="/buy/" aria-current={here('/buy/')}>
+              {t('site.nav.buy')}
+            </a>
+          </li>
+          <li data-guest>
+            <a href="/login/" aria-current={here('/login/')}>
+              {t('site.nav.login')}
+            </a>
+          </li>
+          <li data-player hidden>
+            <a class="player-link" href="/account/" aria-current={here('/account/')}>
+              <Icon name={'ui.character'} class="icon" />
+              <span data-player-name data-fallback={t('site.nav.hub')}>
+                {t('site.nav.hub')}
+              </span>
+            </a>
+          </li>
+          <li data-guest>
             <a class="mrak-button cta-small" data-variant="primary" href={PLAY_URL}>
               <Icon name={'resource.light'} class="icon" />
               {t('site.nav.play')}
+            </a>
+          </li>
+          <li data-player hidden>
+            <a class="mrak-button cta-small" data-variant="primary" href={PLAY_URL}>
+              <Icon name={'resource.light'} class="icon" />
+              {t('site.nav.play-player')}
             </a>
           </li>
         </ul>
@@ -104,5 +124,8 @@ const footer: [string, SiteKey][] = [
       </nav>
       <p class="muted">{t('site.footer.note')}</p>
     </footer>
+    <script>
+      import '../scripts/header';
+    </script>
   </body>
 </html>

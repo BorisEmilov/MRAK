@@ -31,11 +31,17 @@ const faq: [SiteKey, SiteKey][] = [
       <h1 id="hero-title">{t('site.home.title')}</h1>
       <p class="lead">{t('site.home.hook')}</p>
       <p class="row">
-        <a class="mrak-button cta" data-variant="primary" href={PLAY_URL}>
+        <a class="mrak-button cta" data-variant="primary" data-guest href={PLAY_URL}>
           <Icon name={'resource.light'} class="icon" />
           {t('site.home.play')}
         </a>
-        <a href="/buy/">{t('site.home.editions-link')}</a>
+        <a class="mrak-button cta" data-variant="primary" data-player hidden href="/account/">
+          <Icon name={'ui.character'} class="icon" />
+          {t('site.home.hub')}
+        </a>
+        <a href="/buy/" data-editions>
+          {t('site.home.editions-link')}
+        </a>
       </p>
       <p class="muted">{t('site.home.requirements')}</p>
     </div>
