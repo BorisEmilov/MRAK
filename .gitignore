@@ -35,3 +35,10 @@ packages/core/sim-out/
 # Playwright output
 test-results/
 playwright-report/
+
+# Terraform state (holds secrets) and local variable files
+*.tfstate
+*.tfstate.*
+.terraform/
+*.tfvars
+!infra/**/*.example.tfvars

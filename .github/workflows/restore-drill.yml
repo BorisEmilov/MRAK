@@ -1,6 +1,7 @@
-# Monthly backup restore drill in staging (docs/runbooks/restore.md): clone the staging database
-# to a point in time 1 hour ago (Cloud SQL PITR), verify it, then delete the clone. A failure
-# alerts like any failed workflow; record results in docs/security/test-report.md.
+# Monthly restore drill (docs/runbooks/restore.md): restore the latest encrypted backup into a
+# throw-away Postgres inside this job, verify it, and record the time. Production data never
+# reaches staging, artifacts or logs (only row counts are printed). A failure alerts like any
+# failed workflow; record results in docs/security/test-report.md.
 name: Restore drill
 
 on:
@@ -10,7 +11,6 @@ on:
 
 permissions:
   contents: read
-  id-token: write
 
 concurrency:
   group: restore-drill
@@ -19,37 +19,43 @@ concurrency:
 jobs:
   drill:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
-    environment: staging
+    timeout-minutes: 60
+    environment: production
     env:
-      REGION: ${{ vars.GCP_REGION }}
-      SOURCE: ${{ vars.GCP_SQL_INSTANCE }}
-      CLONE: restore-drill-${{ github.run_id }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_BACKUP_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_BACKUP_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      R2: https://${{ vars.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
     steps:
       - uses: actions/checkout@v7
-      - uses: google-github-actions/auth@v3
-        with:
-          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
-          service_account: ${{ vars.GCP_DEPLOY_SA }}
-      - uses: google-github-actions/setup-gcloud@v3
-      - name: Point-in-time clone (1 h ago)
+      - name: Latest backup, at most 48 h old
         run: |
-          started=$(date +%s)
-          pit=$(date -u -d '-1 hour' +%Y-%m-%dT%H:%M:%SZ)
-          gcloud sql instances clone "$SOURCE" "$CLONE" --point-in-time "$pit" --quiet
-          echo "RESTORE_MINUTES=$(( ($(date +%s) - started) / 60 ))" >> "$GITHUB_ENV"
-          echo "PIT=$pit" >> "$GITHUB_ENV"
-      - name: Verify through the Cloud SQL Auth Proxy
+          set -euo pipefail
+          latest=$(aws s3 ls s3://mrak-backups/online/ --endpoint-url "$R2" | sort | tail -n1)
+          [ -n "$latest" ] || { echo "::error::no backups"; exit 1; }
+          when=$(echo "$latest" | awk '{print $1" "$2}')
+          age_h=$(( ($(date -u +%s) - $(date -u -d "$when" +%s)) / 3600 ))
+          [ "$age_h" -le 48 ] || { echo "::error::latest backup is ${age_h} h old"; exit 1; }
+          echo "KEY=online/$(echo "$latest" | awk '{print $4}')" >> "$GITHUB_ENV"
+          echo "AGE_H=$age_h" >> "$GITHUB_ENV"
+      - name: Decrypt and restore into a throw-away Postgres 17
         env:
-          DB_PASSWORD: ${{ secrets.STAGING_DB_PASSWORD }}
+          AGE_KEY: ${{ secrets.BACKUP_AGE_KEY }}
         run: |
-          curl -fsSLo proxy https://storage.googleapis.com/cloud-sql-connectors/cloud-sql-proxy/v2.18.2/cloud-sql-proxy.linux.amd64
-          chmod +x proxy
-          conn=$(gcloud sql instances describe "$CLONE" --format='value(connectionName)')
-          gcloud sql instances patch "$CLONE" --assign-ip --quiet # public IP only for the proxy, IAM-authorised; deleted below
-          ./proxy "$conn" --port 6543 --auto-iam-authn=false & sleep 8
-          MAX_AGE_HOURS=48 infra/gcp/verify-restore.sh "postgresql://online:${DB_PASSWORD}@127.0.0.1:6543/online?sslmode=disable"
-          echo "✔ Restore drill: PITR $PIT, restore took ${RESTORE_MINUTES} min" >> "$GITHUB_STEP_SUMMARY"
-      - name: Delete the clone
+          set -euo pipefail
+          sudo apt-get update -qq && sudo apt-get install -y -qq age postgresql-client
+          started=$(date +%s)
+          docker run -d --name drill -e POSTGRES_PASSWORD=drill -e POSTGRES_DB=online -p 6543:5432 postgres:17-alpine
+          until docker exec drill pg_isready -U postgres >/dev/null 2>&1; do sleep 1; done
+          aws s3 cp "s3://mrak-backups/$KEY" backup.dump.age --endpoint-url "$R2" --only-show-errors
+          umask 077 && printf '%s\n' "$AGE_KEY" > age.key
+          age -d -i age.key backup.dump.age | docker exec -i drill pg_restore -U postgres -d online --no-owner --no-privileges --exit-on-error
+          rm -f age.key backup.dump.age
+          echo "RESTORE_MINUTES=$(( ($(date +%s) - started) / 60 ))" >> "$GITHUB_ENV"
+      - name: Verify
+        run: |
+          infra/postgres/verify-restore.sh "postgresql://postgres:drill@127.0.0.1:6543/online?sslmode=disable"
+          echo "✔ Restore drill: $KEY (${AGE_H} h old), restore took ${RESTORE_MINUTES} min" >> "$GITHUB_STEP_SUMMARY"
+      - name: Destroy the throw-away database
         if: always()
-        run: gcloud sql instances delete "$CLONE" --quiet || true
+        run: docker rm -f drill || true

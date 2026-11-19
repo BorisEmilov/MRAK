@@ -1,6 +1,6 @@
-# Deploy (docs/runbooks/deploy.md). A merge to main deploys staging automatically, then production
-# after a reviewer approves the `production` environment. The approval page shows the migration SQL
-# of the release. Rollback: run this workflow manually with action=rollback.
+# Deploy (docs/runbooks/deploy.md, ADR 0012). A merge to main deploys staging automatically, then
+# production after a reviewer approves the `production` environment. The approval page shows the
+# migration SQL of the release. Rollback: run this workflow manually with action=rollback.
 name: Deploy
 
 on:
@@ -16,13 +16,13 @@ on:
         type: choice
         options: [staging, production]
         default: staging
-      revision:
-        description: 'rollback: Cloud Run revision to restore (empty = the previous one)'
+      release:
+        description: 'rollback: commit SHA of the release to restore (its image is in GHCR)'
         required: false
 
 permissions:
   contents: read
-  id-token: write # Workload Identity Federation (no long-lived cloud keys)
+  packages: write # push the API images to GHCR
 
 concurrency:
   group: deploy-${{ github.ref }}
@@ -34,13 +34,27 @@ jobs:
     if: github.event_name == 'push' || inputs.action == 'deploy'
     runs-on: ubuntu-latest
     timeout-minutes: 20
+    outputs:
+      image: ${{ steps.push.outputs.image }}
+      migrate: ${{ steps.push.outputs.migrate }}
     steps:
       - uses: actions/checkout@v7
       - name: API and migration images (built once, promoted to both environments)
+        id: push
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          docker build -f services/online-api/Dockerfile --target runtime -t online-api:${{ github.sha }} .
-          docker build -f services/online-api/Dockerfile --target migrate -t online-api-migrate:${{ github.sha }} .
-          docker save online-api:${{ github.sha }} online-api-migrate:${{ github.sha }} | gzip > images.tar.gz
+          repo="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/mrak-online-api"
+          label="org.opencontainers.image.source=https://github.com/${GITHUB_REPOSITORY}"
+          docker build -f services/online-api/Dockerfile --target runtime --label "$label" \
+            --build-arg RELEASE="$GITHUB_SHA" -t "$repo:$GITHUB_SHA" .
+          docker build -f services/online-api/Dockerfile --target migrate --label "$label" \
+            -t "$repo-migrate:$GITHUB_SHA" .
+          echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
+          docker push "$repo:$GITHUB_SHA"
+          docker push "$repo-migrate:$GITHUB_SHA"
+          echo "image=$repo:$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          echo "migrate=$repo-migrate:$GITHUB_SHA" >> "$GITHUB_OUTPUT"
       - name: Migration SQL of this release (shown before the production approval)
         run: |
           git fetch --depth=1 origin "${{ github.event.before || 'HEAD~1' }}" 2>/dev/null || true
@@ -49,11 +63,6 @@ jobs:
             git diff --name-only "${{ github.event.before || 'HEAD~1' }}" HEAD -- services/online-api/prisma/migrations \
               | grep 'migration.sql$' | while read -r f; do echo "### $f"; echo '```sql'; cat "$f"; echo '```'; done
           } >> "$GITHUB_STEP_SUMMARY" || echo 'No migrations.' >> "$GITHUB_STEP_SUMMARY"
-      - uses: actions/upload-artifact@v7
-        with:
-          name: images
-          path: images.tar.gz
-          retention-days: 3
 
   deploy:
     name: Deploy ${{ matrix.env }}
@@ -67,65 +76,52 @@ jobs:
         env: ${{ github.event_name == 'push' && fromJSON('["staging","production"]') || fromJSON(format('["{0}"]', inputs.environment)) }}
     environment: ${{ matrix.env }}
     env:
-      IMAGE: ${{ vars.GCP_REGISTRY }}/online-api:${{ github.sha }}
-      MIGRATE_IMAGE: ${{ vars.GCP_REGISTRY }}/online-api-migrate:${{ github.sha }}
-      REGION: ${{ vars.GCP_REGION }}
+      IMAGE: ${{ needs.build.outputs.image }}
+      MIGRATE_IMAGE: ${{ needs.build.outputs.migrate }}
+      ORIGIN: ${{ vars.API_ORIGIN }} # Render service URL (its /health is open for probes)
       BRANCH: ${{ matrix.env == 'production' && 'main' || 'staging' }}
     steps:
       - uses: actions/checkout@v7
-      - uses: actions/download-artifact@v7
-        with:
-          name: images
-      - uses: google-github-actions/auth@v3
-        with:
-          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
-          service_account: ${{ vars.GCP_DEPLOY_SA }}
-      - uses: google-github-actions/setup-gcloud@v3
-      - name: Push images
-        run: |
-          gunzip -c images.tar.gz | docker load
-          gcloud auth configure-docker "${REGION}-docker.pkg.dev" --quiet
-          docker tag online-api:${{ github.sha }} "$IMAGE" && docker push "$IMAGE"
-          docker tag online-api-migrate:${{ github.sha }} "$MIGRATE_IMAGE" && docker push "$MIGRATE_IMAGE"
-      - name: Migrate (expand-only migrations; see the runbook)
-        run: |
-          gcloud run jobs update online-api-migrate --region "$REGION" --image "$MIGRATE_IMAGE" --quiet
-          gcloud run jobs execute online-api-migrate --region "$REGION" --wait
-      - name: Deploy the API (previous revision kept for rollback)
-        run: |
-          echo "PREVIOUS=$(gcloud run services describe online-api --region "$REGION" --format='value(status.latestReadyRevisionName)')" >> "$GITHUB_ENV"
-          gcloud run deploy online-api --region "$REGION" --image "$IMAGE" --quiet
-      - name: Smoke test through the edge; automatic rollback when it fails
+      - name: Migrate Neon (expand-only migrations; see the runbook)
         env:
-          API: ${{ vars.API_URL }}
-          CF_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
-          CF_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+          DATABASE_URL: ${{ secrets.MIGRATE_DATABASE_URL }}
+        run: docker run --rm -e DATABASE_URL "$MIGRATE_IMAGE"
+      - name: Deploy the API image on Render
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
         run: |
-          ok=0
-          for i in 1 2 3 4 5 6; do
-            code=$(curl -s -o /dev/null -w '%{http_code}' ${CF_ID:+-H "CF-Access-Client-Id: $CF_ID" -H "CF-Access-Client-Secret: $CF_SECRET"} "$API/health")
-            [ "$code" = 200 ] && ok=1 && break
+          echo "PREVIOUS=$(curl -fsS --max-time 90 "$ORIGIN/health" | jq -r '.release // empty' || true)" >> "$GITHUB_ENV"
+          curl -fsS -X POST --get --data-urlencode "imgURL=$IMAGE" "$HOOK" > /dev/null
+      - name: Smoke test (new release answering); automatic rollback when it does not
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          for i in $(seq 1 60); do
+            got=$(curl -fsS --max-time 20 "$ORIGIN/health" | jq -r '.release // empty' || true)
+            [ "$got" = "$GITHUB_SHA" ] && echo "release $got is live" && exit 0
             sleep 10
           done
-          if [ "$ok" != 1 ]; then
-            echo "::error::health check failed after deploy — rolling back to $PREVIOUS"
-            gcloud run services update-traffic online-api --region "$REGION" --to-revisions "$PREVIOUS=100"
-            exit 1
+          echo "::error::release $GITHUB_SHA not live after 10 min"
+          if [ -n "$PREVIOUS" ] && [ "$PREVIOUS" != dev ]; then
+            prev="${IMAGE%:*}:$PREVIOUS"
+            echo "rolling back to $prev"
+            curl -fsS -X POST --get --data-urlencode "imgURL=$prev" "$HOOK" > /dev/null
           fi
+          exit 1
       - uses: pnpm/action-setup@v6
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - name: Build the static sites for ${{ matrix.env }}
+      - name: Build the static sites for ${{ matrix.env }} (API on the same origin, /api)
         env:
-          PUBLIC_API_URL: ${{ vars.API_URL }}
+          PUBLIC_API_URL: /api
           PUBLIC_PLAY_URL: ${{ vars.PLAY_URL }}
           PUBLIC_TURNSTILE_SITEKEY: ${{ vars.TURNSTILE_SITEKEY }}
           PUBLIC_PADDLE_CLIENT_TOKEN: ${{ vars.PADDLE_CLIENT_TOKEN }}
           PUBLIC_PADDLE_ENV: ${{ vars.PADDLE_ENV }}
-          VITE_API_URL: ${{ vars.API_URL }}
+          VITE_API_URL: /api
           VITE_SITE_URL: ${{ vars.SITE_URL }}
           VITE_TURNSTILE_SITEKEY: ${{ vars.TURNSTILE_SITEKEY }}
         run: |
@@ -133,14 +129,34 @@ jobs:
           pnpm --filter @mrak/game run assets --require-audio
           pnpm turbo run build --filter=@mrak/game --filter=@mrak/landing
           node tests/security/client-build.mjs
-      - name: Publish to Cloudflare Pages (hashed assets immutable, HTML revalidated)
+      - name: Publish the landing (with its /api Function) to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3
         with:
           apiToken: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
           accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
-          command: |
-            pages deploy apps/landing/dist --project-name=mrak-landing --branch=${{ env.BRANCH }} --commit-hash=${{ github.sha }}
-            pages deploy apps/game/dist --project-name=mrak-game --branch=${{ env.BRANCH }} --commit-hash=${{ github.sha }}
+          workingDirectory: apps/landing
+          command: pages deploy dist --project-name=mrak-landing --branch=${{ env.BRANCH }} --commit-hash=${{ github.sha }}
+      - name: Publish the game (with its /api Function) to Cloudflare Pages
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_PAGES_TOKEN }}
+          accountId: ${{ vars.CLOUDFLARE_ACCOUNT_ID }}
+          workingDirectory: apps/game
+          command: pages deploy dist --project-name=mrak-game --branch=${{ env.BRANCH }} --commit-hash=${{ github.sha }}
+      - name: End-to-end check through the edge (Pages Function → Render)
+        env:
+          PLAY: ${{ vars.PLAY_URL }}
+          CF_ID: ${{ secrets.CF_ACCESS_CLIENT_ID }}
+          CF_SECRET: ${{ secrets.CF_ACCESS_CLIENT_SECRET }}
+        run: |
+          for i in 1 2 3 4 5 6; do
+            got=$(curl -fsS --max-time 30 ${CF_ID:+-H "CF-Access-Client-Id: $CF_ID" -H "CF-Access-Client-Secret: $CF_SECRET"} \
+              "$PLAY/api/health" | jq -r '.release // empty' || true)
+            [ "$got" = "$GITHUB_SHA" ] && exit 0
+            sleep 10
+          done
+          echo "::error::$PLAY/api/health does not answer release $GITHUB_SHA (check API_ORIGIN and EDGE_SECRET on the Pages projects)"
+          exit 1
 
   rollback:
     name: Roll back ${{ inputs.environment }}
@@ -148,25 +164,23 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     environment: ${{ inputs.environment }}
-    env:
-      REGION: ${{ vars.GCP_REGION }}
     steps:
-      - uses: google-github-actions/auth@v3
-        with:
-          workload_identity_provider: ${{ vars.GCP_WIF_PROVIDER }}
-          service_account: ${{ vars.GCP_DEPLOY_SA }}
-      - uses: google-github-actions/setup-gcloud@v3
-      - name: API → previous (or chosen) revision, instantly
+      - name: API → the chosen release's image
         env:
-          WANTED: ${{ inputs.revision }}
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+          ORIGIN: ${{ vars.API_ORIGIN }}
+          WANTED: ${{ inputs.release }}
         run: |
-          current=$(gcloud run services describe online-api --region "$REGION" --format='value(status.traffic[0].revisionName)')
-          target="${WANTED:-$(gcloud run revisions list --service online-api --region "$REGION" \
-            --sort-by='~metadata.creationTimestamp' --format='value(metadata.name)' \
-            | grep -v -x "$current" | head -n1)}"
-          echo "rolling back $current → $target"
-          gcloud run services update-traffic online-api --region "$REGION" --to-revisions "$target=100"
-          echo "API: $current → $target" >> "$GITHUB_STEP_SUMMARY"
+          [[ "$WANTED" =~ ^[0-9a-f]{40}$ ]] || { echo "::error::release must be a full commit SHA"; exit 1; }
+          current=$(curl -fsS --max-time 90 "$ORIGIN/health" | jq -r '.release // empty' || true)
+          image="ghcr.io/${GITHUB_REPOSITORY_OWNER,,}/mrak-online-api:$WANTED"
+          curl -fsS -X POST --get --data-urlencode "imgURL=$image" "$HOOK" > /dev/null
+          for i in $(seq 1 60); do
+            got=$(curl -fsS --max-time 20 "$ORIGIN/health" | jq -r '.release // empty' || true)
+            [ "$got" = "$WANTED" ] && echo "API: $current → $WANTED" >> "$GITHUB_STEP_SUMMARY" && exit 0
+            sleep 10
+          done
+          echo "::error::rollback to $WANTED not live after 10 min"; exit 1
       - name: Static sites → previous production deployment (production only)
         if: inputs.environment == 'production'
         env:

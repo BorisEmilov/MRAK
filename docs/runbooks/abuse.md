@@ -21,21 +21,21 @@ incident log.
 
 ## 1. Triage (5 minutes)
 
-1. Which host and path? Cloudflare → Security → Events / Analytics, filter `api.mrak.game`.
+1. Which host and path? Cloudflare → Security → Events / Analytics, filter path `/api/`.
 2. Is it spread (botnet) or concentrated (few IPs/ASNs)? Note the top ASNs and countries.
-3. Is the database healthy? `GET /health` latency, Postgres CPU and connections.
+3. Is the database healthy? `GET /api/health` latency; Neon → Monitoring (CPU, connections); Upstash → command quota.
 4. Which policy is firing? API logs: `error: "too_many_requests", policy: "<name>"`.
 
 ## 2. Edge first (cheapest: the request never reaches us)
 
 1. **Concentrated source** → Cloudflare → Security → WAF → Tools: block the ASN/country/IP list
-   for `api.mrak.game` only (never for the static sites). Expire the rule in 24 h.
+   for paths starting with `/api/` only (never for the static files). Expire the rule in 24 h.
 2. **Spread L7 flood** → set security level to "I'm under attack" for the zone
    (`cloudflare_zone_setting.security_level = "under_attack"` or dashboard). Static sites keep
    working from cache; the game shows its offline mode for online features.
-3. **One route abused** → tighten `edge_limits` in `infra/cloudflare/variables.tf`
-   (e.g. `auth_per_min = 10`) and `terraform apply`, or edit the rule in the dashboard and copy
-   the change back to Terraform afterwards.
+3. **One route abused** → tighten that route's policy in the API (`RATE_LIMITS` env on Render,
+   e.g. `{"login-ip":{"limit":10}}`, then redeploy), or the edge backstop `edge_limits.api_per_10s`
+   in `infra/cloudflare/variables.tf` and `terraform apply` (Free plan: one edge rule).
 4. Bots on sign-up despite Turnstile → in the Turnstile widget set "Managed" → "Interactive".
 
 ## 3. Emergency switches (seconds, no deploy)

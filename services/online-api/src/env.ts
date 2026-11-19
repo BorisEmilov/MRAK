@@ -44,7 +44,7 @@ const EnvSchema = z.object({
   FULL_PACK_LOCAL_DIR: z.string().optional(),
   /** Public base URL of this API (local signed URLs). */
   API_URL: z.url().default('https://api.mrak.game'),
-  /** Shared secret Cloudflare adds as `x-mrak-edge` (ADR 0011); required in production. */
+  /** Shared secret the Pages proxy adds as `x-mrak-edge` (ADR 0012); required in production. */
   EDGE_SECRET: z.string().min(32).optional(),
   /** PEM CA of the managed Redis (TLS, `rediss://`). */
   REDIS_CA_CERT: z.string().optional(),
@@ -53,6 +53,16 @@ const EnvSchema = z.object({
   /** Comma-separated exact origins (game, landing, native shells). */
   CORS_ORIGINS: z.string().default('https://play.mrak.game,https://mrak.game'),
   COOKIE_DOMAIN: z.string().default('mrak.game'),
+  /** Refresh-cookie path: `/api/v1/auth` behind the Pages proxy (ADR 0012). */
+  COOKIE_PATH: z
+    .string()
+    .regex(/^\/[\w/-]*$/)
+    .default('/v1/auth'),
+  /** Release (git commit) baked into the image; reported by /health. */
+  RELEASE: z.string().max(64).default('dev'),
+  /** Sentry DSN (EU region). Unset: errors only in the logs. */
+  SENTRY_DSN: z.url().optional(),
+  SENTRY_ENVIRONMENT: z.string().max(32).default('production'),
   TURNSTILE_SECRET: z.string().optional(),
   TURNSTILE_HOSTNAMES: z.string().default('play.mrak.game,mrak.game'),
   HIBP_ENABLED: z.enum(['true', 'false']).default('true'),

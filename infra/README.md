@@ -4,10 +4,12 @@
   role, on the first start of the Postgres container (mounted into `/docker-entrypoint-initdb.d`).
   It only runs when the data volume is empty; to re-run it: `docker compose down -v`.
 
-- `cloudflare/` — the edge as Terraform: proxy, API tunnel, WAF, edge rate limits, cache rules,
-  private R2 bucket, alerts (see its README and `docs/runbooks/abuse.md`).
+- `postgres/verify-restore.sh` — checks a restored online-api database (restore drill and real
+  restores; `docs/runbooks/restore.md`).
 
-- `gcp/` — staging and production on Google Cloud, EU ([ADR 0011](../docs/adr/0011-hosting-gcp.md)):
-  network, Cloud Run API and migrate job, Cloud SQL (backups + PITR), Memorystore, Secret
-  Manager with rotation, GitHub Workload Identity Federation, registry, dashboard, alerts, budget.
-  `verify-restore.sh` checks restored databases. Runbooks: `docs/runbooks/deploy.md`, `restore.md`.
+- `cloudflare/` — the edge as Terraform (Free plan): Pages projects with the `/api` Function
+  variables, WAF, edge flood backstop, cache rules, private R2 buckets, alerts (see its README
+  and `docs/runbooks/abuse.md`).
+
+- `../render.yaml` — the online-api service on Render ([ADR 0012](../docs/adr/0012-hosting-free-tier.md)).
+  Database: Neon; Redis: Upstash (set up in their consoles; `docs/runbooks/deploy.md`).

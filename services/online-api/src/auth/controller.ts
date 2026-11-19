@@ -22,6 +22,8 @@ export interface AuthHttpConfig {
   allowedOrigins: readonly string[];
   /** Shared parent domain for the cookie (e.g. "mrak.game"); empty: host-only. */
   cookieDomain: string;
+  /** Cookie path: `/v1/auth` direct, `/api/v1/auth` behind the same-origin proxy (ADR 0012). */
+  cookiePath?: string;
 }
 
 export interface AuthDeps {
@@ -89,7 +91,7 @@ function readCookie(req: Request, name: string): string | undefined {
 function cookie(deps: AuthDeps, value: string, maxAgeS: number): string {
   return [
     `${REFRESH_COOKIE}=${value}`,
-    'Path=/v1/auth',
+    `Path=${deps.http.cookiePath ?? '/v1/auth'}`,
     ...(deps.http.cookieDomain ? [`Domain=${deps.http.cookieDomain}`] : []),
     'HttpOnly',
     'Secure',

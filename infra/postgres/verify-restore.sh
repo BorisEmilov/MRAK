@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # Verifies a restored online-api database (docs/runbooks/restore.md). Used by the monthly restore
 # drill (.github/workflows/restore-drill.yml) and after any real restore.
-#   infra/gcp/verify-restore.sh "<postgres url>" [migrations dir]
+#   infra/postgres/verify-restore.sh "<postgres url>" [migrations dir]
 # Passes when: every repository migration is applied and none failed, the core tables exist and
 # answer, and (optionally) the restored data is not older than MAX_AGE_HOURS.
 set -euo pipefail

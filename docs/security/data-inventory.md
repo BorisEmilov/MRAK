@@ -36,13 +36,17 @@ government ids, free-text chat.
 
 Processors (DPA signed before launch; status in [backlog](../BACKLOG.md)):
 
-| Processor                   | What                                                                                                                     | Region / transfer basis                                             | DPA                                                |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------- | -------------------------------------------------- |
-| Google Cloud                | API hosting, Cloud SQL, Memorystore, Secret Manager, logs (30 days), monitoring ([ADR 0011](../adr/0011-hosting-gcp.md)) | `europe-west1`, EU-only secret replication; SCCs for support access | Cloud Data Processing Addendum (accept in console) |
-| Cloudflare                  | Edge, WAF, Pages, R2 (WEUR), Turnstile, Access                                                                           | Global edge; SCCs + EU Data Localization optional                   | Cloudflare DPA (self-serve)                        |
-| Email provider (to choose)  | Transactional email                                                                                                      | EU region required                                                  | Before enabling `emails`                           |
-| Paddle (merchant of record) | Checkout, payments, tax, invoices; partly an independent controller                                                      | UK/EU; UK adequacy + SCCs                                           | Paddle DPA                                         |
-| Have I Been Pwned           | Only a 5-character SHA-1 prefix (k-anonymity), no personal data                                                          | —                                                                   | Not needed                                         |
+| Processor                   | What                                                                                              | Region / transfer basis                                | DPA                         |
+| --------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------ | --------------------------- |
+| Render                      | API hosting, application logs (7 days) ([ADR 0012](../adr/0012-hosting-free-tier.md))             | Frankfurt (EU); US company: SCCs + EU-US DPF           | Render DPA (self-serve)     |
+| Neon                        | PostgreSQL (accounts, saves, purchases, telemetry, bug reports)                                   | AWS `eu-central-1` (Frankfurt); US company: SCCs + DPF | Neon DPA (self-serve)       |
+| Upstash                     | Redis: rate-limit counters (keyed hashes, no IPs or emails), switches                             | `eu-central-1` (Frankfurt); SCCs                       | Upstash DPA (self-serve)    |
+| Sentry                      | Server error reports (stack traces; no request, user, headers or bodies, C-47)                    | EU region (Frankfurt); US company: SCCs + DPF          | Sentry DPA (self-serve)     |
+| GitHub                      | CI only: encrypted backups pass through jobs, never stored as artifacts                           | —                                                      | GitHub DPA                  |
+| Cloudflare                  | Edge, WAF, Pages + `/api` Function, R2 (WEUR: paid content, encrypted backups), Turnstile, Access | Global edge; SCCs + EU Data Localization optional      | Cloudflare DPA (self-serve) |
+| Email provider (to choose)  | Transactional email                                                                               | EU region required                                     | Before enabling `emails`    |
+| Paddle (merchant of record) | Checkout, payments, tax, invoices; partly an independent controller                               | UK/EU; UK adequacy + SCCs                              | Paddle DPA                  |
+| Have I Been Pwned           | Only a 5-character SHA-1 prefix (k-anonymity), no personal data                                   | —                                                      | Not needed                  |
 
 International transfers: providers outside the EEA only under SCCs/adequacy; recorded per
 processor.
@@ -53,7 +57,7 @@ Breach notification: 72 h to the supervisory authority — [security incident ru
 
 Retention enforcement: unverified accounts deleted after 7 days and unconfirmed newsletter
 addresses after 7 days (hourly jobs); audit log purged after 1 year (hourly job); application
-logs 30 days (Cloud Logging bucket, `infra/gcp`); database backups 30 days. A deleted account
+logs 7 days (Render); encrypted database dumps 30 days (R2 lifecycle). A deleted account
 can reappear in a backup until it expires, and is deleted again after any restore
 ([restore runbook](../runbooks/restore.md)).
 

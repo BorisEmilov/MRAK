@@ -8,6 +8,10 @@
     ".": {
       "types": "./src/index.ts",
       "default": "./src/index.ts"
+    },
+    "./edge-proxy": {
+      "types": "./src/edge-proxy.ts",
+      "default": "./src/edge-proxy.ts"
     }
   },
   "scripts": {

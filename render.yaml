@@ -1,0 +1,79 @@
+# Render Blueprint (ADR 0012): production online-api, free web service in Frankfurt.
+# Staging: the same service in a second Render workspace (its own 750 free hours), named
+# `mrak-api-staging`, with the staging values (docs/runbooks/deploy.md → First-time setup).
+# Images come from GHCR, built and scanned by .github/workflows/deploy.yml, which also runs the
+# migrations against Neon and then calls this service's deploy hook with the new image.
+services:
+  - type: web
+    name: mrak-api
+    runtime: image
+    image:
+      url: ghcr.io/borisemilov/mrak-online-api:latest
+    plan: free
+    region: frankfurt
+    healthCheckPath: /health
+    autoDeploy: false
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+      # Behind the same-origin Pages proxy (/api/*).
+      - key: COOKIE_PATH
+        value: /api/v1/auth
+      - key: COOKIE_DOMAIN
+        value: mrak.game
+      - key: CORS_ORIGINS
+        value: https://play.mrak.game,https://mrak.game
+      - key: API_URL
+        value: https://mrak.game/api
+      - key: APP_URL
+        value: https://mrak.game
+      - key: SITE_URL
+        value: https://mrak.game
+      - key: TURNSTILE_HOSTNAMES
+        value: play.mrak.game,mrak.game
+      # Neon direct endpoint, one small instance (ADR 0012 → Database connections).
+      - key: DB_POOL_MAX
+        value: '5'
+      - key: PADDLE_API_URL
+        value: https://api.paddle.com
+      - key: SENTRY_ENVIRONMENT
+        value: production
+      # Secrets: set in the Render dashboard, never in this file.
+      - key: DATABASE_URL # Neon direct, ?sslmode=require
+        sync: false
+      - key: REDIS_URL # Upstash rediss://
+        sync: false
+      - key: EDGE_SECRET # same value as the Pages project variable
+        sync: false
+      - key: AUTH_JWT_KEYS
+        sync: false
+      - key: AUTH_SECRET
+        sync: false
+      - key: TURNSTILE_SECRET
+        sync: false
+      - key: PADDLE_API_KEY
+        sync: false
+      - key: PADDLE_WEBHOOK_SECRET
+        sync: false
+      - key: PADDLE_PRICE_FULL_GAME
+        sync: false
+      - key: PADDLE_PRICE_COLLECTOR
+        sync: false
+      - key: R2_HOST
+        sync: false
+      - key: R2_ACCESS_KEY_ID
+        sync: false
+      - key: R2_SECRET_ACCESS_KEY
+        sync: false
+      - key: FULL_PACK_PATH
+        sync: false
+      - key: FULL_PACK_VERSION
+        sync: false
+      - key: FULL_PACK_SHA256
+        sync: false
+      - key: FULL_PACK_BYTES
+        sync: false
+      - key: SENTRY_DSN
+        sync: false

@@ -64,11 +64,15 @@ export interface AppOptions {
   /** Secret for hashing IPs/emails into limiter keys. */
   keySecret?: string;
   /**
-   * Edge secret (ADR 0011): only requests carrying it in `x-mrak-edge` (set by Cloudflare) are
-   * served, and only then is `CF-Connecting-IP` trusted as the client IP. `/health` stays open for
-   * the platform's probes. Unset in development.
+   * Edge secret (ADR 0012): only requests carrying it in `x-mrak-edge` (set by the Pages Function
+   * proxy) are served, and only then is `x-mrak-client-ip` trusted as the client IP. `/health`
+   * stays open for the platform's probes. Unset in development.
    */
   edgeSecret?: string;
+  /** Release reported by /health (the smoke test waits for it after a deploy). */
+  release?: string;
+  /** Called with every 5xx error (Sentry in production). */
+  reportError?: (err: unknown) => void;
 }
 
 export function createApp(options: AppOptions = {}): express.Express {
@@ -89,12 +93,13 @@ export function createApp(options: AppOptions = {}): express.Express {
         problem(res, 403, 'forbidden');
         return;
       }
-      const ip = req.get('cf-connecting-ip');
+      const ip = req.get('x-mrak-client-ip');
       if (ip && isIP(ip)) Object.defineProperty(req, 'ip', { value: ip });
       next();
     });
   }
   app.locals['now'] = options.now ?? (() => new Date());
+  app.locals['release'] = options.release ?? 'dev';
   app.locals['authenticate'] = options.authenticate ?? options.auth?.authenticate;
   app.locals['auth'] = options.auth?.deps;
   app.locals['jwks'] = options.auth?.jwks;
@@ -195,7 +200,10 @@ export function createApp(options: AppOptions = {}): express.Express {
       typeof err === 'object' && err !== null && 'status' in err && typeof err.status === 'number'
         ? err.status
         : 500;
-    if (status >= 500) options.logger?.error({ err }, 'request failed');
+    if (status >= 500) {
+      options.logger?.error({ err }, 'request failed');
+      options.reportError?.(err);
+    }
     if (status === 413) problem(res, 413, 'payload_too_large');
     else if (status === 415) problem(res, 415, 'unsupported_media_type');
     else if (status >= 500) problem(res, 500, 'internal_error');

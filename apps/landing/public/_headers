@@ -1,6 +1,6 @@
 # Cloudflare Pages response headers (checked by scripts/check-security.mjs at build).
 /*
-  Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self' https://api.mrak.game; frame-src https://challenges.cloudflare.com; media-src 'self'; manifest-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'none'; script-src 'self' https://challenges.cloudflare.com; style-src 'self'; img-src 'self'; font-src 'self'; connect-src 'self'; frame-src https://challenges.cloudflare.com; media-src 'self'; manifest-src 'self'; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
@@ -11,7 +11,7 @@
 
 /buy/checkout/*
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'none'; script-src 'self' https://cdn.paddle.com; style-src 'self' https://cdn.paddle.com; img-src 'self' https://cdn.paddle.com; font-src 'self'; connect-src 'self' https://api.mrak.game https://checkout-service.paddle.com https://sandbox-checkout-service.paddle.com; frame-src https://buy.paddle.com https://sandbox-buy.paddle.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'none'; script-src 'self' https://cdn.paddle.com; style-src 'self' https://cdn.paddle.com; img-src 'self' https://cdn.paddle.com; font-src 'self'; connect-src 'self' https://checkout-service.paddle.com https://sandbox-checkout-service.paddle.com; frame-src https://buy.paddle.com https://sandbox-buy.paddle.com; form-action 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests
   Referrer-Policy: no-referrer
   Cache-Control: no-store
 

@@ -33,11 +33,13 @@ contacts, and we do not sell or share data for advertising.
 
 ## Processors
 
-Google Cloud (our servers and database, in Belgium), Cloudflare (network, website hosting,
-storage, bot protection), our email provider and Paddle (payments; Paddle is also responsible
-for its own tax and fraud records) process data on our behalf under data-processing agreements.
-Transfers outside the EEA rely on adequacy decisions or standard contractual clauses. Server logs
-are kept for 30 days and backups for 30 days.
+Render (our servers, in Frankfurt), Neon (our database, in Frankfurt), Upstash (rate-limit
+counters, in Frankfurt), Sentry (server error reports, EU region; no personal data), Cloudflare
+(network, website hosting, storage, bot protection), our email provider and Paddle (payments;
+Paddle is also responsible for its own tax and fraud records) process data on our behalf under
+data-processing agreements. Transfers outside the EEA rely on adequacy decisions (EU-US Data
+Privacy Framework) or standard contractual clauses. Server logs are kept for 7 days and encrypted
+backups for 30 days.
 
 ## Your rights
 

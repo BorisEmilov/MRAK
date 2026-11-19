@@ -35,9 +35,12 @@
                     },
                     "service": {
                       "type": "string"
+                    },
+                    "release": {
+                      "type": "string"
                     }
                   },
-                  "required": ["status", "service"]
+                  "required": ["status", "service", "release"]
                 }
               }
             }

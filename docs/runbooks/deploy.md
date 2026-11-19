@@ -1,50 +1,75 @@
 # Runbook — deploy, migrations, rollback, secrets, observability
 
-Platform: [ADR 0011](../adr/0011-hosting-gcp.md). Infrastructure: `infra/gcp` (one state per
-environment) and `infra/cloudflare` (one state for the zone). Related runbooks:
+Platform: [ADR 0012](../adr/0012-hosting-free-tier.md) — Cloudflare Pages (+ `/api` Function),
+Render (API), Neon (Postgres), Upstash (Redis). Infrastructure as code: `render.yaml` (API
+service) and `infra/cloudflare` (zone, Pages projects, WAF, R2). Related runbooks:
 [restore](restore.md), [abuse](abuse.md), [security incident](security-incident.md).
 
 ## Environments
 
-| Env        | Where                                                             | URLs                                                                        | Data                                      |
-| ---------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------- | ----------------------------------------- |
-| dev        | `docker compose up --build` (Postgres, Redis, APIs) + `pnpm dev`  | localhost                                                                   | Local, disposable                         |
-| staging    | GCP project `mrak-staging`, Pages branch `staging`, R2 `-staging` | staging / play-staging / api-staging `.mrak.game`, behind Cloudflare Access | Test accounts only, never production data |
-| production | GCP project `mrak-production`, Pages branch `main`, R2            | mrak.game, play.mrak.game, api.mrak.game                                    | Real                                      |
+| Env        | API (Render)                                 | Database / Redis                                    | Sites (Pages)                                                                   | Data                                      |
+| ---------- | -------------------------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------------- | ----------------------------------------- |
+| dev        | `docker compose up --build` + `pnpm dev`     | local containers                                    | localhost                                                                       | Local, disposable                         |
+| staging    | `mrak-api-staging` (second Render workspace) | Neon project `mrak-staging`, Upstash `mrak-staging` | branch `staging`: staging / play-staging `.mrak.game`, behind Cloudflare Access | Test accounts only, never production data |
+| production | `mrak-api` (`render.yaml`)                   | Neon project `mrak`, Upstash `mrak`                 | branch `main`: mrak.game, play.mrak.game                                        | Real                                      |
 
-**GitHub environments.** `staging` and `production` each have their own variables:
-`GCP_PROJECT`, `GCP_REGION`, `GCP_WIF_PROVIDER`, `GCP_DEPLOY_SA`, `GCP_REGISTRY`,
-`GCP_SQL_INSTANCE` (from `terraform output deploy`), plus `API_URL`, `SITE_URL`, `PLAY_URL`,
-`TURNSTILE_SITEKEY`, `PADDLE_CLIENT_TOKEN`, `PADDLE_ENV` and `CLOUDFLARE_ACCOUNT_ID`. Their
-secrets are `CLOUDFLARE_PAGES_TOKEN`, `CF_ACCESS_CLIENT_ID/SECRET` (staging) and
-`STAGING_DB_PASSWORD` (restore drill). `production` requires a reviewer and allows only `main`.
+The browser only calls its own origin: `https://<site>/api/<path>` → Pages Function → Render.
+
+**GitHub environments** `staging` and `production` (production requires a reviewer and allows only
+`main`):
+
+| Kind     | Name                                                                                                           | Value                                                                   |
+| -------- | -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| variable | `API_ORIGIN`                                                                                                   | Render service URL, `https://<service>.onrender.com`                    |
+| variable | `SITE_URL`, `PLAY_URL`                                                                                         | `https://mrak.game`, `https://play.mrak.game` (staging hosts)           |
+| variable | `TURNSTILE_SITEKEY`, `PADDLE_CLIENT_TOKEN`, `PADDLE_ENV`                                                       | public client keys                                                      |
+| variable | `CLOUDFLARE_ACCOUNT_ID`                                                                                        | account id                                                              |
+| variable | `BACKUP_AGE_RECIPIENT` (production)                                                                            | `age1…` public key                                                      |
+| secret   | `RENDER_DEPLOY_HOOK`                                                                                           | Render → service → Settings → Deploy Hook                               |
+| secret   | `MIGRATE_DATABASE_URL`                                                                                         | Neon **direct** connection string, `?sslmode=require`                   |
+| secret   | `CLOUDFLARE_PAGES_TOKEN`                                                                                       | API token: Account → Cloudflare Pages → Edit                            |
+| secret   | `CF_ACCESS_CLIENT_ID`, `CF_ACCESS_CLIENT_SECRET` (staging)                                                     | Access service token for CI                                             |
+| secret   | `BACKUP_DATABASE_URL`, `R2_BACKUP_ACCESS_KEY_ID`, `R2_BACKUP_SECRET_ACCESS_KEY`, `BACKUP_AGE_KEY` (production) | read-only Neon role; R2 token scoped to `mrak-backups`; age private key |
 
 ## First-time setup
 
-1. Create both projects. Create the EU state bucket `mrak-terraform-state` with versioning,
-   readable only by the infra admins.
-2. Per environment:
-   `terraform -chdir=infra/gcp init -backend-config=prefix=<env>`, then
-   `terraform -chdir=infra/gcp apply -var-file=<env>.tfvars`.
-3. Add the manual secrets (see Secrets below), then list them in `manual_secrets_ready` and apply
-   again.
-4. Edge: run `terraform -chdir=infra/cloudflare apply` with `api_origin_hosts`, the
-   `edge_secrets` (`terraform output -raw edge_secret` of each environment) and
-   `team_email_domain`.
-5. Copy `terraform output deploy` into the GitHub environment variables.
+1. **Neon:** two projects (`mrak`, `mrak-staging`), region AWS Frankfurt, Postgres 17. Copy each
+   **direct** connection string (not `-pooler`). For backups and the Studio, also create a
+   read-only role (`GRANT pg_read_all_data`).
+2. **Upstash:** two Redis databases in `eu-central-1` with TLS; copy each `rediss://` URL.
+3. **Secrets:** generate per environment `AUTH_JWT_KEYS` (`pnpm --filter @mrak/online-api keygen`,
+   wrapped in `[ … ]`), `AUTH_SECRET` and `EDGE_SECRET` (`openssl rand -base64 48` each).
+4. **Render:** production → Blueprint from `render.yaml`. Staging → a second workspace, a web
+   service from the existing image `ghcr.io/<owner>/mrak-online-api:<sha>` with the same variables
+   (staging values, `SENTRY_ENVIRONMENT=staging`, `PADDLE_API_URL` sandbox). Fill the
+   `sync: false` secrets in the dashboard. Copy each service URL and **Deploy Hook**.
+5. **GHCR:** after the first build, make the package `mrak-online-api` public (Packages → Package
+   settings → Change visibility) or give Render a registry credential.
+6. **Cloudflare:** `terraform -chdir=infra/cloudflare init && terraform -chdir=infra/cloudflare apply`
+   with `api_origins` (the two Render URLs), `edge_secrets` (the two `EDGE_SECRET`),
+   `team_email_domain`, `alert_email`. It creates the Pages projects with `API_ORIGIN` and
+   `EDGE_SECRET` (production and preview), DNS, WAF, the edge rate limit and the R2 buckets.
+   State is local (`infra/cloudflare/terraform.tfstate`, gitignored, holds secrets): keep it in
+   the password manager.
+7. **GitHub environments:** the table above.
+8. **Uptime monitor** (free plan of any provider): `GET https://play.mrak.game/api/health` every
+   5 minutes, alert by email. It also keeps the production instance awake.
+9. **Sentry:** EU organisation, one Node project; its DSN goes to `SENTRY_DSN` on Render.
 
 ## Deploy (one merge)
 
 Merging to `main` runs `.github/workflows/deploy.yml`:
 
-1. **Build** the runtime and migration images once. The job summary shows the release's
-   migration SQL.
-2. **Staging:** push the images, run the migrate job, deploy the API, smoke-test `/health`
-   through the edge, then build and publish both static sites to Pages (branch `staging`).
+1. **Build** the API and migration images once (`RELEASE` = commit) and push them to GHCR. The
+   job summary shows the release's migration SQL.
+2. **Staging:** migrate Neon from the migration image, call the Render deploy hook with the new
+   image, wait until Render's `/health` reports the new release (10 min), build both sites with
+   `/api` as the API URL, publish them to Pages (branch `staging`), and check
+   `PLAY_URL/api/health` through the Function.
 3. **Production:** waits for a reviewer to approve the `production` environment, who reads the
    migration SQL first. Then the same steps, with Pages branch `main`.
 
-If the smoke test fails, traffic goes straight back to the previous revision and the job fails.
+If the new release does not come up, the job redeploys the previous image and fails.
 
 ## Migrations (reviewed before they run)
 
@@ -55,59 +80,49 @@ If the smoke test fails, traffic goes straight back to the previous revision and
 - **Expand/contract**, so a rollback never needs a down-migration. Release N adds (new nullable
   columns or tables) and the code reads both. Release N+1 switches the code. Release N+2 removes
   the old part, only after N+1 has been stable for a full day.
-- **A migration failed in production?** The API was not deployed (the step stops the job).
-  Restore with [restore](restore.md) only if data was damaged; otherwise fix forward with a new
-  migration.
+- **A migration failed?** The API was not deployed (the step stops the job). Restore with
+  [restore](restore.md) only if data was damaged; otherwise fix forward with a new migration.
 
 ## Rollback (tested in staging every release cycle)
 
-Actions → Deploy → Run workflow → `action=rollback`, choose the environment, and optionally a
-revision. The API moves 100 % of traffic to the previous revision immediately. In production the
-Pages projects also roll back to their previous deployment. Thanks to expand/contract, the
-database stays as it is.
+Actions → Deploy → Run workflow → `action=rollback`, the environment, and the full commit SHA of
+the release to restore (any earlier deploy run shows it). Render starts that image (about a
+minute); the job waits until `/health` reports it. In production the Pages projects also roll back
+to their previous deployment. Thanks to expand/contract, the database stays as it is.
+Manual equivalent: Render dashboard → service → Events → _Rollback_ on an earlier deploy.
 
-Manual equivalent:
+## Secrets (provider stores only, rotation documented)
 
-```sh
-gcloud run services update-traffic online-api --region europe-west1 --to-revisions <rev>=100
-```
+API secrets live in the Render service environment; Pages secrets in the Pages project (through
+Terraform); CI secrets in the GitHub environments. Never in the repository, issues, chats or logs.
 
-## Secrets (Secret Manager, rotation documented)
+| Secret                                    | Rotation        | How                                                                                                                                                                |
+| ----------------------------------------- | --------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `AUTH_JWT_KEYS`                           | 90 days         | `keygen`, set `[new, old]`, redeploy, wait 10 min, then `[new]` ([incident runbook §3](security-incident.md#3-rotate-jwt-signing-keys-no-downtime))                |
+| `EDGE_SECRET`                             | 180 days        | New value in `edge_secrets` → `terraform apply` (Pages) and on Render at the same time, then redeploy Pages. A short 403 window is possible: do it at low traffic. |
+| `DATABASE_URL`                            | 180 days        | Neon → Roles → reset password → update Render, `MIGRATE_DATABASE_URL` and `BACKUP_DATABASE_URL`                                                                    |
+| `REDIS_URL`                               | 180 days        | Upstash → Reset password → update Render                                                                                                                           |
+| `AUTH_SECRET`                             | 365 days        | New random value on Render. Limiter keys reset.                                                                                                                    |
+| `PADDLE_API_KEY`, `PADDLE_WEBHOOK_SECRET` | 180 days        | Paddle dashboard → Render → redeploy → revoke the old key                                                                                                          |
+| `R2_*`                                    | 180 days        | New R2 token → Render / GitHub → revoke                                                                                                                            |
+| `TURNSTILE_SECRET`, `EMAIL_API_KEY`       | 365 / 180 days  | Provider console → Render                                                                                                                                          |
+| `BACKUP_AGE_KEY`                          | on staff change | New age key pair: new recipient variable, keep the old private key until its dumps expire (30 days)                                                                |
 
-| Secret                                    | Rotation             | How                                                                                                                                                                                             |
-| ----------------------------------------- | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `AUTH_JWT_KEYS`                           | 90 days              | `pnpm --filter @mrak/online-api keygen`, add `[new, old]`, deploy, wait 10 min, then `[new]` ([incident runbook §3](security-incident.md#3-rotate-jwt-signing-keys-no-downtime))                |
-| `EDGE_SECRET`                             | 180 days             | New version **and** the Cloudflare `edge_secrets` value at once: apply Cloudflare first with the new value, add the version, redeploy. A short 403 window is possible, so do it at low traffic. |
-| `DATABASE_URL`                            | 180 days             | `terraform taint random_password.db` → apply (new user password and secret version) → redeploy                                                                                                  |
-| `REDIS_URL` / `REDIS_CA_CERT`             | 180 days / CA expiry | `gcloud redis instances … --auth-string` rotation → apply → redeploy                                                                                                                            |
-| `AUTH_SECRET`                             | 365 days             | Taint and apply. Limiter keys reset.                                                                                                                                                            |
-| `PADDLE_API_KEY`, `PADDLE_WEBHOOK_SECRET` | 180 days             | Paddle dashboard → `gcloud secrets versions add` → redeploy → revoke the old key                                                                                                                |
-| `R2_*`                                    | 180 days             | New R2 token → version → redeploy → revoke                                                                                                                                                      |
-| `TURNSTILE_SECRET`, `EMAIL_API_KEY`       | 365 / 180 days       | Provider console → version → redeploy                                                                                                                                                           |
-
-Add a version with `printf %s "$VALUE" | gcloud secrets versions add NAME --data-file=-`, then
-disable the old version once the new revision is serving. When a secret is due, Secret Manager
-publishes to `secret-rotation`, which triggers the "Secret rotation due" alert. Never paste
-secrets into issues, chats or CI logs.
+Rotation dates are tracked in the owner's calendar (no managed rotation on the free tiers).
 
 ## Observability
 
-- **Dashboard:** "MRAK online-api (<env>)" in Cloud Monitoring. It shows requests by class,
-  latency p95, 401/429, login failures, refresh-token reuse, purchases and webhook failures,
-  emails by kind, 429 by policy (quotas), instances against the ceiling, Cloud SQL CPU and Redis
-  memory.
-- **Alerts** (email): 5xx > 1 %, 401 spike, 429 spike, refresh reuse, failing payment webhooks,
-  latency p95, app alerts (email budget, Redis, limiter), instances at the ceiling, daily cost
-  anomaly (instance-hours), secret rotation due, API down (uptime check), budget 50/80/100 % and
-  forecast.
-- **Logs** are JSON with `severity` and `message`, kept 30 days. They contain no IPs, emails,
-  tokens or account ids. Metric events are `evt=audit|email|rate-limited` and `alert=…`.
-- **Traces:** Cloud Trace samples requests, and request logs carry `logging.googleapis.com/trace`.
-- **Thresholds** live in `infra/gcp` (`alert_thresholds`); tune them after two weeks of real
-  traffic.
+- **Errors:** Sentry (EU), `online-api` project: every 5xx with stack and release. Events carry no
+  request, user, headers, cookies or breadcrumbs (`src/observability/sentry.ts`).
+- **Uptime:** the external monitor on `/api/health` (edge + Function + Render + Redis).
+- **Logs:** Render → service → Logs (kept 7 days on the free plan). JSON, no IPs, emails, tokens
+  or account ids. Metric events are `evt=audit|email|rate-limited` and `alert=…`: search them in
+  the log view.
+- **Quotas:** Neon (CU-hours, storage), Upstash (commands) and Render (instance hours) email at
+  their thresholds; check their dashboards weekly before launch ([ADR 0012 → Limits](../adr/0012-hosting-free-tier.md#limits-and-how-we-watch-them)).
 
 ## Release checklist
 
 - [ ] CI and Security are green; migration review passed (label if destructive).
 - [ ] Production approval: migration SQL read, expand/contract respected.
-- [ ] After the deploy, watch the dashboard for 15 minutes: no rise in 5xx, latency or 401.
+- [ ] After the deploy, watch Sentry and the Render logs for 15 minutes: no new errors or 5xx.

@@ -1,0 +1,45 @@
+# Nightly logical backup of production (ADR 0012 → Backups, docs/runbooks/restore.md).
+# pg_dump of Neon → encrypted with age (public key only; the private key is kept offline) →
+# private R2 bucket `mrak-backups` (30-day lifecycle). Nothing readable leaves this job.
+name: Backup
+
+on:
+  schedule:
+    - cron: '30 3 * * *' # 03:30 UTC every day
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backup
+  cancel-in-progress: false
+
+jobs:
+  backup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    environment: production
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.R2_BACKUP_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_BACKUP_SECRET_ACCESS_KEY }}
+      AWS_DEFAULT_REGION: auto
+      R2: https://${{ vars.CLOUDFLARE_ACCOUNT_ID }}.r2.cloudflarestorage.com
+    steps:
+      - name: Dump, encrypt and upload
+        env:
+          DATABASE_URL: ${{ secrets.BACKUP_DATABASE_URL }}
+          RECIPIENT: ${{ vars.BACKUP_AGE_RECIPIENT }}
+        run: |
+          set -euo pipefail
+          [ -n "$RECIPIENT" ] || { echo "::error::BACKUP_AGE_RECIPIENT is not set"; exit 1; }
+          sudo apt-get update -qq && sudo apt-get install -y -qq age
+          name="online/$(date -u +%Y-%m-%dT%H%MZ).dump.age"
+          # pg_dump must match Neon's major version (17).
+          docker run --rm -e DATABASE_URL postgres:17-alpine sh -c 'pg_dump --format=custom --no-owner "$DATABASE_URL"' \
+            | age -r "$RECIPIENT" > backup.dump.age
+          bytes=$(stat -c %s backup.dump.age)
+          [ "$bytes" -gt 1024 ] || { echo "::error::backup is only $bytes bytes"; exit 1; }
+          aws s3 cp backup.dump.age "s3://mrak-backups/$name" --endpoint-url "$R2" --only-show-errors
+          rm -f backup.dump.age
+          echo "✔ $name ($bytes bytes, encrypted)" >> "$GITHUB_STEP_SUMMARY"

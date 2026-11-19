@@ -1,18 +1,17 @@
-# MRAK edge (threat model C-01, C-02, C-03, C-18, C-31, C-39; ADR 0008).
-# Everything public is proxied. The API origin (Cloud Run, ADR 0011) only serves requests that
-# carry the edge secret this zone injects. One state for the zone (entrypoint rulesets are one per
+# MRAK edge (threat model C-01, C-02, C-03, C-18, C-31, C-39, C-46; ADR 0008, ADR 0012).
+# Cloudflare Free plan. The sites call the API on their own origin (/api/*); a Pages Function adds
+# the edge secret and forwards to Render. One state for the zone (entrypoint rulesets are one per
 # phase): production hostnames plus staging ones, which sit behind Cloudflare Access.
 
 locals {
   game    = "play.${var.domain}"
-  api     = "api.${var.domain}"
   landing = var.domain
   staging = {
     landing = "staging.${var.domain}"
     game    = "play-staging.${var.domain}"
-    api     = "api-staging.${var.domain}"
   }
-  api_hosts = { production = local.api, staging = local.staging.api }
+  sites = "{\"${local.game}\" \"${local.landing}\" \"${local.staging.game}\" \"${local.staging.landing}\"}"
+  api   = "http.host in ${local.sites} and starts_with(http.request.uri.path, \"/api/\")"
 }
 
 # ---------------------------------------------------------------- zone hardening
@@ -48,61 +47,31 @@ resource "cloudflare_bot_management" "bots" {
   fight_mode = true
 }
 
-# ---------------------------------------------------------------- API origin (Cloud Run, ADR 0011)
-
-resource "cloudflare_dns_record" "api" {
-  for_each = local.api_hosts
-  zone_id  = var.zone_id
-  name     = each.value
-  type     = "CNAME"
-  content  = var.api_origin_hosts[each.key]
-  proxied  = true
-  ttl      = 1
-}
-
-
-# Cloud Run routes by Host: rewrite it to the service hostname.
-resource "cloudflare_ruleset" "api_origin" {
-  zone_id = var.zone_id
-  name    = "mrak api origin"
-  kind    = "zone"
-  phase   = "http_request_origin"
-  rules = [for env, host in local.api_hosts : {
-    description       = "API (${env}) → Cloud Run host"
-    expression        = "http.host eq \"${host}\""
-    action            = "route"
-    action_parameters = { host_header = var.api_origin_hosts[env] }
-    enabled           = true
-  }]
-}
-
-# The edge secret proves a request came through this zone (and its WAF/limits); the API refuses
-# anything else and only then trusts CF-Connecting-IP. "set" overwrites any client-sent value.
-resource "cloudflare_ruleset" "api_edge_secret" {
-  zone_id = var.zone_id
-  name    = "mrak api edge secret"
-  kind    = "zone"
-  phase   = "http_request_late_transform"
-  rules = [for env, host in local.api_hosts : {
-    description = "Add x-mrak-edge to API requests (${env})"
-    expression  = "http.host eq \"${host}\""
-    action      = "rewrite"
-    action_parameters = {
-      headers = { "x-mrak-edge" = { operation = "set", value = var.edge_secrets[env] } }
-    }
-    enabled = true
-  }]
-}
-
 # ---------------------------------------------------------------- static sites (Cloudflare Pages)
 
 # Deployed by .github/workflows/deploy.yml (wrangler direct upload). Production = branch `main`;
 # staging = branch `staging` (preview alias). Hashed assets are immutable; HTML revalidates.
+# The /api Function (functions/api/[[path]].ts) reads API_ORIGIN and EDGE_SECRET: production
+# variables point at the production Render service, preview ones at staging.
 resource "cloudflare_pages_project" "site" {
   for_each          = toset(["mrak-landing", "mrak-game"])
   account_id        = var.account_id
   name              = each.key
   production_branch = "main"
+  deployment_configs = {
+    production = {
+      env_vars = {
+        API_ORIGIN  = { type = "plain_text", value = var.api_origins.production }
+        EDGE_SECRET = { type = "secret_text", value = var.edge_secrets.production }
+      }
+    }
+    preview = {
+      env_vars = {
+        API_ORIGIN  = { type = "plain_text", value = var.api_origins.staging }
+        EDGE_SECRET = { type = "secret_text", value = var.edge_secrets.staging }
+      }
+    }
+  }
 }
 
 resource "cloudflare_pages_domain" "site" {
@@ -142,29 +111,8 @@ resource "cloudflare_zero_trust_access_application" "staging" {
 }
 
 # ---------------------------------------------------------------- WAF
-
-resource "cloudflare_ruleset" "waf_managed" {
-  zone_id = var.zone_id
-  name    = "mrak managed WAF"
-  kind    = "zone"
-  phase   = "http_request_firewall_managed"
-  rules = [
-    {
-      description       = "Cloudflare Managed Ruleset"
-      expression        = "true"
-      action            = "execute"
-      action_parameters = { id = "efb7b8c949ac4650a09736fc376e9aee" }
-      enabled           = true
-    },
-    {
-      description       = "Cloudflare OWASP Core Ruleset"
-      expression        = "http.host eq \"${local.api}\""
-      action            = "execute"
-      action_parameters = { id = "4814384a9e5d4991b9815dcfc25d2f1f" }
-      enabled           = true
-    },
-  ]
-}
+# Free plan: the Cloudflare Free Managed Ruleset is always on; custom rules (max 5) below. The
+# full Managed and OWASP rulesets need Pro (re-add them when upgrading).
 
 resource "cloudflare_ruleset" "waf_custom" {
   zone_id = var.zone_id
@@ -174,26 +122,20 @@ resource "cloudflare_ruleset" "waf_custom" {
   rules = [
     {
       description = "API: only the methods the API uses"
-      expression  = "http.host eq \"${local.api}\" and not http.request.method in {\"GET\" \"POST\" \"PATCH\" \"DELETE\" \"OPTIONS\"}"
+      expression  = "${local.api} and not http.request.method in {\"GET\" \"POST\" \"PATCH\" \"DELETE\" \"OPTIONS\"}"
       action      = "block"
       enabled     = true
     },
     {
       description = "API: no compressed request bodies (decompression bombs)"
-      expression  = "http.host eq \"${local.api}\" and any(http.request.headers[\"content-encoding\"][*] ne \"identity\")"
+      expression  = "${local.api} and any(http.request.headers[\"content-encoding\"][*] ne \"identity\")"
       action      = "block"
       enabled     = true
     },
     {
-      description = "Static sites accept no writes"
-      expression  = "http.host in {\"${local.game}\" \"${local.landing}\"} and not http.request.method in {\"GET\" \"HEAD\"}"
+      description = "Static files accept no writes (only /api/ does)"
+      expression  = "http.host in ${local.sites} and not starts_with(http.request.uri.path, \"/api/\") and not http.request.method in {\"GET\" \"HEAD\"}"
       action      = "block"
-      enabled     = true
-    },
-    {
-      description = "Sign-up and recovery from likely bots: managed challenge"
-      expression  = "http.host eq \"${local.api}\" and http.request.uri.path in {\"/v1/auth/register\" \"/v1/auth/forgot-password\" \"/v1/auth/resend-verification\"} and cf.bot_management.verified_bot eq false and cf.threat_score gt 10"
-      action      = "managed_challenge"
       enabled     = true
     },
   ]
@@ -201,6 +143,8 @@ resource "cloudflare_ruleset" "waf_custom" {
 
 # ---------------------------------------------------------------- edge rate limits
 
+# Free plan: one rule, 10-second period and timeout. The API's own Redis limits (per route, IP,
+# account) stay the real control; this is only a flood backstop in front of the Function.
 resource "cloudflare_ruleset" "rate_limits" {
   zone_id = var.zone_id
   name    = "mrak edge rate limits"
@@ -208,50 +152,14 @@ resource "cloudflare_ruleset" "rate_limits" {
   phase   = "http_ratelimit"
   rules = [
     {
-      description = "auth"
-      expression  = "http.host eq \"${local.api}\" and starts_with(http.request.uri.path, \"/v1/auth/\")"
-      action      = "block"
-      ratelimit = {
-        characteristics     = ["cf.colo.id", "ip.src"]
-        period              = 60
-        requests_per_period = var.edge_limits.auth_per_min
-        mitigation_timeout  = 600
-      }
-      enabled = true
-    },
-    {
-      description = "telemetry"
-      expression  = "http.host eq \"${local.api}\" and starts_with(http.request.uri.path, \"/v1/telemetry\")"
-      action      = "block"
-      ratelimit = {
-        characteristics     = ["cf.colo.id", "ip.src"]
-        period              = 60
-        requests_per_period = var.edge_limits.telemetry_per_min
-        mitigation_timeout  = 600
-      }
-      enabled = true
-    },
-    {
-      description = "purchases"
-      expression  = "http.host eq \"${local.api}\" and (starts_with(http.request.uri.path, \"/v1/checkout\") or starts_with(http.request.uri.path, \"/v1/purchases\"))"
-      action      = "block"
-      ratelimit = {
-        characteristics     = ["cf.colo.id", "ip.src"]
-        period              = 60
-        requests_per_period = var.edge_limits.checkout_per_min
-        mitigation_timeout  = 600
-      }
-      enabled = true
-    },
-    {
       description = "whole API backstop"
-      expression  = "http.host eq \"${local.api}\""
+      expression  = local.api
       action      = "block"
       ratelimit = {
         characteristics     = ["cf.colo.id", "ip.src"]
-        period              = 60
-        requests_per_period = var.edge_limits.api_per_min
-        mitigation_timeout  = 60
+        period              = 10
+        requests_per_period = var.edge_limits.api_per_10s
+        mitigation_timeout  = 10
       }
       enabled = true
     },
@@ -288,7 +196,7 @@ resource "cloudflare_ruleset" "cache" {
     },
     {
       description = "API responses are never cached (except what the API marks public)"
-      expression  = "http.host eq \"${local.api}\""
+      expression  = local.api
       action      = "set_cache_settings"
       action_parameters = {
         cache = false
@@ -307,6 +215,26 @@ resource "cloudflare_r2_bucket" "paid_content" {
   location   = "WEUR"
   # No custom domain and no r2.dev public URL: objects are reachable only through short-lived
   # presigned URLs issued by the API after an entitlement check (services/online-api/src/content).
+}
+
+# Encrypted nightly database dumps (.github/workflows/backup.yml); deleted after 30 days.
+resource "cloudflare_r2_bucket" "backups" {
+  account_id = var.account_id
+  name       = "mrak-backups"
+  location   = "WEUR"
+}
+
+resource "cloudflare_r2_bucket_lifecycle" "backups" {
+  account_id  = var.account_id
+  bucket_name = cloudflare_r2_bucket.backups.name
+  rules = [{
+    id         = "expire-after-30-days"
+    enabled    = true
+    conditions = { prefix = "" }
+    delete_objects_transition = {
+      condition = { type = "Age", max_age = 2592000 }
+    }
+  }]
 }
 
 # ---------------------------------------------------------------- alerts

@@ -8,7 +8,7 @@ describe('online-api app', () => {
   it('GET /health returns 200', async () => {
     const res = await request(app).get('/health');
     expect(res.status).toBe(200);
-    expect(res.body).toEqual({ status: 'ok', service: 'online-api' });
+    expect(res.body).toEqual({ status: 'ok', service: 'online-api', release: 'dev' });
   });
 
   it('sends rate-limit headers', async () => {
@@ -43,7 +43,7 @@ describe('online-api app', () => {
     expect(huge.status).toBe(413);
   });
 
-  it('ADR 0011: behind the edge only requests with the edge secret are served', async () => {
+  it('ADR 0012: behind the edge only requests with the edge secret are served', async () => {
     const edge = createApp({ edgeSecret: 'e'.repeat(32) });
     expect((await request(edge).get('/v1/seasonal')).status).toBe(403);
     expect((await request(edge).get('/v1/seasonal').set('x-mrak-edge', 'wrong')).status).toBe(403);
@@ -51,7 +51,37 @@ describe('online-api app', () => {
     const ok = await request(edge)
       .get('/v1/seasonal')
       .set('x-mrak-edge', 'e'.repeat(32))
-      .set('cf-connecting-ip', '203.0.113.7');
+      .set('x-mrak-client-ip', '203.0.113.7');
     expect(ok.status).not.toBe(403);
+  });
+
+  it('SEC-EDGE-46: the client IP comes from x-mrak-client-ip only with the edge secret', async () => {
+    const keys: string[] = [];
+    const limiter = {
+      consume: (key: string) => {
+        keys.push(key);
+        return Promise.resolve({ allowed: true, remaining: 1, retryAfterMs: 0, resetMs: 1000 });
+      },
+    };
+    const secret = 'e'.repeat(32);
+    const edge = createApp({ edgeSecret: secret, limiter });
+    const hit = async (ip: string) => {
+      keys.length = 0;
+      await request(edge)
+        .get('/v1/seasonal')
+        .set('x-mrak-edge', secret)
+        .set('x-mrak-client-ip', ip);
+      return keys.join();
+    };
+    const a = await hit('203.0.113.7');
+    expect(await hit('203.0.113.7')).toBe(a);
+    expect(await hit('198.51.100.9')).not.toBe(a);
+    // Not an IP: ignored (falls back to the socket address), never used as a key.
+    expect(await hit('not-an-ip')).toBe(await hit('also-not-an-ip'));
+    // Without the secret the header is never read: 403 before any limiter call.
+    keys.length = 0;
+    const forged = await request(edge).get('/v1/seasonal').set('x-mrak-client-ip', '203.0.113.7');
+    expect(forged.status).toBe(403);
+    expect(keys).toEqual([]);
   });
 });

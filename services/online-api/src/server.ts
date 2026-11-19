@@ -31,6 +31,7 @@ import { PrismaProgressStore } from './progress/prisma-store.js';
 import { MemoryProgressStore } from './progress/store.js';
 import { PrismaSavesStore } from './saves/prisma-store.js';
 import { MemorySavesStore } from './saves/store.js';
+import { sentryReporter } from './observability/sentry.js';
 
 /** Cloudflare's documented always-pass test secret: development only. */
 const TURNSTILE_TEST_SECRET = '1x0000000000000000000000000000000AA';
@@ -199,7 +200,11 @@ const auth = await buildAuth({
   audience: env.AUTH_AUDIENCE,
   appUrl: env.APP_URL,
   secret: env.AUTH_SECRET ?? 'development-only-secret-not-for-production!!',
-  http: { allowedOrigins: csv(env.CORS_ORIGINS), cookieDomain: env.COOKIE_DOMAIN },
+  http: {
+    allowedOrigins: csv(env.CORS_ORIGINS),
+    cookieDomain: env.COOKIE_DOMAIN,
+    cookiePath: env.COOKIE_PATH,
+  },
   human,
   ...(env.HIBP_ENABLED === 'true' ? { pwned: hibpCheck() } : {}),
   hooks: [
@@ -232,8 +237,17 @@ const auth = await buildAuth({
 
 const telemetryStore = prisma ? new PrismaTelemetryStore(prisma) : null;
 const bugs = prisma ? new PrismaBugStore(prisma) : new MemoryBugStore();
+const reportError = env.SENTRY_DSN
+  ? await sentryReporter({
+      dsn: env.SENTRY_DSN,
+      environment: env.SENTRY_ENVIRONMENT,
+      release: env.RELEASE,
+    })
+  : undefined;
 const app = createApp({
   logger,
+  release: env.RELEASE,
+  ...(reportError ? { reportError } : {}),
   catalog: loadCatalog(env.CONTENT_DATA_DIR),
   progress,
   saves,

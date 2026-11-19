@@ -39,7 +39,7 @@ const asProblem = (res: { body: unknown }) => res.body as Problem;
 const asIssued = (res: { body: unknown }) => res.body as IssuedBody;
 const settle = () => new Promise((r) => setImmediate(r));
 
-async function harness(opts: { pwned?: boolean } = {}) {
+async function harness(opts: { pwned?: boolean; cookiePath?: string } = {}) {
   let clock = Date.parse('2026-11-17T12:00:00Z');
   const now = () => new Date(clock);
   const repo = new MemoryAuthRepository();
@@ -56,7 +56,11 @@ async function harness(opts: { pwned?: boolean } = {}) {
     audience: AUD,
     appUrl: 'https://play.mrak.game',
     secret: 'test-secret-test-secret-test-secret!!',
-    http: { allowedOrigins: [ORIGIN], cookieDomain: 'mrak.game' },
+    http: {
+      allowedOrigins: [ORIGIN],
+      cookieDomain: 'mrak.game',
+      ...(opts.cookiePath ? { cookiePath: opts.cookiePath } : {}),
+    },
     human: (token, _ip, action) => {
       human.push(action);
       return Promise.resolve(token === 'human-ok');
@@ -229,6 +233,15 @@ describe('login, cookies and CSRF', () => {
     );
     expect(asIssued(res).refreshToken).toBeUndefined();
     expect(res.body).toMatchObject({ expiresIn: ACCESS_TTL_S });
+  });
+
+  it('ADR 0012: behind the /api proxy the cookie path follows COOKIE_PATH', async () => {
+    const h = await harness({ cookiePath: '/api/v1/auth' });
+    const { res } = await h.account('proxy@example.com');
+    const set = (res.headers['set-cookie'] as unknown as string[])[0] ?? '';
+    expect(set).toMatch(
+      /; Path=\/api\/v1\/auth; Domain=mrak\.game; HttpOnly; Secure; SameSite=Strict;/,
+    );
   });
 
   it('native platforms get the refresh token in the body and no cookie', async () => {

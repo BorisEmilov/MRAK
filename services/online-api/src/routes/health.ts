@@ -5,8 +5,9 @@ export const healthRoute = defineRoute({
   method: 'get',
   path: '/health',
   rateLimit: ['public-ip'],
-  handler: (_req, res) => {
-    res.status(200).json({ status: 'ok', service: 'online-api' });
+  handler: (req, res) => {
+    const release = String(req.app.locals['release'] ?? 'dev');
+    res.status(200).json({ status: 'ok', service: 'online-api', release });
   },
   doc: {
     tag: 'ops',
@@ -14,7 +15,7 @@ export const healthRoute = defineRoute({
     responses: {
       200: {
         description: 'The service is up.',
-        schema: z.object({ status: z.literal('ok'), service: z.string() }),
+        schema: z.object({ status: z.literal('ok'), service: z.string(), release: z.string() }),
       },
     },
   },

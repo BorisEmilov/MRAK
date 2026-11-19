@@ -1,6 +1,6 @@
 # ADR 0011 — Hosting: Cloud Run, Cloud SQL and Memorystore in the EU
 
-- Status: accepted
+- Status: superseded by [ADR 0012](0012-hosting-free-tier.md) (2026-11-18)
 - Date: 2026-11-18
 - Related: [ADR 0008](0008-cloudflare-edge.md) (edge; its Tunnel decision is replaced by the edge
   secret below), [deploy runbook](../runbooks/deploy.md), `infra/gcp`, `infra/cloudflare`

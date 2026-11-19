@@ -2,8 +2,7 @@
 export const SITE_URL = 'https://mrak.game';
 export const PLAY_URL: string =
   (import.meta.env['PUBLIC_PLAY_URL'] as string | undefined) ?? 'https://play.mrak.game';
-export const API_URL: string =
-  (import.meta.env['PUBLIC_API_URL'] as string | undefined) ?? 'https://api.mrak.game';
+export const API_URL: string = (import.meta.env['PUBLIC_API_URL'] as string | undefined) ?? '/api';
 /** Cloudflare's documented always-pass test key when none is configured (development). */
 export const TURNSTILE_SITEKEY: string =
   (import.meta.env['PUBLIC_TURNSTILE_SITEKEY'] as string | undefined) ?? '1x00000000000000000000AA';

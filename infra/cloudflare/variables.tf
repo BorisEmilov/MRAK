@@ -22,8 +22,8 @@ variable "alert_email" {
   type        = string
 }
 
-variable "api_origin_hosts" {
-  description = "Cloud Run hostname of online-api per environment (output `api_host` of infra/gcp)"
+variable "api_origins" {
+  description = "Render service URL of online-api per environment (https://<service>.onrender.com)"
   type        = object({ production = string, staging = string })
 }
 
@@ -38,18 +38,13 @@ variable "team_email_domain" {
   type        = string
 }
 
-# Edge rate limits (requests per period per IP and colo). Must match docs/runbooks/abuse.md.
+# Edge flood backstop (requests per 10 s per IP and colo; Free plan). Must match
+# docs/runbooks/abuse.md.
 variable "edge_limits" {
   type = object({
-    auth_per_min      = number
-    telemetry_per_min = number
-    checkout_per_min  = number
-    api_per_min       = number
+    api_per_10s = number
   })
   default = {
-    auth_per_min      = 30
-    telemetry_per_min = 30
-    checkout_per_min  = 10
-    api_per_min       = 600
+    api_per_10s = 100
   }
 }
