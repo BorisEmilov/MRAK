@@ -39,6 +39,7 @@ jobs:
       migrate: ${{ steps.push.outputs.migrate }}
     steps:
       - uses: actions/checkout@v7
+      # One GHCR package: `<sha>` is the API, `migrate-<sha>` the migration job.
       - name: API and migration images (built once, promoted to both environments)
         id: push
         env:
@@ -49,12 +50,12 @@ jobs:
           docker build -f services/online-api/Dockerfile --target runtime --label "$label" \
             --build-arg RELEASE="$GITHUB_SHA" -t "$repo:$GITHUB_SHA" .
           docker build -f services/online-api/Dockerfile --target migrate --label "$label" \
-            -t "$repo-migrate:$GITHUB_SHA" .
+            -t "$repo:migrate-$GITHUB_SHA" .
           echo "$GH_TOKEN" | docker login ghcr.io -u "$GITHUB_ACTOR" --password-stdin
           docker push "$repo:$GITHUB_SHA"
-          docker push "$repo-migrate:$GITHUB_SHA"
+          docker push "$repo:migrate-$GITHUB_SHA"
           echo "image=$repo:$GITHUB_SHA" >> "$GITHUB_OUTPUT"
-          echo "migrate=$repo-migrate:$GITHUB_SHA" >> "$GITHUB_OUTPUT"
+          echo "migrate=$repo:migrate-$GITHUB_SHA" >> "$GITHUB_OUTPUT"
       - name: Migration SQL of this release (shown before the production approval)
         run: |
           git fetch --depth=1 origin "${{ github.event.before || 'HEAD~1' }}" 2>/dev/null || true
